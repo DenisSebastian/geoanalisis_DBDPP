@@ -1,6 +1,6 @@
 ---
 title: "Introducción Estadística Espacial"
-subtitle: "Clase 1"
+subtitle: "Módulo 1"
 ---
 
 ## Objetivos
