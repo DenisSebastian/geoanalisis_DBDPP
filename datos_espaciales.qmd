@@ -57,12 +57,12 @@ library(RColorBrewer) #paleta de colores
 
 ```
 
-Lectura de archivos tipo puntos
+### Lectura de archivos tipo puntos
 ```{r}
 sii_LC <- st_read("data/sii/sii_urbe_LC.shp")
 ```
 
-Visualización de los puntos
+### Visualización de los puntos
 
 ```{r}
 # Visualización ggplot y sf
@@ -82,14 +82,14 @@ Líneas
 
 ![Objeto vectorial tipo Línea](images/linea.png)
 
-Lectura de líneas
+### Lectura de líneas
 ```{r}
 las_condes_red <- readRDS("data/redes/RED_LAS_CONDES.rds") 
 # las_condes_red
 
 ```
 
-visualización
+### visualización Líneas
 ```{r}
 
 ggplot() +
@@ -109,7 +109,7 @@ Polígonos
 ![Objeto vectorial tipo polígono](images/poligono.png)
 
 
-Lectura de polígonos
+### Lectura de polígonos
 
 ```{r}
 
@@ -118,7 +118,8 @@ las_condes_mz <- st_read("data/shape/icv_las_condes.shp", quiet=T)
 
 ```
 
-Visualización
+### Visualización polígonos
+
 ```{r}
 
 ggplot() +
@@ -157,11 +158,44 @@ Raster
 
 ![Resolución Raster](images/raster_resolucion.gif)
 
+
+Para ejemplificar el uso y ver características de Raster vamos a utilizar una imágenes satelital del [Satelite Landsat 8](https://eos.com/es/find-satellite/landsat-8/).
+
+
+
+![Imágenes Satelitales](images/Sentinel-2Poster.jpg)
+
+Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de informacion tipos raster conformando una especie de brick de raster.
+
+![Configuración de Bandas](images/3D-array.jpg)
+
+
+
+
+Para este ejemplo de visualización necesitamos conocer las bandas satelitales que componen nuestra imagen satelital.
+
+
+
+![Bandas de Landsat 8](images/bandas_landsat8.png)
+
+
+
+### lectura de imagen Raster.
+
 ```{r}
 library(raster)
 las_condes_raster <- brick("data/raster/OLI_LC.tif")
+names(las_condes_raster) <- c("aerosol", "blue", "green", "red" , "nir", "swir1", "swir2", "tirs1")
+las_condes_raster
+
 ```
 
+### Visualización Raster
+```{r}
+# Visualización de imagen recortada de Las Condes en Color Natural
+plotRGB(las_condes_raster, r = 4, g = 3, b = 2, stretch = "lin")
+# viewRGB(las_condes_raster, r = 4, g = 3, b = 2)
+```
 
 
 ## Sistema de Referencias de Coordenadas
@@ -185,19 +219,74 @@ Coordenadas proyectadas o cartográficas
 2011)](images/utm.png){width=60%}
 
 
-## Actividades Prácticas
+
+Para hacer reproyecciones en R, se le tiene que asignar el Sistema de Referencia de Coordenadas de dos formas, uno como cadena de texto (`"+proj=longlat +datum=WGS84 +no_defs"`) o como número que corresponde a EPSG ([EPSG es el acrónimo de European Petroleum Survey Group](https://mappinggis.com/2016/04/los-codigos-epsg-srid-vinculacion-postgis/)) que representan sistema de referencia de coordenadas también.
 
 
-Modificar sistema de referencia de cordenadas de un polígono comunal de Gran Santiago y generar cartografía con ggplot2.
+Para el caso de Chile usamos dos sistemas de referencias de coordenadas:
 
+Coordenadas elipsoidales (geodésicas):
+: 4326 o `"+proj=longlat +datum=WGS84 +no_defs"`
+
+Coordenadas proyectadas (métricas):
+: 32719 o `"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"` 
+
+### Reproyectar Vectores
 
 ```{r}
-comunas_RM_sf <- read_sf("data/shape/Reg_Met.shp")
+
+LC_mz_32719 <- las_condes_mz %>% st_transform(32719)
+st_crs(LC_mz_32719)
+
 ```
 
 
 
-Modificar sistema de referencia de cordenadas de Raster de Las Condes y generar cartografía con ggplot2.
+### Reproyectar Raster
+
+```{r}
+las_condes_raster
+crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"# geográficas o elipsoidales
+crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # UTM o cartográficas
+las_condes_raster2 <- projectRaster(las_condes_raster, crs = crs_latlon)
+las_condes_raster2
+```
+
+
+
+## Actividades Prácticas
+
+
+1. Seleccione una comuna de las manzanas del INE, visualize con ggplot una  y una variable genere una tabla resumen de suma de personas, hombres.
+
+:::{.callout-tip}
+
+Leer Archivo:
+```{r eval=FALSE}
+mz_ine <- readRDS("../data/censo/manz_INE_2017_sf.rds")
+```
+
+Seleccionar Comuna con `dplyr::filter()`
+
+Eliminar geometrias `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen.
+
+:::
+
+
+
+2. Visualización de Combinación de Bandas Satélitales
+
+:::{.callout-tip}
+![Visualización de Bandas](images/l8-band-combinations.png)
+Referencias: [https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/](https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/)
+
+
+```{r eval=FALSE}
+plotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = "lin")
+```
+
+:::
+
 
 
 ## Referencias
