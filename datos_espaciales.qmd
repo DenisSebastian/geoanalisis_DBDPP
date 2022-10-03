@@ -1,6 +1,6 @@
 ---
 title: "Datos Espaciales"
-subtitle: "Módulo 1"
+subtitle: "Módulo 1: Práctico"
 editor_options: 
   chunk_output_type: console
 ---
@@ -15,7 +15,7 @@ suppressPackageStartupMessages(library(mapview))
 
 ## Objetivos del Módulo
 
-La presente Sesion tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.
+La presente Sesión tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.
 
 
 ## Definición General de Datos Espaciales
@@ -47,10 +47,10 @@ Puntos
 
 ![Objeto vectorial tipo punto](images/punto.png)
 
-Cargar librerias
+Cargar librerías
 ```{r}
 # install.packages("sf") 
-library(sf) # manipulaciíon de datos vectoriales
+library(sf) # manipulación de datos vectoriales
 library(mapview) # visualización de mapas dinámicos
 library(ggplot2) # gráficos
 library(RColorBrewer) #paleta de colores
@@ -104,7 +104,7 @@ ggplot() +
 
 
 Polígonos
-: Tiene tantas coordenadas como vértices. La información que representa es de tipo areal, como por ejemplo división política administrativa, manzanas, construcciones, entre otras.
+: Tiene tantas coordenadas como vértices. La información que representa es de tipo área, como por ejemplo división política administrativa, manzanas, construcciones, entre otras.
 
 ![Objeto vectorial tipo polígono](images/poligono.png)
 
@@ -165,7 +165,7 @@ Para ejemplificar el uso y ver características de Raster vamos a utilizar una i
 
 ![Imágenes Satelitales](images/Sentinel-2Poster.jpg)
 
-Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de informacion tipos raster conformando una especie de brick de raster.
+Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de información tipos raster conformando una especie de brick de raster.
 
 ![Configuración de Bandas](images/3D-array.jpg)
 
@@ -257,7 +257,7 @@ las_condes_raster2
 ## Actividades Prácticas
 
 
-1. Seleccione una comuna de las manzanas del INE, visualize con ggplot una  y una variable genere una tabla resumen de suma de personas, hombres.
+1. Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal.
 
 :::{.callout-tip}
 
@@ -268,13 +268,13 @@ mz_ine <- readRDS("../data/censo/manz_INE_2017_sf.rds")
 
 Seleccionar Comuna con `dplyr::filter()`
 
-Eliminar geometrias `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen.
+Eliminar geometrías `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen.
 
 :::
 
 
 
-2. Visualización de Combinación de Bandas Satélitales
+2. Visualización de Combinación de Bandas Satelitales
 
 :::{.callout-tip}
 ![Visualización de Bandas](images/l8-band-combinations.png)
