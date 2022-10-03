@@ -12,7 +12,7 @@ book:
     left: "Copyright 2022, Denis Berroeta" 
   chapters:
     - index.qmd
-    - intro.qmd
+    - datos_espaciales.qmd
     - references.qmd
 
 bibliography: references.bib
