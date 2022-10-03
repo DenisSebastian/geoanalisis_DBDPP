@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Curso: Geoanálisis - 1&nbsp; Introducción Estadística Espacial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./datos_espaciales.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Curso: Geoanálisis</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Antecedentes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"> <span class="header-section-number">1.1</span> Objetivos</a></li>
+  <li><a href="#origen-de-la-estadística" id="toc-origen-de-la-estadística" class="nav-link" data-scroll-target="#origen-de-la-estadística"> <span class="header-section-number">1.2</span> Origen de la Estadística</a></li>
+  <li><a href="#estadística-vs-estadística-espacial" id="toc-estadística-vs-estadística-espacial" class="nav-link" data-scroll-target="#estadística-vs-estadística-espacial"> <span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</a></li>
+  <li><a href="#condideraciones-generales" id="toc-condideraciones-generales" class="nav-link" data-scroll-target="#condideraciones-generales"> <span class="header-section-number">1.4</span> Condideraciones generales</a></li>
+  <li><a href="#ejemplos-de-correlación-espacial" id="toc-ejemplos-de-correlación-espacial" class="nav-link" data-scroll-target="#ejemplos-de-correlación-espacial"> <span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</a>
+  <ul class="collapse">
+  <li><a href="#autoproducción-tráfico-de-drogas" id="toc-autoproducción-tráfico-de-drogas" class="nav-link" data-scroll-target="#autoproducción-tráfico-de-drogas"> <span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</a></li>
+  <li><a href="#co-producción-mercado-inmobiliario-local" id="toc-co-producción-mercado-inmobiliario-local" class="nav-link" data-scroll-target="#co-producción-mercado-inmobiliario-local"> <span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</a></li>
+  <li><a href="#segregación-y-delincuencia" id="toc-segregación-y-delincuencia" class="nav-link" data-scroll-target="#segregación-y-delincuencia"> <span class="header-section-number">1.5.3</span> Segregación y delincuencia</a></li>
+  <li><a href="#valores-de-vivienda" id="toc-valores-de-vivienda" class="nav-link" data-scroll-target="#valores-de-vivienda"> <span class="header-section-number">1.5.4</span> Valores de Vivienda</a></li>
+  </ul></li>
+  <li><a href="#inconsistencia-estadística-de-datos-espaciales-agregados-maup" id="toc-inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="nav-link" data-scroll-target="#inconsistencia-estadística-de-datos-espaciales-agregados-maup"> <span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></h1>
+<p class="subtitle lead">Clase 1</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="objetivos" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">1.1</span> Objetivos</h2>
+<p><img src="images/m1_objetivos.png" class="img-fluid" alt="Objetivos"> * Conocer teóricos fundamentales de la estadística espacial.</p>
+</section>
+<section id="origen-de-la-estadística" class="level2 page-columns page-full" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="origen-de-la-estadística"><span class="header-section-number">1.2</span> Origen de la Estadística</h2>
+<p>Estadística deriva del italiano statista (hombre de Estado) y se desarrolla desde la antigüedad para facilitar la gestión tributaria y estimar la capacidad bélica de un reino. Ej: censos egipcios desde el 3050 a.C.</p>
+<p>Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarrolla la estadística en estrecha relación con la cartografía, principalmente para la administración y dominio de territorios.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/mapa_africa.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Origen de la Estadística</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="estadística-vs-estadística-espacial" class="level2 page-columns page-full" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="estadística-vs-estadística-espacial"><span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</h2>
+<p><strong>Estadística:</strong></p>
+<ul>
+<li>Análisis de la estructura de datos representativos de una población (en áreas arbitrarias)</li>
+<li>Se basa en matemáticas relativamente complejas</li>
+</ul>
+<p><img src="images/gauss_graph.png" class="img-fluid" alt="Distribución normal en estadística"> <strong>Geoestadística</strong></p>
+<ul>
+<li>Análisis de relaciones de dependencia espacial entre datos georreferenciados</li>
+<li>Complejidad de cálculo que hacía inviable su uso masivo</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/dep_espacial.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Dependencia espacial en geoestadística</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="condideraciones-generales" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="condideraciones-generales"><span class="header-section-number">1.4</span> Condideraciones generales</h2>
+<p>La inferencia estadística convencional se basa en dos supuestos fundamentales</p>
+<ul>
+<li>Los valores de una variable se distribuyen de forma aleatoria</li>
+<li>Los valores de una variable son independientes unos de otros</li>
+</ul>
+<p>Pero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:</p>
+<ul>
+<li>Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí (Ley de Tobler, 1970) *La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales (Lefebvre, 1974)</li>
+</ul>
+<p>Para resolver esta limitación existen dos enfoques principales</p>
+<ul>
+<li>La econometría espacial, que trata el efecto espacial como un error y lo elimina para generar estimaciones sin sesgo</li>
+<li>La geoestadística, que identifica y cuantifica el efecto que el espacio genera en la estructura de la información</li>
+</ul>
+</section>
+<section id="ejemplos-de-correlación-espacial" class="level2 page-columns page-full" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="ejemplos-de-correlación-espacial"><span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</h2>
+<section id="autoproducción-tráfico-de-drogas" class="level3 page-columns page-full" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="autoproducción-tráfico-de-drogas"><span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/drogas_autoproducion.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Autoproducción Espacial en tráfico de Drogas</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="co-producción-mercado-inmobiliario-local" class="level3 page-columns page-full" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/mercado_inmob.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Co-producción Espacial en Mercado inmobiliario local</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="segregación-y-delincuencia" class="level3 page-columns page-full" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="segregación-y-delincuencia"><span class="header-section-number">1.5.3</span> Segregación y delincuencia</h3>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images/lc_vulnerabilidad.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images/lc_delitos_dom.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images/LC_delitos_drogas.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/segregacion_del.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Segregación y delincuencia</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="valores-de-vivienda" class="level3 page-columns page-full" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="valores-de-vivienda"><span class="header-section-number">1.5.4</span> Valores de Vivienda</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/val_vivienda.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Valores de Vivienda</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="level2 page-columns page-full" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</h2>
+<p><strong>Modifiable Areal Unit Problem</strong>: inconsistencia de indicadores estadísticos al modificar los perímetros de agregación (Gehlke &amp; Biehl 1934, Openshaw &amp; Taylor 1979)</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/maup.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Modifiable Areal Unit Problem</figcaption><p></p>
+</figure>
+</div>
+<p>En general, es recomendable trabajar con datos a la menor escala posible, o agregarlos en zonas homogéneas</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Antecedentes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./datos_espaciales.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

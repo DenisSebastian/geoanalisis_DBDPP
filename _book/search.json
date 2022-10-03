@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Curso: Geoanálisis",
     "section": "",
-    "text": "Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2022, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.\n\n\nEste curso se enfoca en entregar a los alumnos conocimientos teóricos y herramientas técnicas para realizar análisis espacial de variables territoriales en diferentes campos de aplicación, con énfasis en afrontar desafíos relacionado a las políticas públicas, haciendo uso de lenguaje de programación R Project, para uso de metodologías de alto nivel y de forma automatizada.\n\n\n\nEl objetivo general es proporcionar a los estudiantes los fundamentos, técnicas y aspectos básicos para analizar, modelar y representar información espacial, para apoyar la toma de decisiones con evidencia territorial robusta.\nLos objetivos específicos son:\n\nConocer los conceptos básicos del geoanálisis.\nManipular datos espaciales en R.\nConocer técnicas de inferencia, autocorrelación y regresión espacial.\nAplicar las técnicas a problemas de interés público.\n\n\n\n\n\nIntroducción a la Estadística Espacial y a Datos Espaciales\nManejo y Representación de datos vectoriales, construcción de indicadores\nManejo y Representación de datos raster, construcción de indicadores\nInferencia Espacial: Interpolación y mapas de calor\nRelaciones de Vecindad y autocorrelación espacial\nModelos de Regresión Espacial\n\n\n\n\n\nProfesor:\n\nDenis Berroeta González (denis.berroeta@uai.cl)\n\n\n\nCoordinador de Investigación Centro de Inteligencia Territorial UAI\nMagister en Inteligencia Artificial FIC-UAI\nMaster of Data Science FIC-UAI (cursando)\nIngeniero en Prevención en Riesgos\n\n\nAyudante:\n\nLeonardo Rojas (leonardo.rojas@uai.cl)\n\n\n\nAnalista Centro de Inteligencia Territorial UAI\nEconomista\nMaster of Data Science FIC-UAI (cursando)"
+    "text": "Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2022, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.\n\n\nEste curso se enfoca en entregar a los alumnos conocimientos teóricos y herramientas técnicas para realizar análisis espacial de variables territoriales en diferentes campos de aplicación, con énfasis en afrontar desafíos relacionado a las políticas públicas, haciendo uso de lenguaje de programación R Project, para uso de metodologías de alto nivel y de forma automatizada.\n\n\n\nEl objetivo general es proporcionar a los estudiantes los fundamentos, técnicas y aspectos básicos para analizar, modelar y representar información espacial, para apoyar la toma de decisiones con evidencia territorial robusta.\nLos objetivos específicos son:\n\nConocer los conceptos básicos del geoanálisis.\nManipular datos espaciales en R.\nConocer técnicas de inferencia, autocorrelación y regresión espacial.\nAplicar las técnicas a problemas de interés público.\n\n\n\n\n\n\n\nModulos\n\n\n\nIntroducción a la Estadística Espacial y a Datos Espaciales\nManejo y Representación de datos vectoriales, construcción de indicadores\nManejo y Representación de datos raster, construcción de indicadores\nInferencia Espacial: Interpolación y mapas de calor\nRelaciones de Vecindad y autocorrelación espacial\nModelos de Regresión Espacial\n\n\n\n\n\nProfesor:\n\nDenis Berroeta González (denis.berroeta@uai.cl)\n\n\n\nCoordinador de Investigación Centro de Inteligencia Territorial UAI\nMagister en Inteligencia Artificial FIC-UAI\nMaster of Data Science FIC-UAI (cursando)\nIngeniero en Prevención en Riesgos\n\n\nAyudante:\n\nLeonardo Rojas (leonardo.rojas@uai.cl)\n\n\n\nAnalista Centro de Inteligencia Territorial UAI\nEconomista\nMaster of Data Science FIC-UAI (cursando)"
   },
   {
     "objectID": "datos_espaciales.html",
@@ -46,7 +46,7 @@
     "href": "datos_espaciales.html#actividades-prácticas",
     "title": "1  Datos Espaciales",
     "section": "1.6 Actividades Prácticas",
-    "text": "1.6 Actividades Prácticas\n\nSeleccione una comuna de las manzanas del INE, genere una tabla resumen de suma de personas,\n\n\n\n\n\n\n\nTip\n\n\n\nLeer Archivo:\n\nmz_ine <- readRDS(\"../data/censo/manz_INE_2017_sf.rds\")\n\nSeleccionar Comuna con dplyr::filter()\nEliminar geometrias sf::st_drop_geometry()\n\n\n\nVisualización de Combinación de Bandas Satélitales\n\n\n\n\n\n\n\nTip\n\n\n\n Referencias: https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/\n\nplotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = \"lin\")"
+    "text": "1.6 Actividades Prácticas\n\nSeleccione una comuna de las manzanas del INE, visualize con ggplot una y una variable genere una tabla resumen de suma de personas, hombres.\n\n\n\n\n\n\n\nTip\n\n\n\nLeer Archivo:\n\nmz_ine <- readRDS(\"../data/censo/manz_INE_2017_sf.rds\")\n\nSeleccionar Comuna con dplyr::filter()\nEliminar geometrias sf::st_drop_geometry() ya que no es necesaria para realizar tabla resumen.\n\n\n\nVisualización de Combinación de Bandas Satélitales\n\n\n\n\n\n\n\nTip\n\n\n\n Referencias: https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/\n\nplotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = \"lin\")"
   },
   {
     "objectID": "datos_espaciales.html#referencias",
@@ -54,5 +54,54 @@
     "title": "1  Datos Espaciales",
     "section": "1.7 Referencias",
     "text": "1.7 Referencias\nGeodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018\nSimple Features for R"
+  },
+  {
+    "objectID": "intro_estad_esp.html",
+    "href": "intro_estad_esp.html",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "",
+    "text": "* Conocer teóricos fundamentales de la estadística espacial."
+  },
+  {
+    "objectID": "intro_estad_esp.html#origen-de-la-estadística",
+    "href": "intro_estad_esp.html#origen-de-la-estadística",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "1.2 Origen de la Estadística",
+    "text": "1.2 Origen de la Estadística\nEstadística deriva del italiano statista (hombre de Estado) y se desarrolla desde la antigüedad para facilitar la gestión tributaria y estimar la capacidad bélica de un reino. Ej: censos egipcios desde el 3050 a.C.\nDurante la expansión de los imperios coloniales (siglos XVI - XIX) se desarrolla la estadística en estrecha relación con la cartografía, principalmente para la administración y dominio de territorios.\n\n\n\nOrigen de la Estadística"
+  },
+  {
+    "objectID": "intro_estad_esp.html#estadística-vs-estadística-espacial",
+    "href": "intro_estad_esp.html#estadística-vs-estadística-espacial",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "1.3 Estadística vs Estadística Espacial",
+    "text": "1.3 Estadística vs Estadística Espacial\nEstadística:\n\nAnálisis de la estructura de datos representativos de una población (en áreas arbitrarias)\nSe basa en matemáticas relativamente complejas\n\n Geoestadística\n\nAnálisis de relaciones de dependencia espacial entre datos georreferenciados\nComplejidad de cálculo que hacía inviable su uso masivo\n\n\n\n\nDependencia espacial en geoestadística"
+  },
+  {
+    "objectID": "intro_estad_esp.html#condideraciones-generales",
+    "href": "intro_estad_esp.html#condideraciones-generales",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "1.4 Condideraciones generales",
+    "text": "1.4 Condideraciones generales\nLa inferencia estadística convencional se basa en dos supuestos fundamentales\n\nLos valores de una variable se distribuyen de forma aleatoria\nLos valores de una variable son independientes unos de otros\n\nPero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:\n\nLos fenómenos más próximos en el espacio están más estrechamente relacionados entre sí (Ley de Tobler, 1970) *La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales (Lefebvre, 1974)\n\nPara resolver esta limitación existen dos enfoques principales\n\nLa econometría espacial, que trata el efecto espacial como un error y lo elimina para generar estimaciones sin sesgo\nLa geoestadística, que identifica y cuantifica el efecto que el espacio genera en la estructura de la información"
+  },
+  {
+    "objectID": "intro_estad_esp.html#ejemplos-de-autoproducción-espacial",
+    "href": "intro_estad_esp.html#ejemplos-de-autoproducción-espacial",
+    "title": "1  Introducción a la Estadística Espacial",
+    "section": "1.5 Ejemplos de Autoproducción Espacial",
+    "text": "1.5 Ejemplos de Autoproducción Espacial\n\n1.5.1 Tráfico de Drogas\n\n\n\nAutoproducción Espacial en tráfico de Drogas\n\n\n\n\n1.5.2 Mercado inmobiliario local\n\n\n\nAutoproducción Espacial en Mercado inmobiliario local"
+  },
+  {
+    "objectID": "intro_estad_esp.html#ejemplos-de-correlación-espacial",
+    "href": "intro_estad_esp.html#ejemplos-de-correlación-espacial",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "1.5 Ejemplos de Correlación Espacial",
+    "text": "1.5 Ejemplos de Correlación Espacial\n\n1.5.1 Autoproducción: Tráfico de Drogas\n\n\n\nAutoproducción Espacial en tráfico de Drogas\n\n\n\n\n1.5.2 Co-producción: Mercado inmobiliario local\n\n\n\nCo-producción Espacial en Mercado inmobiliario local\n\n\n\n\n1.5.3 Segregación y delincuencia\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSegregación y delincuencia\n\n\n\n\n1.5.4 Valores de Vivienda\n\n\n\nValores de Vivienda"
+  },
+  {
+    "objectID": "intro_estad_esp.html#inconsistencia-estadística-de-datos-espaciales-agregados-maup",
+    "href": "intro_estad_esp.html#inconsistencia-estadística-de-datos-espaciales-agregados-maup",
+    "title": "1  Introducción Estadística Espacial",
+    "section": "1.6 Inconsistencia estadística de datos espaciales agregados: MAUP",
+    "text": "1.6 Inconsistencia estadística de datos espaciales agregados: MAUP\nModifiable Areal Unit Problem: inconsistencia de indicadores estadísticos al modificar los perímetros de agregación (Gehlke & Biehl 1934, Openshaw & Taylor 1979)\n\n\n\nModifiable Areal Unit Problem\n\n\nEn general, es recomendable trabajar con datos a la menor escala posible, o agregarlos en zonas homogéneas"
   }
 ]

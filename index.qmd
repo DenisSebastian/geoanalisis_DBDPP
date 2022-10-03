@@ -19,6 +19,8 @@ Los objetivos específicos son:
 
 ## Modulos
 
+![Modulos](images/modulos.png)
+
 1.	Introducción a la Estadística Espacial y a Datos Espaciales
 2.	Manejo y Representación de datos vectoriales, construcción de indicadores
 3.	Manejo y Representación de datos raster, construcción de indicadores

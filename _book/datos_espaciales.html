@@ -632,7 +632,7 @@ max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.1
 <section id="actividades-prácticas" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="actividades-prácticas"><span class="header-section-number">1.6</span> Actividades Prácticas</h2>
 <ol type="1">
-<li>Seleccione una comuna de las manzanas del INE, genere una tabla resumen de suma de personas,</li>
+<li>Seleccione una comuna de las manzanas del INE, visualize con ggplot una y una variable genere una tabla resumen de suma de personas, hombres.</li>
 </ol>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -649,7 +649,7 @@ Tip
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mz_ine <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"../data/censo/manz_INE_2017_sf.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Seleccionar Comuna con <code>dplyr::filter()</code></p>
-<p>Eliminar geometrias <code>sf::st_drop_geometry()</code></p>
+<p>Eliminar geometrias <code>sf::st_drop_geometry()</code> ya que no es necesaria para realizar tabla resumen.</p>
 </div>
 </div>
 <ol start="2" type="1">
