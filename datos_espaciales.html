@@ -213,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></h1>
-<p class="subtitle lead">Módulo 1</p>
+<p class="subtitle lead">Módulo 1: Práctico</p>
 </div>
 
 
@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objetivos-del-módulo" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="objetivos-del-módulo"><span class="header-section-number">2.1</span> Objetivos del Módulo</h2>
-<p>La presente Sesion tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.</p>
+<p>La presente Sesión tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.</p>
 </section>
 <section id="definición-general-de-datos-espaciales" class="level2 page-columns page-full" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="definición-general-de-datos-espaciales"><span class="header-section-number">2.2</span> Definición General de Datos Espaciales</h2>
@@ -263,10 +263,10 @@ Tiene un par de coordenadas “x” e “y”. Es utilizado para información de
 <p></p><figcaption class="figure-caption margin-caption">Objeto vectorial tipo punto</figcaption><p></p>
 </figure>
 </div>
-<p>Cargar librerias</p>
+<p>Cargar librerías</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("sf") </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># manipulaciíon de datos vectoriales</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># manipulación de datos vectoriales</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapview) <span class="co"># visualización de mapas dinámicos</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># gráficos</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co">#paleta de colores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -341,7 +341,7 @@ Tiene tantas coordenadas como vértices. La información que representa es de ti
 <dl>
 <dt>Polígonos</dt>
 <dd>
-Tiene tantas coordenadas como vértices. La información que representa es de tipo areal, como por ejemplo división política administrativa, manzanas, construcciones, entre otras.
+Tiene tantas coordenadas como vértices. La información que representa es de tipo área, como por ejemplo división política administrativa, manzanas, construcciones, entre otras.
 </dd>
 </dl>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -452,7 +452,7 @@ Representación del espacio mediante una matriz de celdas organizada en filas y 
 <p></p><figcaption class="figure-caption margin-caption">Imágenes Satelitales</figcaption><p></p>
 </figure>
 </div>
-<p>Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de informacion tipos raster conformando una especie de brick de raster.</p>
+<p>Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de información tipos raster conformando una especie de brick de raster.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/3D-array.jpg" class="img-fluid figure-img"></p>
@@ -637,7 +637,7 @@ max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.1
 <section id="actividades-prácticas" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="actividades-prácticas"><span class="header-section-number">2.6</span> Actividades Prácticas</h2>
 <ol type="1">
-<li>Seleccione una comuna de las manzanas del INE, visualize con ggplot una y una variable genere una tabla resumen de suma de personas, hombres.</li>
+<li>Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal.</li>
 </ol>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -654,11 +654,11 @@ Tip
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mz_ine <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"../data/censo/manz_INE_2017_sf.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Seleccionar Comuna con <code>dplyr::filter()</code></p>
-<p>Eliminar geometrias <code>sf::st_drop_geometry()</code> ya que no es necesaria para realizar tabla resumen.</p>
+<p>Eliminar geometrías <code>sf::st_drop_geometry()</code> ya que no es necesaria para realizar tabla resumen.</p>
 </div>
 </div>
 <ol start="2" type="1">
-<li>Visualización de Combinación de Bandas Satélitales</li>
+<li>Visualización de Combinación de Bandas Satelitales</li>
 </ol>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
