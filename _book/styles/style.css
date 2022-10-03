@@ -1,0 +1,45 @@
+body {
+  text-align: justify;
+}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p {
+  font-size: 16px
+}
+table{
+  font-size: 14px;
+  text-align: justify;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+  font-size: 14px
+}
+
+ul li{
+  font-size: 16px
+}
+figcaption{
+  font-size: 13px
+}
+
+h1{
+  font-size: 25px
+}
+
+h2{
+  font-size: 20px
+}
+
+h3{
+  font-size: 18px
+}
+

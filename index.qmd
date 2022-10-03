@@ -1,0 +1,44 @@
+# Antecedentes {.unnumbered}
+
+Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2022, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
+
+## Introducción
+
+Este curso se enfoca en entregar a los alumnos conocimientos teóricos y herramientas técnicas para realizar análisis espacial de variables territoriales en diferentes campos de aplicación, con énfasis en afrontar desafíos relacionado a las políticas públicas, haciendo uso de lenguaje de programación R Project, para uso de metodologías de alto nivel y de forma automatizada.
+
+## Objetivos
+
+El objetivo general es proporcionar a los estudiantes los fundamentos, técnicas y aspectos básicos para analizar, modelar y representar información espacial, para apoyar la toma de decisiones con evidencia territorial robusta.
+
+Los objetivos específicos son:
+
+- Conocer los conceptos básicos del geoanálisis.
+- Manipular datos espaciales en R.
+- Conocer técnicas de inferencia, autocorrelación y regresión espacial.
+- Aplicar las técnicas a problemas de interés público.
+
+## Modulos
+
+1.	Introducción a la Estadística Espacial y a Datos Espaciales
+2.	Manejo y Representación de datos vectoriales, construcción de indicadores
+3.	Manejo y Representación de datos raster, construcción de indicadores
+4.	Inferencia Espacial: Interpolación y mapas de calor
+5.	Relaciones de Vecindad y autocorrelación espacial
+6.	Modelos de Regresión Espacial
+
+## Docentes
+
+Profesor:
+: Denis Berroeta González (denis.berroeta@uai.cl)
+
+- Coordinador de Investigación Centro de Inteligencia Territorial UAI
+- Magister en Inteligencia Artificial FIC-UAI
+- Master of Data Science FIC-UAI (cursando)
+- Ingeniero en Prevención en Riesgos 
+
+Ayudante:
+: Leonardo Rojas (leonardo.rojas@uai.cl)
+
+- Analista Centro de Inteligencia Territorial UAI
+- Economista 
+- Master of Data Science FIC-UAI (cursando)

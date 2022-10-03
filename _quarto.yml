@@ -1,0 +1,37 @@
+project:
+  type: book
+
+book:
+  title: "Curso: Geoanálisis"
+  subtitle: "Diplomado en Ciencia de Datos para Políticas Públicas 2022"
+  affiliation-title: "Universidad Adolfo Ibáñez - Chile"
+  author: "Denis Berroeta González (denis.berroeta@uai.cl)"
+  date: "2022-08-12"
+  number-sections: 3
+  page-footer: 
+    left: "Copyright 2022, Denis Berroeta" 
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    html-math-method: katex
+    css: styles/style.css
+    fig-cap-location: "margin"
+    tab-cap-location: "bottom"
+    fig-align: "center"
+    mailto: "denis.berroeta@uai.cl"
+  
+execute:
+  warning: false
+  
+editor: source
+always_allow_html: true
+
+
+
