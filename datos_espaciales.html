@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curso: Geoanálisis - 1&nbsp; Datos Espaciales</title>
+<title>Curso: Geoanálisis - 2&nbsp; Datos Espaciales</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,7 +89,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./intro_estad_esp.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -159,7 +159,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></a>
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -176,29 +181,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objetivos-del-módulo" id="toc-objetivos-del-módulo" class="nav-link active" data-scroll-target="#objetivos-del-módulo"> <span class="header-section-number">1.1</span> Objetivos del Módulo</a></li>
-  <li><a href="#definición-general-de-datos-espaciales" id="toc-definición-general-de-datos-espaciales" class="nav-link" data-scroll-target="#definición-general-de-datos-espaciales"> <span class="header-section-number">1.2</span> Definición General de Datos Espaciales</a></li>
-  <li><a href="#datos-vectoriales" id="toc-datos-vectoriales" class="nav-link" data-scroll-target="#datos-vectoriales"> <span class="header-section-number">1.3</span> Datos Vectoriales</a>
+  <li><a href="#objetivos-del-módulo" id="toc-objetivos-del-módulo" class="nav-link active" data-scroll-target="#objetivos-del-módulo"> <span class="header-section-number">2.1</span> Objetivos del Módulo</a></li>
+  <li><a href="#definición-general-de-datos-espaciales" id="toc-definición-general-de-datos-espaciales" class="nav-link" data-scroll-target="#definición-general-de-datos-espaciales"> <span class="header-section-number">2.2</span> Definición General de Datos Espaciales</a></li>
+  <li><a href="#datos-vectoriales" id="toc-datos-vectoriales" class="nav-link" data-scroll-target="#datos-vectoriales"> <span class="header-section-number">2.3</span> Datos Vectoriales</a>
   <ul class="collapse">
-  <li><a href="#lectura-de-archivos-tipo-puntos" id="toc-lectura-de-archivos-tipo-puntos" class="nav-link" data-scroll-target="#lectura-de-archivos-tipo-puntos"> <span class="header-section-number">1.3.1</span> Lectura de archivos tipo puntos</a></li>
-  <li><a href="#visualización-de-los-puntos" id="toc-visualización-de-los-puntos" class="nav-link" data-scroll-target="#visualización-de-los-puntos"> <span class="header-section-number">1.3.2</span> Visualización de los puntos</a></li>
-  <li><a href="#lectura-de-líneas" id="toc-lectura-de-líneas" class="nav-link" data-scroll-target="#lectura-de-líneas"> <span class="header-section-number">1.3.3</span> Lectura de líneas</a></li>
-  <li><a href="#visualización-líneas" id="toc-visualización-líneas" class="nav-link" data-scroll-target="#visualización-líneas"> <span class="header-section-number">1.3.4</span> visualización Líneas</a></li>
-  <li><a href="#lectura-de-polígonos" id="toc-lectura-de-polígonos" class="nav-link" data-scroll-target="#lectura-de-polígonos"> <span class="header-section-number">1.3.5</span> Lectura de polígonos</a></li>
-  <li><a href="#visualización-polígonos" id="toc-visualización-polígonos" class="nav-link" data-scroll-target="#visualización-polígonos"> <span class="header-section-number">1.3.6</span> Visualización polígonos</a></li>
+  <li><a href="#lectura-de-archivos-tipo-puntos" id="toc-lectura-de-archivos-tipo-puntos" class="nav-link" data-scroll-target="#lectura-de-archivos-tipo-puntos"> <span class="header-section-number">2.3.1</span> Lectura de archivos tipo puntos</a></li>
+  <li><a href="#visualización-de-los-puntos" id="toc-visualización-de-los-puntos" class="nav-link" data-scroll-target="#visualización-de-los-puntos"> <span class="header-section-number">2.3.2</span> Visualización de los puntos</a></li>
+  <li><a href="#lectura-de-líneas" id="toc-lectura-de-líneas" class="nav-link" data-scroll-target="#lectura-de-líneas"> <span class="header-section-number">2.3.3</span> Lectura de líneas</a></li>
+  <li><a href="#visualización-líneas" id="toc-visualización-líneas" class="nav-link" data-scroll-target="#visualización-líneas"> <span class="header-section-number">2.3.4</span> visualización Líneas</a></li>
+  <li><a href="#lectura-de-polígonos" id="toc-lectura-de-polígonos" class="nav-link" data-scroll-target="#lectura-de-polígonos"> <span class="header-section-number">2.3.5</span> Lectura de polígonos</a></li>
+  <li><a href="#visualización-polígonos" id="toc-visualización-polígonos" class="nav-link" data-scroll-target="#visualización-polígonos"> <span class="header-section-number">2.3.6</span> Visualización polígonos</a></li>
   </ul></li>
-  <li><a href="#datos-raster" id="toc-datos-raster" class="nav-link" data-scroll-target="#datos-raster"> <span class="header-section-number">1.4</span> Datos Raster</a>
+  <li><a href="#datos-raster" id="toc-datos-raster" class="nav-link" data-scroll-target="#datos-raster"> <span class="header-section-number">2.4</span> Datos Raster</a>
   <ul class="collapse">
-  <li><a href="#lectura-de-imagen-raster." id="toc-lectura-de-imagen-raster." class="nav-link" data-scroll-target="#lectura-de-imagen-raster."> <span class="header-section-number">1.4.1</span> lectura de imagen Raster.</a></li>
-  <li><a href="#visualización-raster" id="toc-visualización-raster" class="nav-link" data-scroll-target="#visualización-raster"> <span class="header-section-number">1.4.2</span> Visualización Raster</a></li>
+  <li><a href="#lectura-de-imagen-raster." id="toc-lectura-de-imagen-raster." class="nav-link" data-scroll-target="#lectura-de-imagen-raster."> <span class="header-section-number">2.4.1</span> lectura de imagen Raster.</a></li>
+  <li><a href="#visualización-raster" id="toc-visualización-raster" class="nav-link" data-scroll-target="#visualización-raster"> <span class="header-section-number">2.4.2</span> Visualización Raster</a></li>
   </ul></li>
-  <li><a href="#sistema-de-referencias-de-coordenadas" id="toc-sistema-de-referencias-de-coordenadas" class="nav-link" data-scroll-target="#sistema-de-referencias-de-coordenadas"> <span class="header-section-number">1.5</span> Sistema de Referencias de Coordenadas</a>
+  <li><a href="#sistema-de-referencias-de-coordenadas" id="toc-sistema-de-referencias-de-coordenadas" class="nav-link" data-scroll-target="#sistema-de-referencias-de-coordenadas"> <span class="header-section-number">2.5</span> Sistema de Referencias de Coordenadas</a>
   <ul class="collapse">
-  <li><a href="#reproyectar-vectores" id="toc-reproyectar-vectores" class="nav-link" data-scroll-target="#reproyectar-vectores"> <span class="header-section-number">1.5.1</span> Reproyectar Vectores</a></li>
-  <li><a href="#reproyectar-raster" id="toc-reproyectar-raster" class="nav-link" data-scroll-target="#reproyectar-raster"> <span class="header-section-number">1.5.2</span> Reproyectar Raster</a></li>
+  <li><a href="#reproyectar-vectores" id="toc-reproyectar-vectores" class="nav-link" data-scroll-target="#reproyectar-vectores"> <span class="header-section-number">2.5.1</span> Reproyectar Vectores</a></li>
+  <li><a href="#reproyectar-raster" id="toc-reproyectar-raster" class="nav-link" data-scroll-target="#reproyectar-raster"> <span class="header-section-number">2.5.2</span> Reproyectar Raster</a></li>
   </ul></li>
-  <li><a href="#actividades-prácticas" id="toc-actividades-prácticas" class="nav-link" data-scroll-target="#actividades-prácticas"> <span class="header-section-number">1.6</span> Actividades Prácticas</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"> <span class="header-section-number">1.7</span> Referencias</a></li>
+  <li><a href="#actividades-prácticas" id="toc-actividades-prácticas" class="nav-link" data-scroll-target="#actividades-prácticas"> <span class="header-section-number">2.6</span> Actividades Prácticas</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"> <span class="header-section-number">2.7</span> Referencias</a></li>
   </ul>
 </nav>
     </div>
@@ -207,7 +212,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></h1>
 <p class="subtitle lead">Clase 1</p>
 </div>
 
@@ -222,12 +227,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="objetivos-del-módulo" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="objetivos-del-módulo"><span class="header-section-number">1.1</span> Objetivos del Módulo</h2>
+<section id="objetivos-del-módulo" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="objetivos-del-módulo"><span class="header-section-number">2.1</span> Objetivos del Módulo</h2>
 <p>La presente Sesion tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.</p>
 </section>
-<section id="definición-general-de-datos-espaciales" class="level2 page-columns page-full" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="definición-general-de-datos-espaciales"><span class="header-section-number">1.2</span> Definición General de Datos Espaciales</h2>
+<section id="definición-general-de-datos-espaciales" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="definición-general-de-datos-espaciales"><span class="header-section-number">2.2</span> Definición General de Datos Espaciales</h2>
 <p>La representación de un territorio requiere datos geográficos compuestos por información espacial (geometrías asociadas a una ubicación real en el mundo) e información de atributos (características y variables asociadas a estas geometrías). Los tipos de datos espaciales principalmente los vectores y raster.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -242,8 +247,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </figure>
 </div>
 </section>
-<section id="datos-vectoriales" class="level2 page-columns page-full" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="datos-vectoriales"><span class="header-section-number">1.3</span> Datos Vectoriales</h2>
+<section id="datos-vectoriales" class="level2 page-columns page-full" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="datos-vectoriales"><span class="header-section-number">2.3</span> Datos Vectoriales</h2>
 <dl>
 <dt>Datos Vectoriales</dt>
 <dd>
@@ -272,8 +277,8 @@ Tiene un par de coordenadas “x” e “y”. Es utilizado para información de
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># gráficos</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co">#paleta de colores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="lectura-de-archivos-tipo-puntos" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="lectura-de-archivos-tipo-puntos"><span class="header-section-number">1.3.1</span> Lectura de archivos tipo puntos</h3>
+<section id="lectura-de-archivos-tipo-puntos" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="lectura-de-archivos-tipo-puntos"><span class="header-section-number">2.3.1</span> Lectura de archivos tipo puntos</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sii_LC <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/sii/sii_urbe_LC.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -288,8 +293,8 @@ Geodetic CRS:  GCS_unknown</code></pre>
 </div>
 </div>
 </section>
-<section id="visualización-de-los-puntos" class="level3 page-columns page-full" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="visualización-de-los-puntos"><span class="header-section-number">1.3.2</span> Visualización de los puntos</h3>
+<section id="visualización-de-los-puntos" class="level3 page-columns page-full" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="visualización-de-los-puntos"><span class="header-section-number">2.3.2</span> Visualización de los puntos</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización ggplot y sf</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -317,15 +322,15 @@ Tiene tantas coordenadas como vértices. La información que representa es de ti
 </figure>
 </div>
 </section>
-<section id="lectura-de-líneas" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="lectura-de-líneas"><span class="header-section-number">1.3.3</span> Lectura de líneas</h3>
+<section id="lectura-de-líneas" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="lectura-de-líneas"><span class="header-section-number">2.3.3</span> Lectura de líneas</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>las_condes_red <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/redes/RED_LAS_CONDES.rds"</span>) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># las_condes_red</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="visualización-líneas" class="level3 page-columns page-full" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="visualización-líneas"><span class="header-section-number">1.3.4</span> visualización Líneas</h3>
+<section id="visualización-líneas" class="level3 page-columns page-full" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="visualización-líneas"><span class="header-section-number">2.3.4</span> visualización Líneas</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> las_condes_red, <span class="at">col =</span> <span class="st">"gray70"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
@@ -352,15 +357,15 @@ Tiene tantas coordenadas como vértices. La información que representa es de ti
 </figure>
 </div>
 </section>
-<section id="lectura-de-polígonos" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="lectura-de-polígonos"><span class="header-section-number">1.3.5</span> Lectura de polígonos</h3>
+<section id="lectura-de-polígonos" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="lectura-de-polígonos"><span class="header-section-number">2.3.5</span> Lectura de polígonos</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>las_condes_mz <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/shape/icv_las_condes.shp"</span>, <span class="at">quiet=</span>T) </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># las_condes_ptos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="visualización-polígonos" class="level3" data-number="1.3.6">
-<h3 data-number="1.3.6" class="anchored" data-anchor-id="visualización-polígonos"><span class="header-section-number">1.3.6</span> Visualización polígonos</h3>
+<section id="visualización-polígonos" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="visualización-polígonos"><span class="header-section-number">2.3.6</span> Visualización polígonos</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> las_condes_mz, <span class="fu">aes</span>(<span class="at">fill =</span> veg_cob), <span class="at">color =</span><span class="st">"gray80"</span>, </span>
@@ -420,8 +425,8 @@ Tiene tantas coordenadas como vértices. La información que representa es de ti
 </table>
 </section>
 </section>
-<section id="datos-raster" class="level2 page-columns page-full" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="datos-raster"><span class="header-section-number">1.4</span> Datos Raster</h2>
+<section id="datos-raster" class="level2 page-columns page-full" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="datos-raster"><span class="header-section-number">2.4</span> Datos Raster</h2>
 <dl>
 <dt>Raster</dt>
 <dd>
@@ -461,8 +466,8 @@ Representación del espacio mediante una matriz de celdas organizada en filas y 
 <p></p><figcaption class="figure-caption margin-caption">Bandas de Landsat 8</figcaption><p></p>
 </figure>
 </div>
-<section id="lectura-de-imagen-raster." class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="lectura-de-imagen-raster."><span class="header-section-number">1.4.1</span> lectura de imagen Raster.</h3>
+<section id="lectura-de-imagen-raster." class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="lectura-de-imagen-raster."><span class="header-section-number">2.4.1</span> lectura de imagen Raster.</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>las_condes_raster <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="st">"data/raster/OLI_LC.tif"</span>)</span>
@@ -481,8 +486,8 @@ max values :   19119, 20517, 21248, 23237, 29344, 30012, 31166,  5512 </code></p
 </div>
 </div>
 </section>
-<section id="visualización-raster" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="visualización-raster"><span class="header-section-number">1.4.2</span> Visualización Raster</h3>
+<section id="visualización-raster" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="visualización-raster"><span class="header-section-number">2.4.2</span> Visualización Raster</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de imagen recortada de Las Condes en Color Natural</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(las_condes_raster, <span class="at">r =</span> <span class="dv">4</span>, <span class="at">g =</span> <span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -493,8 +498,8 @@ max values :   19119, 20517, 21248, 23237, 29344, 30012, 31166,  5512 </code></p
 </div>
 </section>
 </section>
-<section id="sistema-de-referencias-de-coordenadas" class="level2 page-columns page-full" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="sistema-de-referencias-de-coordenadas"><span class="header-section-number">1.5</span> Sistema de Referencias de Coordenadas</h2>
+<section id="sistema-de-referencias-de-coordenadas" class="level2 page-columns page-full" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sistema-de-referencias-de-coordenadas"><span class="header-section-number">2.5</span> Sistema de Referencias de Coordenadas</h2>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/crs.png" class="img-fluid figure-img"></p>
@@ -538,8 +543,8 @@ Según la proyección empleada las coordenadas elipsoidales pueden representarse
 32719 o <code>"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"</code>
 </dd>
 </dl>
-<section id="reproyectar-vectores" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="reproyectar-vectores"><span class="header-section-number">1.5.1</span> Reproyectar Vectores</h3>
+<section id="reproyectar-vectores" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="reproyectar-vectores"><span class="header-section-number">2.5.1</span> Reproyectar Vectores</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>LC_mz_32719 <span class="ot">&lt;-</span> las_condes_mz <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32719</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(LC_mz_32719)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -596,8 +601,8 @@ PROJCRS["WGS 84 / UTM zone 19S",
 </div>
 </div>
 </section>
-<section id="reproyectar-raster" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="reproyectar-raster"><span class="header-section-number">1.5.2</span> Reproyectar Raster</h3>
+<section id="reproyectar-raster" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="reproyectar-raster"><span class="header-section-number">2.5.2</span> Reproyectar Raster</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>las_condes_raster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -629,8 +634,8 @@ max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.1
 </div>
 </section>
 </section>
-<section id="actividades-prácticas" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="actividades-prácticas"><span class="header-section-number">1.6</span> Actividades Prácticas</h2>
+<section id="actividades-prácticas" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="actividades-prácticas"><span class="header-section-number">2.6</span> Actividades Prácticas</h2>
 <ol type="1">
 <li>Seleccione una comuna de las manzanas del INE, visualize con ggplot una y una variable genere una tabla resumen de suma de personas, hombres.</li>
 </ol>
@@ -672,8 +677,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="referencias" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="referencias"><span class="header-section-number">1.7</span> Referencias</h2>
+<section id="referencias" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.7</span> Referencias</h2>
 <p><a href="https://www.ide.cl/descargas/Geodesia-en-Chile.pdf">Geodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018</a></p>
 <p><a href="https://r-spatial.github.io/sf/">Simple Features for R</a></p>
 
@@ -780,8 +785,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Antecedentes</span>
+      <a href="./intro_estad_esp.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
