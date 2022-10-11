@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Curso: Geoanálisis - 3&nbsp; Datos Vectoriales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./datos_espaciales.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Curso: Geoanálisis</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Antecedentes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a Datos Espaciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objetivos-del-módulo" id="toc-objetivos-del-módulo" class="nav-link active" data-scroll-target="#objetivos-del-módulo"> <span class="header-section-number">3.1</span> Objetivos del Módulo</a></li>
+  <li><a href="#manipulación-de-datos-vectoriales" id="toc-manipulación-de-datos-vectoriales" class="nav-link" data-scroll-target="#manipulación-de-datos-vectoriales"> <span class="header-section-number">3.2</span> Manipulación de Datos Vectoriales</a>
+  <ul class="collapse">
+  <li><a href="#lectura-de-insumos" id="toc-lectura-de-insumos" class="nav-link" data-scroll-target="#lectura-de-insumos"> <span class="header-section-number">3.2.1</span> Lectura de Insumos</a></li>
+  <li><a href="#filtros-y-selección-de-columnas" id="toc-filtros-y-selección-de-columnas" class="nav-link" data-scroll-target="#filtros-y-selección-de-columnas"> <span class="header-section-number">3.2.2</span> Filtros y selección de columnas</a></li>
+  <li><a href="#operaciones-espaciales" id="toc-operaciones-espaciales" class="nav-link" data-scroll-target="#operaciones-espaciales"> <span class="header-section-number">3.2.3</span> Operaciones Espaciales</a></li>
+  <li><a href="#resumen-estadísticos" id="toc-resumen-estadísticos" class="nav-link" data-scroll-target="#resumen-estadísticos"> <span class="header-section-number">3.2.4</span> Resumen Estadísticos</a></li>
+  <li><a href="#joining" id="toc-joining" class="nav-link" data-scroll-target="#joining"> <span class="header-section-number">3.2.5</span> Joining</a></li>
+  <li><a href="#buffer" id="toc-buffer" class="nav-link" data-scroll-target="#buffer"> <span class="header-section-number">3.2.6</span> Buffer</a></li>
+  </ul></li>
+  <li><a href="#indicadores-territoriales" id="toc-indicadores-territoriales" class="nav-link" data-scroll-target="#indicadores-territoriales"> <span class="header-section-number">3.3</span> Indicadores Territoriales</a>
+  <ul class="collapse">
+  <li><a href="#definición-de-indicadores" id="toc-definición-de-indicadores" class="nav-link" data-scroll-target="#definición-de-indicadores"> <span class="header-section-number">3.3.1</span> Definición de Indicadores</a></li>
+  <li><a href="#indicadores-territoriales-1" id="toc-indicadores-territoriales-1" class="nav-link" data-scroll-target="#indicadores-territoriales-1"> <span class="header-section-number">3.3.2</span> Indicadores Territoriales</a></li>
+  </ul></li>
+  <li><a href="#construcción-de-indicadores-socioconómicos" id="toc-construcción-de-indicadores-socioconómicos" class="nav-link" data-scroll-target="#construcción-de-indicadores-socioconómicos"> <span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</a>
+  <ul class="collapse">
+  <li><a href="#insumos-censo-2017" id="toc-insumos-censo-2017" class="nav-link" data-scroll-target="#insumos-censo-2017"> <span class="header-section-number">3.4.1</span> Insumos Censo 2017</a></li>
+  <li><a href="#insumos-del-censo" id="toc-insumos-del-censo" class="nav-link" data-scroll-target="#insumos-del-censo"> <span class="header-section-number">3.4.2</span> Insumos del Censo</a></li>
+  </ul></li>
+  <li><a href="#indicador-de-escolaridad-del-jefe-de-hogar-iej" id="toc-indicador-de-escolaridad-del-jefe-de-hogar-iej" class="nav-link" data-scroll-target="#indicador-de-escolaridad-del-jefe-de-hogar-iej"> <span class="header-section-number">3.5</span> Indicador de Escolaridad del jefe de hogar (IEJ)</a></li>
+  <li><a href="#indicador-de-empleo-iem" id="toc-indicador-de-empleo-iem" class="nav-link" data-scroll-target="#indicador-de-empleo-iem"> <span class="header-section-number">3.6</span> Indicador de Empleo (IEM)</a></li>
+  <li><a href="#indicador-de-participacion-juvenil-en-empleo-y-estudio-ipj" id="toc-indicador-de-participacion-juvenil-en-empleo-y-estudio-ipj" class="nav-link" data-scroll-target="#indicador-de-participacion-juvenil-en-empleo-y-estudio-ipj"> <span class="header-section-number">3.7</span> Indicador de Participación Juvenil en empleo y estudio (IPJ)</a></li>
+  <li><a href="#indicador-de-resiliencia-de-hogares-irh" id="toc-indicador-de-resiliencia-de-hogares-irh" class="nav-link" data-scroll-target="#indicador-de-resiliencia-de-hogares-irh"> <span class="header-section-number">3.8</span> Indicador de Resiliencia de Hogares (IRH)</a></li>
+  <li><a href="#indicador-de-calidad-de-la-vivienda-ivi" id="toc-indicador-de-calidad-de-la-vivienda-ivi" class="nav-link" data-scroll-target="#indicador-de-calidad-de-la-vivienda-ivi"> <span class="header-section-number">3.9</span> Indicador de Calidad de la Vivienda (IVI)</a></li>
+  <li><a href="#indicador-de-suficiencia-de-viviendas-isv" id="toc-indicador-de-suficiencia-de-viviendas-isv" class="nav-link" data-scroll-target="#indicador-de-suficiencia-de-viviendas-isv"> <span class="header-section-number">3.10</span> Indicador de Suficiencia de Viviendas (ISV)</a></li>
+  <li><a href="#consolidación-de-dimensión-socioeconómica" id="toc-consolidación-de-dimensión-socioeconómica" class="nav-link" data-scroll-target="#consolidación-de-dimensión-socioeconómica"> <span class="header-section-number">3.11</span> Consolidación de Dimensión Socioeconómica</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"> <span class="header-section-number">3.12</span> Referencias</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></h1>
+<p class="subtitle lead">Módulo 2: Práctico</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="objetivos-del-módulo" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="objetivos-del-módulo"><span class="header-section-number">3.1</span> Objetivos del Módulo</h2>
+<ul>
+<li>Manipulación de Datos Vectoriales</li>
+<li>Definición de Indicadores Territoriales</li>
+<li>Construcción de Indicadores Socioeconómicos</li>
+</ul>
+</section>
+<section id="manipulación-de-datos-vectoriales" class="level2 page-columns page-full" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="manipulación-de-datos-vectoriales"><span class="header-section-number">3.2</span> Manipulación de Datos Vectoriales</h2>
+<ul>
+<li>Lectura de Insumos</li>
+<li>Filtros y selección</li>
+<li>Resumen Estadísticos</li>
+<li>Joining</li>
+<li>Buffer Espacial</li>
+</ul>
+<section id="lectura-de-insumos" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="lectura-de-insumos"><span class="header-section-number">3.2.1</span> Lectura de Insumos</h3>
+<p>Para los efectos prácticos de esta etapa se utilizará la base de datos del censo a nivel zonal a nivel nacional.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>zonas_censales <span class="ot">&lt;-</span>  <span class="fu">readRDS</span>(<span class="st">"data/censo/zonas_urb_consolidadas.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-censo-zonas" class="anchored">
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"><caption>Table 3.1:  Registros de Zonas Censales del Censo 2017 </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> REGION </th>
+   <th style="text-align:left;"> NOM_REGION </th>
+   <th style="text-align:left;"> PROVINCIA </th>
+   <th style="text-align:left;"> NOM_PROVIN </th>
+   <th style="text-align:left;"> COMUNA </th>
+   <th style="text-align:left;"> NOM_COMUNA </th>
+   <th style="text-align:left;"> URBANO </th>
+   <th style="text-align:right;"> DISTRITO </th>
+   <th style="text-align:right;"> LOC_ZON </th>
+   <th style="text-align:left;"> GEOCODIGO </th>
+   <th style="text-align:right;"> AREA </th>
+   <th style="text-align:right;"> COD_INE_15 </th>
+   <th style="text-align:right;"> COD_INE_16 </th>
+   <th style="text-align:left;"> VALIDO </th>
+   <th style="text-align:right;"> KM2 </th>
+   <th style="text-align:right;"> ESC_JH </th>
+   <th style="text-align:right;"> PERS </th>
+   <th style="text-align:right;"> M2_O </th>
+   <th style="text-align:right;"> M2_C </th>
+   <th style="text-align:right;"> DENS_HAB </th>
+   <th style="text-align:right;"> DENS_OF </th>
+   <th style="text-align:right;"> DENS_COM </th>
+   <th style="text-align:left;"> geometry </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 14 </td>
+   <td style="text-align:left;"> TAMARUGAL </td>
+   <td style="text-align:left;"> 1405 </td>
+   <td style="text-align:left;"> PICA </td>
+   <td style="text-align:left;"> PICA </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 1405011001 </td>
+   <td style="text-align:right;"> 9336400.3 </td>
+   <td style="text-align:right;"> 1405011001 </td>
+   <td style="text-align:right;"> 1405011001 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 9.3364003 </td>
+   <td style="text-align:right;"> 10.817377 </td>
+   <td style="text-align:right;"> 3876 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 415.1493 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.00000 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-69.31192 -... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 14 </td>
+   <td style="text-align:left;"> TAMARUGAL </td>
+   <td style="text-align:left;"> 1401 </td>
+   <td style="text-align:left;"> POZO ALMONTE </td>
+   <td style="text-align:left;"> POZO ALMONTE </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 1401011001 </td>
+   <td style="text-align:right;"> 1941994.2 </td>
+   <td style="text-align:right;"> 1401011001 </td>
+   <td style="text-align:right;"> 1401011001 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 1.9419942 </td>
+   <td style="text-align:right;"> 10.224880 </td>
+   <td style="text-align:right;"> 2771 </td>
+   <td style="text-align:right;"> 1476.0000 </td>
+   <td style="text-align:right;"> 4093.0000 </td>
+   <td style="text-align:right;"> 1426.8838 </td>
+   <td style="text-align:right;"> 760.0435 </td>
+   <td style="text-align:right;"> 2107.62731 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-69.78591 -... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 14 </td>
+   <td style="text-align:left;"> TAMARUGAL </td>
+   <td style="text-align:left;"> 1401 </td>
+   <td style="text-align:left;"> POZO ALMONTE </td>
+   <td style="text-align:left;"> POZO ALMONTE </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 1401011002 </td>
+   <td style="text-align:right;"> 3572254.9 </td>
+   <td style="text-align:right;"> 1401011002 </td>
+   <td style="text-align:right;"> 1401011002 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 3.5722549 </td>
+   <td style="text-align:right;"> 10.253158 </td>
+   <td style="text-align:right;"> 6506 </td>
+   <td style="text-align:right;"> 1905.0000 </td>
+   <td style="text-align:right;"> 9696.0000 </td>
+   <td style="text-align:right;"> 1821.2586 </td>
+   <td style="text-align:right;"> 533.2766 </td>
+   <td style="text-align:right;"> 2714.25201 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-69.76215 -... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 14 </td>
+   <td style="text-align:left;"> TAMARUGAL </td>
+   <td style="text-align:left;"> 1404 </td>
+   <td style="text-align:left;"> HUARA </td>
+   <td style="text-align:left;"> HUARA </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 1404011001 </td>
+   <td style="text-align:right;"> 603314.2 </td>
+   <td style="text-align:right;"> 1404011001 </td>
+   <td style="text-align:right;"> 1404011001 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 0.6033142 </td>
+   <td style="text-align:right;"> 9.523220 </td>
+   <td style="text-align:right;"> 1082 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 1793.4270 </td>
+   <td style="text-align:right;"> 0.0000 </td>
+   <td style="text-align:right;"> 0.00000 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-69.7696 -1... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 11 </td>
+   <td style="text-align:left;"> IQUIQUE </td>
+   <td style="text-align:left;"> 1107 </td>
+   <td style="text-align:left;"> ALTO HOSPICIO </td>
+   <td style="text-align:left;"> ALTO HOSPICIO </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 1107011002 </td>
+   <td style="text-align:right;"> 2272129.2 </td>
+   <td style="text-align:right;"> 1107011002 </td>
+   <td style="text-align:right;"> 1107011002 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 2.2721292 </td>
+   <td style="text-align:right;"> 9.747321 </td>
+   <td style="text-align:right;"> 4360 </td>
+   <td style="text-align:right;"> 475.0686 </td>
+   <td style="text-align:right;"> 180.6789 </td>
+   <td style="text-align:right;"> 1918.9050 </td>
+   <td style="text-align:right;"> 209.0852 </td>
+   <td style="text-align:right;"> 79.51965 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-70.09246 -... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> REGIÓN DE TARAPACÁ </td>
+   <td style="text-align:left;"> 11 </td>
+   <td style="text-align:left;"> IQUIQUE </td>
+   <td style="text-align:left;"> 1107 </td>
+   <td style="text-align:left;"> ALTO HOSPICIO </td>
+   <td style="text-align:left;"> ALTO HOSPICIO </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 1107031002 </td>
+   <td style="text-align:right;"> 5820325.8 </td>
+   <td style="text-align:right;"> 1107031002 </td>
+   <td style="text-align:right;"> 1107031002 </td>
+   <td style="text-align:left;"> TRUE </td>
+   <td style="text-align:right;"> 5.8203258 </td>
+   <td style="text-align:right;"> 9.397516 </td>
+   <td style="text-align:right;"> 7099 </td>
+   <td style="text-align:right;"> 4003.6214 </td>
+   <td style="text-align:right;"> 1008.7833 </td>
+   <td style="text-align:right;"> 1219.6912 </td>
+   <td style="text-align:right;"> 687.8690 </td>
+   <td style="text-align:right;"> 173.32076 </td>
+   <td style="text-align:left;"> MULTIPOLYGON (((-70.05305 -... </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="filtros-y-selección-de-columnas" class="level3 page-columns page-full" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="filtros-y-selección-de-columnas"><span class="header-section-number">3.2.2</span> Filtros y selección de columnas</h3>
+<p>Para efectos de practicar la manipulación de datos espaciales se creará un subset de la base de zonas censales de alguna provincia de Chile y se realizarán cálculos sencillos de densidad.</p>
+<p>Filtrar</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># zonas_censales$NOM_PROVIN %&gt;% unique() %&gt;% sort()</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>zonas <span class="ot">&lt;-</span>  zonas_censales <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NOM_PROVIN <span class="sc">==</span> <span class="st">"VALPARAÍSO"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(URBANO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"VIÑA DEL MAR"</span>, <span class="st">"VALPARAÍSO"</span>) )</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(zonas, zcol = "PERS")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> PERS), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Población Zonas Censales - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-zonas-censales" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-zonas-censales-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.1: Zonas Censales de comunas de Valparaíso y Viña del Mar - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Selección de columnas</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>zonas <span class="ot">&lt;-</span>  zonas <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(GEOCODIGO,NOM_REGION, NOM_PROVIN, NOM_COMUNA, PERS, URBANO, ESC_JH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="operaciones-espaciales" class="level3 page-columns page-full" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="operaciones-espaciales"><span class="header-section-number">3.2.3</span> Operaciones Espaciales</h3>
+<p>Cálculo de superficie por polígono</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>zonas <span class="ot">&lt;-</span> zonas <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AREA =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(.))) <span class="sc">%&gt;%</span> <span class="co"># en metros cuadrados</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AREA =</span> AREA<span class="sc">/</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> <span class="co"># en hectárea cuadrada</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DENS_PERS=</span> <span class="fu">round</span>(PERS<span class="sc">/</span>AREA, <span class="dv">1</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>zonas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 270 features and 9 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -71.66215 ymin: -33.10497 xmax: -71.44276 ymax: -32.94484
+CRS:           +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0
+First 10 features:
+    GEOCODIGO           NOM_REGION NOM_PROVIN   NOM_COMUNA PERS       URBANO
+1  5109041011 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 1099 VIÑA DEL MAR
+2  5109041001 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 2019 VIÑA DEL MAR
+3  5109041008 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 2909 VIÑA DEL MAR
+4  5109171001 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 4112 VIÑA DEL MAR
+5  5109041003 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 3848 VIÑA DEL MAR
+6  5109041009 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 1644 VIÑA DEL MAR
+7  5109041002 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 2622 VIÑA DEL MAR
+8  5109041004 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 4388 VIÑA DEL MAR
+9  5109171002 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 4370 VIÑA DEL MAR
+10 5109121002 REGIÓN DE VALPARAÍSO VALPARAÍSO VIÑA DEL MAR 3536 VIÑA DEL MAR
+      ESC_JH                       geometry      AREA DENS_PERS
+1  14.874739 MULTIPOLYGON (((-71.54403 -...  30.21474      36.4
+2  15.452073 MULTIPOLYGON (((-71.52892 -... 280.03089       7.2
+3  16.270210 MULTIPOLYGON (((-71.50958 -... 193.87803      15.0
+4  11.814570 MULTIPOLYGON (((-71.48 -32.... 359.81093      11.4
+5  14.875097 MULTIPOLYGON (((-71.51213 -... 438.40072       8.8
+6  15.539638 MULTIPOLYGON (((-71.53398 -...  38.79690      42.4
+7  14.691789 MULTIPOLYGON (((-71.52915 -...  47.69528      55.0
+8  16.590909 MULTIPOLYGON (((-71.5356 -3... 155.56770      28.2
+9   9.136792 MULTIPOLYGON (((-71.47489 -... 546.70960       8.0
+10 12.231474 MULTIPOLYGON (((-71.52137 -... 150.78167      23.5</code></pre>
+</div>
+</div>
+<div class="page-columns page-full">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> PERS), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Población Zonas Censales - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> DENS_PERS), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Densidad de Población Zonas Censales - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel page-columns page-full">
+<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
+<div class="cell-output-display quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-dif-personas-1" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-dif-personas-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.2: Diferencias de un valor absoluto y densidad de Personas en Zonas Censales</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-dif-personas-2" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-dif-personas-2.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.3: Diferencias de un valor absoluto y densidad de Personas en Zonas Censales</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen-estadísticos" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="resumen-estadísticos"><span class="header-section-number">3.2.4</span> Resumen Estadísticos</h3>
+<p>El objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.</p>
+<p>Un punto importante para generar esta tabla es eficiente eliminar la geometría para los cálculos ya que la salida será una tabla.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tab_com <span class="ot">&lt;-</span> zonas_censales <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="co"># eliminar geometría.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(NOM_COMUNA) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">POB_COM =</span> <span class="fu">sum</span>(PERS),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">ESC_JH_COM =</span> <span class="fu">round</span>(<span class="fu">mean</span>(ESC_JH, <span class="at">na.rm=</span> T), <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-censo-comunas" class="anchored">
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"><caption>Table 3.2:  Registros de Población y Escolaridad por Comuna </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> NOM_COMUNA </th>
+   <th style="text-align:right;"> POB_COM </th>
+   <th style="text-align:right;"> ESC_JH_COM </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ALGARROBO </td>
+   <td style="text-align:right;"> 10880 </td>
+   <td style="text-align:right;"> 12.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ALHUÉ </td>
+   <td style="text-align:right;"> 2706 </td>
+   <td style="text-align:right;"> 9.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ALTO HOSPICIO </td>
+   <td style="text-align:right;"> 105065 </td>
+   <td style="text-align:right;"> 10.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ANCUD </td>
+   <td style="text-align:right;"> 28162 </td>
+   <td style="text-align:right;"> 10.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ANDACOLLO </td>
+   <td style="text-align:right;"> 9989 </td>
+   <td style="text-align:right;"> 8.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ANGOL </td>
+   <td style="text-align:right;"> 48608 </td>
+   <td style="text-align:right;"> 10.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ANTOFAGASTA </td>
+   <td style="text-align:right;"> 349983 </td>
+   <td style="text-align:right;"> 12.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ANTUCO </td>
+   <td style="text-align:right;"> 2038 </td>
+   <td style="text-align:right;"> 9.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ARAUCO </td>
+   <td style="text-align:right;"> 27274 </td>
+   <td style="text-align:right;"> 9.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ARICA </td>
+   <td style="text-align:right;"> 203132 </td>
+   <td style="text-align:right;"> 11.5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="joining" class="level3 page-columns page-full" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="joining"><span class="header-section-number">3.2.5</span> Joining</h3>
+<p>En este caso agregaremos a la tabla de resultados comunales antes creada, a la base de la comuna de Viña del Mar y Valparaíso, utilizaremos la función <code>left_join</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>zonas <span class="ot">&lt;-</span>  zonas <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(tab_com, <span class="at">by =</span> <span class="st">"NOM_COMUNA"</span>) <span class="sc">%&gt;%</span> <span class="co"># Ojo con las veces que se hace esta operación</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DIF_EJH_COM =</span> <span class="fu">round</span>((ESC_JH_COM<span class="sc">-</span> ESC_JH), <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> DIF_EJH_COM), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Diferencias Esc. Jefe Hogar Zona/Comuna - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-zonas-dif-ejh" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-zonas-dif-ejh-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.4: Diferencias Esc. Jefe Hogar respecto comuna - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="buffer" class="level3 page-columns page-full" data-number="3.2.6">
+<h3 data-number="3.2.6" class="anchored" data-anchor-id="buffer"><span class="header-section-number">3.2.6</span> Buffer</h3>
+<p>Primeramente se creará una geometría comunal basándose en las zonas censales</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>valpo_com <span class="ot">&lt;-</span>  zonas <span class="sc">%&gt;%</span> <span class="fu">filter</span>(NOM_COMUNA <span class="sc">==</span> <span class="st">"VALPARAÍSO"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> DIF_EJH_COM), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.3</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> valpo_com,  <span class="at">color =</span><span class="st">"magenta"</span>, <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>)<span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resaltar la comuna de Valparaíso"</span> ) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-zonas-comu-vlp" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-zonas-comu-vlp-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.5: Resaltar la comuna de Valparaíso</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Aplicación de Buffer con la función de <code>st_buffer</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>valpo_com_buffer <span class="ot">&lt;-</span>  valpo_com <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_buffer</span>(<span class="at">dist =</span> <span class="dv">1000</span>) <span class="co"># %&gt;% st_simplify(dTolerance = 100) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> valpo_com_buffer,  <span class="at">color =</span><span class="st">"orange"</span>, <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>)<span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> valpo_com,  <span class="at">color =</span><span class="st">"magenta"</span>, <span class="at">alpha=</span><span class="fl">0.3</span>,  <span class="at">size=</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"magenta"</span>)<span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Buffer de la comuna de Valparaíso - 1000 mts."</span> ) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-buffer-vlp" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-buffer-vlp-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.6: Buffer de la comuna de Valparaíso - 1000 mts.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="indicadores-territoriales" class="level2 page-columns page-full" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="indicadores-territoriales"><span class="header-section-number">3.3</span> Indicadores Territoriales</h2>
+<section id="definición-de-indicadores" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="definición-de-indicadores"><span class="header-section-number">3.3.1</span> Definición de Indicadores</h3>
+<dl>
+<dt>¿Qué es un Indicador?:</dt>
+<dd>
+<p>Un indicador es un instrumento que provee información de una determinada condición, situación, actividad o resultado. Este instrumento nos permite definir un punto de comparación para establecer diferencias entre individuos o respecto a sí mismo en diferentes tiempos. Son construidos a través de análisis y operaciones técnicas y nos entregan una medida cuantitativa (valor) o una descripción cualitativa (caracterización) de la magnitud o criterio que se pretende medir u observar.</p>
+</dd>
+</dl>
+</section>
+<section id="indicadores-territoriales-1" class="level3 page-columns page-full" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="indicadores-territoriales-1"><span class="header-section-number">3.3.2</span> Indicadores Territoriales</h3>
+<p>El Centro de Inteligencia Territorial de la Universidad Adolfo Ibáñez, bajo proyecto denominado <strong>Matriz de Bienestar Humano Territorial (MBHT)</strong> construyó una serie indicadores territoriales, que buscan comprender las condiciones de los entornos urbanos y rurales, para construir soluciones que impacten positivamente en el bienestar de las personas y su hábitat.</p>
+<div id="fig-cit" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/Logo_CIT_UAI_Negro.png" class="img-fluid figure-img" data-fig-align="center" style="width:30.0%"><img src="images/logo-mbht.png" class="img-fluid figure-img" data-fig-align="center" style="width:18.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.7: Centro de Inteligencia Territorial - UAI</figcaption><p></p>
+</figure>
+</div>
+<p>El sistema MBHT consiste en 18 indicadores territoriales agrupados en 4 dimensiones, que corresponde a las dimensiones de Accesibilidad, Ambiental, Seguridad y Socoeconómicas, siendo esta última a la se replicará.</p>
+<div id="fig-mbht" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/dimensiones_bht.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.8: Dimensiones de la Matriz de Bienestar Humano Territorial</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="construcción-de-indicadores-socioconómicos" class="level2 page-columns page-full" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="construcción-de-indicadores-socioconómicos"><span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</h2>
+<p>Las ciudades de Chile presentan altos índices de segregación (Sabatini, 2002), que reflejan la separación espacial de distintos grupos sociales (Ruiz-Tagle, 2014). La intensidad de este fenómeno hace imperativo el considerar la condición social como una dimensión estructurante en la evaluación de Políticas Públicas.</p>
+<div id="fig-soc-mbht" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/socioeconomico.png" class="img-fluid figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.9: Indicadores Socioconómicos</figcaption><p></p>
+</figure>
+</div>
+<section id="insumos-censo-2017" class="level3 page-columns page-full" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="insumos-censo-2017"><span class="header-section-number">3.4.1</span> Insumos Censo 2017</h3>
+<p>Para la construcción de los indicadores territoriales que componen la dimensión seocioeconómica, se utiliza íntegramente información del Censo 2017.</p>
+<p><strong>¿Que es Censo 2017?:</strong></p>
+<p>El censo de población y vivienda es la operación estadística más importante que realiza el INE y en la cual participan todos los habitantes del país, ya que este es un insumo esencial para elaborar estimaciones y proyecciones de población tanto para el país, las regiones y las comunas.</p>
+<p>El censo permite contar con información esencial para el adecuado diseño de políticas públicas y toma de decisiones privadas y públicas. El último censo de población y vivienda realizado fue en 2017. Sus resultados indican que la población efectivamente censada llegó a un total de 17.574.003 personas.</p>
+<p>De ellas, 8.601.989 (48,9%) son hombres y 8.972.014 (51,1%), mujeres. El número de viviendas, en tanto, fue 6.499.355, de las cuales 6.486.533 (99,8%) corresponden a viviendas particulares y 12.822 (0,2%) a colectivas.</p>
+<p>Para estos fines, se utilizaremos información censal agregada a nivel de <strong>manzanas</strong> obtenidos del Censo 2017, a continuación se explorará los insumos utilizados.</p>
+<div id="fig-logo-censo" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/censo_2017.png" class="img-fluid figure-img" style="width:20.0%"></p>
+</figure>
+</div>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.10: Censo 2017 - Instituto Nacional de Estadísticas de Chile</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="insumos-del-censo" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="insumos-del-censo"><span class="header-section-number">3.4.2</span> Insumos del Censo</h3>
+<p>Para los indicadores que se crearán a continuación se utilizará una base proveniente de la consolidación de las bases del censo, denominadas microdatos de Personas, Viviendas y Hogares provenientes de los resultados de la Encuesta del Censo 2017 del Instituto Nacional de Estadísticas, Chile.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ruta de insumos</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>path_insumos <span class="ot">&lt;-</span> <span class="st">"data/socioeconomicos/insumos/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lectura de Insumos y selección de región de estudio, en este caso seleccionará la <a href="https://es.wikipedia.org/wiki/Región_de_Coquimbo">Región de Coquimbo</a> compuesta por las provincias de Elqui, Limarí y Choapa. Sus principales centros urbanos son la Conurbación La Serena-Coquimbo con 506 391 habitantes, seguida de Ovalle con 121.269 habitantes según el Censo chileno de 2017.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># selección de región</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span>  <span class="st">"R04"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lectura de insumo espacial</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>path_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_insumos, reg, <span class="st">"_INSUMO_SOCIOECONOMICO.shp"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> <span class="fu">st_read</span>(path_file, <span class="at">quiet =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualización de Tabla de Información <code>head()</code></strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-censo" class="anchored">
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;"><caption>Table 3.3:  Visualización de registros de insumos del Censo 2017 para indicadores socioeconómicos </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> ID_MANZ </th>
+   <th style="text-align:left;"> MANZ_EN </th>
+   <th style="text-align:left;"> NOM_COM </th>
+   <th style="text-align:right;"> COD_COM </th>
+   <th style="text-align:left;"> NOM_REG </th>
+   <th style="text-align:right;"> COD_REG </th>
+   <th style="text-align:left;"> NOM_PROV </th>
+   <th style="text-align:right;"> COD_PROV </th>
+   <th style="text-align:left;"> ZONA </th>
+   <th style="text-align:left;"> ID_MANZCIT </th>
+   <th style="text-align:right;"> AREA </th>
+   <th style="text-align:right;"> TOTAL_V </th>
+   <th style="text-align:right;"> HOG_N </th>
+   <th style="text-align:right;"> PERSONAS </th>
+   <th style="text-align:right;"> E4A18 </th>
+   <th style="text-align:right;"> E15A24 </th>
+   <th style="text-align:right;"> ESCOLAR </th>
+   <th style="text-align:right;"> P03A_4 </th>
+   <th style="text-align:right;"> P03A_5 </th>
+   <th style="text-align:right;"> P03A_6 </th>
+   <th style="text-align:right;"> P03B_4 </th>
+   <th style="text-align:right;"> P03B_6 </th>
+   <th style="text-align:right;"> P03B_7 </th>
+   <th style="text-align:right;"> P03C_4 </th>
+   <th style="text-align:right;"> P03C_5 </th>
+   <th style="text-align:right;"> NIV_HAC2 </th>
+   <th style="text-align:right;"> NIV_HAC3 </th>
+   <th style="text-align:right;"> HOMBRES </th>
+   <th style="text-align:right;"> MUJERES </th>
+   <th style="text-align:right;"> MONOPAR </th>
+   <th style="text-align:right;"> P17_ACT </th>
+   <th style="text-align:right;"> P17_4 </th>
+   <th style="text-align:right;"> J_NINI </th>
+   <th style="text-align:right;"> JH_HASTA_P </th>
+   <th style="text-align:right;"> JH_HASTA_S </th>
+   <th style="text-align:left;"> geometry </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 4101071001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> LA SERENA </td>
+   <td style="text-align:right;"> 4101 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4101071001 </td>
+   <td style="text-align:left;"> 4101071001900001 </td>
+   <td style="text-align:right;"> 2873.376 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((292811 6685815, 2... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4101071001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> LA SERENA </td>
+   <td style="text-align:right;"> 4101 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4101071001 </td>
+   <td style="text-align:left;"> 4101071001900002 </td>
+   <td style="text-align:right;"> 1256.480 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((293056 6685511, 2... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4102101001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> COQUIMBO </td>
+   <td style="text-align:right;"> 4102 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4102101001 </td>
+   <td style="text-align:left;"> 4102101001900001 </td>
+   <td style="text-align:right;"> 1230.344 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((285917.8 6664517,... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4102101001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> COQUIMBO </td>
+   <td style="text-align:right;"> 4102 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4102101001 </td>
+   <td style="text-align:left;"> 4102101001900002 </td>
+   <td style="text-align:right;"> 3877.142 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((286085 6664254, 2... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4102101001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> COQUIMBO </td>
+   <td style="text-align:right;"> 4102 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4102101001 </td>
+   <td style="text-align:left;"> 4102101001900003 </td>
+   <td style="text-align:right;"> 34392.873 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((286082.4 6663489,... </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4106101001900 </td>
+   <td style="text-align:left;"> URBANO </td>
+   <td style="text-align:left;"> VICUÑA </td>
+   <td style="text-align:right;"> 4106 </td>
+   <td style="text-align:left;"> REGIÓN DE COQUIMBO </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> ELQUI </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:left;"> 4106101001 </td>
+   <td style="text-align:left;"> 4106101001900001 </td>
+   <td style="text-align:right;"> 4033.107 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> POLYGON ((310231.6 6684580,... </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="indicador-de-escolaridad-del-jefe-de-hogar-iej" class="level2 page-columns page-full" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="indicador-de-escolaridad-del-jefe-de-hogar-iej"><span class="header-section-number">3.5</span> Indicador de Escolaridad del jefe de hogar (IEJ)</h2>
+<p>Para la construcción de este indicador se utilizó el promedio de años de estudio de jefes de hogar (EJH), que es una variable censal numérica (“ESCOLARIDAD”, en tabla de personas del censo 2017) que registra el nivel del curso más alto aprobado, medida en años sucesivos desde la enseñanza básica hasta estudios de postgrado.</p>
+<p>Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del capital cultural de cada hogar y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016).</p>
+<p>** Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IEJ =</span> ESCOLAR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para efectos de visualización se enfocará los resultados en las zonas urbanas de la comuna de La Serena en todos los indicadores que se presentarán.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IEJ</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> IEJ), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Escolaridad del jefe de hogar (IEJ) - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-iej-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-iej-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.11: Indicador de Escolaridad del jefe de hogar (IEJ) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(censo %&gt;% filter(COD_COM == 4101 &amp; MANZ_EN == "URBANO"),</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="co"># zcol = "IEJ", layer.name = "IEJ")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IEJ</code> comuna de La Serena <code>RURAL</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>la_serena_rural <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"RURAL"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_rural, <span class="fu">aes</span>(<span class="at">fill =</span> IEJ), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Escolaridad del jefe de hogar (IEJ) - Rural"</span> ) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(censo %&gt;% filter(COD_COM == 4101 &amp; MANZ_EN == "RURAL"),</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                 <span class="co"># zcol = "IEJ", layer.name = "IEJ")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-iej-rural" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-iej-rural-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.12: Indicador de Escolaridad del jefe de hogar (IEJ) - Rural</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="indicador-de-empleo-iem" class="level2 page-columns page-full" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="indicador-de-empleo-iem"><span class="header-section-number">3.6</span> Indicador de Empleo (IEM)</h2>
+<p>Para este indicador se usó la proporción de población activa sin empleo que es la fracción de las personas que no tienen empleo y están buscando uno, respecto al total de personas en condiciones y con deseo de trabajar en cada manzana.</p>
+<p>Esta variable es similar al cálculo de desempleo, pero calculada a escala de manzanas y en un tiempo específico, por lo que representa las brechas potenciales que existen para acceder al empleo en barrios específicos (MDS, 2019).</p>
+<p>** Cálculo Indicador de Empleo (IEM) **</p>
+<p><strong>P17_4</strong>: Trabajo la semana pasada, <em>opción 4</em>: “Se encontraba buscando empleo”<br>
+<strong>P17_ACT</strong>: Total de Actividades Remuneradas (no es pregunta del Censo)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P17: Trabajo la semana pasada</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># opción `4`: "Se encontraba buscando empleo"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># P17_ACT: Total de Actividades Remuneradas</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">CESA_DENS =</span> P17_4 <span class="sc">/</span> P17_ACT)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Invertir el valor de indicador 1</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IEM =</span> <span class="dv">1</span> <span class="sc">-</span> CESA_DENS )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>De aquí continuación se realizarán cartografías solo a zonas urbanas a efecto de limitar la extensión del presente documento, pero el cálculo urbano se puede efectuar perfectamente aplicando un filtro como se ejemplifico en el indicador anterior. Ahora, se procede a filtrar por zonas urbanas</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IEM</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> IEM), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"PuBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Empleo (IEM) - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-iem-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-iem-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.13: Indicador de Empleo (IEM) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(la_serena_urb, </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                  zcol = "IEM", layer.name = "IEM")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indicador-de-participacion-juvenil-en-empleo-y-estudio-ipj" class="level2 page-columns page-full" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="indicador-de-participacion-juvenil-en-empleo-y-estudio-ipj"><span class="header-section-number">3.7</span> Indicador de Participación Juvenil en empleo y estudio (IPJ)</h2>
+<p>Para la construcción de este indicador se utilizó la proporción de jóvenes entre 14 y 24 años que no trabajan ni estudian: es la fracción de jóvenes en este rango edad que no trabajan ni estudian, respecto al total de este segmento etario en cada manzana.</p>
+<p>Esta variable representa un riesgo de exclusión socioeconómica en el período de transición entre el ambiente educativo y el laboral, siendo característico de trayectorias de deserción escolar que conducen al desempleo y que podrían incrementar el riesgo de adopción de comportamientos delictivos (MDS, 2019).</p>
+<p>Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable, convirtiéndose así en un indicador de empleo.</p>
+<p>** Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **</p>
+<p><strong>J_NINI</strong>: Jóvenes que no trabajan ni estudian P17 <strong>E15A24</strong>: Jóvenes entre 15 y 24 años de edad</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">NINI_DENS =</span> J_NINI <span class="sc">/</span> E15A24)  </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">NINI_DENS =</span> <span class="fu">ifelse</span>(NINI_DENS <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, NINI_DENS))  </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IPJ =</span> <span class="dv">1</span> <span class="sc">-</span> NINI_DENS )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IPJ</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> IPJ), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"Purples"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Participación Juvenil en empleo y estudio (IPJ) - Urbano"</span> ) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-ipj-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-ipj-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.14: Indicador de Participación Juvenil enempleo y estudio (IPJ) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(la_serena_urb, </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                  zcol = "IPJ", layer.name = "IPJ")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indicador-de-resiliencia-de-hogares-irh" class="level2 page-columns page-full" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="indicador-de-resiliencia-de-hogares-irh"><span class="header-section-number">3.8</span> Indicador de Resiliencia de Hogares (IRH)</h2>
+<p>En particular, la monoparentalidad es ampliamente reconocida en la literatura internacional como una situación familiar frágil, que puede afectar las trayectorias de vida de los hijos, en términos de un mayor riesgo de mortalidad (Amato &amp; Patterson, 2017), inestabilidad psicológica (Theodoritsi, Daliana &amp; Antoniou, 2018), problemas de salud (Duriancik &amp; Goff, 2019) y otros.</p>
+<p>En suma, el Indicador de Resiliencia de Hogares (en base a la monoparentalidad), en complemento a otras variables, es conceptualmente relevante para evaluar riesgos no monetarios de condiciones sociales.</p>
+<p>Este indicador es el inverso aditivo de la proporción de hogares monoparentales dentro de una manzana. Los hogares monoparentales son aquellos con hijos que viven con un solo progenitor, lo que se asocia en diversas formas a la condición social, que abarcan desde un menor ingreso, problemas de salud y delincuencia, entre otros (MDS, 2019).</p>
+<p>Al contrario, los hogares biparentales permiten el apoyo entre progenitores y los hogares sin hijos tienen menores exigencias de gasto y tiempo relacionadas con la paternidad, por lo que se considera que en general son más resilientes.</p>
+<p>** Cálculo de Indicador de Resiliencia de Hogares (IRH) **</p>
+<p><strong>MONOPAR</strong>: Hogares Monoparentales<br>
+<strong>HOG_N</strong>: Número de Hogares</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">MONO_DENS =</span> MONOPAR <span class="sc">/</span> HOG_N)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">MONO_DENS =</span> <span class="fu">ifelse</span>(MONO_DENS <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, MONO_DENS))  </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IRH =</span> <span class="dv">1</span> <span class="sc">-</span> MONO_DENS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IRH</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> IRH), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"PuRd"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Resiliencia de Hogares (IRH) - Urbano"</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-irh-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-irh-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.15: Indicador de Resiliencia de Hogares (IRH) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(la_serena_urb, </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                  zcol = "IRH", layer.name = "IRH")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indicador-de-calidad-de-la-vivienda-ivi" class="level2 page-columns page-full" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="indicador-de-calidad-de-la-vivienda-ivi"><span class="header-section-number">3.9</span> Indicador de Calidad de la Vivienda (IVI)</h2>
+<p>El indicador de calidad de vivienda es una variable sintética de todas las materialidades de la vivienda. Inicialmente, se construyó como un indicador de mala calidad, tomando un valor más alto cuando la calidad de la vivienda es peor y es más bajo cuando es mejor. Fue elaborado como un promedio lineal del 3 sub-indicadores de paredes, suelo y techo. Cada uno de estos sub-indicadores registra el porcentaje de viviendas de la manzana que tienen paredes, suelo o techo considerado insuficiente. Las construcciones consideradas insuficientes son las siguientes:</p>
+<p><strong>Paredes</strong>: Material de los muros exteriores</p>
+<ul>
+<li>P03A_4: Tabique sin forro interior (madera u otro)</li>
+<li>P03A_5: Adobe, barro, quincha, pirca u otro artesanal tradicional</li>
+<li>P03A_6: Materiales precarios (lata, cartón, plástico, etc.)</li>
+</ul>
+<p><strong>Techo</strong>: Material en la cubierta del techo</p>
+<ul>
+<li>P03B_4: Fonolita o plancha de fieltro embreado</li>
+<li>P03B_6: Materiales precarios (lata, cartón, plásticos, etc.)</li>
+<li>P03B_7: Sin cubierta sólida de techo</li>
+</ul>
+<p><strong>Suelo</strong>: Material de construcción del piso</p>
+<ul>
+<li>P03C_4: Capa de cemento sobre tierra</li>
+<li>P03C_5: Tierra</li>
+</ul>
+<p>** Cálculo Indicador de Calidad de la Vivienda (IVI) **</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">paredes =</span> (P03A_4 <span class="sc">+</span> P03A_5 <span class="sc">+</span> P03A_6)<span class="sc">/</span>TOTAL_V,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">techo =</span> (P03B_4 <span class="sc">+</span> P03B_6 <span class="sc">+</span> P03B_7)<span class="sc">/</span>TOTAL_V,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">suelo =</span> (P03C_4 <span class="sc">+</span>  P03C_5)<span class="sc">/</span>TOTAL_V)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminar valores infinitos de la división anterior</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">paredes =</span> <span class="fu">ifelse</span>(paredes <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, paredes), </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">techo =</span> <span class="fu">ifelse</span>(techo <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, techo), </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">suelo =</span> <span class="fu">ifelse</span>(suelo <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="dv">1</span>, suelo))</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">IVI =</span> (paredes<span class="sc">+</span> suelo<span class="sc">+</span> techo)<span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">IVI =</span>  <span class="dv">1</span> <span class="sc">-</span> IVI) <span class="co"># invertir sentido</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>IVI</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> IVI), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlOrRd"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Indicador de Calidad de la Vivienda (IVI) - Urbano"</span>) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-ivi-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-ivi-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.16: Indicador de Calidad de la Vivienda (IVI) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(la_serena_urb, </span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                  zcol = "IVI", layer.name = "IVI")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indicador-de-suficiencia-de-viviendas-isv" class="level2 page-columns page-full" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="indicador-de-suficiencia-de-viviendas-isv"><span class="header-section-number">3.10</span> Indicador de Suficiencia de Viviendas (ISV)</h2>
+<p>El indicador de Suficiencia de Viviendas se construyó inicialmente como un indicador de hacinamiento. Se realizó a partir de 2 variables que indican el número de viviendas que se encuentran en situación de hacinamiento y el número de viviendas que se encuentran en situación de hacinamiento severo. El indicador corresponde a la suma de 2 veces las viviendas en situación de hacinamiento severo con las viviendas en situación de hacinamiento normal, dividido por el total de viviendas.</p>
+<p>Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable. Con esto se obtuvo el indicador de suficiencia de viviendas.</p>
+<p><strong>Cálculo de Indicador de Suficiencia de Viviendas (ISV) </strong></p>
+<p><strong>NIV_HAC2</strong>: &gt;= 2.5 personas por habitación<br>
+<strong>NIV_HAC3</strong>: &gt;= 5 personas por habitación</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ISV =</span> NIV_HAC2 <span class="sc">+</span> (<span class="dv">2</span> <span class="sc">*</span> NIV_HAC3))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># función de normalización</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>minmax <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> (x <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ISV =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">minmax</span>(ISV))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>la_serena_urb <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualizar la Variable de <code>ISV</code> comuna de La Serena <code>URBANO</code></strong>:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> la_serena_urb, <span class="fu">aes</span>(<span class="at">fill =</span> ISV), <span class="at">color =</span><span class="cn">NA</span>, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlOrRd"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">" Indicador de Suficiencia de Viviendas (ISV) - Urbano"</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-isv-urbano" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="datos_vectoriales_files/figure-html/fig-isv-urbano-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure 3.17: Indicador de Suficiencia de Viviendas (ISV) - Urbano</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview::mapview(la_serena_urb, </span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                  zcol = "ISV", layer.name = "ISV")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="consolidación-de-dimensión-socioeconómica" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="consolidación-de-dimensión-socioeconómica"><span class="header-section-number">3.11</span> Consolidación de Dimensión Socioeconómica</h2>
+<p><strong>Selección de Variables de Interés</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># names(censo)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>soc <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID_MANZ<span class="sc">:</span>PERSONAS, IEJ, IEM, IPJ, IRH, IVI, ISV)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualización de los Indicadores</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>comuna <span class="ot">&lt;-</span> soc <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEM"</span>)<span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IPJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IRH"</span>)<span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IVI"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"ISV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Guardar Resultados</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar shapefile</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>path_file_out <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/socioeconomicos/resultados/"</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.shp"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(soc, path_file_out)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co">#guardar en RDS</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>path_file_out_rds <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/socioeconomicos/resultados/"</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.rds"</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(soc, path_file_out_rds)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="referencias" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="referencias"><span class="header-section-number">3.12</span> Referencias</h2>
+<ul>
+<li><a href="https://es.r4ds.hadley.nz">R para Ciencia de Datos</a></li>
+<li><a href="https://bookdown.org/gboccardo/manual-ED-UCH/">RStudio para Estadística Descriptiva en Ciencias Sociales</a></li>
+<li><a href="https://bookdown.org/jboscomendoza/r-principiantes4/">R para Principiantes4/</a></li>
+<li><a href="https://ggplot2-book.org/scale-colour.html">Colores en Ggplot2</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./datos_espaciales.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a Datos Espaciales</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

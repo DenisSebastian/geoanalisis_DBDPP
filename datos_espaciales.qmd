@@ -1,5 +1,5 @@
 ---
-title: "Datos Espaciales"
+title: " Introducción a Datos Espaciales"
 subtitle: "Módulo 1: Práctico"
 editor_options: 
   chunk_output_type: console
