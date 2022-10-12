@@ -168,7 +168,7 @@ En este caso agregaremos a la tabla de resultados comunales antes creada, a la b
 
 zonas <-  zonas %>% 
   left_join(tab_com, by = "NOM_COMUNA") %>% # Ojo con las veces que se hace esta operación
-  mutate(DIF_EJH_COM = round((ESC_JH_COM- ESC_JH), 2))
+  mutate(DIF_EJH_COM = round(( ESC_JH-ESC_JH_COM), 2))
 ```
 
 ```{r}
@@ -179,7 +179,7 @@ zonas <-  zonas %>%
 ggplot() +
   geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, 
           alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
+  scale_fill_distiller(palette= "PRGn", direction = 1)+
   ggtitle("Diferencias Esc. Jefe Hogar Zona/Comuna - Urbano" ) +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
@@ -206,7 +206,7 @@ valpo_com <-  zonas %>% filter(NOM_COMUNA == "VALPARAÍSO") %>%
 ggplot() +
   geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, 
           alpha=0.3,  size= 0.1)+
-  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
+  scale_fill_distiller(palette= "PRGn", direction = 1)+
   geom_sf(data = valpo_com,  color ="magenta", alpha=1,  size= 1, fill = NA)+
   ggtitle("Resaltar la comuna de Valparaíso" ) +
   theme_bw() +
@@ -423,7 +423,7 @@ Esta variable es similar al cálculo de desempleo, pero calculada a escala de ma
 
 
 
-** Cálculo Indicador de Empleo (IEM) **
+**Cálculo Indicador de Empleo (IEM) **
 
 **P17_4**: Trabajo la semana pasada, *opción 4*: "Se encontraba buscando empleo"  
 **P17_ACT**: Total de Actividades Remuneradas (no es pregunta del Censo)
@@ -482,7 +482,7 @@ Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el v
 
 
 
-** Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **
+**Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **
 
 **J_NINI**: Jóvenes que no trabajan ni estudian P17
 **E15A24**: Jóvenes entre 15 y 24 años de edad
@@ -535,7 +535,7 @@ Al contrario, los hogares biparentales permiten el apoyo entre progenitores y lo
 
 
 
-** Cálculo de Indicador de Resiliencia de Hogares (IRH) **
+**Cálculo de Indicador de Resiliencia de Hogares (IRH) **
 
 **MONOPAR**: Hogares Monoparentales  
 **HOG_N**: Número de Hogares
