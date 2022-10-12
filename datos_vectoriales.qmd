@@ -357,10 +357,10 @@ Para la construcción de este indicador se utilizó el promedio de años de estu
 Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del capital cultural de cada hogar y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016). 
 
 
-** Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**
+**Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**
 
 ```{r}
-censo <- censo %>% mutate( IEJ = ESCOLAR)
+censo <- censo %>% mutate( IEJ = ifelse(PERSONAS ==0, NA, ESCOLAR))
 ```
 
 Para efectos de visualización se enfocará los resultados en las zonas urbanas de la comuna de La Serena en todos los indicadores que se presentarán.
@@ -596,7 +596,7 @@ El indicador de calidad de vivienda es una variable sintética de todas las mate
 * P03C_5: Tierra
 
 
-** Cálculo Indicador de Calidad de la Vivienda (IVI) **
+**Cálculo Indicador de Calidad de la Vivienda (IVI) **
 
 ```{r}
 censo <- censo %>%

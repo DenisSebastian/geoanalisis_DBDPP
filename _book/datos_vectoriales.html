@@ -656,13 +656,13 @@ First 10 features:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>zonas <span class="ot">&lt;-</span>  zonas <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(tab_com, <span class="at">by =</span> <span class="st">"NOM_COMUNA"</span>) <span class="sc">%&gt;%</span> <span class="co"># Ojo con las veces que se hace esta operación</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DIF_EJH_COM =</span> <span class="fu">round</span>((ESC_JH_COM<span class="sc">-</span> ESC_JH), <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DIF_EJH_COM =</span> <span class="fu">round</span>(( ESC_JH<span class="sc">-</span>ESC_JH_COM), <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> DIF_EJH_COM), <span class="at">color =</span><span class="cn">NA</span>, </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.8</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"PRGn"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Diferencias Esc. Jefe Hogar Zona/Comuna - Urbano"</span> ) <span class="sc">+</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
@@ -688,7 +688,7 @@ First 10 features:
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> zonas, <span class="fu">aes</span>(<span class="at">fill =</span> DIF_EJH_COM), <span class="at">color =</span><span class="cn">NA</span>, </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.3</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"PRGn"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> valpo_com,  <span class="at">color =</span><span class="st">"magenta"</span>, <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>)<span class="sc">+</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resaltar la comuna de Valparaíso"</span> ) <span class="sc">+</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -1098,9 +1098,9 @@ First 10 features:
 <h2 data-number="3.5" class="anchored" data-anchor-id="indicador-de-escolaridad-del-jefe-de-hogar-iej"><span class="header-section-number">3.5</span> Indicador de Escolaridad del jefe de hogar (IEJ)</h2>
 <p>Para la construcción de este indicador se utilizó el promedio de años de estudio de jefes de hogar (EJH), que es una variable censal numérica (“ESCOLARIDAD”, en tabla de personas del censo 2017) que registra el nivel del curso más alto aprobado, medida en años sucesivos desde la enseñanza básica hasta estudios de postgrado.</p>
 <p>Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del capital cultural de cada hogar y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016).</p>
-<p>** Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**</p>
+<p><strong>Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IEJ =</span> ESCOLAR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">IEJ =</span> <span class="fu">ifelse</span>(PERSONAS <span class="sc">==</span><span class="dv">0</span>, <span class="cn">NA</span>, ESCOLAR))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Para efectos de visualización se enfocará los resultados en las zonas urbanas de la comuna de La Serena en todos los indicadores que se presentarán.</p>
 <div class="cell">
@@ -1157,7 +1157,7 @@ First 10 features:
 <h2 data-number="3.6" class="anchored" data-anchor-id="indicador-de-empleo-iem"><span class="header-section-number">3.6</span> Indicador de Empleo (IEM)</h2>
 <p>Para este indicador se usó la proporción de población activa sin empleo que es la fracción de las personas que no tienen empleo y están buscando uno, respecto al total de personas en condiciones y con deseo de trabajar en cada manzana.</p>
 <p>Esta variable es similar al cálculo de desempleo, pero calculada a escala de manzanas y en un tiempo específico, por lo que representa las brechas potenciales que existen para acceder al empleo en barrios específicos (MDS, 2019).</p>
-<p>** Cálculo Indicador de Empleo (IEM) **</p>
+<p><strong>Cálculo Indicador de Empleo (IEM) </strong></p>
 <p><strong>P17_4</strong>: Trabajo la semana pasada, <em>opción 4</em>: “Se encontraba buscando empleo”<br>
 <strong>P17_ACT</strong>: Total de Actividades Remuneradas (no es pregunta del Censo)</p>
 <div class="cell">
@@ -1203,7 +1203,7 @@ First 10 features:
 <p>Para la construcción de este indicador se utilizó la proporción de jóvenes entre 14 y 24 años que no trabajan ni estudian: es la fracción de jóvenes en este rango edad que no trabajan ni estudian, respecto al total de este segmento etario en cada manzana.</p>
 <p>Esta variable representa un riesgo de exclusión socioeconómica en el período de transición entre el ambiente educativo y el laboral, siendo característico de trayectorias de deserción escolar que conducen al desempleo y que podrían incrementar el riesgo de adopción de comportamientos delictivos (MDS, 2019).</p>
 <p>Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable, convirtiéndose así en un indicador de empleo.</p>
-<p>** Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **</p>
+<p><strong>Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) </strong></p>
 <p><strong>J_NINI</strong>: Jóvenes que no trabajan ni estudian P17 <strong>E15A24</strong>: Jóvenes entre 15 y 24 años de edad</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> <span class="fu">mutate</span>( <span class="at">NINI_DENS =</span> J_NINI <span class="sc">/</span> E15A24)  </span>
@@ -1243,7 +1243,7 @@ First 10 features:
 <p>En suma, el Indicador de Resiliencia de Hogares (en base a la monoparentalidad), en complemento a otras variables, es conceptualmente relevante para evaluar riesgos no monetarios de condiciones sociales.</p>
 <p>Este indicador es el inverso aditivo de la proporción de hogares monoparentales dentro de una manzana. Los hogares monoparentales son aquellos con hijos que viven con un solo progenitor, lo que se asocia en diversas formas a la condición social, que abarcan desde un menor ingreso, problemas de salud y delincuencia, entre otros (MDS, 2019).</p>
 <p>Al contrario, los hogares biparentales permiten el apoyo entre progenitores y los hogares sin hijos tienen menores exigencias de gasto y tiempo relacionadas con la paternidad, por lo que se considera que en general son más resilientes.</p>
-<p>** Cálculo de Indicador de Resiliencia de Hogares (IRH) **</p>
+<p><strong>Cálculo de Indicador de Resiliencia de Hogares (IRH) </strong></p>
 <p><strong>MONOPAR</strong>: Hogares Monoparentales<br>
 <strong>HOG_N</strong>: Número de Hogares</p>
 <div class="cell">
@@ -1298,7 +1298,7 @@ First 10 features:
 <li>P03C_4: Capa de cemento sobre tierra</li>
 <li>P03C_5: Tierra</li>
 </ul>
-<p>** Cálculo Indicador de Calidad de la Vivienda (IVI) **</p>
+<p><strong>Cálculo Indicador de Calidad de la Vivienda (IVI) </strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>censo <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">paredes =</span> (P03A_4 <span class="sc">+</span> P03A_5 <span class="sc">+</span> P03A_6)<span class="sc">/</span>TOTAL_V,</span>
