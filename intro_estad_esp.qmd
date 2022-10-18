@@ -6,6 +6,7 @@ subtitle: "Módulo 1: Teórico"
 ## Objetivos
 
 ![Objetivos](images/m1_objetivos.png)
+
 * Conocer teóricos fundamentales de la estadística espacial.
 
 

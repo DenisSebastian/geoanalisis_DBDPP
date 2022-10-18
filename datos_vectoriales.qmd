@@ -1,6 +1,6 @@
 ---
 title: "Datos Vectoriales"
-subtitle: "Módulo 2: Práctico"
+subtitle: "Construcción de Indicadores Socioecnómicos en Chile"
 editor_options: 
   chunk_output_type: console
 ---
@@ -17,6 +17,8 @@ suppressPackageStartupMessages(require(knitr))
 suppressPackageStartupMessages(library(viridis))
 suppressPackageStartupMessages(library(tidyr))
 ```
+
+![Objetivos](images/m2_geoanalisis.png)
 
 ## Objetivos del Módulo
 
@@ -272,7 +274,7 @@ Dimensiones de la Matriz de Bienestar Humano Territorial
 
 
 
-## Construcción de Indicadores Socioconómicos
+## Construcción de Indicadores Socioconómicos {#sec-indsoc}
 
 Las ciudades de Chile presentan altos índices de segregación (Sabatini, 2002), que reflejan la separación espacial de distintos grupos sociales (Ruiz-Tagle, 2014). La intensidad de este fenómeno hace imperativo el considerar la condición social como una dimensión estructurante en la evaluación de Políticas Públicas.
 

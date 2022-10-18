@@ -1,0 +1,36 @@
+---
+subtitle: "Datos Vectoriales y Raster"
+editor_options: 
+  chunk_output_type: console
+---
+
+# Tarea 1 {.unnumbered}
+
+
+## Antecedentes
+
+- Fecha de entrega: **30 de Octubre 2022**
+- Formato: Informe (pdf, html) + Código
+- Integrantes: 3 o 4 
+
+
+## Instrucciones
+
+
+### Parte 1: Indicadores Socioeconómicos
+
+1. Calcular los 6 Indicadores Socioenómicos en una Región de su área de estudio _(1 pt)_ @sec-indsoc
+
+2. Seleccione una Provincia y **un indicador socioeconómico** que consideren que evidencia una nencesidad prioritaria en la provincia. Defina un valor de indicador como umbral crítico (ej: menor a 0.25) y genere una tabla resumen (usar función `group_by()`) donde se contabilice la **cantidad de personas** que están bajo el umbral crítico y **promedio del indicador** por comuna en la provincia seleccionada. _(1 pt)_
+
+3. De la tabla anterior, **seleccione una comuna**, ya sea por la mayor cantidad de personas (bajo el umbral) o por valor promedio del indicador más bajo (justifique la selección de comuna). Realicé representación cartográfica del valor del indicador  a nivel de manzana censal e identifique visualmente si existen concentraciones de valores de indicadores altos y/o bajos y haga una descripción del sector basándose en su conocimiento en terreno, experiencia general o valores de indicadores. _(1 pt)_
+
+### Parte 2: Indicadores Ambientales
+
+1. Seleccionar una Comuna de la Región metropolitana (no Las Condes) @sec-cortaraster y calcular NDVI usando la función vista en clases @sec-calcndvi . _(1pt)_
+
+2. Calcular Vegentación que existe en la comuna seleccionada, filtrando y dejando solo los pixeles sobre un valor de umbral que ustedes determinen. @sec-calcicv _(1pt)_
+
+3. Calcule el indicador de cobertura vegetal para la manzanas urbanas de la comuna seleccionada. @sec-calcicv _(1 pt)_
+
+

@@ -15,6 +15,13 @@ book:
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
     - datos_vectoriales.qmd
+    - raster.qmd
+    - part: "Tareas"
+      chapters:
+        - tarea_1.qmd
+    - part: "Anexos"
+      chapters:
+      - luces_nocturnas.qmd
     - references.qmd
 
 bibliography: references.bib
