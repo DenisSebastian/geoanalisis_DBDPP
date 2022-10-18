@@ -88,7 +88,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./raster.html" rel="next">
 <link href="./datos_espaciales.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -177,6 +177,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./raster.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Tareas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">Tarea 1</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Anexos</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./luces_nocturnas.html" class="sidebar-item-text sidebar-link">Luces Nocturnas con GEE</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -204,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#definición-de-indicadores" id="toc-definición-de-indicadores" class="nav-link" data-scroll-target="#definición-de-indicadores"> <span class="header-section-number">3.3.1</span> Definición de Indicadores</a></li>
   <li><a href="#indicadores-territoriales-1" id="toc-indicadores-territoriales-1" class="nav-link" data-scroll-target="#indicadores-territoriales-1"> <span class="header-section-number">3.3.2</span> Indicadores Territoriales</a></li>
   </ul></li>
-  <li><a href="#construcción-de-indicadores-socioconómicos" id="toc-construcción-de-indicadores-socioconómicos" class="nav-link" data-scroll-target="#construcción-de-indicadores-socioconómicos"> <span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</a>
+  <li><a href="#sec-indsoc" id="toc-sec-indsoc" class="nav-link" data-scroll-target="#sec-indsoc"> <span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</a>
   <ul class="collapse">
   <li><a href="#insumos-censo-2017" id="toc-insumos-censo-2017" class="nav-link" data-scroll-target="#insumos-censo-2017"> <span class="header-section-number">3.4.1</span> Insumos Censo 2017</a></li>
   <li><a href="#insumos-del-censo" id="toc-insumos-del-censo" class="nav-link" data-scroll-target="#insumos-del-censo"> <span class="header-section-number">3.4.2</span> Insumos del Censo</a></li>
@@ -226,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></h1>
-<p class="subtitle lead">Módulo 2: Práctico</p>
+<p class="subtitle lead">Construcción de Indicadores Socioecnómicos en Chile</p>
 </div>
 
 
@@ -240,6 +275,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m2_geoanalisis.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Objetivos</figcaption><p></p>
+</figure>
+</div>
 <section id="objetivos-del-módulo" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="objetivos-del-módulo"><span class="header-section-number">3.1</span> Objetivos del Módulo</h2>
 <ul>
@@ -760,8 +801,8 @@ First 10 features:
 </div>
 </section>
 </section>
-<section id="construcción-de-indicadores-socioconómicos" class="level2 page-columns page-full" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="construcción-de-indicadores-socioconómicos"><span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</h2>
+<section id="sec-indsoc" class="level2 page-columns page-full" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-indsoc"><span class="header-section-number">3.4</span> Construcción de Indicadores Socioconómicos</h2>
 <p>Las ciudades de Chile presentan altos índices de segregación (Sabatini, 2002), que reflejan la separación espacial de distintos grupos sociales (Ruiz-Tagle, 2014). La intensidad de este fenómeno hace imperativo el considerar la condición social como una dimensión estructurante en la evaluación de Políticas Públicas.</p>
 <div id="fig-soc-mbht" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -1532,8 +1573,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./raster.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

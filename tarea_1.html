@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Denis Berroeta González (denis.berroeta@uai.cl)">
-<meta name="dcterms.date" content="2022-08-12">
 
-<title>Curso: Geoanálisis</title>
+<title>Curso: Geoanálisis - Tarea 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27,7 +25,8 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro_estad_esp.html" rel="next">
+<link href="./luces_nocturnas.html" rel="next">
+<link href="./raster.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,13 +60,13 @@ ul.task-list{list-style: none;}
 <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Curso: Geoanálisis</h1>
+      <h1 class="quarto-secondary-nav-title">Tarea 1</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -92,7 +91,7 @@ ul.task-list{list-style: none;}
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Antecedentes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Antecedentes</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -125,7 +124,7 @@ ul.task-list{list-style: none;}
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">Tarea 1</a>
+  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link active">Tarea 1</a>
   </div>
 </li>
       </ul>
@@ -159,108 +158,60 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a>
+  <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
+  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones">Instrucciones</a>
   <ul class="collapse">
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción">Introducción</a></li>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos">Objetivos</a></li>
-  <li><a href="#modulos" id="toc-modulos" class="nav-link" data-scroll-target="#modulos">Modulos</a></li>
-  <li><a href="#docentes" id="toc-docentes" class="nav-link" data-scroll-target="#docentes">Docentes</a></li>
+  <li><a href="#parte-1-indicadores-socioeconómicos" id="toc-parte-1-indicadores-socioeconómicos" class="nav-link" data-scroll-target="#parte-1-indicadores-socioeconómicos">Parte 1: Indicadores Socioeconómicos</a></li>
+  <li><a href="#parte-2-indicadores-ambientales" id="toc-parte-2-indicadores-ambientales" class="nav-link" data-scroll-target="#parte-2-indicadores-ambientales">Parte 2: Indicadores Ambientales</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Curso: Geoanálisis</h1>
-<p class="subtitle lead">Diplomado en Ciencia de Datos para Políticas Públicas 2022</p>
+<h1 class="title d-none d-lg-block">Tarea 1</h1>
+<p class="subtitle lead">Datos Vectoriales y Raster</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Denis Berroeta González (denis.berroeta@uai.cl) </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 12, 2022</p>
-    </div>
-  </div>
     
   </div>
   
 
 </header>
 
-<section id="antecedentes" class="level1 unnumbered page-columns page-full">
-<h1 class="unnumbered">Antecedentes</h1>
-<p>Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2022, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.</p>
-<section id="introducción" class="level2">
-<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>Este curso se enfoca en entregar a los alumnos conocimientos teóricos y herramientas técnicas para realizar análisis espacial de variables territoriales en diferentes campos de aplicación, con énfasis en afrontar desafíos relacionado a las políticas públicas, haciendo uso de lenguaje de programación R Project, para uso de metodologías de alto nivel y de forma automatizada.</p>
-</section>
-<section id="objetivos" class="level2">
-<h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
-<p>El objetivo general es proporcionar a los estudiantes los fundamentos, técnicas y aspectos básicos para analizar, modelar y representar información espacial, para apoyar la toma de decisiones con evidencia territorial robusta.</p>
-<p>Los objetivos específicos son:</p>
+<section id="antecedentes" class="level2">
+<h2 class="anchored" data-anchor-id="antecedentes">Antecedentes</h2>
 <ul>
-<li>Conocer los conceptos básicos del geoanálisis.</li>
-<li>Manipular datos espaciales en R.</li>
-<li>Conocer técnicas de inferencia, autocorrelación y regresión espacial.</li>
-<li>Aplicar las técnicas a problemas de interés público.</li>
+<li>Fecha de entrega: <strong>30 de Octubre 2022</strong></li>
+<li>Formato: Informe (pdf, html) + Código</li>
+<li>Integrantes: 3 o 4</li>
 </ul>
 </section>
-<section id="modulos" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="modulos">Modulos</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/modulos.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Modulos</figcaption><p></p>
-</figure>
-</div>
+<section id="instrucciones" class="level2">
+<h2 class="anchored" data-anchor-id="instrucciones">Instrucciones</h2>
+<section id="parte-1-indicadores-socioeconómicos" class="level3">
+<h3 class="anchored" data-anchor-id="parte-1-indicadores-socioeconómicos">Parte 1: Indicadores Socioeconómicos</h3>
 <ol type="1">
-<li>Introducción a la Estadística Espacial y a Datos Espaciales</li>
-<li>Manejo y Representación de datos vectoriales, construcción de indicadores</li>
-<li>Manejo y Representación de datos raster, construcción de indicadores</li>
-<li>Inferencia Espacial: Interpolación y mapas de calor</li>
-<li>Relaciones de Vecindad y autocorrelación espacial</li>
-<li>Modelos de Regresión Espacial</li>
+<li><p>Calcular los 6 Indicadores Socioenómicos en una Región de su área de estudio <em>(1 pt)</em> <a href="datos_vectoriales.html#sec-indsoc"><span>Section&nbsp;3.4</span></a></p></li>
+<li><p>Seleccione una Provincia y <strong>un indicador socioeconómico</strong> que consideren que evidencia una nencesidad prioritaria en la provincia. Defina un valor de indicador como umbral crítico (ej: menor a 0.25) y genere una tabla resumen (usar función <code>group_by()</code>) donde se contabilice la <strong>cantidad de personas</strong> que están bajo el umbral crítico y <strong>promedio del indicador</strong> por comuna en la provincia seleccionada. <em>(1 pt)</em></p></li>
+<li><p>De la tabla anterior, <strong>seleccione una comuna</strong>, ya sea por la mayor cantidad de personas (bajo el umbral) o por valor promedio del indicador más bajo (justifique la selección de comuna). Realicé representación cartográfica del valor del indicador a nivel de manzana censal e identifique visualmente si existen concentraciones de valores de indicadores altos y/o bajos y haga una descripción del sector basándose en su conocimiento en terreno, experiencia general o valores de indicadores. <em>(1 pt)</em></p></li>
 </ol>
 </section>
-<section id="docentes" class="level2">
-<h2 class="anchored" data-anchor-id="docentes">Docentes</h2>
-<dl>
-<dt>Profesor:</dt>
-<dd>
-Denis Berroeta González (denis.berroeta@uai.cl)
-</dd>
-</dl>
-<ul>
-<li>Coordinador de Investigación Centro de Inteligencia Territorial UAI</li>
-<li>Magister en Inteligencia Artificial FIC-UAI</li>
-<li>Master of Data Science FIC-UAI (cursando)</li>
-<li>Ingeniero en Prevención en Riesgos</li>
-</ul>
-<dl>
-<dt>Ayudante:</dt>
-<dd>
-Leonardo Rojas (leonardo.rojas@uai.cl)
-</dd>
-</dl>
-<ul>
-<li>Analista Centro de Inteligencia Territorial UAI</li>
-<li>Economista</li>
-<li>Master of Data Science FIC-UAI (cursando)</li>
-</ul>
+<section id="parte-2-indicadores-ambientales" class="level3">
+<h3 class="anchored" data-anchor-id="parte-2-indicadores-ambientales">Parte 2: Indicadores Ambientales</h3>
+<ol type="1">
+<li><p>Seleccionar una Comuna de la Región metropolitana (no Las Condes) <a href="raster.html#sec-cortaraster"><span>Section&nbsp;4.3.3</span></a> y calcular NDVI usando la función vista en clases <a href="raster.html#sec-calcndvi"><span>Section&nbsp;4.4.1</span></a> . <em>(1pt)</em></p></li>
+<li><p>Calcular Vegentación que existe en la comuna seleccionada, filtrando y dejando solo los pixeles sobre un valor de umbral que ustedes determinen. <a href="raster.html#sec-calcicv"><span>Section&nbsp;4.4.2</span></a> <em>(1pt)</em></p></li>
+<li><p>Calcule el indicador de cobertura vegetal para la manzanas urbanas de la comuna seleccionada. <a href="raster.html#sec-calcicv"><span>Section&nbsp;4.4.2</span></a> <em>(1 pt)</em></p></li>
+</ol>
 
 
 </section>
@@ -366,10 +317,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./raster.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro_estad_esp.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./luces_nocturnas.html" class="pagination-link">
+        <span class="nav-page-text">Luces Nocturnas con GEE</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
