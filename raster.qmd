@@ -201,7 +201,7 @@ hist_bandas
 ### Reproyectar imagen tipo Raster (Sistema de Referencia de Coords.)
 
 
-```{r echo=FALSE}
+```{r echo=TRUE}
 crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"# geográficas o elipsoidales
 crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # UTM o cartográficas
 
