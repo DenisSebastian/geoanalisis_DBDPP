@@ -16,6 +16,7 @@ book:
     - datos_espaciales.qmd
     - datos_vectoriales.qmd
     - raster.qmd
+    - inferencia.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd

@@ -1,0 +1,637 @@
+---
+title: " Inferencia Espacial"
+subtitle: "KDE y IDW"
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(raster))
+suppressPackageStartupMessages(library(mapview))
+```
+
+## Objetivos del Módulo
+
+
+
+
+![Objetivos del Módulo](images/m4_geoanalisis.png)
+
+
+- Conocer los fundamentos teóricos de la inferencia espacial
+- Construcción Indicadores en base de Kernel Density Estimation (KDE)
+- Construcción Indicadores en base de Interpolación Inverso a la Distancia ponderada (IDW)
+
+
+## Kernel Density Estimation
+
+### Introducción 
+
+Identificar el tipo de distribución que tiene a una variable es un paso fundamental en prácticamente todos los estudios que implican datos, son muchas las ventajas que tiene disponer de una función que describa aproximadamente los datos. Por ejemplo, se puede calcular la probabilidad (o densidad en el caso de variables aleatorias continuas) de que una observación tome un determinado valor. También es posible simular nuevos. valores.
+
+En términos generales, ajustar una distribución consiste en **encontrar una función matemática capaz de describir un conjunto de datos**. De entre todas las posibles funciones candidatas, lo interesante es encontrar aquella que, con mayor probabilidad, puede haber generado los datos observados.
+
+
+Una de las aproximaciones más prácticas es utilizar como candidatas distribuciones paramétricas, estas son distribuciones conocidas cuyo comportamiento está determinado usando un número finito de parámetros. Por ejemplo, la distribución normal está parametrizada por la media y la desviación típica. 
+
+Cuando ninguna de las distribuciones paramétricas disponibles describe correctamente los datos, es necesario recurrir lo que se conoce como métodos de ajuste no paramétricos, cuyo objetivo es encontrar funciones que describan distribuciones cualesquiera, entendiendo por cualesquiera a que no se limitan a las distribuciones paramétricas conocidas. Uno de los métodos más empleados es kernel density estimation (KDE).
+
+
+
+### Conceptos relacionados KDE en general
+
+En estadística, kernel density estimation (KDE), es un método no paramétrico que permite estimar la función de densidad de probabilidad de una variable aleatoria a partir de un número finito de observaciones (muestra). Fué propuesto por Fix y Hodges (1951) y Rosenblatt (1956).
+
+
+Una forma de entender cómo funciona un kernel density estimation (KDE) es partiendo del histograma. El histograma es una de las formas más utilizadas en estadística para representar la distribución de datos unidimensionales.
+
+![Histograma de una variable aleatoria bimodal](images/histogram_kde.png)
+
+
+El Kernel density estimation (KDE) expande la idea del histograma, "cada observación aumenta la densidad de probabilidad en la zona donde se encuentra", pero lo hace de forma que las contribuciones se agrupen creando una curva continua y suave (smooth). 
+
+![Observaciones y sus posiciones ordenadas](images/obs_kde.png)
+
+A continuación, sobre cada observación se centra una distribución normal, con media igual al valor de la observación y desviación típica de 1 (más adelante se detalla la elección de este valor).
+
+
+![Distribución normal por cada observaciones  con media igual valor y desviación estándar = 1](images/dist_normales_kde.png)
+
+
+De esta forma se consigue que cada observación contribuya justo en la posición que ocupa pero también, de forma gradual, en las regiones cercanas.
+
+Por último, si se suman las contribuciones individuales y se dividen por el total de curvas (observaciones), se consigue una curva final que describe la distribución de las observaciones.sy
+
+![Suma de las Distribuciones](images/sum_distr_kde.png)
+
+En esta idea se fundamenta el método kernel density estimation (KDE): aproximar una función de densidad como la suma de funciones (kernel) de cada observación. 
+
+
+**Definición matemática**
+
+Dado un conjunto de datos $x={x_1,x_2,...,x_n}$  la función de distribución de densidad $f(x)$ puede aproximarse utilizando un kernel density estimation (KDE) tal que:
+
+
+$$
+\hat{f}(x)=\frac{1}{n}\sum_{i = 1}^{n}K_h(x-x_i)= \frac{1}{nh}\sum_{i = 1}^{n}K\left(\frac{x-x_i}{h}\right)
+$$
+* $n$: es el número de datos (observaciones). Cada uno de ellos es el centro sobre el que se coloca un kernel.
+
+* $h$: es el ancho de banda (bandwidth o smoothing parameter). Controla cuánto se expande la influencia de cada observación. Si se emplea como kernel una distribución normal, equivale a la desviación típica. Este es el valor más determinante a la hora de ajustar un KDE, puesto que condiciona el nivel de sobreajuste.
+
+* $K$: es el Kernel, una función que define la forma y la distribución de la influencia (peso) que se asocian a cada observación. En los ejemplos anteriores se ha utilizado como kernel la distribución normal. 
+
+
+**Selección de Ancho de Banda**
+
+El ancho de banda es crucial a la hora de estimar una función densidad mediante el método KDE. Si su valor es muy bajo, se genera overfitting y la función resultante estará demasiado influenciada por el "ruido" de los datos. Si su valor es muy elevado, la función resultante no será capaz de aprender la distribución subyacente.
+
+![Tipos de Distribuciones de acuerdo a valor de ancho de Banda](images/banda_kde.png)
+
+
+_Reglas empíricas_
+
+* Scott's rule:  $h≈1.06 \cdot \hat{\sigma}n^{−1/5}$
+
+* Silverman's rule:  $h=0.9\cdot min(\hat{\sigma},IQR/1.35)n^{−1/5}$
+
+ 
+Si bien estos métodos son muy rápidos, tienen el limitante de funcionar bien solo cuando la función de densidad real es aproximadamente normal.
+
+También se puede usar validación cruzada que requiere de mayor tiempo de computación pero es útil para cualquier tipo de distribución. Validación cruzada es la opción disponible en Scikit learn, utilizando como métrica de comparación en _log-likelihood_.
+
+Es importante destacar que, cuando se dispone de pocos datos, conviene utilizar _one leave out crossvalidation_. 
+
+
+**Tipos de kernel**
+
+
+El kernel es la función que determina cómo se distribuye la influencia de cada observación, por lo tanto, puede tener un impacto notable en la estimación de la función de densidad resultante. Aunque en la gran mayoría de casos se emplea un kernel gaussiano (distribución normal), existen otras posibilidades.
+
+
+- **Gaussian**: asigna los pesos siguiendo la distribución normal con una desviación estándar equivalente al ancho de banda.
+
+- **Epanechnikov**: las observaciones que están a una distancia entre 0 y h tienen un peso entre  $\frac{3}{4}$ y 0 con disminución cuadrática. Toda observación fuera de este rango tiene pero 0.
+
+- **Tophat**: Asigna el mismo peso a todas las observaciones que estén dentro del ancho de banda.
+
+- **Exponential**: el peso decae de forma exponencial.
+
+
+- **Linear**: el peso decae de forma lineal dentro del ancho de banda. Más allá de este el pero es 0.
+
+- **Cosine**: el peso dentro del ancho de banda es proporcional al coseno.
+
+
+![Algunos tipos de Kernel más utilizados](images/tipos_kernel_kde.png)
+
+_TO-DO: Agregar formulas de cada Kernel_
+
+
+### KDE aproximación espacial
+
+
+Para entender el concepto KDE se presentó anteriormente en su forma básica correspondiente a una distribución univariada, como por ejemplo la distribución (bimodal) siguiente:
+
+![Distribución Univariada](images/d-bimodal-kde.png)
+
+Para aplicar los KDE a casos espaciales, se tiene que entender que las variables aleatorias antes señaladas, ahora van a corresponder a eventos o condiciones físicas que ocurren en el espacio, por ende bajo un sistema de coordenadas, por lo cual el eje de coordenadas $x$ e $y$ que también intervienen como nuevas dimensiones, entonces los que se predente estimar una distribución multivariante.
+
+
+![De puentos espaciales a Mapa de Densidad.](images/Density- map_point-map.png)
+
+
+Una de las aplicaciones más comunas es de el análisis criminal, ya que los algunas categorías delitos coproducen bajo ciertas condiciones espaciales.
+
+
+![Ejemplo de Kernel Density Estimation de Delitos en Domicilios en la Comuna de Las Condes](images/lc_delitos_dom.png){width=60%}
+
+
+Entonces para el caso espacial lo que se prentende identificar patrones de cluster basándose en proximidad espacial
+
+Los elementos del KDE Univariado tambien están presentes en el caso espacial como por ejemplo en ancho debanda como se observa a continuación.
+
+
+![KDE Espacial con diferentes tipos de Ancho de Banda.](images/kde_spatial.png)
+
+
+
+### Kernel Density Estimation en delitos Violentos
+
+
+Existe una gama importante de métodos de interpolación como el Kriging, las superficies de tendencia, el inverso de la distancia y los modelos de regresión local, (Anselin, 1992; Clevelend at al. 1993, Venables & Ripley, 1997) los cuales requieren en su mayoría que los puntos de muestreo/entrada asuman valores heterogéneos diferentes de cero.
+
+Considerando que los dato con que se trabajará son eventos delictivos, por ensde no se hace muetreo  de la información, el universo está dado por la totalidad de los eventos registrados, adicionalmente cada punto representa un evento particular.
+
+Como no en toda la superficie de una zona de estudio han sucedido delitos, pero existe una probabilidad de que ocurran, la estimación de densidad de kernel sirve para calcular esa probabilidad (Smith & Bruce 2008, 60-64) de modo que la interpolación produce "superficies de riesgo".
+
+![Suma de funciones normales de Kernel de 5 Puntos](images/kde_exp.png){width=50%}
+
+
+*Fuente: Estimación de densidad de Kernel. Adaptado de Wilson, R. y Eck, J. (2005: 27).*
+
+
+
+
+Cargar Librerías
+```{r}
+library(rgdal)
+library(sf)
+library(dplyr)
+library(rgeos)
+library(raster)
+library(spatstat)
+library(spdep)
+library(mapview)
+library(viridis)
+library(ggplot2)
+```
+
+
+
+Lectura de casos violencia (Las Condes, anonimizados)
+
+
+```{r}
+violencia_df <- readRDS(file = "data/delitos/casos_violencia.rds")
+head(violencia_df)
+
+```
+
+Transformar a Objeto Espacial
+
+```{r}
+violencia <-  st_as_sf(x = violencia_df, 
+                          coords = c("x", "y"), crs = 32719)
+
+ggplot() +
+  geom_sf(data = violencia,  color =  "red", 
+          alpha=0.8,  size= 0.1)+
+  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
+  ggtitle("Delitos Violentos en Las Condes") +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+
+**KDE con Raster**
+
+Calcular KDE con Función cuartica o esférica (`quartic`)
+
+Supone una distribución relativamente uniforme que al llegar a cierto umbral decae sin suavidad:
+
+ ![Kernel  cuártica o esférica](images/func_quartic.png){width=70%}
+
+
+Definir Parámetros
+
+```{r}
+library(SpatialKDE)
+
+#Definirán Parámemetros de Estudio
+cell_size <- 100 # Tamaño de Celda
+band_width <- 500 #  Parámetro de Suavisado (denominada ventana o h)
+```
+
+
+Crear Raster Vacío
+
+```{r}
+raster_violencia <- violencia %>% 
+  create_raster(cell_size = cell_size, side_offset = band_width)
+```
+
+Crear Kernel raster
+
+```{r}
+kde_raster <- violencia %>% 
+  kde(band_width = band_width, kernel = "quartic", grid = raster_violencia)
+```
+
+Histograma de valores de Densidad
+
+```{r}
+hist(kde_raster, col="springgreen4", main="Histograma KDE",
+  ylab="Número de Pixeles", xlab="valor KDE")
+```
+
+Visualizar Raster KDE con ggplot
+
+```{r}
+# rastero to df (na omit)
+kde_raster_df <- raster::as.data.frame(kde_raster, xy = TRUE) %>% na.omit()
+
+umbral <- 1
+kde_raster_df <- kde_raster_df %>% 
+  mutate(layer = ifelse(layer < umbral, NA, layer))
+```
+
+```{r}
+ggplot() +
+  geom_raster(data = kde_raster_df %>% na.omit() , 
+             aes(x = x, y = y, 
+                  fill = layer)) + 
+  scale_fill_gradientn(name = "KDE", 
+                       colors = (viridis::magma(100)), na.value = NA)+
+  coord_fixed()+
+  ggtitle(paste0("KDE Raster de Delitos") ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+Función Para filtrar Raster (solo para tener en cuenta)
+
+```{r eval =FALSE}
+na_menor <- function(x){
+  x[x < 10] <- NA
+  return(x)
+}
+kde_raster2 <- calc(kde_raster, fun = na_menor)
+```
+
+
+KDE a  Indicador Territorial
+
+Leer manzanas del Censo
+
+```{r}
+mi_comuna <-  "LAS CONDES"
+mz_comuna <- readRDS("data/censo/manzanas.rds") %>% 
+  filter(NOM_COM == mi_comuna) %>% 
+  st_transform(32719)
+```
+
+
+Cálculo de Indicador de Delitos Violentos
+```{r}
+library(exactextractr)
+
+mz_comuna  <- mz_comuna %>% 
+  mutate(idelv = exact_extract(kde_raster,y = ., 'mean', 
+                               progress = FALSE))
+  
+```
+
+
+Visualización del Indicador
+
+
+```{r}
+# pal_idelv<- colorRampPalette(c("white",  "red"))( 100 )
+ggplot() +
+  geom_sf(data = mz_comuna, aes(fill = idelv), color ="gray80", 
+          alpha=0.8,  size= 0.1)+
+  # scale_fill_gradientn(colors = pal_idelv)+
+  scale_fill_distiller(palette= "Reds", direction = 1)+
+  ggtitle("Indicador de Delitos Violentos") +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+
+## Interpolación Inverso a Distancia Ponderada IDW
+
+
+### Definiciones
+
+Este tipo de interpolación, determina los valores de celda a través de una combinación ponderada linealmente de un conjunto de datos de puntos de muestra. Esto significa que los puntos de muestreo se ponderan de tal manera que la influencia de un punto frente a otro, disminuye con la distancia.
+
+
+Cuanto más cerca está un punto del centro de la celda que se está estimando, más influencia o peso tendrá en el proceso de cálculo del promedio.
+
+
+![Estimación de valores por interpolación de inverso a la distancia](images/values_idw.png)
+
+los puntos rojos tienen valores de elevación conocidos. Los otros puntos serán interpolados. Si desea medir el punto púrpura, puede configurar su interpolación para que tome un número fijo o variable de puntos. En este ejemplo, utiliza un número fijo de 3 puntos de 3 y utiliza los tres puntos más cercanos.
+
+
+![Descripción gráfica de los resultados de interpolación](images/exp_idw.png)
+
+Dado que la IDW es un promedio de distancia ponderada, el promedio no puede ser mayor que la entrada máxima o inferior que la entrada mínima. Por lo tanto, no puede crear crestas o valles si estos extremos aún no se han muestreado (Watson y Philip 1985).
+
+
+
+
+
+
+### Usos prácticos
+
+
+**Pasos**
+
+* Definición de Área de Estudio
+* Interpolación de información Comercio y Oficina
+* Crear Indicador de Atractor de Comercios y Oficina
+
+**Desarrollo**
+
+Definición de Área de Estudio
+
+Para efectos de este ejemplo práctico se utilizará el área urbana de la comuna de Las Condes.
+
+```{r}
+mi_comuna <-  "LAS CONDES"
+zonas <-  readRDS("data/censo/zonas_urb_consolidadas.rds")
+comuna <-  zonas %>% filter(NOM_COMUNA == mi_comuna)
+
+```
+
+
+Visualizaciíon  de Área de Estudio
+
+```{r}
+ggplot() +
+  geom_sf(data = comuna, aes(fill = ESC_JH), color =NA, 
+          alpha=0.8,  size= 0.1)+
+  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
+  ggtitle("Población Zonas Censales - Urbano" ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+Obtener el Borde comunal
+
+```{r}
+comuna_border <- comuna %>% st_union()
+```
+
+
+```{r}
+ggplot() +
+  geom_sf(data = comuna_border, fill = "gray90", color ="gray30", 
+          alpha=0.8,  size= 0.8)+
+  ggtitle("Borde Zonas Censales - Urbano" ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+
+**Imputar información SII a zonas censales**
+
+
+Lectura de datos de SII (puntos)
+```{r}
+sii_ptos <- st_read("data/sii/urbes.shp", quiet = T)
+```
+
+
+Selección de Comuna
+
+```{r}
+comuna_sii <-  sii_ptos %>% filter(n_com == mi_comuna) %>% 
+  st_transform(32719)
+# comuna_sii
+```
+
+Visualización de los Puntos del SII
+
+
+```{r}
+ggplot() +
+  geom_sf(data = comuna_sii,  color ="orange", 
+          alpha=0.8,  size= 0.5)+
+  ggtitle("Predios SII - Urbano" ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+
+**Interpolación de Inverso a la Distancia ponderada por Atractores (SII)**
+
+Definción ventana de trabajo
+
+```{r}
+crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # 32719
+suppressMessages(library(raster))
+# grilla desde mancha comuna
+urbano_utm <- st_transform(comuna, crs_utm)
+urbano_sp <- as(urbano_utm, "Spatial")
+ext <- raster::extent(urbano_sp)
+x_min <- ext[1] - 100
+x_max <- ext[2] + 100
+y_min <- ext[3] - 100
+y_max <- ext[4] + 100
+
+
+```
+
+
+Definción grilla de interpolación**
+
+```{r fig.align='center', fig.width=7}
+## Definir espaciado de interpolacion
+grd=expand.grid(x = seq(from = x_min,to = x_max, by=100),
+                y = seq(from = y_min,to = y_max, by=100))
+coordinates(grd)=~x+y
+gridded(grd)=T
+proj4string(grd)= "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # 32719
+plot(grd)
+```
+
+
+Cálculo de Interpolación de Inverso a la Distancia
+
+```{r}
+# Decsar Valores NA
+sii_sp <- comuna_sii%>%
+  st_transform(crs_utm) %>% 
+  filter(!is.na(atractor))%>%
+  as("Spatial")
+```
+
+
+```{r}
+interp_sii=gstat::idw(formula = sii_sp@data$atractor ~ 1, 
+                 locations = sii_sp, 
+                 newdata = grd, idp = 1,
+                 na.action = na.omit, nmax = 4)
+```
+
+
+
+Ajustes del Resultado
+
+* Asiganar CRS
+* Tranformar valores  NA a 0
+* Transformar raster y cortar por contorno urbano
+
+```{r}
+proj4string(interp_sii) = proj4string(sii_sp) # Asignar crs
+interp_sii@data[is.na(interp_sii@data)] = 0 # trasnformar los valores 0 en NA
+interp_sii <- mask(raster(interp_sii, values = T), urbano_sp) # cortar por borde comunal
+```
+
+
+Visualización
+
+```{r}
+interp_sii_df <- raster::as.data.frame(interp_sii, xy = TRUE) %>% na.omit()
+
+ggplot() +
+  geom_raster(data = interp_sii_df , 
+             aes(x = x, y = y, 
+                  fill = var1.pred)) + 
+  scale_fill_gradientn(name = "IDW", 
+                       colors = (viridis::viridis(100)), na.value = NA)+
+  coord_fixed()+
+  ggtitle(paste0("IDW Atractores de Comercio y Oficina") ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+
+```
+
+
+Cálculo de Indicador  de Atractor IDW
+
+```{r}
+mz_comuna  <- mz_comuna %>% 
+  mutate(atractor_sii = exact_extract(interp_sii,y = ., 'mean', 
+                               progress = FALSE))
+```
+
+
+Visualización del Indicador `atractor_sii`
+
+```{r}
+
+ggplot() +
+  geom_sf(data = mz_comuna, aes(fill = atractor_sii), color =NA, 
+          alpha=0.8,  size= 0.1)+
+  scale_fill_viridis_c()+
+  ggtitle("Indicador de Atractor de Comercio y Oficinas") +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+
+
+
+
+## Referencias
+
+- [Ajuste de distribuciones con kernel density estimation y Python](https://www.cienciadedatos.net/documentos/pystats02-kernel-density-estimation-kde-python.html)
+
+- [Role of Big Data in the Development of Smart City by Analyzing the Density of Residents in Shanghai](https://www.mdpi.com/2079-9292/9/5/837/htm)
+
+
+- [How Is the Confidentiality of Crime Locations Affected by Parameters in Kernel Density Estimation?](https://www.mdpi.com/2220-9964/8/12/544/htm)
+
+- [IDW (Spatial Analyst)](https://pro.arcgis.com/es/pro-app/latest/tool-reference/spatial-analyst/idw.htm)
+
+- [IMPORTANCIA DE LOS ESPACIOS COMUNES: UNA ADAPTACIÓN DE LA TÉCNICA DE INTERPOLACIÓN ESPACIAL INVERSE DISTANCE WEIGHTED (IDW) EN LA PREDICCIÓN DE DATOS SOCIOECONÓMICOS AUSENTES](http://ru.iiec.unam.mx/4646/1/4-114-Navarrete-Lopez.pdf)
+
+
+<!-- legacy -->
+<!-- #### KDE con Polígonos (grilla regular) -->
+
+
+
+<!-- Crear Grilla -->
+
+<!-- ```{r} -->
+<!-- # Crear una grilla de Delitos de Violencia -->
+<!-- grid_violencia <- violencia %>%  -->
+<!--   create_grid_rectangular(cell_size = cell_size, side_offset = band_width) -->
+<!-- plot(grid_violencia) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- # Calcular kde quartic -->
+<!-- kde_quartic <- violencia %>%  -->
+<!--   kde(band_width = band_width, kernel = "quartic", grid = grid_violencia) -->
+<!-- # as.numeric(object.size(kde_quartic))/1e6 # calcular peso del resultado -->
+<!-- ``` -->
+
+
+<!-- Visualziar Resultados de KDE `quartic` -->
+
+<!-- ```{r} -->
+<!-- kde_q <- ggplot(data = kde_quartic) + -->
+<!--   geom_sf(aes(fill= kde_value), color = NA, alpha = 0.9)+  -->
+<!--   scale_fill_gradientn(colors = (viridis::magma(100)), na.value = NA)+ -->
+<!--   # scale_color_viridis()+ -->
+<!--   ggtitle(paste0("Kernel Density Estimation (Kernel quartic)")) + -->
+<!--   theme_bw() + -->
+<!--   theme(panel.grid.major = element_line(colour = "gray90"),  -->
+<!--         panel.grid.minor = element_line(colour = "gray90")) -->
+
+<!-- kde_q -->
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- # reemplazar valores 0 po NA -->
+<!-- umbral <- 10 -->
+<!-- kde_quartic <- kde_quartic %>%  -->
+<!--   mutate(kde_value = ifelse(kde_value <= umbral, NA, kde_value)) -->
+
+<!-- kde_q <- ggplot(data = kde_quartic) + -->
+<!--   geom_sf(aes(fill= kde_value), color = NA, alpha = 0.9)+  -->
+<!--   scale_fill_gradientn(colors = (viridis::magma(100)), na.value = NA)+ -->
+<!--   # scale_color_viridis()+ -->
+<!--   ggtitle(paste0("Kernel Density Estimation (Kernel quartic)")) + -->
+<!--   theme_bw() + -->
+<!--   theme(panel.grid.major = element_line(colour = "gray90"),  -->
+<!--         panel.grid.minor = element_line(colour = "gray90")) -->
+
+<!-- kde_q -->
+<!-- ``` -->
