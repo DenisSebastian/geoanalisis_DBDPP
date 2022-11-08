@@ -1,0 +1,434 @@
+---
+title: " Autocorrelación Espacial"
+subtitle: "Matriz de Vecindad e Índice de Moran"
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(raster))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(mapview))
+suppressPackageStartupMessages(library(spdep))
+suppressPackageStartupMessages(library(spatstat))
+```
+
+## Objetivos del Módulo
+
+
+![Objetivos del Módulo](images/m5_geoanalisis.png)
+
+
+- Conceptos Generales de Autocorrelación Espacial
+- Definición de Matrices de vecindad
+- Cálculo de índice de Moran (global y local)
+
+## Conceptos Generales de Autocorrelación Espacial
+
+### Introducción
+
+La primera ley de la geografía de Tobler: "Todo está relacionado con todo lo demás, pero las cosas cercanas están más relacionadas que las lejanas" no se cumple de siempre de forma absoluta. Es y ha sido siempre una simplificación excesiva, que encubre posibles problemas subyacentes de entitación, apoyo y otros errores de especificación. ¿Son las unidades de observación apropiadas para la escala del proceso espacial subyacente? ¿Podría explicarse el patrón espacial de la variable de interés para la entitación elegida mediante otra variable?
+
+
+Teniendo lo anterior como contexto, existe un test estadístico que nos permite estimar bajo ciertas condiciones evidencia la autoproducción espacial llamado _I de Moran_ es posiblemente el indicador más utilizado de autocorrelación espacial global y para ampliamente utilizado para en temáticas segregación o clusterización social. Fue sugerido inicialmente por [@moran_interpretation_1948] y popularizado a través del trabajo clásico sobre autocorrelación espacial de Cliff y Ord (1973).
+
+A continuación se realizará un análisis teórico y práctico de las diferentes técnicas de autocorrelación espacial usado en ciencias sociales, en particular haciendo usos de Índice de Moran y todos los tratamientos previos. Se tratará evidenciar estadísticamente si existe agrupamiento o segregación por nivel Socieconómico en la una comuna de Chile, haciendo uso del nivel de años de estudio de jefe de hogar, más aún, identificar espacialmente donde se ubican estas concentraciones tanto de ingresos alto como bajos.
+
+Pasos:
+
+- Preparación de Datos
+- Matriz de Vecindad
+- Indicador de Global Moran
+- Indicador de Local Moran
+
+
+## Prepararación de Datos
+
+**Cargar Librerías**
+
+```{r eval=FALSE}
+library(dplyr)
+library(sf)
+library(ggplot2)
+library(raster)
+library(mapview)
+library(spdep)
+library(spatstat)
+```
+
+**Lectura de Manzanas Censales**
+
+Se procede a leer las manzanas censales y se filtra la comuna objeto de estudio, para efecto de este documento se seleccionará la comuna de _LAS CONDES_.
+
+```{r}
+mi_comuna <-  "LAS CONDES"
+mz_comuna <- readRDS("data/censo/manzanas.rds") %>% 
+  filter(NOM_COM == mi_comuna) %>% 
+  st_transform(32719)
+
+```
+
+**Eliminar valores Nulos**
+
+Es procedimiento es clave para realizar los cálculos posteriores, por lo cual se debe eliminar las manzanas sin registros de población y por ende sin registro de escolaridad del jefe de hogar.
+
+```{r}
+
+mz_comuna <-  mz_comuna %>% 
+  mutate(nived = JH_ESC_P) %>% # Usaremos variable auxiliar de nivel educacional
+  filter(!is.na(nived))
+```
+
+
+
+**Visualización del Escolaridad del Jefe de Hogar**
+
+```{r}
+ggplot() +
+  geom_sf(data = mz_comuna, aes(fill = nived), color ="gray80", 
+          alpha=1,  size= 0.1)+
+  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
+  ggtitle("Nivel Educacional del Jefe de Hogar") +
+  theme_bw() +
+  theme(plot.title = element_text(size=12))+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+## Construcción de la Matriz de Vecindad
+
+
+
+La matriz de vecindad $W_{ij}$ es un elemento central de la estadística y el análisis espacial es la cercanía y la distancia, a partir de la cual definimos que elementos cercanos, o vecinos.
+
+Matemáticamente se puede expresar si ciertos elementos son continuos:
+
+$$W=(w_{ij}:i,j=1,...,n)$$
+
+Donde los el valor de $w_ij$ expresa la relación de vecindad entre los elementos $i$
+ y $j$:
+
+$$w_{ij} = \begin{cases}1 \space vecino \\
+0 \space no \space vecino
+\end{cases}$$
+ 
+Como ilustración, si tuviéramos 3 observaciones y una matriz de la siguiente forma:
+$$$$
+$$W=\begin{pmatrix}
+ w_{11} & w_{12} & w_{13} \\
+ w_{21} & w_{22} & w_{23} \\
+ w_{31} & w_{32} & w_{33}
+\end{pmatrix}=\begin{pmatrix}
+ 1 &  0 & 0 \\
+ 1 &  1 & 0 \\
+ 1 &  0 & 0 
+\end{pmatrix}$$
+
+
+**Polígonos a puntos**
+
+```{r}
+ptos_comuna <- mz_comuna%>%
+  st_geometry() %>%
+  st_centroid()
+
+ggplot() +
+  geom_sf(data = ptos_comuna,  color ="#525252", alpha=1,  size= 0.5)+
+  ggtitle("Puntos Centroides de Manzanas") +
+  theme_bw() +
+  theme(plot.title = element_text(size=12))+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+**Cálculo de K Vecinos**
+
+
+Aunque existen muchas de construir una matriz de vecindad, para los efectos prácticos usaremos el algoritmo _K Vecinos más Cercanos_ conocido de `knn` (K Nearest Neightbours).
+
+
+Para definir la vecindad se calcula la distancia desde un origen una centroide de manzana cualquiera respecto a todas las demás, quedando con las $k$ distancias mas cortas.
+
+**Distancia Euclidiana: ** Para calcular la separación entre dos puntos la distancia Euclidiana es la más utilizada y se define matemáticamente con la siguiente ecuación (@eq-eucledian-distance):
+
+$$d_{ij}= \sqrt{(x_i-x_j)^2+(y_i-y_j)^2}$${#eq-eucledian-distance}
+
+Es la distancia "ordinaria" entre dos puntos de un espacio euclídeo, la cual se deduce a partir del teorema de Pitágoras.
+
+![Representación gráfica de la Distancia Euclediana](images/d-euclediana.png){width=50%}
+
+
+**Distancia Great Circle:** El el tipo de distancia que utiliza cuando las objetos espaciales se encuentran coordenadas geográfica ya que considera la curvatura de la tierra.
+
+![Distancia Great Circle](images/great-circle_distance.png){width=40%}
+
+
+```{r}
+# vecinos mas cercanos (neighbours)
+k <- 8 # numero de vecinos a buscar
+nb_mzs <- knearneigh(ptos_comuna, k = k) %>%  # por punto calcula K vecinos
+  knn2nb() # Knn a matriz de vecindad
+
+```
+
+**Visualización de la relaciones por cada Centroide**
+
+
+```{r}
+# matri< de vecindad a lines solo oara visualizaciñon
+neighbors_sf <- as(nb2lines(nb_mzs, coords = st_geometry(ptos_comuna)), 'sf')
+
+p_mv <- ggplot() +
+  geom_sf(data = mz_comuna, fill = NA, color ="gray60", alpha=1,  size= 0.3)+
+  geom_sf(data = neighbors_sf,  color = "red", alpha=0.5,  size= 0.5)+
+  geom_sf(data = ptos_comuna,  color ="#525252", alpha=1,  size= 1)+
+  ggtitle("Relaciones de Vecindad por cada manzana (k = 8)") +
+  theme_bw() +
+  theme(plot.title = element_text(size=12))+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+
+p_mv
+```
+
+
+**Revisión de la Matriz**
+
+Solo para ver la estructura de relaciones, correspondiente una matriz simétrica $n \times n$ donde la diagonal es 0. El valor 0 representa no relación y 1 relación o conexión.
+
+```{r}
+# relaciones entre 10 primeros elementos
+matriz_vec <- listw2mat(nb2listw(nb_mzs, style = "B"))
+dim(matriz_vec)
+# rowSums(matriz_vec) %>% max()
+```
+
+![Estrucutura de una Matriz de Distancia](images/matriz_dist.png){width=80%}
+
+
+```{r}
+matriz_vec[1:10,1:10]
+```
+
+
+**Asignar Pesos por Población**
+
+
+Ahora a la matriz de vecindad le vamos a convertir en una matriz de pesos y para nuestro caso vamos asignar los pesos por población, asumiendo que la influencia por cercanía espacial sería proporcional a la cantidad de personas.
+
+
+```{r}
+nb <-nb2listw(nb_mzs)
+mz_comuna$id <- 1:nrow(mz_comuna)
+
+# Estado actual (todos los vecinos pesan lo mismo)
+nb$weights %>% head(5)
+```
+
+
+El siguiente bloque de código a través de un proceso iterativo identifica el id de cada uno de los 8 vecinos, captura la población y le asigna la proporción respecto a la suma de personas de las manzanas de los 8 vecinos.
+
+```{r}
+nb$weights = lapply(1:nrow(mz_comuna), function(i)
+  mz_comuna$POBLACION[mz_comuna$id %in% nb$neighbours[[i]]] / 
+    sum(mz_comuna$POBLACION[mz_comuna$id %in% nb$neighbours[[i]]]))
+
+nb$weights %>% head(5)
+```
+
+Volvamos a revisar la matriz de distancia pero ponderada por población.
+ 
+ 
+```{r}
+# relaciones entre 10 primeros elementos
+matriz_vec_pond <- listw2mat(nb)
+dim(matriz_vec_pond)
+# rowSums(matriz_vec_pond)
+
+matriz_vec_pond[1:10,1:10]
+```
+
+
+## Cálculo de índice de Morán (global y local)
+
+### Índice de Moran
+
+Para efectos del presente curso el indicador se utilizará como test para evidenciar la segregación que pueda existir en el territorio, entendiéndose por segregación la agrupación de individuos de características similares en el espacio, resultando en cierta homogeneidad de la población.
+
+
+El índice de Moran en esencia, se trata de un estadístico de producto cruzado entre una variable y su retardo espacial, con la variable expresada en desviaciones de su media. 
+
+
+$$I= \frac{n}{S_0 }\frac{\sum_{i=1}^n  \sum_{j=1}^n W_{ij} Z_iZ_j}{ \sum_{i=1}^n Z_i^2}$${#eq-moran-test}
+
+
+Donde:
+
+- $zi$ = valor de la desviación de la media de la variable de interés, es decir $z_i=x_i-\bar{x}$. 
+
+- $S_o= \sum_{i=1}^n  \sum_{j=1}^n W_{ij}$
+
+- $W_{ij}$ =  Matriz de Vecindad
+
+La inferencia de I de Moran se basa en una hipótesis nula de aleatoriedad espacial. La distribución del estadístico bajo la hipótesis nula puede derivarse utilizando un supuesto de normalidad (variantes aleatorias normales independientes), o la llamada aleatoriedad (es decir, cada valor tiene la misma probabilidad de ocurrir en cualquier lugar). 
+
+
+Para efectos prácticos de evaluación de la autocorrelación espacial se  buscará usar el promedio de educación del jefe de hogar como un indicador del nivel socioeconómico del hogar. El promedio de estos a nivel de manzana, nos indicará a grandes rasgos las características de la población a este nivel desagregado.
+
+
+**Aplicación de Moran Test (global)** (@eq-moran-test)
+```{r}
+## Test de Moran de autocorrelacion global
+spdep::moran.test(x = mz_comuna$nived,  listw = nb)
+```
+
+El _p-value_ es menor que `0.05` se rechaza la hipótesis nula, por ende podemos descartar un patrón aleatorio en los datos de muestra.
+
+
+**Gráfico de Moran*
+
+```{r}
+moran.plot(x = mz_comuna$nived,  listw = nb, 
+           labels=as.character(mz_comuna$id))
+```
+
+En este gráfico se se divide el espacio en cuadrantes  de Valores Altos rodeados de Valores Altos (hotspots), Bajos rodeados de Bajos (Coldspot) y los intermedios.
+
+
+
+### Local Moran
+
+El Índice de Moran (global) fue diseñado  para rechazar la hipótesis nula de aleatoriedad espacial a favor de una alternativa de agrupación. Dicha agrupación es una característica del patrón espacial completo y no proporciona una indicación de la ubicación de las agrupaciones.
+
+El estadístico Moran local fue sugerido por[@anselin_local_1995] Acomo una forma de identificar los clusters locales y los valores atípicos espaciales locales.
+
+Para nuestro caso práctico  este test permite identificar la significancia de los cluster y poder clasificar las observaciones (manzanas) e identificar denominadas "Hight Hight" y "Low Low" en coherencia de los cuadrantes diagonales del gráfico de Moran antes visualizado.
+
+
+Con las ponderaciones estandarizadas por filas, $S_0=\sum_i\sum_jw_{ij}$ la suma de todas las ponderaciones es igual al número de observaciones, $n$. Como resultado,  del gráfico de dispersión de Moran, el estadístico I de Moran se simplifica a:
+ 
+ $$I=\frac{\sum_i\sum_jw_{ij}Z_iZj}{{\sum_i z_i^2},}$$
+ 
+El correspondiente estadístico local de Moran consistiría en el componente de la suma doble que corresponde a cada observación $i$, o:
+
+$$I_i= \frac{\sum_{j}w_{ij}Z_iZj}{\sum_i z_i^2},$$
+
+En esta expresión, el denominador es fijo y, por lo tanto, se puede ignorar. Para simplificar la notación, lo sustituimos por $c$ de modo que la expresión de Moran local se convierte en la expresión:
+
+$$I_i= c.Z_i\sum_jw_{ij}Z_j$$
+Se podría demostrar (Matemáticamente) que la suma de las estadísticas locales es proporcional a la I de Moran global o, alternativamente, que la I de Moran global se corresponde con la media de las estadísticas locales (para más detalles, [@anselin_local_1995].
+
+
+Para realizar estos cálculos en R haremos uso de la función `localmoran`
+
+
+```{r}
+# moran local
+lmoran <-
+  localmoran(mz_comuna$nived,
+             listw = nb) %>%
+  as_tibble() # llevar a tabla para facilitar trabajo
+```
+
+Haciendo uso del test de local Moran podemos identificar los cluster haciendo uso de los resultados significancia estadística:
+
+
+
+
+
+```{r}
+# resultados
+mzs_cluster <-
+  mz_comuna %>%
+  mutate(
+    z_i = as.numeric(scale(mz_comuna$nived)), # var estandarizada
+    z_j = lag.listw(nb, z_i) # promedio vecinos
+    ) %>%
+  mutate(
+    P = as.numeric(lmoran$`Pr(z != E(Ii))`) # significancia
+  )
+```
+
+* Las puntuaciones $z$ y los valores $p$ son medidas de significancia estadística que indican si se rechazará la hipótesis nula, entidad por entidad. En efecto, indican si la aparente similitud (un clustering espacial de valores altos o bajos) o la falta de similitud (un valor atípico espacial) es más marcada de lo que se espera en una distribución aleatoria
+
+* Una puntuación $z$ positiva alta para una entidad indica que las entidades circundantes tienen valores similares (ya sea valores altos o bajos). La salida será Alto/alto para un clúster de valores altos estadísticamente significativo y Bajo/bajo para un clúster de valores bajos estadísticamente significativo.
+
+* Una puntuación $z$ negativa baja para una entidad indica un valor atípico de datos espacial estadísticamente significativo. La salida indicará si la entidad tiene un valor alto y está rodeada por entidades con valores bajos (Alto/bajo) o si la entidad tiene un valor bajo y está rodeada por entidades con valores altos (Bajo/alto).
+
+
+```{r}
+mzs_cluster <- mzs_cluster%>%
+  mutate(
+    clusterM = # clasificar cluster
+      case_when(
+        (P <= 0.5) & (z_i >  0) & (z_j >  0) ~ "HH",
+        (P <= 0.5) & (z_i <= 0) & (z_j >  0) ~ "LH",
+        (P <= 0.5) & (z_i >  0) & (z_j <= 0) ~ "HL",
+        (P <= 0.5) & (z_i <= 0) & (z_j <= 0) ~ "LL",
+        TRUE ~ "NS"
+        )
+  )
+
+# st_write(mzs_cluster, "data/shape/clusters_LC.shp")
+```
+
+
+El campo `clusterM` indicará siempre clusters y valores atípicos estadísticamente significativos para un nivel de confianza del 95 por ciento. 
+
+
+```{r}
+# resultados clusters
+table(mzs_cluster$clusterM)
+```
+
+**Visualización de cluster HH y LL**
+
+```{r}
+
+mzs_cluster_segr <- mzs_cluster %>% filter(clusterM %in% c( "HH", "LL"))
+
+ggplot() +
+  geom_sf(data = mz_comuna, fill =NA,  color ="gray80", 
+          alpha=1,  size= 0.1)+
+  geom_sf(data = mzs_cluster_segr, aes(fill = clusterM),
+          color =NA, alpha=0.8,  size= 0.1)+
+  scale_fill_manual(values = c("#08519c", "#e31a1c"))+
+  ggtitle("Segregación en la comuna de Las Condes") +
+  theme_bw() +
+  theme(plot.title = element_text(size=12))+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+
+# mapview(mzs_cluster_segr, zcol = "clusterM")
+```
+
+```{r eval=T}
+
+kde_raster <-  raster("data/delitos/kde_delvio_LC.tif")
+
+mapview(kde_raster)+
+    mapview(mzs_cluster_segr, zcol = "clusterM", layer.name =  "clusterM")
+
+```
+
+
+## Actividades:
+
+* Calcular local Moran para la variable de Atractor comercial de la Base del SII
+* Calcular local Moran cualquier otra variable de la base comunal.
+* Calcular local Moran cualquier otra variable en otra comuna.
+
+
+## Referencias del Capítulo
+
+- [Distance-Band Spatial Weights - Luc Anselin](https://geodacenter.github.io/workbook/4b_dist_weights/lab4b.html)
+- [Global Spatial Autocorrelation - Luc Anselin](https://geodacenter.github.io/workbook/5a_global_auto/lab5a.html)
+- [Local Spatial Autocorrelation - Luc Anselin](https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html)
+- [AnalizaR Datos Políticos- Mapas y datos espaciales](https://arcruz0.github.io/libroadp/maps.html#inferencia-a-partir-de-datos-espaciales)
+
+
+

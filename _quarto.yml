@@ -8,6 +8,7 @@ book:
   author: "Denis Berroeta González (denis.berroeta@uai.cl)"
   date: "2022-08-12"
   number-sections: 3
+  bibliography: references.bib
   page-footer: 
     left: "Copyright 2022, Denis Berroeta" 
   chapters:
@@ -17,6 +18,7 @@ book:
     - datos_vectoriales.qmd
     - raster.qmd
     - inferencia.qmd
+    - autocorrelacion.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd

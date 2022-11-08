@@ -259,6 +259,8 @@ Histograma de valores de Densidad
 ```{r}
 hist(kde_raster, col="springgreen4", main="Histograma KDE",
   ylab="Número de Pixeles", xlab="valor KDE")
+
+# writeRaster(kde_raster, "data/delitos/kde_delvio_LC.tif")
 ```
 
 Visualizar Raster KDE con ggplot
@@ -317,7 +319,8 @@ library(exactextractr)
 mz_comuna  <- mz_comuna %>% 
   mutate(idelv = exact_extract(kde_raster,y = ., 'mean', 
                                progress = FALSE))
-  
+
+# saveRDS(mz_comuna, "data/delitos/idel_violentos_LC.rds")
 ```
 
 
