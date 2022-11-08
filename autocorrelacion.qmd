@@ -365,10 +365,10 @@ mzs_cluster <- mzs_cluster%>%
   mutate(
     clusterM = # clasificar cluster
       case_when(
-        (P <= 0.5) & (z_i >  0) & (z_j >  0) ~ "HH",
-        (P <= 0.5) & (z_i <= 0) & (z_j >  0) ~ "LH",
-        (P <= 0.5) & (z_i >  0) & (z_j <= 0) ~ "HL",
-        (P <= 0.5) & (z_i <= 0) & (z_j <= 0) ~ "LL",
+        (P <= 0.05) & (z_i >  0) & (z_j >  0) ~ "HH",
+        (P <= 0.05) & (z_i <= 0) & (z_j >  0) ~ "LH",
+        (P <= 0.05) & (z_i >  0) & (z_j <= 0) ~ "HL",
+        (P <= 0.05) & (z_i <= 0) & (z_j <= 0) ~ "LL",
         TRUE ~ "NS"
         )
   )
@@ -425,6 +425,7 @@ mapview(kde_raster)+
 
 ## Referencias del Capítulo
 
+- [http://www.scielo.org.co/pdf/rcdg/v28n1/2256-5442-rcdg-28-01-1.pdf](http://www.scielo.org.co/pdf/rcdg/v28n1/2256-5442-rcdg-28-01-1.pdf)
 - [Distance-Band Spatial Weights - Luc Anselin](https://geodacenter.github.io/workbook/4b_dist_weights/lab4b.html)
 - [Global Spatial Autocorrelation - Luc Anselin](https://geodacenter.github.io/workbook/5a_global_auto/lab5a.html)
 - [Local Spatial Autocorrelation - Luc Anselin](https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html)
