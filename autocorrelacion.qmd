@@ -167,6 +167,9 @@ Es la distancia "ordinaria" entre dos puntos de un espacio euclídeo, la cual se
 ![Distancia Great Circle](images/great-circle_distance.png){width=40%}
 
 
+
+**Calcular Vecinos Cercanos ($k$)**
+
 ```{r}
 # vecinos mas cercanos (neighbours)
 k <- 8 # numero de vecinos a buscar

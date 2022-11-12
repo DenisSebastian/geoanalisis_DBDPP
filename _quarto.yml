@@ -19,6 +19,7 @@ book:
     - raster.qmd
     - inferencia.qmd
     - autocorrelacion.qmd
+    - regresion_espacial.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd
