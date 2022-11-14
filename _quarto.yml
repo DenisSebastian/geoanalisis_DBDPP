@@ -23,7 +23,6 @@ book:
     - part: "Tareas"
       chapters:
         - tarea_1.qmd
-        - tarea_2.qmd
     - part: "Anexos"
       chapters:
       - luces_nocturnas.qmd
