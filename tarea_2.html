@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curso: Geoanálisis - 1&nbsp; Introducción Estadística Espacial</title>
+<title>Curso: Geoanálisis - Tarea 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./datos_espaciales.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./luces_nocturnas.html" rel="next">
+<link href="./tarea_1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -66,7 +66,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></h1>
+      <h1 class="quarto-secondary-nav-title">Tarea 2</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -96,7 +96,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -144,7 +144,7 @@ ul.task-list{list-style: none;}
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">Tarea 2</a>
+  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link active">Tarea 2</a>
   </div>
 </li>
       </ul>
@@ -178,18 +178,12 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"> <span class="header-section-number">1.1</span> Objetivos</a></li>
-  <li><a href="#origen-de-la-estadística" id="toc-origen-de-la-estadística" class="nav-link" data-scroll-target="#origen-de-la-estadística"> <span class="header-section-number">1.2</span> Origen de la Estadística</a></li>
-  <li><a href="#estadística-vs-estadística-espacial" id="toc-estadística-vs-estadística-espacial" class="nav-link" data-scroll-target="#estadística-vs-estadística-espacial"> <span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</a></li>
-  <li><a href="#condideraciones-generales" id="toc-condideraciones-generales" class="nav-link" data-scroll-target="#condideraciones-generales"> <span class="header-section-number">1.4</span> Condideraciones generales</a></li>
-  <li><a href="#ejemplos-de-correlación-espacial" id="toc-ejemplos-de-correlación-espacial" class="nav-link" data-scroll-target="#ejemplos-de-correlación-espacial"> <span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</a>
+  <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
+  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones">Instrucciones</a>
   <ul class="collapse">
-  <li><a href="#autoproducción-tráfico-de-drogas" id="toc-autoproducción-tráfico-de-drogas" class="nav-link" data-scroll-target="#autoproducción-tráfico-de-drogas"> <span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</a></li>
-  <li><a href="#co-producción-mercado-inmobiliario-local" id="toc-co-producción-mercado-inmobiliario-local" class="nav-link" data-scroll-target="#co-producción-mercado-inmobiliario-local"> <span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</a></li>
-  <li><a href="#segregación-y-delincuencia" id="toc-segregación-y-delincuencia" class="nav-link" data-scroll-target="#segregación-y-delincuencia"> <span class="header-section-number">1.5.3</span> Segregación y delincuencia</a></li>
-  <li><a href="#valores-de-vivienda" id="toc-valores-de-vivienda" class="nav-link" data-scroll-target="#valores-de-vivienda"> <span class="header-section-number">1.5.4</span> Valores de Vivienda</a></li>
+  <li><a href="#parte-1-interpolación-de-inverso-a-la-distancia-poderada." id="toc-parte-1-interpolación-de-inverso-a-la-distancia-poderada." class="nav-link" data-scroll-target="#parte-1-interpolación-de-inverso-a-la-distancia-poderada.">Parte 1: Interpolación de Inverso a la Distancia Poderada.</a></li>
+  <li><a href="#parte-2-autocorrelación-espacial." id="toc-parte-2-autocorrelación-espacial." class="nav-link" data-scroll-target="#parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</a></li>
   </ul></li>
-  <li><a href="#inconsistencia-estadística-de-datos-espaciales-agregados-maup" id="toc-inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="nav-link" data-scroll-target="#inconsistencia-estadística-de-datos-espaciales-agregados-maup"> <span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</a></li>
   </ul>
 </nav>
     </div>
@@ -198,8 +192,8 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></h1>
-<p class="subtitle lead">Módulo 1: Teórico</p>
+<h1 class="title d-none d-lg-block">Tarea 2</h1>
+<p class="subtitle lead">Inferencia y Autocorrelación Espacial</p>
 </div>
 
 
@@ -213,129 +207,47 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="objetivos" class="level2 page-columns page-full" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">1.1</span> Objetivos</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/m1_objetivos.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Objetivos</figcaption><p></p>
-</figure>
-</div>
+<section id="antecedentes" class="level2">
+<h2 class="anchored" data-anchor-id="antecedentes">Antecedentes</h2>
 <ul>
-<li>Conocer teóricos fundamentales de la estadística espacial.</li>
+<li>Fecha de entrega: <strong>23 de Noviembre 2022</strong></li>
+<li>Formato: Informe (pdf o html) + Código (.r o .rmd)</li>
+<li>Integrantes: 1</li>
 </ul>
 </section>
-<section id="origen-de-la-estadística" class="level2 page-columns page-full" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="origen-de-la-estadística"><span class="header-section-number">1.2</span> Origen de la Estadística</h2>
-<p>Estadística deriva del italiano statista (hombre de Estado) y se desarrolla desde la antigüedad para facilitar la gestión tributaria y estimar la capacidad bélica de un reino. Ej: censos egipcios desde el 3050 a.C.</p>
-<p>Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarrolla la estadística en estrecha relación con la cartografía, principalmente para la administración y dominio de territorios.</p>
+<section id="instrucciones" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="instrucciones">Instrucciones</h2>
+<section id="parte-1-interpolación-de-inverso-a-la-distancia-poderada." class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="parte-1-interpolación-de-inverso-a-la-distancia-poderada.">Parte 1: Interpolación de Inverso a la Distancia Poderada.</h3>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="images/mapa_africa.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Origen de la Estadística</figcaption><p></p>
+<p><img src="images/exp_idw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Descripción gráfica de los resultados de interpolación de inverso a la distancia ponderada</figcaption><p></p>
 </figure>
 </div>
+<ol type="1">
+<li>Defina un área de estudio Urbana (no la comunas vistas en clases)</li>
+<li>Realice 3 calculos de interpolación de Inverso a al Distancia (IDW) con los datos del SII correspodiente a <em>comercio</em>, <em>oficina</em> y <em>atractor</em>. <em>(1.5 pt)</em></li>
+<li>Calcule un indicador de territorial por cada uno de los resultados de las IDW del punto anterio y visualice los los resultados. <em>(1.5 pt)</em></li>
+</ol>
 </section>
-<section id="estadística-vs-estadística-espacial" class="level2 page-columns page-full" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="estadística-vs-estadística-espacial"><span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</h2>
-<p><strong>Estadística:</strong></p>
-<ul>
-<li>Análisis de la estructura de datos representativos de una población (en áreas arbitrarias)</li>
-<li>Se basa en matemáticas relativamente complejas</li>
-</ul>
-<p><img src="images/gauss_graph.png" class="img-fluid" alt="Distribución normal en estadística"> <strong>Geoestadística</strong></p>
-<ul>
-<li>Análisis de relaciones de dependencia espacial entre datos georreferenciados</li>
-<li>Complejidad de cálculo que hacía inviable su uso masivo</li>
-</ul>
+<section id="parte-2-autocorrelación-espacial." class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</h3>
+<ol type="1">
+<li><p>Defina un área de estudio Urbana (no la comunas vistas en clases) y visualice una variable que usted decida evaluar su autocorrelación espacial (Ej: Nivel Educacional). Justifique la selwcción de variable a modo de hipótesis. <em>(1 pt)</em></p></li>
+<li><p>Genere una Matriz de Vecidad ponderada por la variable que usted encuentre idónea (Ej: Población) <em>(1 pt)</em></p></li>
+<li><p>Cálculo de índice de Moran (global) y visualice sus resultados en gráfico de cuadrantes. Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
+<li><p>Cálculo de índice de local Moran e identifique los grupos o cluster haciendo uso de los resultados significancia estadística, visualice los resultados en un Mapa e Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
+</ol>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="images/dep_espacial.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Dependencia espacial en geoestadística</figcaption><p></p>
+<p><img src="images/clusters_LC.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Autocorrelación Espacial</figcaption><p></p>
 </figure>
 </div>
-</section>
-<section id="condideraciones-generales" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="condideraciones-generales"><span class="header-section-number">1.4</span> Condideraciones generales</h2>
-<p>La inferencia estadística convencional se basa en dos supuestos fundamentales</p>
-<ul>
-<li>Los valores de una variable se distribuyen de forma aleatoria</li>
-<li>Los valores de una variable son independientes unos de otros</li>
-</ul>
-<p>Pero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:</p>
-<ul>
-<li>Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí (Ley de Tobler, 1970) *La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales (Lefebvre, 1974)</li>
-</ul>
-<p>Para resolver esta limitación existen dos enfoques principales</p>
-<ul>
-<li>La econometría espacial, que trata el efecto espacial como un error y lo elimina para generar estimaciones sin sesgo</li>
-<li>La geoestadística, que identifica y cuantifica el efecto que el espacio genera en la estructura de la información</li>
-</ul>
-</section>
-<section id="ejemplos-de-correlación-espacial" class="level2 page-columns page-full" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="ejemplos-de-correlación-espacial"><span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</h2>
-<section id="autoproducción-tráfico-de-drogas" class="level3 page-columns page-full" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="autoproducción-tráfico-de-drogas"><span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/drogas_autoproducion.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Autoproducción Espacial en tráfico de Drogas</figcaption><p></p>
-</figure>
-</div>
-</section>
-<section id="co-producción-mercado-inmobiliario-local" class="level3 page-columns page-full" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/mercado_inmob.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Co-producción Espacial en Mercado inmobiliario local</figcaption><p></p>
-</figure>
-</div>
-</section>
-<section id="segregación-y-delincuencia" class="level3 page-columns page-full" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="segregación-y-delincuencia"><span class="header-section-number">1.5.3</span> Segregación y delincuencia</h3>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/lc_vulnerabilidad.png" class="img-fluid"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/lc_delitos_dom.png" class="img-fluid"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/LC_delitos_drogas.png" class="img-fluid"></p>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/segregacion_del.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Segregación y delincuencia</figcaption><p></p>
-</figure>
-</div>
-</section>
-<section id="valores-de-vivienda" class="level3 page-columns page-full" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="valores-de-vivienda"><span class="header-section-number">1.5.4</span> Valores de Vivienda</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/val_vivienda.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Valores de Vivienda</figcaption><p></p>
-</figure>
-</div>
-</section>
-</section>
-<section id="inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="level2 page-columns page-full" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</h2>
-<p><strong>Modifiable Areal Unit Problem</strong>: inconsistencia de indicadores estadísticos al modificar los perímetros de agregación (Gehlke &amp; Biehl 1934, Openshaw &amp; Taylor 1979)</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/maup.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Modifiable Areal Unit Problem</figcaption><p></p>
-</figure>
-</div>
-<p>En general, es recomendable trabajar con datos a la menor escala posible, o agregarlos en zonas homogéneas</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -438,13 +350,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Antecedentes</span>
+      <a href="./tarea_1.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tarea 1</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./datos_espaciales.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a Datos Espaciales</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./luces_nocturnas.html" class="pagination-link">
+        <span class="nav-page-text">Luces Nocturnas con GEE</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
