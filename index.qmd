@@ -1,6 +1,6 @@
 # Antecedentes {.unnumbered}
 
-Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2022, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
+Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2023, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
 
 ## Introducción
 

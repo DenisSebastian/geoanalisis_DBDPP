@@ -1,5 +1,5 @@
 ---
-title: "Introducción Estadística Espacial"
+title: "Estadistica Espacial"
 subtitle: "Módulo 1: Teórico"
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: " Introducción a Datos Espaciales"
+title: "Datos Espaciales"
 subtitle: "Módulo 1: Práctico"
 editor_options: 
   chunk_output_type: console
@@ -14,6 +14,8 @@ suppressPackageStartupMessages(library(mapview))
 ```
 
 ## Objetivos del Módulo
+
+![Objetivos](images/m1_objetivos.png)
 
 La presente Sesión tiene como objetivo principal introducir conceptos generales y manipulación básica de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.
 
