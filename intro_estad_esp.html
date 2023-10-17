@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curso: Geoanálisis - 1&nbsp; Estadistica Espacial</title>
+<title>Curso: Geoanálisis - 1&nbsp; Estadística Espacial</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -75,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_estad_esp.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadistica Espacial</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_estad_esp.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -109,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadistica Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -121,10 +140,6 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Tareas</span></span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Anexos</span></span>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -144,16 +159,17 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"><span class="header-section-number">1.1</span> Objetivos</a></li>
   <li><a href="#origen-de-la-estadística" id="toc-origen-de-la-estadística" class="nav-link" data-scroll-target="#origen-de-la-estadística"><span class="header-section-number">1.2</span> Origen de la Estadística</a></li>
-  <li><a href="#estadística-vs-estadística-espacial" id="toc-estadística-vs-estadística-espacial" class="nav-link" data-scroll-target="#estadística-vs-estadística-espacial"><span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</a></li>
-  <li><a href="#condideraciones-generales" id="toc-condideraciones-generales" class="nav-link" data-scroll-target="#condideraciones-generales"><span class="header-section-number">1.4</span> Condideraciones generales</a></li>
-  <li><a href="#ejemplos-de-correlación-espacial" id="toc-ejemplos-de-correlación-espacial" class="nav-link" data-scroll-target="#ejemplos-de-correlación-espacial"><span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</a>
+  <li><a href="#definición-general" id="toc-definición-general" class="nav-link" data-scroll-target="#definición-general"><span class="header-section-number">1.3</span> Definición General</a></li>
+  <li><a href="#estadística-vs-estadística-espacial" id="toc-estadística-vs-estadística-espacial" class="nav-link" data-scroll-target="#estadística-vs-estadística-espacial"><span class="header-section-number">1.4</span> Estadística vs Estadística Espacial</a></li>
+  <li><a href="#condideraciones-generales" id="toc-condideraciones-generales" class="nav-link" data-scroll-target="#condideraciones-generales"><span class="header-section-number">1.5</span> Condideraciones generales</a></li>
+  <li><a href="#ejemplos-de-correlación-espacial" id="toc-ejemplos-de-correlación-espacial" class="nav-link" data-scroll-target="#ejemplos-de-correlación-espacial"><span class="header-section-number">1.6</span> Ejemplos de Correlación Espacial</a>
   <ul class="collapse">
-  <li><a href="#autoproducción-tráfico-de-drogas" id="toc-autoproducción-tráfico-de-drogas" class="nav-link" data-scroll-target="#autoproducción-tráfico-de-drogas"><span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</a></li>
-  <li><a href="#co-producción-mercado-inmobiliario-local" id="toc-co-producción-mercado-inmobiliario-local" class="nav-link" data-scroll-target="#co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</a></li>
-  <li><a href="#segregación-y-delincuencia" id="toc-segregación-y-delincuencia" class="nav-link" data-scroll-target="#segregación-y-delincuencia"><span class="header-section-number">1.5.3</span> Segregación y delincuencia</a></li>
-  <li><a href="#valores-de-vivienda" id="toc-valores-de-vivienda" class="nav-link" data-scroll-target="#valores-de-vivienda"><span class="header-section-number">1.5.4</span> Valores de Vivienda</a></li>
+  <li><a href="#autoproducción-tráfico-de-drogas" id="toc-autoproducción-tráfico-de-drogas" class="nav-link" data-scroll-target="#autoproducción-tráfico-de-drogas"><span class="header-section-number">1.6.1</span> Autoproducción: Tráfico de Drogas</a></li>
+  <li><a href="#co-producción-mercado-inmobiliario-local" id="toc-co-producción-mercado-inmobiliario-local" class="nav-link" data-scroll-target="#co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.6.2</span> Co-producción: Mercado inmobiliario local</a></li>
+  <li><a href="#segregación-y-delincuencia" id="toc-segregación-y-delincuencia" class="nav-link" data-scroll-target="#segregación-y-delincuencia"><span class="header-section-number">1.6.3</span> Segregación y delincuencia</a></li>
+  <li><a href="#valores-de-vivienda" id="toc-valores-de-vivienda" class="nav-link" data-scroll-target="#valores-de-vivienda"><span class="header-section-number">1.6.4</span> Valores de Vivienda</a></li>
   </ul></li>
-  <li><a href="#inconsistencia-estadística-de-datos-espaciales-agregados-maup" id="toc-inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="nav-link" data-scroll-target="#inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</a></li>
+  <li><a href="#inconsistencia-estadística-de-datos-espaciales-agregados-maup" id="toc-inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="nav-link" data-scroll-target="#inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.7</span> Inconsistencia estadística de datos espaciales agregados: MAUP</a></li>
   </ul>
 </nav>
     </div>
@@ -162,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadistica Espacial</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></h1>
 <p class="subtitle lead">Módulo 1: Teórico</p>
 </div>
 
@@ -201,8 +217,13 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="estadística-vs-estadística-espacial" class="level2 page-columns page-full" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="estadística-vs-estadística-espacial"><span class="header-section-number">1.3</span> Estadística vs Estadística Espacial</h2>
+<section id="definición-general" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="definición-general"><span class="header-section-number">1.3</span> Definición General</h2>
+<p>La estadística es una herramienta fundamental en la ciencia de datos que nos permite comprender y analizar datos para obtener información significativa. En términos simples, es como un lenguaje que utilizamos para describir, resumir y tomar decisiones basadas en la información que los datos nos proporcionan. Al aplicar métodos estadísticos, podemos identificar patrones, tendencias y relaciones en los datos, lo que es esencial tanto para la investigación académica como para la toma de decisiones en el mundo real.</p>
+</section>
+<section id="estadística-vs-estadística-espacial" class="level2 page-columns page-full" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="estadística-vs-estadística-espacial"><span class="header-section-number">1.4</span> Estadística vs Estadística Espacial</h2>
+<p>La estadística en general es una disciplina amplia que se aplica a diversos tipos de datos y problemas, utilizando métodos estadísticos convencionales. La estadística espacial, por otro lado, se enfoca en datos con ubicaciones geográficas explícitas y se especializa en el análisis de la dependencia espacial y la modelización de patrones espaciales.</p>
 <p><strong>Estadística:</strong></p>
 <ul>
 <li>Análisis de la estructura de datos representativos de una población (en áreas arbitrarias)</li>
@@ -210,7 +231,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><img src="images/gauss_graph.png" class="img-fluid" alt="Distribución normal en estadística"> <strong>Geoestadística</strong></p>
 <ul>
-<li>Análisis de relaciones de dependencia espacial entre datos georreferenciados</li>
+<li>Análisis de relaciones de dependencia espacial entre datos georreferenciados y modelamiento de datos espacilizados.</li>
 <li>Complejidad de cálculo que hacía inviable su uso masivo</li>
 </ul>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -220,16 +241,17 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="condideraciones-generales" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="condideraciones-generales"><span class="header-section-number">1.4</span> Condideraciones generales</h2>
+<section id="condideraciones-generales" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="condideraciones-generales"><span class="header-section-number">1.5</span> Condideraciones generales</h2>
 <p>La inferencia estadística convencional se basa en dos supuestos fundamentales</p>
 <ul>
-<li>Los valores de una variable se distribuyen de forma aleatoria</li>
-<li>Los valores de una variable son independientes unos de otros</li>
+<li><p>Los valores de una variable se distribuyen de forma aleatoria</p></li>
+<li><p>Los valores de una variable son independientes unos de otros</p></li>
 </ul>
 <p>Pero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:</p>
 <ul>
-<li>Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí (Ley de Tobler, 1970) *La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales (Lefebvre, 1974)</li>
+<li><p>Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí. Ley de <span class="citation" data-cites="Tobler_1970">Tobler (<a href="references.html#ref-Tobler_1970" role="doc-biblioref">1970</a>)</span></p></li>
+<li><p>La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales. <span class="citation" data-cites="Lefebvre_1974">Lefebvre (<a href="references.html#ref-Lefebvre_1974" role="doc-biblioref">1974</a>)</span></p></li>
 </ul>
 <p>Para resolver esta limitación existen dos enfoques principales</p>
 <ul>
@@ -237,10 +259,10 @@ ul.task-list li input[type="checkbox"] {
 <li>La geoestadística, que identifica y cuantifica el efecto que el espacio genera en la estructura de la información</li>
 </ul>
 </section>
-<section id="ejemplos-de-correlación-espacial" class="level2 page-columns page-full" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="ejemplos-de-correlación-espacial"><span class="header-section-number">1.5</span> Ejemplos de Correlación Espacial</h2>
-<section id="autoproducción-tráfico-de-drogas" class="level3 page-columns page-full" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="autoproducción-tráfico-de-drogas"><span class="header-section-number">1.5.1</span> Autoproducción: Tráfico de Drogas</h3>
+<section id="ejemplos-de-correlación-espacial" class="level2 page-columns page-full" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="ejemplos-de-correlación-espacial"><span class="header-section-number">1.6</span> Ejemplos de Correlación Espacial</h2>
+<section id="autoproducción-tráfico-de-drogas" class="level3 page-columns page-full" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="autoproducción-tráfico-de-drogas"><span class="header-section-number">1.6.1</span> Autoproducción: Tráfico de Drogas</h3>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/drogas_autoproducion.png" class="img-fluid figure-img"></p>
@@ -248,8 +270,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="co-producción-mercado-inmobiliario-local" class="level3 page-columns page-full" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.5.2</span> Co-producción: Mercado inmobiliario local</h3>
+<section id="co-producción-mercado-inmobiliario-local" class="level3 page-columns page-full" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.6.2</span> Co-producción: Mercado inmobiliario local</h3>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/mercado_inmob.png" class="img-fluid figure-img"></p>
@@ -257,8 +279,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="segregación-y-delincuencia" class="level3 page-columns page-full" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="segregación-y-delincuencia"><span class="header-section-number">1.5.3</span> Segregación y delincuencia</h3>
+<section id="segregación-y-delincuencia" class="level3 page-columns page-full" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="segregación-y-delincuencia"><span class="header-section-number">1.6.3</span> Segregación y delincuencia</h3>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -279,8 +301,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="valores-de-vivienda" class="level3 page-columns page-full" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="valores-de-vivienda"><span class="header-section-number">1.5.4</span> Valores de Vivienda</h3>
+<section id="valores-de-vivienda" class="level3 page-columns page-full" data-number="1.6.4">
+<h3 data-number="1.6.4" class="anchored" data-anchor-id="valores-de-vivienda"><span class="header-section-number">1.6.4</span> Valores de Vivienda</h3>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/val_vivienda.png" class="img-fluid figure-img"></p>
@@ -289,8 +311,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </section>
-<section id="inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="level2 page-columns page-full" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.6</span> Inconsistencia estadística de datos espaciales agregados: MAUP</h2>
+<section id="inconsistencia-estadística-de-datos-espaciales-agregados-maup" class="level2 page-columns page-full" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="inconsistencia-estadística-de-datos-espaciales-agregados-maup"><span class="header-section-number">1.7</span> Inconsistencia estadística de datos espaciales agregados: MAUP</h2>
 <p><strong>Modifiable Areal Unit Problem</strong>: inconsistencia de indicadores estadísticos al modificar los perímetros de agregación (Gehlke &amp; Biehl 1934, Openshaw &amp; Taylor 1979)</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -301,6 +323,14 @@ ul.task-list li input[type="checkbox"] {
 <p>En general, es recomendable trabajar con datos a la menor escala posible, o agregarlos en zonas homogéneas</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Lefebvre_1974" class="csl-entry" role="listitem">
+Lefebvre, Henri. 1974. <span>“La Production de l<span></span>espace.”</span> <em>L Homme Et La Soci<span>é</span>t<span>é</span></em> 31 (1): 15–32. <a href="https://doi.org/10.3406/homso.1974.1855">https://doi.org/10.3406/homso.1974.1855</a>.
+</div>
+<div id="ref-Tobler_1970" class="csl-entry" role="listitem">
+Tobler, W. R. 1970. <span>“A Computer Movie Simulating Urban Growth in the Detroit Region.”</span> <em>Economic Geography</em> 46 (June): 234. <a href="https://doi.org/10.2307/143141">https://doi.org/10.2307/143141</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -552,7 +582,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+    <div class="nav-footer-left">Copyright 2023, Denis Berroeta</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
