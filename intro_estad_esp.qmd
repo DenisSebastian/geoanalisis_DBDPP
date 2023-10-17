@@ -1,5 +1,5 @@
 ---
-title: "Estadistica Espacial"
+title: "Estadística Espacial"
 subtitle: "Módulo 1: Teórico"
 ---
 
@@ -19,7 +19,14 @@ Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarroll
 ![Origen de la Estadística](images/mapa_africa.png)
 
 
+## Definición General
+
+La estadística es una herramienta fundamental en la ciencia de datos que nos permite comprender y analizar datos para obtener información significativa. En términos simples, es como un lenguaje que utilizamos para describir, resumir y tomar decisiones basadas en la información que los datos nos proporcionan. Al aplicar métodos estadísticos, podemos identificar patrones, tendencias y relaciones en los datos, lo que es esencial tanto para la investigación académica como para la toma de decisiones en el mundo real.
+
 ## Estadística vs Estadística Espacial
+
+La estadística en general es una disciplina amplia que se aplica a diversos tipos de datos y problemas, utilizando métodos estadísticos convencionales. La estadística espacial, por otro lado, se enfoca en datos con ubicaciones geográficas explícitas y se especializa en el análisis de la dependencia espacial y la modelización de patrones espaciales.
+
 
 **Estadística:**
 
@@ -29,7 +36,7 @@ Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarroll
 ![Distribución normal en estadística](images/gauss_graph.png)
 **Geoestadística**
 
-* Análisis de relaciones de dependencia espacial entre datos georreferenciados
+* Análisis de relaciones de dependencia espacial entre datos georreferenciados y modelamiento de datos espacilizados.
 * Complejidad de cálculo que hacía inviable su uso masivo 
 
 ![Dependencia espacial en geoestadística](images/dep_espacial.png)
@@ -39,12 +46,14 @@ Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarroll
 La inferencia estadística convencional se basa en dos supuestos fundamentales
 
 * Los valores de una variable se distribuyen de forma aleatoria
+
 * Los valores de una variable son independientes unos de otros
 
 Pero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:
 
-* Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí (Ley de Tobler, 1970)
-*La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales (Lefebvre, 1974) 
+* Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí. Ley de @Tobler_1970
+
+* La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales. @Lefebvre_1974
 
 Para resolver esta limitación existen dos enfoques principales
 

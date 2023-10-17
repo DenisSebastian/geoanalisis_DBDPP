@@ -35,12 +35,12 @@ Profesor:
 
 - Coordinador de Investigación Centro de Inteligencia Territorial UAI
 - Magister en Inteligencia Artificial FIC-UAI
-- Master of Data Science FIC-UAI (cursando)
+- Doctorado Master of Data Science FIC-UAI (cursando)
 - Ingeniero en Prevención en Riesgos 
 
 Ayudante:
-: Leonardo Rojas (leonardo.rojas@uai.cl)
+: Jaime  Constanzo (jvconstanzo@gmail.com)
 
-- Analista Centro de Inteligencia Territorial UAI
-- Economista 
-- Master of Data Science FIC-UAI (cursando)
+- Cientista Político PUC
+- Business intelligence analyst (UNICEF)
+- Diplomado de Big data para políticas públicas
