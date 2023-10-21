@@ -14,7 +14,7 @@ book:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
-    # - datos_vectoriales.qmd
+    - datos_vectoriales.qmd
     # - raster.qmd
     # - inferencia.qmd
     # - autocorrelacion.qmd
@@ -24,8 +24,8 @@ book:
         # - tarea_1.qmd
         # - tarea_2.qmd
     - part: "Anexos"
-      # chapters:
-        # - espacial_r.qmd
+      chapters:
+        - espacial_r.qmd
       
       # - luces_nocturnas.qmd
     - references.qmd

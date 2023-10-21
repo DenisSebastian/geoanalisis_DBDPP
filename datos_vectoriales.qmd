@@ -356,19 +356,22 @@ censo  %>%
 
 Para la construcción de este indicador se utilizó el promedio de años de estudio de jefes de hogar (EJH), que es una variable censal numérica (“ESCOLARIDAD”, en tabla de personas del censo 2017) que registra el nivel del curso más alto aprobado, medida en años sucesivos desde la enseñanza básica hasta estudios de postgrado.
 
-Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del capital cultural de cada hogar y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016). 
+Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del **capital cultural de cada hogar** y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016). 
 
+$$IEJ = ESCOLAR$$
 
 **Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**
 
 ```{r}
-censo <- censo %>% mutate( IEJ = ifelse(PERSONAS ==0, NA, ESCOLAR))
+censo <- censo %>% 
+  mutate( IEJ = ifelse(PERSONAS ==0, NA, ESCOLAR))
 ```
 
 Para efectos de visualización se enfocará los resultados en las zonas urbanas de la comuna de La Serena en todos los indicadores que se presentarán.
 
 ```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
+la_serena_urb <- censo %>% 
+  filter(COD_COM == 4101 & MANZ_EN == "URBANO")
 ```
 
 
@@ -423,6 +426,7 @@ Para este indicador se usó la proporción de población activa sin empleo que e
 
 Esta variable es similar al cálculo de desempleo, pero calculada a escala de manzanas y en un tiempo específico, por lo que representa las brechas potenciales que existen para acceder al empleo en barrios específicos (MDS, 2019). 
 
+$$IEM = 1- \left(\frac{P17\_4}{P17\_ACT} \right) $$
 
 
 **Cálculo Indicador de Empleo (IEM) **
@@ -482,6 +486,7 @@ Esta variable representa un riesgo de exclusión socioeconómica en el período 
 
 Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable, convirtiéndose así en un indicador de empleo. 
 
+$$IPJ = 1 - \left(\frac{J\_NINI}{E15A24} \right)$$
 
 
 **Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **
@@ -535,7 +540,7 @@ Los hogares monoparentales son aquellos con hijos que viven con un solo progenit
 
 Al contrario, los hogares biparentales permiten el apoyo entre progenitores y los hogares sin hijos tienen menores exigencias de gasto y tiempo relacionadas con la paternidad, por lo que se considera que en general son más resilientes. 
 
-
+$$IRH = 1 - \left(\frac{MONOPAR}{HOG\_N} \right)$$
 
 **Cálculo de Indicador de Resiliencia de Hogares (IRH) **
 
@@ -580,7 +585,9 @@ ggplot() +
 
 El indicador de calidad de vivienda es una variable sintética de todas las materialidades de la vivienda. Inicialmente, se construyó como un indicador de mala calidad, tomando un valor más alto cuando la calidad de la vivienda es peor y es más bajo cuando es mejor. Fue elaborado como un promedio lineal del 3 sub-indicadores de paredes, suelo y techo. Cada uno de estos sub-indicadores registra el porcentaje de viviendas de la manzana que tienen paredes, suelo o techo considerado insuficiente. Las construcciones consideradas insuficientes son las siguientes: 
 
-**Paredes**: Material de los muros exteriores  
+**Paredes**: Material de los muros exteriores 
+
+$$paredes= \frac{(P03A\_4 + P03A\_5 + P03A\_6)}{TOTAL\_V}$$
 
 * P03A_4: Tabique sin forro interior (madera u otro)
 * P03A_5: Adobe, barro, quincha, pirca u otro artesanal tradicional
@@ -588,17 +595,20 @@ El indicador de calidad de vivienda es una variable sintética de todas las mate
 
 **Techo**: Material en la cubierta del techo   
 
+$$techo= \frac{(P03B\_4 + P03B\_6 + P03B\_7)}{TOTAL\_V}$$
+
 * P03B_4: Fonolita o plancha de fieltro embreado
 * P03B_6: Materiales precarios (lata, cartón, plásticos, etc.)
 * P03B_7: Sin cubierta sólida de techo
 
 **Suelo**: Material de construcción del piso   
 
+$$suelo= \frac{(P03C\_4 +  P03C\_5)}{TOTAL\_V}$$
+
 * P03C_4: Capa de cemento sobre tierra
 * P03C_5: Tierra
 
 
-**Cálculo Indicador de Calidad de la Vivienda (IVI) **
 
 ```{r}
 censo <- censo %>%
@@ -611,7 +621,13 @@ censo <- censo %>%
   mutate(paredes = ifelse(paredes > 1, 1, paredes), 
          techo = ifelse(techo > 1, 1, techo), 
          suelo = ifelse(suelo > 1, 1, suelo))
+```
 
+**Cálculo Indicador de Calidad de la Vivienda (IVI) **
+
+$$IVI= 1 - \left(\frac{paredes+ suelo+ techo}{3}\right)$$
+
+```{r}
 censo <- censo %>%  mutate(IVI = (paredes+ suelo+ techo)/3)
 censo <- censo %>%  mutate(IVI =  1 - IVI) # invertir sentido
 ```
@@ -653,20 +669,31 @@ El indicador de Suficiencia de Viviendas se construyó inicialmente como un indi
 
 Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable. Con esto se obtuvo el indicador de suficiencia de viviendas.  
 
-**Cálculo de Indicador de Suficiencia de Viviendas (ISV) **
+El indicador de sificiencia de la vivienda debe ser normalizado, por lo cual se usará la función de normalización _minmax_ (@eq-minmax) que se describe a continuación:
 
-**NIV_HAC2**: >= 2.5 personas por habitación    
-**NIV_HAC3**: >= 5 personas por habitación
+$$x^{\prime}=\frac{x-min(x)}{max(x)-min(x)}$${#eq-minmax}
 
 ```{r}
-censo <- censo %>% mutate(ISV = NIV_HAC2 + (2 * NIV_HAC3))
-
 # función de normalización
 minmax <- function(x) {
   x <- (x - min(x, na.rm = TRUE)) / 
     (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
   return(x)
 }
+```
+
+
+
+**Cálculo de Indicador de Suficiencia de Viviendas (ISV) **
+
+$$ISV = 1 - minmax(NIV\_HAC2 + (2 \times  NIV\_HAC3)$$
+
+
+**NIV_HAC2**: >= 2.5 personas por habitación    
+**NIV_HAC3**: >= 5 personas por habitación
+
+```{r}
+censo <- censo %>% mutate(ISV = NIV_HAC2 + (2 * NIV_HAC3))
 
 censo <- censo %>% mutate(ISV = 1 - minmax(ISV))
 ```

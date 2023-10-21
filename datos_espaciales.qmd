@@ -247,10 +247,10 @@ st_crs(LC_mz_32719)
 ### Reproyectar Raster
 
 ```{r}
-las_condes_raster
+# las_condes_raster
 crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"# geográficas o elipsoidales
 crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # UTM o cartográficas
-las_condes_raster2 <- projectRaster(las_condes_raster, crs = crs_latlon)
+las_condes_raster2 <- projectRaster(from= las_condes_raster,                                             crs = crs_latlon)
 las_condes_raster2
 ```
 
