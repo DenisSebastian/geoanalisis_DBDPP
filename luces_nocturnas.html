@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,16 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -89,7 +65,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./tarea_2.html" rel="prev">
+<link href="./espacial_r.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,13 +91,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
@@ -129,9 +106,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="site_libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="site_libs/leaflet-binding-2.1.2/leaflet.js"></script>
 <script src="site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="site_libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
 <link href="site_libs/HomeButton-0.0.1/home-button.css" rel="stylesheet">
 <script src="site_libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="site_libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
@@ -147,11 +124,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Luces Nocturnas con GEE</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./espacial_r.html">Anexos</a></li><li class="breadcrumb-item"><a href="./luces_nocturnas.html">Luces Nocturnas con GEE</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -159,105 +141,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Curso: Geoanálisis</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Antecedentes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Antecedentes</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción Estadística Espacial</span></a>
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a Datos Espaciales</span></a>
+  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></a>
+  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./raster.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./inferencia.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./regresion_espacial.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Regresión Espacial</span></a>
+  <a href="./raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Tareas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">Tarea 1</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">Tarea 2</a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Tareas</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Anexos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Anexos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./luces_nocturnas.html" class="sidebar-item-text sidebar-link active">Luces Nocturnas con GEE</a>
+  <a href="./espacial_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Objetos Espaciales en R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./luces_nocturnas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Luces Nocturnas con GEE</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -279,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Luces Nocturnas con GEE</h1>
+<h1 class="title">Luces Nocturnas con GEE</h1>
 <p class="subtitle lead">Índice de Luminosidad Nocturna</p>
 </div>
 
@@ -288,6 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -300,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="metodología" class="level2">
 <h2 class="anchored" data-anchor-id="metodología">Metodología</h2>
-<p>De forma general se utilizará como base producto satelital llamado <strong>VIIRS Stray Light Corrected Nighttime Day/Night Band Composites Version 1</strong>, que entrega valores de radiancia media mensual del infrarojo visible, utilizando la plataflorma de GEE para su adquisisción y procesamiento.</p>
+<p>De forma general se utilizará como base producto satelital llamado <strong>VIIRS Stray Light Corrected Nighttime Day/Night Band Composites Version 1</strong>, que entrega valores de radiancia media mensual del infrarojo visible, utilizando la plataflorma de GEE para su adquisición y procesamiento.</p>
 <p>Se definirá una región de estudio, paral el caso práctico de cálculo es la área urbana de las comunas de Valparaíso y Viña del Mar en la V Región, se le aplicará un buffer de 1000 metros y se cortará imagen tipo raster obtendida del producto satelital antes mecionado.</p>
 <p>Finalmente se procederá extraer el valor de indicador por unidad territorial mínima, manzana urbana y entidad censal, mediante el cáculo del promedio de los valores de pixeles que contiene en su interior, y este valor será el del indicador ILN. Para tener control de flujo de este proceso se rezarará mediante un ciclo interativo por Distrito censal, en caso de caerse la conexión con GEE, se puede continuar en el distrito correcto, sin perder lo avanzado.</p>
 </section>
@@ -323,35 +290,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Resolution</strong>: 463.83 meters</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
 <caption>Información de Producto Satelital</caption>
- <thead>
-  <tr>
-   <th style="text-align:center;"> Name </th>
-   <th style="text-align:center;"> Units </th>
-   <th style="text-align:center;"> Min </th>
-   <th style="text-align:center;"> Max </th>
-   <th style="text-align:center;"> Description </th>
-  </tr>
- </thead>
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Name</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Units</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Max</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:center;"> avg_rad </td>
-   <td style="text-align:center;"> nanoWatts/cm2/sr </td>
-   <td style="text-align:center;"> -1.5* </td>
-   <td style="text-align:center;"> 193565* </td>
-   <td style="text-align:center;"> Average DNB radiance values. </td>
-  </tr>
-  <tr>
-   <td style="text-align:center;"> cf_cvg </td>
-   <td style="text-align:center;"> NA </td>
-   <td style="text-align:center;"> 0* </td>
-   <td style="text-align:center;"> 84* </td>
-   <td style="text-align:center;"> Cloud-free coverages; the total number of observations that went into each pixel. This band can be used to identify areas with low numbers of observations where the quality is reduced. </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: center;">avg_rad</td>
+<td style="text-align: center;">nanoWatts/cm2/sr</td>
+<td style="text-align: center;">-1.5*</td>
+<td style="text-align: center;">193565*</td>
+<td style="text-align: center;">Average DNB radiance values.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">cf_cvg</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">0*</td>
+<td style="text-align: center;">84*</td>
+<td style="text-align: center;">Cloud-free coverages; the total number of observations that went into each pixel. This band can be used to identify areas with low numbers of observations where the quality is reduced.</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -375,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgee)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ee_Initialize</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>── rgee 1.1.5 ─────────────────────────────────────── earthengine-api 0.1.317 ── 
+<pre><code>── rgee 1.1.5 ─────────────────────────────────────── earthengine-api 0.1.374 ── 
  ✔ user: not_defined
  ✔ Initializing Google Earth Engine:
  ✔ Initializing Google Earth Engine:  DONE!
@@ -405,8 +372,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(ae)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-e5a7a22bf6f395a67fd7" style="width:100%;height:464px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e5a7a22bf6f395a67fd7">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["polygon",420]},{"method":"addPolygons","args":[[[[{"lng":[-71.6703016818842,-71.6703016818842,-71.6732680961397,-71.6732680961397,-71.6762344839113,-71.6762344839113,-71.6792008451752,-71.6836503373169,-71.6836503373169,-71.6851334880844,-71.6851334880844,-71.6880997696819,-71.6910660246763,-71.6910660246763,-71.6925491421899,-71.6925491421899,-71.6969984547601,-71.6999646298019,-71.6999646298019,-71.702930778145,-71.702930778145,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7073799505476,-71.7073799505476,-71.70886299464,-71.70886299464,-71.70886299464,-71.70886299464,-71.7058968997656,-71.7058968997656,-71.7036723110563,-71.7036723110563,-71.702930778145,-71.702930778145,-71.702930778145,-71.702930778145,-71.6999646298019,-71.6999646298019,-71.6999646298019,-71.6969984547601,-71.6969984547601,-71.6947738059722,-71.6947738059722,-71.6940322530437,-71.6940322530437,-71.6910660246763,-71.6910660246763,-71.6821671799075,-71.6821671799075,-71.6792008451752,-71.6762344839113,-71.6732680961397,-71.6703016818842,-71.6673352411687,-71.6643687740171,-71.6614022804532,-71.6584357605009,-71.6554692141841,-71.6525026415265,-71.6495360425522,-71.6495360425522,-71.6487943886994,-71.6487943886994,-71.6465694172849,-71.6465694172849,-71.6436027657485,-71.6436027657485,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6405433788636,-71.6405433788636,-71.637669383964,-71.637669383964,-71.637669383964,-71.6406360879669,-71.6406360879669,-71.6421194301369,-71.6421194301369,-71.6436027657485,-71.6436027657485,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6436027657485,-71.6436027657485,-71.6436027657485,-71.6465694172849,-71.6465694172849,-71.6495360425522,-71.6495360425522,-71.6517609942492,-71.6517609942492,-71.6525026415265,-71.6525026415265,-71.6539859311464,-71.6539859311464,-71.6554692141841,-71.6554692141841,-71.6584357605009,-71.6584357605009,-71.6614022804532,-71.6643687740171,-71.6673352411687,-71.6703016818842],"lat":[-33.0830072170335,-33.0857245117876,-33.0861739655345,-33.0888912060149,-33.089340599732,-33.0920577859114,-33.0925071195855,-33.0931809722334,-33.0918223647742,-33.0920469381923,-33.0906883077466,-33.0911373860372,-33.0915863854694,-33.092945034715,-33.0931695095579,-33.0945281452136,-33.0952014655416,-33.0956502471803,-33.0983675105774,-33.0988162321277,-33.1015334411096,-33.1019821025585,-33.104699257098,-33.1074163384129,-33.110133346489,-33.1128502813122,-33.1142087212494,-33.1144330645892,-33.1157914908931,-33.1160158191946,-33.1187326262058,-33.1241660203135,-33.1268826073816,-33.1264338561356,-33.1291503511423,-33.1288137218819,-33.129492830663,-33.1293806098753,-33.1341342347749,-33.1395666737804,-33.1422827831832,-33.1418337618282,-33.144549779113,-33.1472657229692,-33.1468165852804,-33.1495324369999,-33.1491955179062,-33.1498744658544,-33.1497621484534,-33.1517989612475,-33.1513496282812,-33.1540652957001,-33.1527167670252,-33.1554323048838,-33.1549826187244,-33.1545328536136,-33.154083009552,-33.1536330865402,-33.153183084579,-33.1527330036689,-33.1522828438106,-33.1518326050048,-33.151382287252,-33.150931890553,-33.1504814149083,-33.1484449228692,-33.1483322951377,-33.147653456453,-33.1473155471708,-33.1446001606195,-33.1441495645934,-33.1414341234137,-33.1409834672165,-33.1382679714356,-33.1355524023029,-33.1329216247699,-33.1329075422338,-33.132822677315,-33.1323860810377,-33.1296703840311,-33.1269546137198,-33.1274052549366,-33.124689392539,-33.1249146741592,-33.1235567107801,-33.1237819679748,-33.1169918528285,-33.1165413657184,-33.1138252102829,-33.1111089816234,-33.1115594311085,-33.1034102494568,-33.092543649584,-33.0929938883776,-33.0902770367396,-33.0907271778288,-33.0880102342378,-33.0883477741711,-33.0876685233177,-33.0877810255942,-33.0857432420905,-33.0859682247912,-33.0846096749035,-33.0848346331798,-33.0834760603095,-33.0839259083021,-33.0812086889067,-33.0816584392058,-33.0821081106604,-33.0825577032699,-33.0830072170335]}],[{"lng":[-71.5842642552703,-71.5872314271759,-71.5901985732898,-71.5931656935882,-71.5931656935882,-71.5946492440491,-71.5946492440491,-71.5961327880471,-71.5961327880471,-71.5976163255793,-71.5976163255793,-71.5990998566427,-71.6020668993512,-71.6050339161486,-71.6050339161486,-71.6080009070111,-71.6109678719148,-71.6109678719148,-71.6139348108358,-71.6139348108358,-71.6154182705454,-71.6154182705454,-71.6169017237504,-71.6169017237504,-71.6169017237504,-71.6169017237504,-71.6198686106345,-71.6198686106345,-71.6213520443077,-71.6213520443077,-71.6228354714643,-71.6228354714643,-71.6228354714643,-71.625802306216,-71.625802306216,-71.6287691148657,-71.6287691148657,-71.6317358973895,-71.6347026537635,-71.6347026537635,-71.637669383964,-71.6406360879669,-71.6436027657485,-71.6465694172849,-71.6495360425522,-71.6525026415265,-71.6525026415265,-71.6554692141841,-71.6584357605009,-71.6584357605009,-71.6614022804532,-71.6614022804532,-71.6643687740171,-71.6643687740171,-71.6673352411687,-71.6673352411687,-71.6673352411687,-71.6675206444882,-71.6675206444882,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6706724851137,-71.6706724851137,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6703016818842,-71.6703016818842,-71.6680768538269,-71.6680768538269,-71.6673352411687,-71.6673352411687,-71.6644151252695,-71.6644151252695,-71.6643687740171,-71.6643687740171,-71.6614022804532,-71.6614022804532,-71.6584357605009,-71.6554692141841,-71.6554692141841,-71.6539859311464,-71.6539859311464,-71.6525026415265,-71.6525026415265,-71.6510193453275,-71.6510193453275,-71.6495360425522,-71.6495360425522,-71.6465694172849,-71.6465694172849,-71.6436027657485,-71.6406360879669,-71.6384110624216,-71.6384110624216,-71.637669383964,-71.637669383964,-71.6347026537635,-71.6347026537635,-71.6319213204292,-71.6319213204292,-71.6317358973895,-71.6317358973895,-71.6287691148657,-71.6287691148657,-71.6259877325216,-71.6259877325216,-71.625802306216,-71.625802306216,-71.6243188921014,-71.6243188921014,-71.6228354714643,-71.6228354714643,-71.6206103282855,-71.6206103282855,-71.6198686106345,-71.6198686106345,-71.6154182705454,-71.6154182705454,-71.6139348108358,-71.6139348108358,-71.6109678719148,-71.6109678719148,-71.6080009070111,-71.6057756662966,-71.6057756662966,-71.6050339161486,-71.6050339161486,-71.6020668993512,-71.5990998566427,-71.5961327880471,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5946492440491,-71.5946492440491,-71.5961327880471,-71.5961327880471,-71.5961327880471,-71.5976163255793,-71.5976163255793,-71.5990998566427,-71.5990998566427,-71.5994707383975,-71.5994707383975,-71.6020668993512,-71.6020668993512,-71.6020668993512,-71.5998416197477,-71.5998416197477,-71.5990998566427,-71.5990998566427,-71.5990998566427,-71.5961327880471,-71.5961327880471,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5916821366674,-71.5916821366674,-71.5901985732898,-71.5901985732898,-71.5887150034583,-71.5887150034583,-71.5872314271759,-71.5872314271759,-71.5857478444455,-71.5857478444455,-71.5842642552703,-71.5842642552703,-71.5814825082059,-71.5814825082059,-71.5812970575969,-71.5812970575969,-71.5784225603008,-71.5784225603008,-71.5783298341796,-71.5783298341796,-71.5783298341796,-71.5757334925901,-71.5757334925901,-71.5753625850422,-71.5753625850422,-71.5738789508359,-71.5738789508359,-71.5723953102086,-71.5723953102086,-71.5694280097027,-71.5694280097027,-71.5664606835484,-71.5634933317696,-71.5620096462784,-71.5620096462784,-71.56052595439,-71.56052595439,-71.5575585514337,-71.5575585514337,-71.556816696701,-71.556816696701,-71.5545911229245,-71.5516236688862,-71.5516236688862,-71.5501399323011,-71.5501399323011,-71.5486561893427,-71.5486561893427,-71.547172440014,-71.547172440014,-71.545688684318,-71.545688684318,-71.545688684318,-71.545688684318,-71.545688684318,-71.5442049222576,-71.5442049222576,-71.5427211538359,-71.5427211538359,-71.5427211538359,-71.5412373790558,-71.5412373790558,-71.5397535979202,-71.5397535979202,-71.5382698104323,-71.5382698104323,-71.5367860165949,-71.5338184098839,-71.5338184098839,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5278831204,-71.5278831204,-71.5278831204,-71.5278831204,-71.5249154376749,-71.518979996378,-71.5160122378539,-71.5160122378539,-71.5130444541112,-71.5130444541112,-71.5071088110656,-71.5041409518104,-71.5041409518104,-71.5011730674322,-71.4996891158294,-71.4996891158294,-71.4982051579548,-71.4982051579548,-71.4952372234022,-71.4926402601178,-71.4926402601178,-71.4922692637981,-71.4922692637981,-71.4893012791666,-71.4893012791666,-71.4833652349165,-71.4833652349165,-71.4803971753457,-71.4803971753457,-71.4803971753457,-71.4803971753457,-71.477429090843,-71.4744609814323,-71.4744609814323,-71.4714928471373,-71.4714928471373,-71.4700087706657,-71.4700087706657,-71.468524687982,-71.468524687982,-71.4670405990893,-71.4670405990893,-71.4655565039904,-71.4655565039904,-71.4655565039904,-71.4640724026884,-71.4640724026884,-71.4625882951862,-71.4625882951862,-71.4625882951862,-71.4596200615934,-71.4596200615934,-71.4596200615934,-71.4566518032359,-71.4566518032359,-71.4566518032359,-71.4566518032359,-71.4596200615934,-71.4596200615934,-71.461846239111,-71.461846239111,-71.4625882951862,-71.4625882951862,-71.4655565039904,-71.4655565039904,-71.4740899660058,-71.4740899660058,-71.4744609814323,-71.4744609814323,-71.4714928471373,-71.4714928471373,-71.4714928471373,-71.4714928471373,-71.468524687982,-71.468524687982,-71.468524687982,-71.4677826443116,-71.4677826443116,-71.4655565039904,-71.4655565039904,-71.4625882951862,-71.4596200615934,-71.4566518032359,-71.4551676647778,-71.4551676647778,-71.4536835201375,-71.4536835201375,-71.4477468798137,-71.4477468798138,-71.4462627043071,-71.4462627043071,-71.4447785226362,-71.4418101408133,-71.4418101408133,-71.4388417343691,-71.4388417343691,-71.4358733033274,-71.4358733033274,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4299363675471,-71.4299363675471,-71.4299363675471,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4358733033274,-71.4358733033274,-71.4387489712713,-71.4387489712713,-71.4388417343691,-71.4388417343691,-71.4403259406674,-71.4403259406674,-71.4418101408133,-71.4418101408133,-71.4418101408133,-71.4447785226362,-71.4470047928312,-71.4470047928312,-71.4477468798138,-71.4477468798137,-71.4507152123222,-71.4507152123222,-71.4536835201375,-71.4536835201375,-71.4566518032359,-71.4566518032359,-71.4596200615934,-71.4625882951862,-71.4654637478407,-71.4654637478407,-71.4655565039904,-71.4655565039904,-71.468524687982,-71.468524687982,-71.4714928471373,-71.4714928471373,-71.4744609814323,-71.4744609814323,-71.477429090843,-71.4796551565565,-71.4796551565565,-71.4803971753458,-71.4803971753458,-71.4833652349165,-71.4833652349165,-71.4863332695314,-71.4863332695314,-71.4893012791666,-71.4907852746093,-71.4907852746093,-71.4922692637981,-71.4922692637981,-71.4944952358488,-71.4944952358488,-71.4952372234022,-71.4952372234022,-71.4980196627797,-71.4980196627797,-71.4982051579548,-71.4982051579548,-71.5011730674322,-71.5011730674322,-71.5056248845799,-71.5056248845799,-71.5071088110656,-71.5071088110656,-71.5100766451738,-71.5100766451738,-71.5130444541112,-71.5160122378539,-71.5160122378539,-71.518979996378,-71.5219477296597,-71.5219477296597,-71.5249154376749,-71.5278831204,-71.5278831204,-71.5308507778109,-71.5308507778109,-71.5360441172962,-71.5360441172962,-71.5367860165949,-71.5367860165949,-71.5390117049701,-71.5390117049701,-71.5397535979202,-71.5397535979202,-71.5427211538359,-71.5427211538359,-71.545688684318,-71.5486561893427,-71.5516236688862,-71.5545911229245,-71.5545911229245,-71.5560748403717,-71.5560748403717,-71.56052595439,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5606186853204,-71.5606186853204,-71.56052595439,-71.56052595439,-71.5590422561075,-71.5590422561075,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.56052595439,-71.56052595439,-71.56052595439,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5638642521424,-71.5638642521424,-71.5664606835484,-71.5694280097027,-71.5694280097027,-71.5723953102086,-71.5753625850422,-71.5753625850422,-71.5768462128244,-71.5768462128244,-71.5783298341796,-71.5812970575969,-71.5842642552703],"lat":[-33.0155890686497,-33.0160404099803,-33.0164916725633,-33.0169428563979,-33.0183019956827,-33.0185275628259,-33.0198866886948,-33.0201122409057,-33.0214713533553,-33.0216968906323,-33.0230559896592,-33.0232815120006,-33.0237324976145,-33.0241834044692,-33.0269015955001,-33.0273524425944,-33.0278032109241,-33.0305213671988,-33.0309720757501,-33.0282539004886,-33.0284792157336,-33.0271200960718,-33.0273453868789,-33.0259862442825,-33.0232679045321,-33.0205494920502,-33.0209999671181,-33.0182814629218,-33.0185066614254,-33.0171473773117,-33.0173725513785,-33.0160132443397,-33.0132945757404,-33.0137448363157,-33.0110260760301,-33.0114762388618,-33.0087573868991,-33.0092074519899,-33.0096574383425,-33.0069384757119,-33.0073883643297,-33.0078381742119,-33.0082879053579,-33.008737557767,-33.0091871314386,-33.0096366263718,-33.0123557029184,-33.0128051380847,-33.0132544945075,-33.0159735362845,-33.0164228329225,-33.0191418209305,-33.0195910577706,-33.0223099919822,-33.0227591690111,-33.025478049399,-33.0280269336635,-33.0280550069055,-33.0282249303224,-33.0286459931402,-33.0313647468777,-33.0340834278016,-33.0368020358976,-33.0391807582288,-33.0392369038697,-33.0395767170878,-33.0399697041741,-33.0426881854741,-33.048124929434,-33.0535613817786,-33.0589975423938,-33.0644334111653,-33.0671512360741,-33.0667019142309,-33.0694196472789,-33.0690825900238,-33.0697620083422,-33.0696496448918,-33.0716878689303,-33.0712453760298,-33.0712878383038,-33.0712808139865,-33.0739559010163,-33.073506286114,-33.0762237435251,-33.075774030931,-33.0753242395009,-33.0780415861561,-33.077816651447,-33.0791752926681,-33.0789503335342,-33.0803089517776,-33.0800839682186,-33.0814425634833,-33.0812175554988,-33.0825761277837,-33.0821260432517,-33.0848431141624,-33.0843929319243,-33.0839426708377,-33.0836049232789,-33.0842841666215,-33.0841715730668,-33.0862092721563,-33.0857588345065,-33.0884756838185,-33.0880533092212,-33.0882231087713,-33.0881949479269,-33.0907419058125,-33.0902912727237,-33.0930079381265,-33.0925853803002,-33.0927551683554,-33.0927269952955,-33.0952737807487,-33.0950483763373,-33.0964066309217,-33.0961812020785,-33.0975394336673,-33.0972012463604,-33.0978803517628,-33.0977676116231,-33.0998048968706,-33.0991283312953,-33.1004864844592,-33.1002609184492,-33.1016190486132,-33.101167848006,-33.1038840346135,-33.103432736266,-33.103094210743,-33.1037732377117,-33.1036603848319,-33.10569743477,-33.1052459598002,-33.1047944059518,-33.1043427732254,-33.1038910616218,-33.1066069887049,-33.1079649248157,-33.1081908046358,-33.1095487271755,-33.1097745919927,-33.1124903916288,-33.1165639538587,-33.1167898225331,-33.1181476447234,-33.1183734983874,-33.1207496514235,-33.1208061138192,-33.1211455599709,-33.1215407642827,-33.1242563087878,-33.126971780043,-33.1266330089283,-33.1273118617636,-33.1271989270176,-33.129235454517,-33.1319507604008,-33.1314989391367,-33.134214152904,-33.1337622338904,-33.1364773555321,-33.1391924038668,-33.1419073788802,-33.1446222805583,-33.1473371088867,-33.1471110727301,-33.1484684546815,-33.1482423940871,-33.1495997529941,-33.1493736679617,-33.1507310038232,-33.1505048943524,-33.1518622071672,-33.1516360732577,-33.1529933630247,-33.1527672046761,-33.1541244713943,-33.153700362476,-33.1538700184236,-33.1538417419551,-33.1563865456639,-33.1559482038813,-33.1560330289912,-33.1560188876817,-33.1586484299642,-33.1613627239266,-33.1609667035572,-33.1613059830835,-33.1612494035162,-33.1636243260187,-33.1633979871852,-33.164755055815,-33.16452869254,-33.1685997741632,-33.1681469601874,-33.1708609039861,-33.1704079922407,-33.169955001522,-33.169728476548,-33.1710853973984,-33.1708588479801,-33.1722157457637,-33.1717625782939,-33.1697272388361,-33.1696139381554,-33.1689354836631,-33.1685955555342,-33.16814224893,-33.1667853426387,-33.1665586644282,-33.1652017444843,-33.1649750512384,-33.1636181176452,-33.1633914093656,-33.1620344621266,-33.1618077388149,-33.1590937987028,-33.156379785201,-33.1536656983237,-33.1523086273737,-33.1520819173011,-33.1507248327261,-33.1504981076312,-33.1477838929042,-33.1464267580416,-33.1462000273579,-33.1448428788819,-33.1446161331813,-33.1432589710952,-33.1430322103793,-33.1416750346866,-33.1414482589571,-33.1409946483005,-33.138280270272,-33.1378265995743,-33.1351121671667,-33.129683082605,-33.1242537051428,-33.1215389066095,-33.1210852704377,-33.1183704176462,-33.1156554916909,-33.1129404925859,-33.112486834313,-33.1115792811055,-33.1111253861723,-33.1084103897246,-33.1079564348642,-33.1106714123538,-33.1097632280641,-33.1093090175944,-33.112023865087,-33.1115695567656,-33.1113423730229,-33.1126997551275,-33.1124725469207,-33.1138299060049,-33.1133754209406,-33.1129776817968,-33.1133170142651,-33.1132601891605,-33.1156354823762,-33.115180820561,-33.1124662141495,-33.1115566918133,-33.1088420502711,-33.1083871897682,-33.1056724941425,-33.1029577254547,-33.1002428837191,-33.0997880013539,-33.0993330401214,-33.0966181633863,-33.0961631423104,-33.0948056860764,-33.0945781507226,-33.0932206809969,-33.0929931306868,-33.0916356474727,-33.0914080822079,-33.090050585509,-33.0898230052912,-33.0871079666903,-33.0857504200314,-33.0855228343872,-33.0841652742549,-33.0839376736631,-33.0812225082268,-33.0785072698697,-33.0780520476823,-33.0753367554898,-33.0699059524556,-33.069450708673,-33.0667352169487,-33.064019652384,-33.0613040149929,-33.0617592014949,-33.0590434721891,-33.0593847960218,-33.0587058487377,-33.058819612304,-33.0567827395702,-33.057237730256,-33.0545218171477,-33.0558294215011,-33.055489920381,-33.0555467576705,-33.0531702158957,-33.0527154998135,-33.0499994029388,-33.0445669909121,-33.039134287944,-33.0386795886358,-33.0359631472126,-33.0339257684429,-33.0338120896773,-33.0331329555319,-33.0327918932852,-33.0300753256416,-33.0296205262025,-33.029165648,-33.0287106910349,-33.0284831830166,-33.0298414424059,-33.0296139099074,-33.030972146346,-33.0300618002832,-33.0287035830069,-33.0284759520557,-33.0271177214132,-33.0268900755646,-33.0264347247987,-33.0237182378123,-33.0232628274707,-33.0205462870671,-33.0200908171633,-33.01737422337,-33.0169186939174,-33.014202046762,-33.0114853270595,-33.0087685348242,-33.0060516700703,-33.0055961387335,-33.0001622301844,-32.997445167196,-32.9979006408401,-32.9951834861548,-32.9924662590224,-32.9929216154745,-32.990204296664,-32.99064532953,-32.9905604115675,-32.9905746371856,-32.9879421446873,-32.988169734803,-32.9868109975957,-32.987038563225,-32.9856798031039,-32.9829622285607,-32.9834172719257,-32.9837585028063,-32.9830790894378,-32.9831928220251,-32.9811545511642,-32.9816094178959,-32.9788916408311,-32.9793464096266,-32.9766285409383,-32.9770832118,-32.9743652514973,-32.974819824428,-32.9752743186761,-32.9757145349457,-32.975629595735,-32.9756437950116,-32.973010643845,-32.9734649614879,-32.9707467794945,-32.9712009992179,-32.9684827256363,-32.9689368474428,-32.9662184822822,-32.9666725061744,-32.9670129724656,-32.9663333614561,-32.9664468391835,-32.9644079754246,-32.9648618227371,-32.9621432552049,-32.9625970046117,-32.9598783455273,-32.960331997031,-32.9605587932844,-32.9591994221986,-32.9594261939773,-32.9580668000067,-32.958406913589,-32.9577272062188,-32.9578405663783,-32.9558014135507,-32.9562264568388,-32.9560565244738,-32.9560848581599,-32.9535358376748,-32.9539891168321,-32.9512700723908,-32.9519498147988,-32.9505902510487,-32.9508167877176,-32.9494572010917,-32.9499102058258,-32.9471909591429,-32.9476438659963,-32.9480966942049,-32.9453773367994,-32.9458300671332,-32.9462827188248,-32.9435632507087,-32.9440158045313,-32.9444682797141,-32.9417487008996,-32.9422010782194,-32.9394814079416,-32.940272845392,-32.9395929081259,-32.939705949759,-32.9376661072708,-32.9380051918707,-32.9373252317424,-32.9374382489121,-32.9353983378408,-32.93585034296,-32.9331303791228,-32.9335822863929,-32.9340341150381,-32.9344858650574,-32.9349375364502,-32.9362975658268,-32.9365233768397,-32.9378833929606,-32.9385607224551,-32.9412807293134,-32.9417322032109,-32.944452156999,-32.9471720385103,-32.9498918477305,-32.9526115846452,-32.9553312492402,-32.958050841501,-32.9607703614133,-32.9634898089627,-32.9630522962361,-32.963137277226,-32.9631231626643,-32.9657575377144,-32.9655316850017,-32.9668913310806,-32.9666654539116,-32.968025077105,-32.9707442691923,-32.9734633888685,-32.9761824361193,-32.9766342377867,-32.9820721532143,-32.9929471142794,-32.9983841596878,-32.998836035562,-33.0015544685264,-33.0042728289131,-33.0066513347038,-33.0067078205116,-33.0070476028136,-33.0074429711085,-33.0078947467748,-33.0106130001063,-33.011064716103,-33.0115163533597,-33.0128754718504,-33.0131012657148,-33.0144603708072,-33.0146861497486,-33.0151376485722,-33.0155890686497]},{"lng":[-71.5575585514337,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5664606835484,-71.5664606835484,-71.5634933317696,-71.5634933317696,-71.56052595439,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337],"lat":[-33.0930327505148,-33.0934853707239,-33.0939379120723,-33.0912219547602,-33.0916743983155,-33.0862422266831,-33.0857898210051,-33.0830736445906,-33.0826211790126,-33.0821686345898,-33.0848847731015,-33.0876008386023,-33.0903168310782,-33.0930327505148]}]]],null,"ae",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"polygon","stroke":true,"color":"#333333","weight":0.5,"opacity":0.9,"fill":true,"fillColor":"#6666ff","fillOpacity":0.6,"smoothFactor":1,"noClip":false},null,{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"1",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},{"stroke":true,"weight":1,"opacity":0.9,"fillOpacity":0.84,"bringToFront":false,"sendToBack":false}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-71.70886299464,-33.1722157457637,-71.4299363675471,-32.9331303791228,true,"ae","Zoom to ae","<strong> ae <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"ae",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[-33.1722157457637,-32.9331303791228],"lng":[-71.70886299464,-71.4299363675471]},"fitBounds":[-33.1722157457637,-71.70886299464,-32.9331303791228,-71.4299363675471,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fb84ee84018d8d127b5c" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-fb84ee84018d8d127b5c">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["polygon",420]},{"method":"addPolygons","args":[[[[{"lng":[-71.6703016818842,-71.6703016818842,-71.6732680961397,-71.6732680961397,-71.6762344839113,-71.6762344839113,-71.6792008451752,-71.6836503373169,-71.6836503373169,-71.6851334880844,-71.6851334880844,-71.6880997696819,-71.6910660246763,-71.6910660246763,-71.6925491421899,-71.6925491421899,-71.6969984547601,-71.6999646298019,-71.6999646298019,-71.702930778145,-71.702930778145,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7058968997656,-71.7073799505476,-71.7073799505476,-71.70886299464,-71.70886299464,-71.70886299464,-71.70886299464,-71.7058968997656,-71.7058968997656,-71.7036723110563,-71.7036723110563,-71.702930778145,-71.702930778145,-71.702930778145,-71.702930778145,-71.6999646298019,-71.6999646298019,-71.6999646298019,-71.6969984547601,-71.6969984547601,-71.6947738059722,-71.6947738059722,-71.6940322530437,-71.6940322530437,-71.6910660246763,-71.6910660246763,-71.6821671799075,-71.6821671799075,-71.6792008451752,-71.6762344839113,-71.6732680961397,-71.6703016818842,-71.6673352411687,-71.6643687740171,-71.6614022804532,-71.6584357605009,-71.6554692141841,-71.6525026415265,-71.6495360425522,-71.6495360425522,-71.6487943886994,-71.6487943886994,-71.6465694172849,-71.6465694172849,-71.6436027657485,-71.6436027657485,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6405433788636,-71.6405433788636,-71.637669383964,-71.637669383964,-71.637669383964,-71.6406360879669,-71.6406360879669,-71.6421194301369,-71.6421194301369,-71.6436027657485,-71.6436027657485,-71.6406360879669,-71.6406360879669,-71.6406360879669,-71.6436027657485,-71.6436027657485,-71.6436027657485,-71.6465694172849,-71.6465694172849,-71.6495360425522,-71.6495360425522,-71.6517609942492,-71.6517609942492,-71.6525026415265,-71.6525026415265,-71.6539859311464,-71.6539859311464,-71.6554692141841,-71.6554692141841,-71.6584357605009,-71.6584357605009,-71.6614022804532,-71.6643687740171,-71.6673352411687,-71.6703016818842],"lat":[-33.0830072170335,-33.0857245117876,-33.0861739655345,-33.0888912060149,-33.089340599732,-33.0920577859114,-33.0925071195855,-33.0931809722334,-33.0918223647742,-33.0920469381923,-33.0906883077466,-33.0911373860372,-33.0915863854694,-33.092945034715,-33.0931695095579,-33.0945281452136,-33.0952014655416,-33.0956502471803,-33.0983675105774,-33.0988162321277,-33.1015334411096,-33.1019821025585,-33.104699257098,-33.1074163384129,-33.110133346489,-33.1128502813122,-33.1142087212494,-33.1144330645892,-33.1157914908931,-33.1160158191946,-33.1187326262058,-33.1241660203135,-33.1268826073816,-33.1264338561356,-33.1291503511423,-33.1288137218819,-33.129492830663,-33.1293806098753,-33.1341342347749,-33.1395666737804,-33.1422827831832,-33.1418337618282,-33.144549779113,-33.1472657229692,-33.1468165852804,-33.1495324369999,-33.1491955179062,-33.1498744658544,-33.1497621484534,-33.1517989612475,-33.1513496282812,-33.1540652957001,-33.1527167670252,-33.1554323048838,-33.1549826187244,-33.1545328536136,-33.154083009552,-33.1536330865402,-33.153183084579,-33.1527330036689,-33.1522828438106,-33.1518326050048,-33.151382287252,-33.150931890553,-33.1504814149083,-33.1484449228692,-33.1483322951377,-33.147653456453,-33.1473155471708,-33.1446001606195,-33.1441495645934,-33.1414341234137,-33.1409834672165,-33.1382679714356,-33.1355524023029,-33.1329216247699,-33.1329075422338,-33.132822677315,-33.1323860810377,-33.1296703840311,-33.1269546137198,-33.1274052549366,-33.124689392539,-33.1249146741592,-33.1235567107801,-33.1237819679748,-33.1169918528285,-33.1165413657184,-33.1138252102829,-33.1111089816234,-33.1115594311085,-33.1034102494568,-33.092543649584,-33.0929938883776,-33.0902770367396,-33.0907271778288,-33.0880102342378,-33.0883477741711,-33.0876685233177,-33.0877810255942,-33.0857432420905,-33.0859682247912,-33.0846096749035,-33.0848346331798,-33.0834760603095,-33.0839259083021,-33.0812086889067,-33.0816584392058,-33.0821081106604,-33.0825577032699,-33.0830072170335]}],[{"lng":[-71.5842642552703,-71.5872314271759,-71.5901985732898,-71.5931656935882,-71.5931656935882,-71.5946492440491,-71.5946492440491,-71.5961327880471,-71.5961327880471,-71.5976163255793,-71.5976163255793,-71.5990998566427,-71.6020668993512,-71.6050339161486,-71.6050339161486,-71.6080009070111,-71.6109678719148,-71.6109678719148,-71.6139348108358,-71.6139348108358,-71.6154182705454,-71.6154182705454,-71.6169017237504,-71.6169017237504,-71.6169017237504,-71.6169017237504,-71.6198686106345,-71.6198686106345,-71.6213520443077,-71.6213520443077,-71.6228354714643,-71.6228354714643,-71.6228354714643,-71.625802306216,-71.625802306216,-71.6287691148657,-71.6287691148657,-71.6317358973895,-71.6347026537635,-71.6347026537635,-71.637669383964,-71.6406360879669,-71.6436027657485,-71.6465694172849,-71.6495360425522,-71.6525026415265,-71.6525026415265,-71.6554692141841,-71.6584357605009,-71.6584357605009,-71.6614022804532,-71.6614022804532,-71.6643687740171,-71.6643687740171,-71.6673352411687,-71.6673352411687,-71.6673352411687,-71.6675206444882,-71.6675206444882,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6703016818842,-71.6706724851137,-71.6706724851137,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6732680961397,-71.6703016818842,-71.6703016818842,-71.6680768538269,-71.6680768538269,-71.6673352411687,-71.6673352411687,-71.6644151252695,-71.6644151252695,-71.6643687740171,-71.6643687740171,-71.6614022804532,-71.6614022804532,-71.6584357605009,-71.6554692141841,-71.6554692141841,-71.6539859311464,-71.6539859311464,-71.6525026415265,-71.6525026415265,-71.6510193453275,-71.6510193453275,-71.6495360425522,-71.6495360425522,-71.6465694172849,-71.6465694172849,-71.6436027657485,-71.6406360879669,-71.6384110624216,-71.6384110624216,-71.637669383964,-71.637669383964,-71.6347026537635,-71.6347026537635,-71.6319213204292,-71.6319213204292,-71.6317358973895,-71.6317358973895,-71.6287691148657,-71.6287691148657,-71.6259877325216,-71.6259877325216,-71.625802306216,-71.625802306216,-71.6243188921014,-71.6243188921014,-71.6228354714643,-71.6228354714643,-71.6206103282855,-71.6206103282855,-71.6198686106345,-71.6198686106345,-71.6154182705454,-71.6154182705454,-71.6139348108358,-71.6139348108358,-71.6109678719148,-71.6109678719148,-71.6080009070111,-71.6057756662966,-71.6057756662966,-71.6050339161486,-71.6050339161486,-71.6020668993512,-71.5990998566427,-71.5961327880471,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5946492440491,-71.5946492440491,-71.5961327880471,-71.5961327880471,-71.5961327880471,-71.5976163255793,-71.5976163255793,-71.5990998566427,-71.5990998566427,-71.5994707383975,-71.5994707383975,-71.6020668993512,-71.6020668993512,-71.6020668993512,-71.5998416197477,-71.5998416197477,-71.5990998566427,-71.5990998566427,-71.5990998566427,-71.5961327880471,-71.5961327880471,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5931656935882,-71.5916821366674,-71.5916821366674,-71.5901985732898,-71.5901985732898,-71.5887150034583,-71.5887150034583,-71.5872314271759,-71.5872314271759,-71.5857478444455,-71.5857478444455,-71.5842642552703,-71.5842642552703,-71.5814825082059,-71.5814825082059,-71.5812970575969,-71.5812970575969,-71.5784225603008,-71.5784225603008,-71.5783298341796,-71.5783298341796,-71.5783298341796,-71.5757334925901,-71.5757334925901,-71.5753625850422,-71.5753625850422,-71.5738789508359,-71.5738789508359,-71.5723953102086,-71.5723953102086,-71.5694280097027,-71.5694280097027,-71.5664606835484,-71.5634933317696,-71.5620096462784,-71.5620096462784,-71.56052595439,-71.56052595439,-71.5575585514337,-71.5575585514337,-71.556816696701,-71.556816696701,-71.5545911229245,-71.5516236688862,-71.5516236688862,-71.5501399323011,-71.5501399323011,-71.5486561893427,-71.5486561893427,-71.547172440014,-71.547172440014,-71.545688684318,-71.545688684318,-71.545688684318,-71.545688684318,-71.545688684318,-71.5442049222576,-71.5442049222576,-71.5427211538359,-71.5427211538359,-71.5427211538359,-71.5412373790558,-71.5412373790558,-71.5397535979202,-71.5397535979202,-71.5382698104323,-71.5382698104323,-71.5367860165949,-71.5338184098839,-71.5338184098839,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5308507778109,-71.5278831204,-71.5278831204,-71.5278831204,-71.5278831204,-71.5249154376749,-71.518979996378,-71.5160122378539,-71.5160122378539,-71.5130444541112,-71.5130444541112,-71.5071088110656,-71.5041409518104,-71.5041409518104,-71.5011730674322,-71.4996891158294,-71.4996891158294,-71.4982051579548,-71.4982051579548,-71.4952372234022,-71.4926402601178,-71.4926402601178,-71.4922692637981,-71.4922692637981,-71.4893012791666,-71.4893012791666,-71.4833652349165,-71.4833652349165,-71.4803971753457,-71.4803971753457,-71.4803971753457,-71.4803971753457,-71.477429090843,-71.4744609814323,-71.4744609814323,-71.4714928471373,-71.4714928471373,-71.4700087706657,-71.4700087706657,-71.468524687982,-71.468524687982,-71.4670405990893,-71.4670405990893,-71.4655565039904,-71.4655565039904,-71.4655565039904,-71.4640724026884,-71.4640724026884,-71.4625882951862,-71.4625882951862,-71.4625882951862,-71.4596200615934,-71.4596200615934,-71.4596200615934,-71.4566518032359,-71.4566518032359,-71.4566518032359,-71.4566518032359,-71.4596200615934,-71.4596200615934,-71.461846239111,-71.461846239111,-71.4625882951862,-71.4625882951862,-71.4655565039904,-71.4655565039904,-71.4740899660058,-71.4740899660058,-71.4744609814323,-71.4744609814323,-71.4714928471373,-71.4714928471373,-71.4714928471373,-71.4714928471373,-71.468524687982,-71.468524687982,-71.468524687982,-71.4677826443116,-71.4677826443116,-71.4655565039904,-71.4655565039904,-71.4625882951862,-71.4596200615934,-71.4566518032359,-71.4551676647778,-71.4551676647778,-71.4536835201375,-71.4536835201375,-71.4477468798137,-71.4477468798138,-71.4462627043071,-71.4462627043071,-71.4447785226362,-71.4418101408133,-71.4418101408133,-71.4388417343691,-71.4388417343691,-71.4358733033274,-71.4358733033274,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4299363675471,-71.4299363675471,-71.4299363675471,-71.4329048477121,-71.4329048477121,-71.4329048477121,-71.4358733033274,-71.4358733033274,-71.4387489712713,-71.4387489712713,-71.4388417343691,-71.4388417343691,-71.4403259406674,-71.4403259406674,-71.4418101408133,-71.4418101408133,-71.4418101408133,-71.4447785226362,-71.4470047928312,-71.4470047928312,-71.4477468798138,-71.4477468798137,-71.4507152123222,-71.4507152123222,-71.4536835201375,-71.4536835201375,-71.4566518032359,-71.4566518032359,-71.4596200615934,-71.4625882951862,-71.4654637478407,-71.4654637478407,-71.4655565039904,-71.4655565039904,-71.468524687982,-71.468524687982,-71.4714928471373,-71.4714928471373,-71.4744609814323,-71.4744609814323,-71.477429090843,-71.4796551565565,-71.4796551565565,-71.4803971753458,-71.4803971753458,-71.4833652349165,-71.4833652349165,-71.4863332695314,-71.4863332695314,-71.4893012791666,-71.4907852746093,-71.4907852746093,-71.4922692637981,-71.4922692637981,-71.4944952358488,-71.4944952358488,-71.4952372234022,-71.4952372234022,-71.4980196627797,-71.4980196627797,-71.4982051579548,-71.4982051579548,-71.5011730674322,-71.5011730674322,-71.5056248845799,-71.5056248845799,-71.5071088110656,-71.5071088110656,-71.5100766451738,-71.5100766451738,-71.5130444541112,-71.5160122378539,-71.5160122378539,-71.518979996378,-71.5219477296597,-71.5219477296597,-71.5249154376749,-71.5278831204,-71.5278831204,-71.5308507778109,-71.5308507778109,-71.5360441172962,-71.5360441172962,-71.5367860165949,-71.5367860165949,-71.5390117049701,-71.5390117049701,-71.5397535979202,-71.5397535979202,-71.5427211538359,-71.5427211538359,-71.545688684318,-71.5486561893427,-71.5516236688862,-71.5545911229245,-71.5545911229245,-71.5560748403717,-71.5560748403717,-71.56052595439,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5606186853204,-71.5606186853204,-71.56052595439,-71.56052595439,-71.5590422561075,-71.5590422561075,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.56052595439,-71.56052595439,-71.56052595439,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5634933317696,-71.5638642521424,-71.5638642521424,-71.5664606835484,-71.5694280097027,-71.5694280097027,-71.5723953102086,-71.5753625850422,-71.5753625850422,-71.5768462128244,-71.5768462128244,-71.5783298341796,-71.5812970575969,-71.5842642552703],"lat":[-33.0155890686497,-33.0160404099803,-33.0164916725633,-33.0169428563979,-33.0183019956827,-33.0185275628259,-33.0198866886948,-33.0201122409057,-33.0214713533553,-33.0216968906323,-33.0230559896592,-33.0232815120006,-33.0237324976145,-33.0241834044692,-33.0269015955001,-33.0273524425944,-33.0278032109241,-33.0305213671988,-33.0309720757501,-33.0282539004886,-33.0284792157336,-33.0271200960718,-33.0273453868789,-33.0259862442825,-33.0232679045321,-33.0205494920502,-33.0209999671181,-33.0182814629218,-33.0185066614254,-33.0171473773117,-33.0173725513785,-33.0160132443397,-33.0132945757404,-33.0137448363157,-33.0110260760301,-33.0114762388618,-33.0087573868991,-33.0092074519899,-33.0096574383425,-33.0069384757119,-33.0073883643297,-33.0078381742119,-33.0082879053579,-33.008737557767,-33.0091871314386,-33.0096366263718,-33.0123557029184,-33.0128051380847,-33.0132544945075,-33.0159735362845,-33.0164228329225,-33.0191418209305,-33.0195910577706,-33.0223099919822,-33.0227591690111,-33.025478049399,-33.0280269336635,-33.0280550069055,-33.0282249303224,-33.0286459931402,-33.0313647468777,-33.0340834278016,-33.0368020358976,-33.0391807582288,-33.0392369038697,-33.0395767170878,-33.0399697041741,-33.0426881854741,-33.048124929434,-33.0535613817786,-33.0589975423938,-33.0644334111653,-33.0671512360741,-33.0667019142309,-33.0694196472789,-33.0690825900238,-33.0697620083422,-33.0696496448918,-33.0716878689303,-33.0712453760298,-33.0712878383038,-33.0712808139865,-33.0739559010163,-33.073506286114,-33.0762237435251,-33.075774030931,-33.0753242395009,-33.0780415861561,-33.077816651447,-33.0791752926681,-33.0789503335342,-33.0803089517776,-33.0800839682186,-33.0814425634833,-33.0812175554988,-33.0825761277837,-33.0821260432517,-33.0848431141624,-33.0843929319243,-33.0839426708377,-33.0836049232789,-33.0842841666215,-33.0841715730668,-33.0862092721563,-33.0857588345065,-33.0884756838185,-33.0880533092212,-33.0882231087713,-33.0881949479269,-33.0907419058125,-33.0902912727237,-33.0930079381265,-33.0925853803002,-33.0927551683554,-33.0927269952955,-33.0952737807487,-33.0950483763373,-33.0964066309217,-33.0961812020785,-33.0975394336673,-33.0972012463604,-33.0978803517628,-33.0977676116231,-33.0998048968706,-33.0991283312953,-33.1004864844592,-33.1002609184492,-33.1016190486132,-33.101167848006,-33.1038840346135,-33.103432736266,-33.103094210743,-33.1037732377117,-33.1036603848319,-33.10569743477,-33.1052459598002,-33.1047944059518,-33.1043427732254,-33.1038910616218,-33.1066069887049,-33.1079649248157,-33.1081908046358,-33.1095487271755,-33.1097745919927,-33.1124903916288,-33.1165639538587,-33.1167898225331,-33.1181476447234,-33.1183734983874,-33.1207496514235,-33.1208061138192,-33.1211455599709,-33.1215407642827,-33.1242563087878,-33.126971780043,-33.1266330089283,-33.1273118617636,-33.1271989270176,-33.129235454517,-33.1319507604008,-33.1314989391367,-33.134214152904,-33.1337622338904,-33.1364773555321,-33.1391924038668,-33.1419073788802,-33.1446222805583,-33.1473371088867,-33.1471110727301,-33.1484684546815,-33.1482423940871,-33.1495997529941,-33.1493736679617,-33.1507310038232,-33.1505048943524,-33.1518622071672,-33.1516360732577,-33.1529933630247,-33.1527672046761,-33.1541244713943,-33.153700362476,-33.1538700184236,-33.1538417419551,-33.1563865456639,-33.1559482038813,-33.1560330289912,-33.1560188876817,-33.1586484299642,-33.1613627239266,-33.1609667035572,-33.1613059830835,-33.1612494035162,-33.1636243260187,-33.1633979871852,-33.164755055815,-33.16452869254,-33.1685997741632,-33.1681469601874,-33.1708609039861,-33.1704079922407,-33.169955001522,-33.169728476548,-33.1710853973984,-33.1708588479801,-33.1722157457637,-33.1717625782939,-33.1697272388361,-33.1696139381554,-33.1689354836631,-33.1685955555342,-33.16814224893,-33.1667853426387,-33.1665586644282,-33.1652017444843,-33.1649750512384,-33.1636181176452,-33.1633914093656,-33.1620344621266,-33.1618077388149,-33.1590937987028,-33.156379785201,-33.1536656983237,-33.1523086273737,-33.1520819173011,-33.1507248327261,-33.1504981076312,-33.1477838929042,-33.1464267580416,-33.1462000273579,-33.1448428788819,-33.1446161331813,-33.1432589710952,-33.1430322103793,-33.1416750346866,-33.1414482589571,-33.1409946483005,-33.138280270272,-33.1378265995743,-33.1351121671667,-33.129683082605,-33.1242537051428,-33.1215389066095,-33.1210852704377,-33.1183704176462,-33.1156554916909,-33.1129404925859,-33.112486834313,-33.1115792811055,-33.1111253861723,-33.1084103897246,-33.1079564348642,-33.1106714123538,-33.1097632280641,-33.1093090175944,-33.112023865087,-33.1115695567656,-33.1113423730229,-33.1126997551275,-33.1124725469207,-33.1138299060049,-33.1133754209406,-33.1129776817968,-33.1133170142651,-33.1132601891605,-33.1156354823762,-33.115180820561,-33.1124662141495,-33.1115566918133,-33.1088420502711,-33.1083871897682,-33.1056724941425,-33.1029577254547,-33.1002428837191,-33.0997880013539,-33.0993330401214,-33.0966181633863,-33.0961631423104,-33.0948056860764,-33.0945781507226,-33.0932206809969,-33.0929931306868,-33.0916356474727,-33.0914080822079,-33.090050585509,-33.0898230052912,-33.0871079666903,-33.0857504200314,-33.0855228343872,-33.0841652742549,-33.0839376736631,-33.0812225082268,-33.0785072698697,-33.0780520476823,-33.0753367554898,-33.0699059524556,-33.069450708673,-33.0667352169487,-33.064019652384,-33.0613040149929,-33.0617592014949,-33.0590434721891,-33.0593847960218,-33.0587058487377,-33.058819612304,-33.0567827395702,-33.057237730256,-33.0545218171477,-33.0558294215011,-33.055489920381,-33.0555467576705,-33.0531702158957,-33.0527154998135,-33.0499994029388,-33.0445669909121,-33.039134287944,-33.0386795886358,-33.0359631472126,-33.0339257684429,-33.0338120896773,-33.0331329555319,-33.0327918932852,-33.0300753256416,-33.0296205262025,-33.029165648,-33.0287106910349,-33.0284831830166,-33.0298414424059,-33.0296139099074,-33.030972146346,-33.0300618002832,-33.0287035830069,-33.0284759520557,-33.0271177214132,-33.0268900755646,-33.0264347247987,-33.0237182378123,-33.0232628274707,-33.0205462870671,-33.0200908171633,-33.01737422337,-33.0169186939174,-33.014202046762,-33.0114853270595,-33.0087685348242,-33.0060516700703,-33.0055961387335,-33.0001622301844,-32.997445167196,-32.9979006408401,-32.9951834861548,-32.9924662590224,-32.9929216154745,-32.990204296664,-32.99064532953,-32.9905604115675,-32.9905746371856,-32.9879421446873,-32.988169734803,-32.9868109975957,-32.987038563225,-32.9856798031039,-32.9829622285607,-32.9834172719257,-32.9837585028063,-32.9830790894378,-32.9831928220251,-32.9811545511642,-32.9816094178959,-32.9788916408311,-32.9793464096266,-32.9766285409383,-32.9770832118,-32.9743652514973,-32.974819824428,-32.9752743186761,-32.9757145349457,-32.975629595735,-32.9756437950116,-32.973010643845,-32.9734649614879,-32.9707467794945,-32.9712009992179,-32.9684827256363,-32.9689368474428,-32.9662184822822,-32.9666725061744,-32.9670129724656,-32.9663333614561,-32.9664468391835,-32.9644079754246,-32.9648618227371,-32.9621432552049,-32.9625970046117,-32.9598783455273,-32.960331997031,-32.9605587932844,-32.9591994221986,-32.9594261939773,-32.9580668000067,-32.958406913589,-32.9577272062188,-32.9578405663783,-32.9558014135507,-32.9562264568388,-32.9560565244738,-32.9560848581599,-32.9535358376748,-32.9539891168321,-32.9512700723908,-32.9519498147988,-32.9505902510487,-32.9508167877176,-32.9494572010917,-32.9499102058258,-32.9471909591429,-32.9476438659963,-32.9480966942049,-32.9453773367994,-32.9458300671332,-32.9462827188248,-32.9435632507087,-32.9440158045313,-32.9444682797141,-32.9417487008996,-32.9422010782194,-32.9394814079416,-32.940272845392,-32.9395929081259,-32.939705949759,-32.9376661072708,-32.9380051918707,-32.9373252317424,-32.9374382489121,-32.9353983378408,-32.93585034296,-32.9331303791228,-32.9335822863929,-32.9340341150381,-32.9344858650574,-32.9349375364502,-32.9362975658268,-32.9365233768397,-32.9378833929606,-32.9385607224551,-32.9412807293134,-32.9417322032109,-32.944452156999,-32.9471720385103,-32.9498918477305,-32.9526115846452,-32.9553312492402,-32.958050841501,-32.9607703614133,-32.9634898089627,-32.9630522962361,-32.963137277226,-32.9631231626643,-32.9657575377144,-32.9655316850017,-32.9668913310806,-32.9666654539116,-32.968025077105,-32.9707442691923,-32.9734633888685,-32.9761824361193,-32.9766342377867,-32.9820721532143,-32.9929471142794,-32.9983841596878,-32.998836035562,-33.0015544685264,-33.0042728289131,-33.0066513347038,-33.0067078205116,-33.0070476028136,-33.0074429711085,-33.0078947467748,-33.0106130001063,-33.011064716103,-33.0115163533597,-33.0128754718504,-33.0131012657148,-33.0144603708072,-33.0146861497486,-33.0151376485722,-33.0155890686497]},{"lng":[-71.5575585514337,-71.56052595439,-71.5634933317696,-71.5634933317696,-71.5664606835484,-71.5664606835484,-71.5634933317696,-71.5634933317696,-71.56052595439,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337,-71.5575585514337],"lat":[-33.0930327505148,-33.0934853707239,-33.0939379120723,-33.0912219547602,-33.0916743983155,-33.0862422266831,-33.0857898210051,-33.0830736445906,-33.0826211790126,-33.0821686345898,-33.0848847731015,-33.0876008386023,-33.0903168310782,-33.0930327505148]}]]],null,"ae",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"polygon","stroke":true,"color":"#333333","weight":0.5,"opacity":0.9,"fill":true,"fillColor":"#6666ff","fillOpacity":0.6,"smoothFactor":1,"noClip":false},null,{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"1",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},{"stroke":true,"weight":1,"opacity":0.9,"fillOpacity":0.84,"bringToFront":false,"sendToBack":false}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-71.70886299464,-33.1722157457637,-71.4299363675471,-32.9331303791228,true,"ae","Zoom to ae","<strong> ae <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"ae",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[-33.1722157457637,-32.9331303791228],"lng":[-71.70886299464,-71.4299363675471]},"fitBounds":[-33.1722157457637,-71.70886299464,-32.9331303791228,-71.4299363675471,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
 </div>
 </div>
 <p>Trannsformar a formato soportado por google earth Engine</p>
@@ -439,8 +406,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Map<span class="sc">$</span><span class="fu">centerObject</span>(region, <span class="at">zoom =</span> <span class="dv">11</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Map<span class="sc">$</span><span class="fu">addLayer</span>(imagen, vis, <span class="at">name =</span> <span class="st">"Nighttime"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-df94332e7898d53249ce" style="width:100%;height:464px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-df94332e7898d53249ce">{"x":{"options":{"minZoom":1,"maxZoom":24,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addLayersControl","args":[["CartoDB.Positron","OpenStreetMap","CartoDB.DarkMatter","Esri.WorldImagery","OpenTopoMap"],[],{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addTiles","args":["https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/maps/39da310ea1b904b273ca0c617a6875c7-3b3e5401233d70b1e034a54cd5079601/tiles/{z}/{x}/{y}","Nighttime","Nighttime",{"minZoom":0,"maxZoom":24,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]},{"method":"addLayersControl","args":[["CartoDB.Positron","OpenStreetMap","CartoDB.DarkMatter","Esri.WorldImagery","OpenTopoMap"],"Nighttime",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"hideGroup","args":[null]}],"setView":[[-33.0526456230489,-71.5693996999997],11,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9547af6e5e959771641c" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-9547af6e5e959771641c">{"x":{"options":{"minZoom":1,"maxZoom":24,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane","maxZoom":24}]},{"method":"addLayersControl","args":[["CartoDB.Positron","OpenStreetMap","CartoDB.DarkMatter","Esri.WorldImagery","OpenTopoMap"],[],{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addTiles","args":["https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/6cc99a0685ef09a72a3d0c4c1599d53a-33dfff1132015f57c348d1c4541eec56/tiles/{z}/{x}/{y}","Nighttime","Nighttime",{"minZoom":0,"maxZoom":24,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]},{"method":"addLayersControl","args":[["CartoDB.Positron","OpenStreetMap","CartoDB.DarkMatter","Esri.WorldImagery","OpenTopoMap"],"Nighttime",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"hideGroup","args":[null]}],"setView":[[-33.0526456230489,-71.5693996999997],11,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
 </div>
 </div>
 </section>
@@ -531,9 +498,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -545,7 +526,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -573,38 +571,143 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./tarea_2.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tarea 2</span>
+      <a href="./espacial_r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Objetos Espaciales en R</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -616,7 +719,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+    <div class="nav-footer-left">Copyright 2023, Denis Berroeta</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 
