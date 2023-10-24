@@ -107,7 +107,7 @@ Características de Satélites y Sensores:
 
 ```{r echo=FALSE}
 suppressMessages(library(raster))
-OLI <- brick("../compartir/data/raster/corte_rm_m.tif")
+OLI <- brick("data/raster/corte_rm_m.tif")
 names(OLI) <- c("aerosol", "blue", "green", "red", "nir",
                 "swir1", "swir2", "thermal")
 # OLI
@@ -116,7 +116,7 @@ names(OLI) <- c("aerosol", "blue", "green", "red", "nir",
 
 ```{r eval=FALSE}
 library(raster)
-OLI <- brick("../data/raster/corte_rm_m.tif")
+OLI <- brick("data/raster/corte_rm_m.tif")
 names(OLI) <- c("aerosol", "blue", "green", "red", "nir", "swir1", "swir2", "thermal")
 OLI
 ```
