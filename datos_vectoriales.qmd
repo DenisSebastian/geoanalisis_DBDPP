@@ -689,12 +689,11 @@ minmax <- function(x) {
 $$ISV = 1 - minmax(NIV\_HAC2 + (2 \times  NIV\_HAC3)$$
 
 
-**NIV_HAC2**: >= 2.5 personas por habitación    
-**NIV_HAC3**: >= 5 personas por habitación
+**NIV_HAC2**: >= 2.5 personas por habitación  (Hacinamiento)    
+**NIV_HAC3**: >= 5 personas por habitación (Hacinamiento severo)
 
 ```{r}
 censo <- censo %>% mutate(ISV = NIV_HAC2 + (2 * NIV_HAC3))
-
 censo <- censo %>% mutate(ISV = 1 - minmax(ISV))
 ```
 
