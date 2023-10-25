@@ -20,8 +20,8 @@ book:
     # - autocorrelacion.qmd
     # - regresion_espacial.qmd
     - part: "Tareas"
-      # chapters:
-        # - tarea_1.qmd
+      chapters:
+        - tarea_1.qmd
         # - tarea_2.qmd
     - part: "Anexos"
       chapters:

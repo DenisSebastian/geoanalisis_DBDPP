@@ -9,7 +9,7 @@ editor_options:
 
 ## Antecedentes
 
-- Fecha de entrega: **30 de Octubre 2022**
+- Fecha de entrega: **05 de Novimbre 2022**
 - Formato: Informe (pdf, html) + Código
 - Integrantes: 3 o 4 
 
