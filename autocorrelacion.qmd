@@ -34,7 +34,7 @@ suppressPackageStartupMessages(library(spatstat))
 La primera ley de la geografía de Tobler: "Todo está relacionado con todo lo demás, pero las cosas cercanas están más relacionadas que las lejanas" no se cumple de siempre de forma absoluta. Es y ha sido siempre una simplificación excesiva, que encubre posibles problemas subyacentes de entitación, apoyo y otros errores de especificación. ¿Son las unidades de observación apropiadas para la escala del proceso espacial subyacente? ¿Podría explicarse el patrón espacial de la variable de interés para la entitación elegida mediante otra variable?
 
 
-Teniendo lo anterior como contexto, existe un test estadístico que nos permite estimar bajo ciertas condiciones evidencia la autoproducción espacial llamado _I de Moran_ es posiblemente el indicador más utilizado de autocorrelación espacial global y para ampliamente utilizado para en temáticas segregación o clusterización social. Fue sugerido inicialmente por [@moran_interpretation_1948] y popularizado a través del trabajo clásico sobre autocorrelación espacial de Cliff y Ord (1973).
+Teniendo lo anterior como contexto, existe un test estadístico que nos permite estimar bajo ciertas condiciones evidencia la autoproducción espacial llamado _I de Moran_ es posiblemente el indicador más utilizado de autocorrelación espacial global y para ampliamente utilizado para en temáticas segregación o clusterización social. Fue sugerido inicialmente por @moran_interpretation_1948 y popularizado a través del trabajo clásico sobre autocorrelación espacial de @Cliff_1972.
 
 A continuación se realizará un análisis teórico y práctico de las diferentes técnicas de autocorrelación espacial usado en ciencias sociales, en particular haciendo usos de Índice de Moran y todos los tratamientos previos. Se tratará evidenciar estadísticamente si existe agrupamiento o segregación por nivel Socieconómico en la una comuna de Chile, haciendo uso del nivel de años de estudio de jefe de hogar, más aún, identificar espacialmente donde se ubican estas concentraciones tanto de ingresos alto como bajos.
 
@@ -117,7 +117,7 @@ $$w_{ij} = \begin{cases}1 \space vecino \\
 \end{cases}$$
  
 Como ilustración, si tuviéramos 3 observaciones y una matriz de la siguiente forma:
-$$$$
+
 $$W=\begin{pmatrix}
  w_{11} & w_{12} & w_{13} \\
  w_{21} & w_{22} & w_{23} \\

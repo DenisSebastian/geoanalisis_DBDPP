@@ -211,7 +211,6 @@ violencia <-  st_as_sf(x = violencia_df,
 ggplot() +
   geom_sf(data = violencia,  color =  "red", 
           alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
   ggtitle("Delitos Violentos en Las Condes") +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 

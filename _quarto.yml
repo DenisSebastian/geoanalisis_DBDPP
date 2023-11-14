@@ -7,6 +7,7 @@ book:
   # affiliation-title: "Universidad Adolfo Ibáñez - Chile"
   author: "Denis Berroeta González (denis.berroeta@uai.cl)"
   date: "2023-10-17"
+  language: "es"
   # number-sections: 3
   page-footer: 
     left: "Copyright 2023, Denis Berroeta" 
@@ -16,17 +17,18 @@ book:
     - datos_espaciales.qmd
     - datos_vectoriales.qmd
     - raster.qmd
-    # - inferencia.qmd
-    # - autocorrelacion.qmd
+    - inferencia.qmd
+    - autocorrelacion.qmd
     # - regresion_espacial.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd
-        # - tarea_2.qmd
+        - tarea_2.qmd
     - part: "Anexos"
       chapters:
         - espacial_r.qmd
         - luces_nocturnas.qmd
+        - john_snow.qmd
     - references.qmd
 
 bibliography: references.bib
