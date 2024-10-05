@@ -1,10 +1,10 @@
 # Antecedentes {.unnumbered}
 
-Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2023, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
+Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2024, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
 
 ## Introducción
 
-Este curso se enfoca en entregar a los alumnos conocimientos teóricos y herramientas técnicas para realizar análisis espacial de variables territoriales en diferentes campos de aplicación, con énfasis en afrontar desafíos relacionado a las políticas públicas, haciendo uso de lenguaje de programación R Project, para uso de metodologías de alto nivel y de forma automatizada.
+Este curso está diseñado para proporcionar a los estudiantes una sólida base teórica y competencias técnicas para realizar análisis espacial de variables territoriales en múltiples áreas de aplicación. Se destaca el uso del lenguaje de programación R para implementar metodologías avanzadas y automatizadas, con un enfoque en resolver desafíos complejos en políticas públicas, facilitando la toma de decisiones informadas por evidencia territorial.
 
 ## Objetivos
 
@@ -14,10 +14,11 @@ Los objetivos específicos son:
 
 - Conocer los conceptos básicos del geoanálisis.
 - Manipular datos espaciales en R.
-- Conocer técnicas de inferencia, autocorrelación y regresión espacial.
+- Conocer técnicas de inferencia, autocorrelación, regresión espacial y Clustering.
 - Aplicar las técnicas a problemas de interés público.
 
 ## Modulos
+
 
 ![Modulos](images/modulos.png)
 
@@ -31,16 +32,15 @@ Los objetivos específicos son:
 ## Docentes
 
 Profesor:
-: Denis Berroeta González (denis.berroeta@uai.cl)
+: Denis Berroeta González (<denis.berroeta@uai.cl>)
 
 - Coordinador de Investigación Centro de Inteligencia Territorial UAI
 - Magister en Inteligencia Artificial FIC-UAI
-- Doctorado Master of Data Science FIC-UAI (cursando)
+- Doctorado y Master of Data Science FIC-UAI (cursando)
 - Ingeniero en Prevención en Riesgos 
 
 Ayudante:
-: Jaime  Constanzo (jvconstanzo@gmail.com)
+: Eduardo Silva Gaete (<eduardo.silva.g@edu.uai.cl>)
 
-- Cientista Político PUC
-- Business intelligence analyst (UNICEF)
-- Diplomado de Big data para políticas públicas
+- Estudiante de Ingeniería Civil Eléctrica UChile
+- Estudiante de Magister en Ciecnia de Datos UCHile

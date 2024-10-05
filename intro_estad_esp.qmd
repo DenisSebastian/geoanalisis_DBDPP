@@ -5,7 +5,7 @@ subtitle: "Módulo 1: Teórico"
 
 ## Objetivos
 
-![Objetivos](images/m1_objetivos.png)
+![Objetivos](images/m1_geoanalisis.png)
 
 * Conocer teóricos fundamentales de la estadística espacial.
 
@@ -83,7 +83,7 @@ Para resolver esta limitación existen dos enfoques principales
 
 :::
 
-![Segregación y delincuencia](images/segregacion_del.png){width=70%}
+<!-- ![Segregación y delincuencia](images/segregacion_del.png){width=70%} -->
 
 ### Valores de Vivienda
 

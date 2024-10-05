@@ -3,32 +3,32 @@ project:
 
 book:
   title: "Curso: Geoanálisis"
-  subtitle: "Diplomado en Ciencia de Datos para Políticas Públicas 2023"
+  subtitle: "Diplomado en Ciencia de Datos para Políticas Públicas 2024"
   # affiliation-title: "Universidad Adolfo Ibáñez - Chile"
   author: "Denis Berroeta González (denis.berroeta@uai.cl)"
-  date: "2023-10-17"
+  date: "2024-10-05"
   language: "es"
   # number-sections: 3
   page-footer: 
-    left: "Copyright 2023, Denis Berroeta" 
+    left: "Copyright 2024, Denis Berroeta" 
   chapters:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
-    - datos_vectoriales.qmd
-    - raster.qmd
-    - inferencia.qmd
-    - autocorrelacion.qmd
-    - regresion_espacial.qmd
-    - part: "Tareas"
-      chapters:
-        - tarea_1.qmd
-        - tarea_2.qmd
+    #- datos_vectoriales.qmd
+    #- raster.qmd
+    #- inferencia.qmd
+    #- autocorrelacion.qmd
+    #- regresion_espacial.qmd
+    #- part: "Tareas"
+    # chapters:
+    #   - tarea_1.qmd
+    #   - tarea_2.qmd
     - part: "Anexos"
       chapters:
         - espacial_r.qmd
-        - luces_nocturnas.qmd
-        - john_snow.qmd
+          #   - luces_nocturnas.qmd
+          #- john_snow.qmd
     - references.qmd
 
 bibliography: references.bib
