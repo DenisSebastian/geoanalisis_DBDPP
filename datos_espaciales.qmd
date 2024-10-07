@@ -256,38 +256,38 @@ las_condes_raster2
 
 
 
-## Actividades Prácticas
+<!-- ## Actividades Prácticas -->
 
 
-1. Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal.
+<!-- 1. Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal. -->
 
-:::{.callout-tip}
+<!-- :::{.callout-tip} -->
 
-Leer Archivo:
-```{r eval=FALSE}
-mz_ine <- readRDS("../data/censo/manz_INE_2017_sf.rds")
-```
+<!-- Leer Archivo: -->
+<!-- ```{r eval=FALSE} -->
+<!-- mz_ine <- readRDS("../data/censo/manz_INE_2017_sf.rds") -->
+<!-- ``` -->
 
-Seleccionar Comuna con `dplyr::filter()`
+<!-- Seleccionar Comuna con `dplyr::filter()` -->
 
-Eliminar geometrías `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen.
+<!-- Eliminar geometrías `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen. -->
 
-:::
-
-
-
-2. Visualización de Combinación de Bandas Satelitales
-
-:::{.callout-tip}
-![Visualización de Bandas](images/l8-band-combinations.png)
-Referencias: [https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/](https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/)
+<!-- ::: -->
 
 
-```{r eval=FALSE}
-plotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = "lin")
-```
 
-:::
+<!-- 2. Visualización de Combinación de Bandas Satelitales -->
+
+<!-- :::{.callout-tip} -->
+<!-- ![Visualización de Bandas](images/l8-band-combinations.png) -->
+<!-- Referencias: [https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/](https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/) -->
+
+
+<!-- ```{r eval=FALSE} -->
+<!-- plotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = "lin") -->
+<!-- ``` -->
+
+<!-- ::: -->
 
 
 
