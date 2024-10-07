@@ -190,21 +190,11 @@
     ]
   },
   {
-    "objectID": "datos_espaciales.html#actividades-prácticas",
-    "href": "datos_espaciales.html#actividades-prácticas",
-    "title": "2  Datos Espaciales",
-    "section": "2.6 Actividades Prácticas",
-    "text": "2.6 Actividades Prácticas\n\nSeleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal.\n\n\n\n\n\n\n\nTip\n\n\n\nLeer Archivo:\n\nmz_ine &lt;- readRDS(\"../data/censo/manz_INE_2017_sf.rds\")\n\nSeleccionar Comuna con dplyr::filter()\nEliminar geometrías sf::st_drop_geometry() ya que no es necesaria para realizar tabla resumen.\n\n\n\nVisualización de Combinación de Bandas Satelitales\n\n\n\n\n\n\n\nTip\n\n\n\n Referencias: https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/\n\nplotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = \"lin\")",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Datos Espaciales</span>"
-    ]
-  },
-  {
     "objectID": "datos_espaciales.html#referencias",
     "href": "datos_espaciales.html#referencias",
     "title": "2  Datos Espaciales",
-    "section": "2.7 Referencias",
-    "text": "2.7 Referencias\nGeodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018\nSimple Features for R",
+    "section": "2.6 Referencias",
+    "text": "2.6 Referencias\nGeodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018\nSimple Features for R",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Datos Espaciales</span>"
     ]

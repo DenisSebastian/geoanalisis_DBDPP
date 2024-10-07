@@ -213,8 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reproyectar-vectores" id="toc-reproyectar-vectores" class="nav-link" data-scroll-target="#reproyectar-vectores"><span class="header-section-number">2.5.1</span> Reproyectar Vectores</a></li>
   <li><a href="#reproyectar-raster" id="toc-reproyectar-raster" class="nav-link" data-scroll-target="#reproyectar-raster"><span class="header-section-number">2.5.2</span> Reproyectar Raster</a></li>
   </ul></li>
-  <li><a href="#actividades-prácticas" id="toc-actividades-prácticas" class="nav-link" data-scroll-target="#actividades-prácticas"><span class="header-section-number">2.6</span> Actividades Prácticas</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">2.7</span> Referencias</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">2.6</span> Referencias</a></li>
   </ul>
 </nav>
     </div>
@@ -657,53 +656,28 @@ min values : 8592.067, 7778.388, 6806.291, 6280.802, 5729.628, 5316.893, 5303.62
 max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.15,  5495.00 </code></pre>
 </div>
 </div>
+<!-- ## Actividades Prácticas -->
+<!-- 1. Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal. -->
+<!-- :::{.callout-tip} -->
+<!-- Leer Archivo: -->
+<!-- ```{r eval=FALSE} -->
+<!-- mz_ine <- readRDS("../data/censo/manz_INE_2017_sf.rds") -->
+<!-- ``` -->
+<!-- Seleccionar Comuna con `dplyr::filter()` -->
+<!-- Eliminar geometrías `sf::st_drop_geometry()` ya que no es necesaria para realizar tabla resumen. -->
+<!-- ::: -->
+<!-- 2. Visualización de Combinación de Bandas Satelitales -->
+<!-- :::{.callout-tip} -->
+<!-- ![Visualización de Bandas](images/l8-band-combinations.png) -->
+<!-- Referencias: [https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/](https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/) -->
+<!-- ```{r eval=FALSE} -->
+<!-- plotRGB(las_condes_raster, r = 7, g = 6, b = 4, stretch = "lin") -->
+<!-- ``` -->
+<!-- ::: -->
 </section>
 </section>
-<section id="actividades-prácticas" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="actividades-prácticas"><span class="header-section-number">2.6</span> Actividades Prácticas</h2>
-<ol type="1">
-<li>Seleccione una comuna de las manzanas del INE, visualiza con ggplot. Además genere una tabla resumen de suma de personas, hombres, mujeres viviendas por Zona Censal.</li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Leer Archivo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mz_ine <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"../data/censo/manz_INE_2017_sf.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Seleccionar Comuna con <code>dplyr::filter()</code></p>
-<p>Eliminar geometrías <code>sf::st_drop_geometry()</code> ya que no es necesaria para realizar tabla resumen.</p>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Visualización de Combinación de Bandas Satelitales</li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="images/l8-band-combinations.png" class="img-fluid" alt="Visualización de Bandas"> Referencias: <a href="https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/">https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes-de-satelite-landsat-y-sentinel/</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(las_condes_raster, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">g =</span> <span class="dv">6</span>, <span class="at">b =</span> <span class="dv">4</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="referencias" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.7</span> Referencias</h2>
+<section id="referencias" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.6</span> Referencias</h2>
 <p><a href="https://www.ide.cl/descargas/Geodesia-en-Chile.pdf">Geodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018</a></p>
 <p><a href="https://r-spatial.github.io/sf/">Simple Features for R</a></p>
 
