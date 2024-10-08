@@ -200,6 +200,83 @@
     ]
   },
   {
+    "objectID": "r_project.html",
+    "href": "r_project.html",
+    "title": "3  R Project",
+    "section": "",
+    "text": "3.1 ¿Qué es R Project?\nR es un lenguaje programación multiparadigma (procedural, imperativo, orientado a objetos y funcional) enfocado a aplicaciones estadísticas. Por estadísticas se debe entender también los campos de estudio que se basan o las utilizan como económía, finanzas, ciencia de datos, machine learning, etc.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#qué-es-r-project",
+    "href": "r_project.html#qué-es-r-project",
+    "title": "3  R Project",
+    "section": "",
+    "text": "3.1.1 Ventajas de Utilizar R Project\n1. R es un software libre\n\nLa libertad de ejecutar el programa como desee y con cualquier propósito\nEstudiar el funcionamiento del programa y adaptarlo a sus necesidades.\nRescribir copias para ayudar a los demás.\nManejar el programa y publicar las mejorar, de manera que toda comunidad se beneficie.\n\n2. R es multiplataforma\n\nR funciona en Mac, Windows y en numerosos sistemas UNIX. Esto significa que cualquier persona puede trabajar con tus datos, figuras, análisis y más importante aún usar tus instrucciones (también conocido como scripts o código) para generar las figuras y el análisis. Así que cualquier persona, y en cualquier lugar del mundo, con acceso a cualquier SO puede usar R sin ninguna licencia.\n\n3. R es de código abierto\n\nExiste una gran comunidad de voluntarios trabajando para mejorarlo, lo cual permite ser moldeado y dirigido a cuestiones específicas. Creando así programas y paquetes que funcionen en el entorno R. Programas tales como R-studio, Java GUI for R, R- commander, RKWard, entre otros, y con más de 18000 paquetes indexado en CRAN, Biocoductor, GitHub y R-Forge.\n\n4. Todo dentro de un mismo entorno\n\nR remplaza la combinación de varios programas para el proceso de análisis de datos, por ejemplo Excel, ArcGis, QGis, SigmaPlot, entre otros. Esto no solo resulta en el alto costo de las licencias de múltiples programas, si no también, en la gran cantidad de archivos con diferentes formatos que no podrían leer otros programas. En cambio con solo utilizar R, puedes realizar todo el análisis de datos e inclusive leer archivos de diferentes formatos.\n\n\n\n3.1.2 Desventajas de utilizar R\n\nR tiene una vasta documentación de ayuda, descripción de paquetes y de funciones, que es difícil encontrar información específica en un momento dado.\nLos mensajes de error que R nos muestra, no es específica sobre los fallos que estamos realizando y solo un usuario con cierta experiencia en el uso de R puede saberlo.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#instalación-de-r-project",
+    "href": "r_project.html#instalación-de-r-project",
+    "title": "3  R Project",
+    "section": "3.2 Instalación de R Project",
+    "text": "3.2 Instalación de R Project\n\n3.2.1 Instalación de R Project\nPrimero se debe instalar R Project desde su sitio oficial (https://cran.r-project.org/bin/windows/base/), se ejecuta el instalador que se descargó depende del sistema operativo del PC, como se muestra en las siguientes figuras:\n\n\n\n3.2.2 Instalación de R para Windows\n\n\n\n\n\n3.2.3 Instalar Rtools (solo Sistema Operativo Windows)\n\n\n\n\n\n\n\n\n3.2.4 Instalación de R para Mac\n\n\n\nR Project Ejecutándose",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#instalación-de-rstudio",
+    "href": "r_project.html#instalación-de-rstudio",
+    "title": "3  R Project",
+    "section": "3.3 Instalación de RStudio",
+    "text": "3.3 Instalación de RStudio\nSe recomienta instalar Rstudio, que es Interfaz de Usuario de R Project, desde su sitio web oficial, el cual permite acceder con mayor facilidad a sus funciones y potencialidades de R.\n\n\n\n\n\n\n\n\n\n3.3.1 RStudio Cloud\nRStudio Cloud es una versión ligera del IDE RStudio alojada en la la nube que permite a cualquiera hacer, compartir, enseñar y aprender Ciencias de Datos Online. Tiene una versión gratuita limitada.\n\n3.3.1.1 Características:\n\nAnalyze your data using the RStudio IDE, directly from your browser.\nShare projects with your team, class, workshop or the world.\nTeach data science with R to your students or colleagues.\nLearn data science in an instructor-led environment or with interactive tutorials.",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#instalar-librerías",
+    "href": "r_project.html#instalar-librerías",
+    "title": "3  R Project",
+    "section": "3.4 Instalar Librerías",
+    "text": "3.4 Instalar Librerías\n\n3.4.1 Librerías en R\nLas librerías o paquetes en R corresponden a una colección de funciones encapsuladas y diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, mineria de datos, interacción con servicios de internet y muchas otras cosas más.\nEstos paquetes se encuentran alojados principalmente en CRAN (Comprehensive R Archive Network), así que pasan por un control riguroso antes de estar disponibles para su uso generalizado, al día de hoy (29.11.2021) existen 18498 paquetes disponibles. En el siguiente enlace se deja una lista de temas y sus librerías asociadas disponibles, con una breve descripción (enlace)\nAunque las versiones de prueba de una librería pueden estar disponible en Github (Respositorio de Control de Versiones) de cada autor.\n\n\n3.4.2 Ejemplo de Instalación de Librerías desde R\nPodemos instalar paquetes usando la función install.packages(), dando como argumento el nombre del paquete que deseamos instalar, entre comillas.\nPara instalar librerías se puede hacer directamente desde la consola de RStudio, por ejemplo:\n\ninstall.packages(\"dplyr\") # Se puede instalar más de una librería a la vez\n\n\n\n3.4.3 Ejemplo de Instalación de Librerías desde Rstudio\nTambién se pude instalar librerías del Panel “Packages”\n\n\n\nY por último se puede instalar desde Pestaña “Tools” -&gt; “Install Packages”:",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#sec-wd",
+    "href": "r_project.html#sec-wd",
+    "title": "3  R Project",
+    "section": "3.5 Definición de Directorios de Trabajos",
+    "text": "3.5 Definición de Directorios de Trabajos\nDefinir directorio de Trabajo con RStudio\n\n\n\n\n\n\nDefinir Directorio de Trabajo con una función\n\nsetwd(\"~/OneDrive - Universidad Adolfo Ibanez/FONDECYT/capacitacion_SPD\")\n\nConsultar Directorio de Trabajo\n\ngetwd()\n\n[1] \"/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book\"",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
+    "objectID": "r_project.html#referencias",
+    "href": "r_project.html#referencias",
+    "title": "3  R Project",
+    "section": "3.6 Referencias:",
+    "text": "3.6 Referencias:\n\nR para Ciencia de Datos\nRStudio para Estadística Descriptiva en Ciencias Sociales\nhttps://bookdown.org/jboscomendoza/r-principiantes4/estructuras-de-control.html",
+    "crumbs": [
+      "Anexos",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+    ]
+  },
+  {
     "objectID": "espacial_r.html",
     "href": "espacial_r.html",
     "title": "Objetos Espaciales en R",
