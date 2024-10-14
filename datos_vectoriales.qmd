@@ -1,6 +1,7 @@
 ---
 title: "Datos Vectoriales"
-subtitle: "Construcción de Indicadores Socioecnómicos en Chile"
+subtitle: "Manejo y Representación de datos vectoriales"
+number-depth: 3
 editor_options: 
   chunk_output_type: console
 ---
@@ -18,27 +19,116 @@ suppressPackageStartupMessages(library(viridis))
 suppressPackageStartupMessages(library(tidyr))
 ```
 
-![Objetivos](images/m2_geoanalisis.png)
+## Introducción
 
-## Objetivos del Módulo
+Los datos vectoriales son uno de los tipos fundamentales en los que se representa la información espacial. Este formato se caracteriza por describir los elementos del espacio a través de puntos, líneas y polígonos. Cada uno de estos objetos puede tener atributos asociados que describen características adicionales como el uso del suelo, la densidad poblacional, o cualquier otra variable relevante para el análisis.
+
+En políticas públicas, los datos vectoriales juegan un rol clave en la toma de decisiones, ya que permiten analizar la distribución espacial de fenómenos, desde la localización de infraestructuras hasta la incidencia de eventos sociales y delictivos. A través de las herramientas de análisis vectorial, es posible identificar patrones, relaciones espaciales y tomar decisiones fundamentadas sobre la planificación y gestión del territorio.
+
+En este capítulo, utilizaremos la librería [sf](https://r-spatial.github.io/sf/index.html) para la lectura y manipulación de datos vectoriales en R. Esta librería es ampliamente utilizada en la comunidad de análisis espacial debido a su eficiencia y su integración con otras herramientas como dplyr para el manejo de tablas de atributos.
+
+![Introducción](images/m2_geoanalisis.png)
+
+**Tipos de Datos Vectoriales espaciales básicos**
+
+| type | description |
+|------------------------------------|------------------------------------|
+| POINT | zero-dimensional geometry containing a single point |
+| LINESTRING | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry |
+| POLYGON | geometry with a positive area (two-dimensional); sequence of points form a closed, non-self intersecting ring; the first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring |
+| MULTIPOINT | set of points; a MULTIPOINT is simple if no two Points in the MULTIPOINT are equal |
+| MULTILINESTRING | set of linestrings |
+| MULTIPOLYGON | set of polygons |
+| GEOMETRYCOLLECTION | set of geometries of any type except GEOMETRYCOLLECTION |
+
+```{r echo=FALSE}
+par(mfrow = c(2,4))
+par(mar = c(1,1,1.2,1))
+
+# 1
+p <- st_point(0:1)
+plot(p, pch = 16)
+title("point")
+box(col = 'grey')
+
+# 2
+mp <- st_multipoint(rbind(c(1,1), c(2, 2), c(4, 1), c(2, 3), c(1,4)))
+plot(mp, pch = 16)
+title("multipoint")
+box(col = 'grey')
+
+# 3
+ls <- st_linestring(rbind(c(1,1), c(5,5), c(5, 6), c(4, 6), c(3, 4), c(2, 3)))
+plot(ls, lwd = 2)
+title("linestring")
+box(col = 'grey')
+
+# 4
+mls <- st_multilinestring(list(
+  rbind(c(1,1), c(5,5), c(5, 6), c(4, 6), c(3, 4), c(2, 3)),
+  rbind(c(3,0), c(4,1), c(2,1))))
+plot(mls, lwd = 2)
+title("multilinestring")
+box(col = 'grey')
+
+# 5 polygon
+po <- st_polygon(list(rbind(c(2,1), c(3,1), c(5,2), c(6,3), c(5,3), c(4,4), c(3,4), c(1,3), c(2,1)),
+    rbind(c(2,2), c(3,3), c(4,3), c(4,2), c(2,2))))
+plot(po, border = 'black', col = '#ff8888', lwd = 2)
+title("polygon")
+box(col = 'grey')
+
+# 6 multipolygon
+mpo <- st_multipolygon(list(
+    list(rbind(c(2,1), c(3,1), c(5,2), c(6,3), c(5,3), c(4,4), c(3,4), c(1,3), c(2,1)),
+        rbind(c(2,2), c(3,3), c(4,3), c(4,2), c(2,2))),
+    list(rbind(c(3,7), c(4,7), c(5,8), c(3,9), c(2,8), c(3,7)))))
+plot(mpo, border = 'black', col = '#ff8888', lwd = 2)
+title("multipolygon")
+box(col = 'grey')
+
+# 7 geometrycollection
+gc <- st_geometrycollection(list(po, ls + c(0,5), st_point(c(2,5)), st_point(c(5,4))))
+plot(gc, border = 'black', col = '#ff6666', pch = 16, lwd = 2)
+title("geometrycollection")
+box(col = 'grey')
+
+
+```
+
+**Objetivos del Módulo**
 
 -   Manipulación de Datos Vectoriales
--   Definición de Indicadores Territoriales
--   Construcción de Indicadores Socioeconómicos
+-   Operaciones Espaciales
+-   Ejemplo de Delitos
 
 ## Manipulación de Datos Vectoriales
 
-- Lectura de Insumos
-- Filtros y selección
-- Resumen Estadísticos
-- Joining
-- Buffer Espacial
+Además de las geometrías espaciales, los datos vectoriales incluyen una tabla de atributos que contiene información adicional sobre cada objeto espacial. Esta tabla de atributos es esencial para realizar análisis más profundos, ya que nos permite filtrar, seleccionar, crear columnas nuevas y resumir los datos según diferentes criterios.
+
+Para la manipulación de datos vectoriales se usará la sección de atributos que la estructura sf permite para lo cual utilizaremos la librería `dplyr` cómo si fuera un dataframe.
 
 ### Lectura de Insumos
 
-Para los efectos prácticos de esta etapa se utilizará la base de datos del censo a nivel zonal a nivel nacional.
+![Al leer un archivo vectorial, obtenemos un objeto sf que combina tanto la geometría como la tabla de atributos.](images/feature_at_glance.png)
+
+El paquete [sf](https://r-spatial.github.io/sf/index.html) facilita la importación de estos datos, que suelen estar en formatos como shapefile (.shp) o GeoJSON (.geojson), etc. la función nativa para esto es `st_read()`. Para los efectos prácticos de esta etapa se utilizará la base de datos del censo a nivel zonal a nivel nacional que en este caso esta almacenado bajo la estrucura `rds` nativa de R, pero manteniendo todos los atributos y geometrías espaciales.
+
+Cargar librerías
 
 ```{r}
+# install.packages("sf") 
+library(sf) # manipulación de datos vectoriales
+library(dplyr) # manipulación de tablas de atributos
+library(mapview) # visualización de mapas dinámicos
+library(ggplot2) # gráficos
+library(RColorBrewer) #paleta de colores
+library(viridis) #paleta de colores
+
+```
+
+```{r}
+# sii_LC <- st_read("data/sii/sii_urbe_LC.shp")
 zonas_censales <-  readRDS("data/censo/zonas_urb_consolidadas.rds")
 
 ```
@@ -54,12 +144,26 @@ zonas_censales  %>%
                  font_size = 10,full_width = F)
 ```
 
-
 ### Filtros y selección de columnas
 
-Para efectos de practicar la manipulación de datos espaciales se creará un subset de la base de zonas censales de alguna provincia de Chile y se realizarán cálculos sencillos de densidad.
+Uno de los pasos más comunes en la manipulación de datos vectoriales es filtrar y seleccionar filas o columnas de la tabla de atributos, lo que permite centrarse en elementos específicos para análisis más detallados. Para efectos de practicar la manipulación de datos espaciales se creará un subset de la base de zonas censales de alguna provincia de Chile y se realizarán cálculos sencillos de densidad.
 
-Filtrar
+**Filtrar**
+
+```{r echo = FALSE}
+op_logicos <- tibble::tribble(
+    ~Operador,                   ~Comparación,       ~Ejemplo, ~Resultado,
+      "x | y",           "x Ó y es verdadero", "TRUE | FALSE",     "TRUE",
+      "x & y",         "x Y y son verdaderos", "TRUE & FALSE",    "FALSE",
+         "!x", "x no es verdadero (negación)",        "!TRUE",    "FALSE",
+  "isTRUE(x)",  "x es verdadero (afirmación)", "isTRUE(TRUE)",     "TRUE"
+  )
+
+require(knitr)
+kable(op_logicos, digits = 3, row.names = FALSE, align = "c",
+              caption = NULL)
+
+```
 
 ```{r}
 
@@ -70,7 +174,6 @@ zonas <-  zonas_censales %>%
 
 # mapview::mapview(zonas, zcol = "PERS")
 ```
-
 
 ```{r}
 #| label: fig-zonas-censales
@@ -87,14 +190,16 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-Selección de columnas
+**Selección de columnas**
 
 ```{r}
 zonas <-  zonas %>% 
-  dplyr::select(GEOCODIGO,NOM_REGION, NOM_PROVIN, NOM_COMUNA, PERS, URBANO, ESC_JH)
+  dplyr::select(GEOCODIGO,NOM_REGION, NOM_PROVIN, 
+                NOM_COMUNA, PERS, URBANO, ESC_JH)
+
 ```
 
-### Operaciones Espaciales
+**Mutate**
 
 Cálculo de superficie por polígono
 
@@ -104,14 +209,11 @@ zonas <- zonas %>%
   mutate(AREA = AREA/10000) %>% # en hectárea cuadrada
   mutate(DENS_PERS= round(PERS/AREA, 1))
 
-zonas
+# zonas
 ```
-
 
 ```{r}
 #| layout-ncol: 2
-#| label: fig-dif-personas
-#| fig-cap: Diferencias de un valor absoluto y densidad de Personas en Zonas Censales
 
 ggplot() +
   geom_sf(data = zonas, aes(fill = PERS), color =NA, 
@@ -121,6 +223,7 @@ ggplot() +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
         panel.grid.minor = element_line(colour = "gray80"))
+
 ggplot() +
   geom_sf(data = zonas, aes(fill = DENS_PERS), color =NA, 
           alpha=0.8,  size= 0.1)+
@@ -133,21 +236,18 @@ ggplot() +
 
 ### Resumen Estadísticos
 
-El objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones  y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.
-
+El objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.
 
 Un punto importante para generar esta tabla es eficiente eliminar la geometría para los cálculos ya que la salida será una tabla.
-
 
 ```{r}
 tab_com <- zonas_censales %>% 
   st_drop_geometry() %>% # eliminar geometría.
   group_by(NOM_COMUNA) %>% 
-  summarise(POB_COM = sum(PERS),
+  summarise(POB_COM = sum(PERS, na.rm = T),
             ESC_JH_COM = round(mean(ESC_JH, na.rm= T), 1))
 
 ```
-
 
 ```{r echo=FALSE}
 #| label: tbl-censo-comunas
@@ -160,11 +260,9 @@ tab_com  %>%
                  font_size = 16,full_width = F)
 ```
 
-
 ### Joining
 
-En este caso agregaremos a la tabla de resultados comunales antes creada, a la base de la comuna de Viña del Mar y Valparaíso, utilizaremos la función  `left_join`.
-
+En este caso agregaremos a la tabla de resultados comunales antes creada, a la base de la comuna de Viña del Mar y Valparaíso, utilizaremos la función `left_join`.
 
 ```{r}
 
@@ -188,18 +286,160 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
+## Operaciones Espaciales con sf
 
+Las operaciones espaciales son el conjunto de herramientas que permiten realizar cálculos y transformaciones sobre los datos espaciales vectoriales. Estas operaciones son fundamentales para análisis de proximidad, intersección, disolución de fronteras y creación de buffers, entre otras.
 
-### Buffer 
+Podemos clasificar las operaciones sobre geometrías en función de lo que toman como entrada y lo que devuelven como salida. En cuanto a la salida tenemos operaciones que devuelven:
 
-Primeramente se creará una geometría comunal basándose en las zonas censales
+-   **predicates**: una lógica que afirma una determinada propiedad es `TRUE`
+-   **measures**: una cantidad (un valor numérico, posiblemente con unidad de medida)
+-   **transformations**: nuevas geometrías generadas
+
+y en cuanto a lo que operan, distinguimos las operaciones que son:
+
+-   **unary** cuando trabajan en una única geometría
+-   **binary** cuando trabajan con pares de geometrías
+-   **n-ary** cuando trabajan con conjuntos de geometrías
+
+### Unary measures
+
+Las medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:
+
+| medida | devuelve |
+|---------------|---------------------------------------------------------|
+| `dimension` | 0 para puntos, 1 para líneas, 2 para polígonos, posiblemente `NA` para geometrías vacías |
+| `area` | el área de una geometría |
+| `length` | la longitud de una geometría lineal |
+
+Ejemplo cuando calculamos el área de cada polígono de zona censal.
+
+```{r eval=FALSE}
+
+# st_area(zonas)
+
+zonas <- zonas %>% 
+  mutate(AREA = as.numeric(st_area(.))) %>% # en metros cuadrados
+  mutate(AREA = AREA/10000) %>% # en hectárea cuadrada
+  mutate(DENS_PERS= round(PERS/AREA, 1))
+
+```
+
+### Unary predicates
+
+Los predicados unitarios describen una determinada propiedad de una geometría. Los predicados `is_simple`, `is_valid`, y `is_empty` devolver respectivamente si una geometría es simple, válida o vacía. Dado un sistema de referencia de coordenadas, `is_longlat` devuelve si las coordenadas son geográficas o proyectadas. es(geometría, clase)\` comprueba si una geometría pertenece a una clase determinada.
+
+```{r}
+st_is_valid(zonas) %>% head(10)
+```
+
+## Binary Predicates
+
+Una lista de predicados binarios es:
+
+| predicado | significado | inverso de |
+|--------------|---------------------------------------------|--------------|
+| `contains` | Ninguno de los puntos de A está fuera de B | `within` |
+| `contains_properly` | A contiene a B y B no tiene puntos en común con el límite de A |  |
+| `covers` | Ningún punto de B está en el exterior de A | `covered_by` |
+| `covered_by` | Inverso de `covers` |  |
+| `crosses` | A y B tienen algunos pero no todos los puntos interiores en común |  |
+| `disjoint` | A y B no tienen puntos en común | `intersects` |
+| `equals` | A y B son topológicamente iguales: el orden de los nodos o el número de nodos puede ser diferente; idéntico a A contiene B y A dentro de B |  |
+| `equals_exact` | A y B son geométricamente iguales, y tienen el mismo orden de nodos |  |
+| `intersects` | A y B no son disjuntos | `disjoint` |
+| `is_within_distance` | A está más cerca de B que una distancia dada |  |
+| `within` | Ninguno de los puntos de B está fuera de A | `contains` |
+| `touches` | A y B tienen al menos un punto en el límite en común, pero ningún punto interior |  |
+| `overlaps` | A y B tienen algunos puntos en común; la dimensión de estos es idéntica a la de A y B |  |
+| `relate` | Dado un patrón de máscara, devuelve si A y B se adhieren a este patrón |  |
+
+La [página DE-9IM de Wikipedia](https://en.wikipedia.org/wiki/DE-9IM) proporciona los patrones `relate` para cada uno de estos verbos. Es importante importante comprobarlos; por ejemplo, *covers* y *contains* (y sus (y sus inversos) no suelen ser del todo intuitivos:
+
+-   si A *contiene* B, B no tiene puntos en común con el exterior *o frontera* de A
+-   si A *cubre* B, B no tiene puntos en común con el exterior de A
+
+### Unary transformers
+
+Las transformaciones unarias funcionan por geometría y devuelven para cada geometría una nueva geometría.
+
+| transformador | devuelve una geometría ... |   |
+|-----------------|--------------------------------------|-----------------|
+| `centroid` | de tipo `POINT` con el centroide de la geometría |  |
+| `buffer` | que es más grande (o más pequeña) que la geometría de entrada, dependiendo del tamaño del buffer |  |
+| `jitter` | que ha sido movida en el espacio una cierta cantidad, usando una distribución uniforme bivariada |  |
+| `wrap_dateline` | cortada en piezas que ya no cruzan ni cubren la línea de cambio de fecha |  |
+| `boundary` | con el límite de la geometría de entrada |  |
+| `convex_hull` | que forma el envolvente convexo de la geometría de entrada |  |
+| `line_merge` | después de unir elementos `LINESTRING` conectados de un `MULTILINESTRING` en `LINESTRING`s más largos |  |
+| `make_valid` | que es válida |  |
+| `node` | con nodos añadidos a geometrías lineales en las intersecciones sin nodo; solo funciona en geometrías lineales individuales |  |
+| `point_on_surface` | con un (arbitrario) punto en una superficie |  |
+| `polygonize` | de tipo polígono, creada a partir de líneas que forman un anillo cerrado |  |
+| `segmentize` | una geometría (lineal) con nodos a una densidad o distancia mínima dada |  |
+| `simplify` | simplificada mediante la eliminación de vértices/nodos (líneas o polígonos) |  |
+| `split` | que ha sido dividida con una línea divisoria |  |
+| `transform` | transformada o convertida a un nuevo sistema de referencia de coordenadas |  |
+| `triangulate` | con polígonos triangulados de Delaunay |  |
+| `voronoi` | con la teselación de Voronoi de una geometría de entrada |  |
+| `zm` | con coordenadas `Z` y/o `M` eliminadas o añadidas |  |
+| `collection_extract` | con sub-geometrías de un `GEOMETRYCOLLECTION` de un tipo particular |  |
+| `cast` | que se convierte a otro tipo |  |
+| `+` | que se desplaza sobre un vector dado |  |
+| `*` | que se multiplica por un escalar o matriz |  |
+
+```{r fig-vor, echo = F}
+#| fig.cap: "Para un conjunto de puntos, izquierda: Convex Hull (rojo); centro: Polígonos de Voronoi; derecha: triangulación de Delauney"
+#| code-fold: true
+#| out.width: 60%
+par(mar = rep(0,4), mfrow = c(1, 3))
+set.seed(133331)
+mp <- st_multipoint(matrix(runif(20), 10))
+plot(mp, cex = 2)
+plot(st_convex_hull(mp), add = TRUE, col = NA, border = 'red')
+box()
+plot(mp, cex = 2)
+plot(st_voronoi(mp), add = TRUE, col = NA, border = 'red')
+box()
+plot(mp, cex = 2)
+plot(st_triangulate(mp), add = TRUE, col = NA, border = 'darkgreen')
+box()
+```
+
+#### Transformación de CRS
+
+Los sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido.
+
+Para el caso de Chile usamos dos sistemas de referencias de coordenadas:
+
+Coordenadas elipsoidales (geodésicas):
+
+:   4326 o `"+proj=longlat +datum=WGS84 +no_defs"`
+
+Coordenadas proyectadas (métricas):
+
+:   32719 o `"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"`
+
+Las medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:
+
+**Reproyectar Vectores**
+
+```{r}
+
+zonas_utm <- zonas %>% st_transform(32719)
+# st_crs(zonas_utm)
+# st_is_empty(zonas_utm) %>% table()
+```
+
+#### Unión de Polígonos
+
+Primeramente se creará una geometría comunal basándose en las zonas censales utilizando la función `st_union()`
 
 ```{r}
 valpo_com <-  zonas %>% filter(NOM_COMUNA == "VALPARAÍSO") %>% 
   st_union()
 
 ```
-
 
 ```{r}
 #| label: fig-zonas-comu-vlp
@@ -216,561 +456,277 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-Aplicación de Buffer con la función de `st_buffer`.
+#### Buffer
+
+Aplicación de Buffer con la función de `st_buffer`, que tiene el parámetro `dist`que dice relación a los metros que se quiere hacer el buffer (también puede ser negativo)
 
 ```{r}
+#buffer exterior cuando el valor  de dist es positivo
 valpo_com_buffer <-  valpo_com %>% 
   st_buffer(dist = 1000) # %>% st_simplify(dTolerance = 100) 
 
-```
+#buffer interior cuando el valor de dist es negativo
+valpo_com_buffer_menos <-  valpo_com %>% 
+  st_buffer(dist = - 500) # %>% st_simplify(dTolerance = 100) 
 
+```
 
 ```{r}
 #| label: fig-buffer-vlp
-#| fig-cap: Buffer de la comuna de Valparaíso - 1000 mts.
+#| fig-cap: Buffer de la comuna de Valparaíso 1000 y 500 metros.
 
 
 ggplot() +
-  geom_sf(data = valpo_com_buffer,  color ="orange", alpha=1,  size= 1, fill = NA)+
   geom_sf(data = valpo_com,  color ="magenta", alpha=0.3,  size= 1, fill = "magenta")+
+  geom_sf(data = valpo_com_buffer,  color ="orange", alpha=1,  size= 1, fill = NA)+
+  geom_sf(data = valpo_com_buffer_menos,  color ="red", alpha=1,  size= 1, fill = NA)+
   ggtitle("Buffer de la comuna de Valparaíso - 1000 mts." ) +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
+#### Transformaciones Binarias
 
-## Indicadores Territoriales
+Los transformadores binarios son funciones que devuelven una geometría basada en operar sobre un par de geometrías. Incluyen:
 
-### Definición de Indicadores
+| función | devuelve | operador infijo |
+|----------------|-----------------------------------------|:--------------:|
+| `intersection` | las geometrías superpuestas para un par de geometrías | `&` |
+| `union` | la combinación de las geometrías; elimina límites internos y puntos, nodos o segmentos de línea duplicados | `|` |
+| `difference` | las geometrías de la primera después de eliminar la superposición con la segunda geometría | `/` |
+| `sym_difference` | las combinaciones de las geometrías después de eliminar donde se intersectan; la negación (opuesto) de `intersection` | `%/%` |
 
-¿Qué es un Indicador?:
+## Ejemplo de Delitos {#sec-dataframes}
 
-:   Un indicador es un instrumento que provee información de una determinada condición, situación, actividad o resultado. Este instrumento nos permite definir un punto de comparación para establecer diferencias entre individuos o respecto a sí mismo en diferentes tiempos. Son construidos a través de análisis y operaciones técnicas y nos entregan una medida cuantitativa (valor) o una descripción cualitativa (caracterización) de la magnitud o criterio que se pretende medir u observar.
+En esta sessión se realizará un flujo de trabajo para el análisis de delitos a nivel comunal utilizando R. Que contempla desde la lectura de la base de información (excel de delitos), agregar información de categorías, hacer filtros, resúmenes estadísticos (tablas dinámicas) y finalmente visualizaciones gráficas y espaciales.
 
-### Indicadores Territoriales
+### Lectura de una tabla
 
-El Centro de Inteligencia Territorial de la Universidad Adolfo Ibáñez, bajo proyecto denominado **Matriz de Bienestar Humano Territorial (MBHT)** construyó una serie indicadores territoriales, que buscan comprender las condiciones de los entornos urbanos y rurales, para construir soluciones que impacten positivamente en el bienestar de las personas y su hábitat.
-
-
-::: {#fig-cit}
-
-![](images/Logo_CIT_UAI_Negro.png){fig-align="center" width="30%"}![](images/logo-mbht.png){fig-align="center" width="18%"}
-
-Centro de Inteligencia Territorial - UAI
-:::
-
-
-
-El sistema MBHT consiste en 18 indicadores territoriales agrupados en 4 dimensiones, que corresponde a las dimensiones de Accesibilidad, Ambiental, Seguridad y Socoeconómicas, siendo esta última a la se replicará.
-
-::: {#fig-mbht}
-
-
-![](images/dimensiones_bht.png){fig-align="center"}
-
-Dimensiones de la Matriz de Bienestar Humano Territorial
-:::
-
-
-
-## Construcción de Indicadores Socioconómicos {#sec-indsoc}
-
-Las ciudades de Chile presentan altos índices de segregación (Sabatini, 2002), que reflejan la separación espacial de distintos grupos sociales (Ruiz-Tagle, 2014). La intensidad de este fenómeno hace imperativo el considerar la condición social como una dimensión estructurante en la evaluación de Políticas Públicas.
-
-::: {#fig-soc-mbht }
-
-![](images/socioeconomico.png){fig-align="center" width=40%}
-
-Indicadores Socioconómicos
-:::
-
-
-
-### Insumos Censo 2017
-
-Para la construcción de los indicadores territoriales que componen la dimensión seocioeconómica, se utiliza íntegramente información del Censo 2017.
-
-**¿Que es Censo 2017?:**
-
-El censo de población y vivienda es la operación estadística más importante que realiza el INE y en la cual participan todos los habitantes del país, ya que este es un insumo esencial para elaborar estimaciones y proyecciones de población tanto para el país, las regiones y las comunas. 
-
-El censo permite contar con información esencial para el adecuado diseño de políticas públicas y toma de decisiones privadas y públicas. El último censo de población y vivienda realizado fue en 2017. Sus resultados indican que la población efectivamente censada llegó a un total de 17.574.003 personas. 
-
-De ellas, 8.601.989 (48,9%) son hombres y 8.972.014 (51,1%), mujeres. El número de viviendas, en tanto, fue 6.499.355, de las cuales 6.486.533 (99,8%) corresponden a viviendas particulares y 12.822 (0,2%) a colectivas.
-
-
-Para estos fines, se utilizaremos información censal agregada a nivel de **manzanas** obtenidos del Censo 2017, a continuación se explorará los insumos utilizados.
-
-
-::: {#fig-logo-censo }
-
-![](images/censo_2017.png){width="20%" fig-align="center"}
-
-Censo 2017 - Instituto Nacional de Estadísticas de Chile
-:::
-
-
-
-
-###  Insumos del Censo
-
-Para los indicadores que se crearán a continuación se utilizará una base proveniente de la consolidación de las bases del censo, denominadas microdatos de Personas, Viviendas y Hogares provenientes de los resultados de la Encuesta del Censo 2017 del Instituto Nacional de Estadísticas, Chile.
+Se leerá el archivo excel que se vio la semana pasada de delitos comunales.
 
 ```{r}
-library(sf)
-library(dplyr)
+library(openxlsx) # trabajar con archivos Excel
+library(plotly) # gráficos dinámicos
+delitos_tbl <- read.xlsx("data/excel/delitos_comunales.xlsx")
 
-# ruta de insumos
-path_insumos <- "data/socioeconomicos/insumos/"
+# str(delitos_tbl)
 ```
 
-Lectura de Insumos y selección de región de estudio, en este caso seleccionará la [Región de Coquimbo](https://es.wikipedia.org/wiki/Región_de_Coquimbo) compuesta por las provincias de Elqui, Limarí y Choapa. Sus principales centros urbanos son la Conurbación La Serena-Coquimbo con 506 391 habitantes, seguida de Ovalle con 121.269 habitantes según el Censo chileno de 2017.
-
-
+ver los primeros 6 registros
 
 ```{r}
-# selección de región
-reg <-  "R04"
-
-# Lectura de insumo espacial
-path_file <- paste0(path_insumos, reg, "_INSUMO_SOCIOECONOMICO.shp")
-censo <- st_read(path_file, quiet = T)
+head(delitos_tbl)
 ```
 
+## Agregar Categoría
 
-**Visualización de Tabla de Información `head()`**
+**Categorizar los Delitos**:
+
+Primeros veremos los tipos de delitos que existen, contenidos en la columna `Subgrupo`:
+
+```{r eval = F}
+unique(delitos_tbl$Subgrupo)
+```
 
 ```{r echo=FALSE}
-#| label: tbl-censo
-#| tbl-cap: Visualización de registros de insumos del Censo 2017 para indicadores socioeconómicos
-
-censo  %>%
-  head(6) %>% 
-  kbl() %>%
-   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
-                 font_size = 8,full_width = F)
+unique(delitos_tbl$Subgrupo) %>% head()
 ```
 
-## Indicador de Escolaridad del jefe de hogar (IEJ) 
+-   Se muestran los primeros 6 solo para buena visualización en el libro digital, en la práctica deben existir 50 categorias de delitos.
 
-Para la construcción de este indicador se utilizó el promedio de años de estudio de jefes de hogar (EJH), que es una variable censal numérica (“ESCOLARIDAD”, en tabla de personas del censo 2017) que registra el nivel del curso más alto aprobado, medida en años sucesivos desde la enseñanza básica hasta estudios de postgrado.
+**Crear una categoría de delitos**
 
-Se calcula el promedio de esta variable para todos los jefes de hogar en cada manzana. Esta variable es representativa del **capital cultural de cada hogar** y está altamente correlacionada con el nivel de ingresos en Chile (Agostini et al, 2016). 
-
-$$IEJ = ESCOLAR$$
-
-**Cálculo Indicador de Escolaridad del jefe de hogar (IEJ)**
+Se debe crear un grupo de delitos de su interés (Puede elegir los que usted quiera). Para este ejemplo se seleccionarán los delitos de violentos.
 
 ```{r}
-censo <- censo %>% 
-  mutate( IEJ = ifelse(PERSONAS ==0, NA, ESCOLAR))
+#guardo los delitos violentos en un vector
+d_agrupados <- c( "Lesiones graves o gravísimas", "Lesiones menos graves",
+                  "Microtráfico de sustancias", "Otros homicidios",
+                  "Robo con homicidio", "Robo violento de vehículo motorizado",
+                  "Robos con violencia o intimidación", "Tráfico de sustancias")
+
+# leves o incivilidades
+# d_agrupados <- c( "Amenazas con armas", "Amenazas o riña", 
+#                   "Desórdenes públicos", "Comercio ilegal" , 
+#                   "Consumo de alcohol y drogas en la vía pública", 
+#                   "Daños", "Lesiones leves" , "Desórdenes públicos",
+#                   "Desórdenes públicos", "Ofensas al pudor",
+#                   "Porte de arma cortante o punzante","Receptación",
+#                   "Robo de objetos de o desde vehículo",
+#                   "Robo por sorpresa" )
 ```
 
-Para efectos de visualización se enfocará los resultados en las zonas urbanas de la comuna de La Serena en todos los indicadores que se presentarán.
+**Agregar Categoría de delitos**
+
+Para esto crearemos una nueva columna con la función `mutate()`
 
 ```{r}
-la_serena_urb <- censo %>% 
-  filter(COD_COM == 4101 & MANZ_EN == "URBANO")
+delitos_tbl <- delitos_tbl %>% 
+  mutate(grupo = ifelse(Subgrupo %in% d_agrupados, TRUE, FALSE))
+
+
+# head(delitos_tbl)
+
+count(delitos_tbl, grupo)
+dim(delitos_tbl)
 ```
 
+## Filtros
 
-**Visualizar la Variable de `IEJ` comuna de La Serena `URBANO`**:
+**Filtrar por Tipo de Participante**
 
 ```{r}
-#| label: fig-iej-urbano
-#| fig-cap: Indicador de Escolaridad del jefe de hogar (IEJ) - Urbano
-
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = IEJ), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
-  ggtitle("Indicador de Escolaridad del jefe de hogar (IEJ) - Urbano" ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
+delitos_filtered <- delitos_tbl %>% 
+  filter(Tipo.Participante == "VICTIMA")
 ```
 
-```{r}
-# mapview::mapview(censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO"),
-                 # zcol = "IEJ", layer.name = "IEJ")
-```
-
-
-**Visualizar la Variable de `IEJ` comuna de La Serena `RURAL`**:
-
-```{r echo=TRUE}
-#| label: fig-iej-rural
-#| fig-cap: Indicador de Escolaridad del jefe de hogar (IEJ) - Rural
-
-la_serena_rural <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "RURAL")
-
-ggplot() +
-  geom_sf(data = la_serena_rural, aes(fill = IEJ), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlGnBu", direction = 1)+
-  ggtitle("Indicador de Escolaridad del jefe de hogar (IEJ) - Rural" ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-# mapview::mapview(censo %>% filter(COD_COM == 4101 & MANZ_EN == "RURAL"),
-                 # zcol = "IEJ", layer.name = "IEJ")
-```
-
-
-
-## Indicador de Empleo (IEM) 
-
-Para este indicador se usó la proporción de población activa sin empleo que es la fracción de las personas que no tienen empleo y están buscando uno, respecto al total de personas en condiciones y con deseo de trabajar en cada manzana. 
-
-Esta variable es similar al cálculo de desempleo, pero calculada a escala de manzanas y en un tiempo específico, por lo que representa las brechas potenciales que existen para acceder al empleo en barrios específicos (MDS, 2019). 
-
-$$IEM = 1- \left(\frac{P17\_4}{P17\_ACT} \right) $$
-
-
-**Cálculo Indicador de Empleo (IEM) **
-
-**P17_4**: Trabajo la semana pasada, *opción 4*: "Se encontraba buscando empleo"  
-**P17_ACT**: Total de Actividades Remuneradas (no es pregunta del Censo)
-
+**Filtrar por Región**
 
 ```{r}
 
-# P17: Trabajo la semana pasada
-# opción `4`: "Se encontraba buscando empleo"
-# P17_ACT: Total de Actividades Remuneradas
+# * Pueden cambiar la región
+delitos_filtered <- delitos_filtered %>% 
+  filter(NOM_REGION == "REGIÓN DE LA ARAUCANÍA")
 
-censo <- censo %>% mutate( CESA_DENS = P17_4 / P17_ACT)
 
-# Invertir el valor de indicador 1
-censo <- censo %>% mutate( IEM = 1 - CESA_DENS )
 ```
 
-De aquí continuación se realizarán cartografías solo a zonas urbanas a efecto de limitar la extensión del presente documento, pero el cálculo urbano se puede efectuar perfectamente aplicando un filtro como se ejemplifico en el indicador anterior. Ahora, se procede a filtrar por zonas urbanas
-
+**Filtrar por Categortía**
 
 ```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
+delitos_filtered <- delitos_filtered %>% 
+  filter(grupo == T)
 ```
 
+## Generar Resúmenes (similar a tablas dinámicas)
 
-**Visualizar la Variable de `IEM` comuna de La Serena `URBANO`**:
+![Se buscará replicar desde R las operaciones correspondientes a esta tabla dinámica](images/t_dinamica_excel.png){fig-align="center" width="300"}
+
+![](images/dplyr_group_by.png){fig-align="center" width="200"}
 
 ```{r}
-#| label: fig-iem-urbano
-#| fig-cap: Indicador de Empleo (IEM) - Urbano
 
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = IEM), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "PuBu", direction = 1)+
-  ggtitle("Indicador de Empleo (IEM) - Urbano" ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-```{r}
-# mapview::mapview(la_serena_urb, 
-#                  zcol = "IEM", layer.name = "IEM")
-```
-
-
-## Indicador de Participación Juvenil en empleo y estudio (IPJ) 
-
-Para la construcción de este indicador se utilizó la proporción de jóvenes entre 14 y 24 años que no trabajan ni estudian: es la fracción de jóvenes en este rango edad que no trabajan ni estudian, respecto al total de este segmento etario en cada manzana. 
-
-Esta variable representa un riesgo de exclusión socioeconómica en el período de transición entre el ambiente educativo y el laboral, siendo característico de trayectorias de deserción escolar que conducen al desempleo y que podrían incrementar el riesgo de adopción de comportamientos delictivos (MDS, 2019). 
-
-Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable, convirtiéndose así en un indicador de empleo. 
-
-$$IPJ = 1 - \left(\frac{J\_NINI}{E15A24} \right)$$
-
-
-**Cálculo Indicador de Participación Juvenil en empleo y estudio (IPJ) **
-
-**J_NINI**: Jóvenes que no trabajan ni estudian P17
-**E15A24**: Jóvenes entre 15 y 24 años de edad
-
-```{r}
-censo <- censo %>% mutate( NINI_DENS = J_NINI / E15A24)  
-censo <- censo %>% mutate( NINI_DENS = ifelse(NINI_DENS > 1, 1, NINI_DENS))  
-censo <- censo %>% mutate( IPJ = 1 - NINI_DENS )
-```
-
-
-
-```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
-```
-
-
-**Visualizar la Variable de `IPJ` comuna de La Serena `URBANO`**:
-
-```{r}
-#| label: fig-ipj-urbano
-#| fig-cap: Indicador de Participación Juvenil enempleo y estudio (IPJ) - Urbano
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = IPJ), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "Purples", direction = 1)+
-  ggtitle("Indicador de Participación Juvenil en empleo y estudio (IPJ) - Urbano" ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-```{r}
-# mapview::mapview(la_serena_urb, 
-#                  zcol = "IPJ", layer.name = "IPJ")
-```
-
-
-## Indicador de Resiliencia de Hogares (IRH) 
-
-En particular, la monoparentalidad es ampliamente reconocida en la literatura internacional como una situación familiar frágil, que puede afectar las trayectorias de vida de los hijos, en términos de un mayor riesgo de mortalidad (Amato & Patterson, 2017), inestabilidad psicológica (Theodoritsi, Daliana & Antoniou, 2018), problemas de salud (Duriancik & Goff, 2019) y otros. 
-
-En suma, el Indicador de Resiliencia de Hogares (en base a la monoparentalidad), en complemento a otras variables, es conceptualmente relevante para evaluar riesgos no monetarios de condiciones sociales. 
-
-Este indicador es el inverso aditivo de la proporción de hogares monoparentales dentro de una manzana. 
-Los hogares monoparentales son aquellos con hijos que viven con un solo progenitor, lo que se asocia en diversas formas a la condición social, que abarcan desde un menor ingreso, problemas de salud y delincuencia, entre otros (MDS, 2019). 
-
-Al contrario, los hogares biparentales permiten el apoyo entre progenitores y los hogares sin hijos tienen menores exigencias de gasto y tiempo relacionadas con la paternidad, por lo que se considera que en general son más resilientes. 
-
-$$IRH = 1 - \left(\frac{MONOPAR}{HOG\_N} \right)$$
-
-**Cálculo de Indicador de Resiliencia de Hogares (IRH) **
-
-**MONOPAR**: Hogares Monoparentales  
-**HOG_N**: Número de Hogares
-
-```{r}
-censo <- censo %>% mutate( MONO_DENS = MONOPAR / HOG_N)
-censo <- censo %>% mutate( MONO_DENS = ifelse(MONO_DENS > 1, 1, MONO_DENS))  
-censo <- censo %>% mutate( IRH = 1 - MONO_DENS)
-```
-
-
-```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
-```
-
-
-**Visualizar la Variable de `IRH` comuna de La Serena `URBANO`**:
-
-```{r}
-#| label: fig-irh-urbano
-#| fig-cap: Indicador de Resiliencia de Hogares (IRH) - Urbano
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = IRH), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "PuRd", direction = 1)+
-  ggtitle("Indicador de Resiliencia de Hogares (IRH) - Urbano") +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-```{r}
-# mapview::mapview(la_serena_urb, 
-#                  zcol = "IRH", layer.name = "IRH")
-```
-
-
-## Indicador de Calidad de la Vivienda (IVI) 
-
-El indicador de calidad de vivienda es una variable sintética de todas las materialidades de la vivienda. Inicialmente, se construyó como un indicador de mala calidad, tomando un valor más alto cuando la calidad de la vivienda es peor y es más bajo cuando es mejor. Fue elaborado como un promedio lineal del 3 sub-indicadores de paredes, suelo y techo. Cada uno de estos sub-indicadores registra el porcentaje de viviendas de la manzana que tienen paredes, suelo o techo considerado insuficiente. Las construcciones consideradas insuficientes son las siguientes: 
-
-**Paredes**: Material de los muros exteriores 
-
-$$paredes= \frac{(P03A\_4 + P03A\_5 + P03A\_6)}{TOTAL\_V}$$
-
-* P03A_4: Tabique sin forro interior (madera u otro)
-* P03A_5: Adobe, barro, quincha, pirca u otro artesanal tradicional
-* P03A_6: Materiales precarios (lata, cartón, plástico, etc.)
-
-**Techo**: Material en la cubierta del techo   
-
-$$techo= \frac{(P03B\_4 + P03B\_6 + P03B\_7)}{TOTAL\_V}$$
-
-* P03B_4: Fonolita o plancha de fieltro embreado
-* P03B_6: Materiales precarios (lata, cartón, plásticos, etc.)
-* P03B_7: Sin cubierta sólida de techo
-
-**Suelo**: Material de construcción del piso   
-
-$$suelo= \frac{(P03C\_4 +  P03C\_5)}{TOTAL\_V}$$
-
-* P03C_4: Capa de cemento sobre tierra
-* P03C_5: Tierra
-
-
-
-```{r}
-censo <- censo %>%
-  mutate(paredes = (P03A_4 + P03A_5 + P03A_6)/TOTAL_V,
-         techo = (P03B_4 + P03B_6 + P03B_7)/TOTAL_V,
-         suelo = (P03C_4 +  P03C_5)/TOTAL_V)
-
-# eliminar valores infinitos de la división anterior
-censo <- censo %>%
-  mutate(paredes = ifelse(paredes > 1, 1, paredes), 
-         techo = ifelse(techo > 1, 1, techo), 
-         suelo = ifelse(suelo > 1, 1, suelo))
-```
-
-**Cálculo Indicador de Calidad de la Vivienda (IVI) **
-
-$$IVI= 1 - \left(\frac{paredes+ suelo+ techo}{3}\right)$$
-
-```{r}
-censo <- censo %>%  mutate(IVI = (paredes+ suelo+ techo)/3)
-censo <- censo %>%  mutate(IVI =  1 - IVI) # invertir sentido
-```
-
-
-
-```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
-```
-
-
-**Visualizar la Variable de `IVI` comuna de La Serena `URBANO`**:
-
-```{r}
-#| label: fig-ivi-urbano
-#| fig-cap: Indicador de Calidad de la Vivienda (IVI) - Urbano
-
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = IVI), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlOrRd", direction = 1)+
-  ggtitle("Indicador de Calidad de la Vivienda (IVI) - Urbano") +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-```{r}
-# mapview::mapview(la_serena_urb, 
-#                  zcol = "IVI", layer.name = "IVI")
-```
-
-
-## Indicador de Suficiencia de Viviendas (ISV) 
-
-
-El indicador de Suficiencia de Viviendas se construyó inicialmente como un indicador de hacinamiento. Se realizó a partir de 2 variables que indican el número de viviendas que se encuentran en situación de hacinamiento y el número de viviendas que se encuentran en situación de hacinamiento severo. El indicador corresponde a la suma de 2 veces las viviendas en situación de hacinamiento severo con las viviendas en situación de hacinamiento normal, dividido por el total de viviendas. 
-
-Luego, el indicador se normalizó con su inverso aditivo, para asegurar que el valor máximo, sea lo más deseable y el 0 lo menos deseable. Con esto se obtuvo el indicador de suficiencia de viviendas.  
-
-El indicador de sificiencia de la vivienda debe ser normalizado, por lo cual se usará la función de normalización _minmax_ (@eq-minmax) que se describe a continuación:
-
-$$x^{\prime}=\frac{x-min(x)}{max(x)-min(x)}$${#eq-minmax}
-
-```{r}
-# función de normalización
-minmax <- function(x) {
-  x <- (x - min(x, na.rm = TRUE)) / 
-    (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
-  return(x)
-}
-```
-
-
-
-**Cálculo de Indicador de Suficiencia de Viviendas (ISV) **
-
-$$ISV = 1 - minmax(NIV\_HAC2 + (2 \times  NIV\_HAC3)$$
-
-
-**NIV_HAC2**: >= 2.5 personas por habitación  (Hacinamiento)    
-**NIV_HAC3**: >= 5 personas por habitación (Hacinamiento severo)
-
-```{r}
-censo <- censo %>% mutate(ISV = NIV_HAC2 + (2 * NIV_HAC3))
-censo <- censo %>% mutate(ISV = 1 - minmax(ISV))
-```
-
-
-```{r}
-la_serena_urb <- censo %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
-```
-
-
-**Visualizar la Variable de `ISV` comuna de La Serena `URBANO`**:
-
-```{r}
-#| label: fig-isv-urbano
-#| fig-cap: Indicador de Suficiencia de Viviendas (ISV) - Urbano
-
-ggplot() +
-  geom_sf(data = la_serena_urb, aes(fill = ISV), color =NA, 
-          alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "YlOrRd", direction = 1)+
-  ggtitle(" Indicador de Suficiencia de Viviendas (ISV) - Urbano") +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-```{r}
-# mapview::mapview(la_serena_urb, 
-#                  zcol = "ISV", layer.name = "ISV")
-```
-
-
-## Consolidación de Dimensión Socioeconómica
-
-
-**Selección de Variables de Interés**
-
-```{r}
-# names(censo)
-soc <- censo %>% 
-  dplyr::select(ID_MANZ:PERSONAS, IEJ, IEM, IPJ, IRH, IVI, ISV)
-```
-
-**Visualización de los Indicadores**
-
-```{r eval=FALSE}
-comuna <- soc %>% filter(COD_COM == 4101 & MANZ_EN == "URBANO")
-mapview(comuna, zcol = "IEJ") + mapview(comuna, zcol = "IEM")+
-  mapview(comuna, zcol = "IPJ") + mapview(comuna, zcol = "IRH")+
-  mapview(comuna, zcol = "IVI") + mapview(comuna, zcol = "ISV")
+tabla_resumen <- delitos_filtered %>% 
+  group_by(NOM_COMUNA) %>% 
+  summarise(total_delitos = sum(TOTAL_delitos),
+            pob = min(PERSONAS))
   
+tabla_resumen
 ```
 
+**Ponderar por población**
 
-**Guardar Resultados**
+```{r}
+tabla_resumen <- tabla_resumen %>% 
+  mutate(pond_poblacion = total_delitos / pob) %>% 
+  mutate(del_10000_hab = pond_poblacion * 10000) %>% 
+  mutate(del_10000_hab = round(del_10000_hab,2))  # redondear con 2 decimales
+
+head(tabla_resumen)
+```
+
+## Visualización gráfica
+
+```{r}
+g_barra <- ggplot(tabla_resumen, aes(x = NOM_COMUNA, y = del_10000_hab)) +
+  geom_bar(fill = "#6a51a3", color =  "gray90", stat = "identity", width = 0.7)+
+  coord_flip()+
+  theme_bw()+
+  labs(title="Delitos Violentos en la Región de la Araucanía", 
+       y ="Delitos Violentos / 10000 hebitantes", x = "Nombre de Comuna")+
+  theme(plot.title = element_text(face = "bold",colour= "gray20", size=12)) 
+  
+g_barra
+
+
+```
+
+Guardar el gráfico de barras como imagen
 
 ```{r eval=FALSE}
-# guardar shapefile
-path_file_out <- paste0("../data/socioeconomicos/resultados/",
-                    reg, "_ind_socioeconomicos.shp")
-st_write(soc, path_file_out)
-
-#guardar en RDS
-path_file_out_rds <- paste0("../data/socioeconomicos/resultados/",
-                    reg, "_ind_socioeconomicos.rds")
-saveRDS(soc, path_file_out_rds)  
+ggsave(plot = g_barra, filename = "images/del_violentos_R09.png", width = 8, height = 7)
 ```
 
+Generar gráfico dinámico
 
+```{r}
+ggplotly(g_barra)
 
+```
 
+## Visualización Espacial
 
+Primero se debe unir la tabla resumen delitos con Shapefile de comunas del INE.
+
+**Leer Shapefile de comunas**
+
+```{r}
+comunas_r09 <- st_read("data/shape/Comunas_Chile.shp") %>% 
+  filter(NOM_REGION == "REGIÓN DE LA ARAUCANÍA")
+
+head(comunas_r09)
+```
+
+**Unir shafile con tabla resumen**
+
+Se utilizará la función `left_join`
+
+![](images/dplyr_joins.png){fig-align="center" width="200"}
+
+```{r}
+
+comunas_r09 <- comunas_r09 %>% 
+  left_join(tabla_resumen, by = "NOM_COMUNA")
+
+head(comunas_r09)
+```
+
+```{r}
+library(viridis)
+del_r09_m <- ggplot() +
+  geom_sf(data = comunas_r09, aes(fill = del_10000_hab), alpha=0.8,  size= 0.5)+
+  scale_fill_viridis_c()+
+  ggtitle("Delitos Violentos en la Región de la Araucanía" ) +
+  theme_bw() +
+  # theme(legend.position="none")+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+
+del_r09_m
+```
+
+Guardar el Mapa como imagen
+
+```{r eval=FALSE}
+ggsave(plot = del_r09_m, filename = "images/map_del_violentos_R09.png", width = 8, height = 7)
+```
+
+**Mapa Dinámico**
+
+```{r}
+library(mapview)
+
+mapview(comunas_r09, zcol = "del_10000_hab", alpha.regions = 0.9)
+```
+
+## Guardar Resultados
+
+```{r eval=FALSE}
+
+# Excel
+write.xlsx(tabla_resumen, file = "data/excel/R09_del_violentos.xlsx")
+
+# Shapefile 
+st_write(comunas_r09, "data/shape/R09_del_violentos.shp", delete_dsn = T)
+
+# rds
+saveRDS(object = comunas_r09,file = "data/rds/R09_del_violentos.rds")
+
+```
 
 ## Referencias
 
-* [R para Ciencia de Datos](https://es.r4ds.hadley.nz)
-* [RStudio para Estadística Descriptiva en Ciencias Sociales](https://bookdown.org/gboccardo/manual-ED-UCH/)
-* [R para Principiantes4/](https://bookdown.org/jboscomendoza/r-principiantes4/)
-* [Colores en Ggplot2](https://ggplot2-book.org/scale-colour.html)
-
-
+-   [Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)
+-   [Geographic Data Science with R: Chapter 5 Vector Geospatial Data](https://bookdown.org/mcwimberly/gdswr-book/vector-geospatial-data.html#importing-geospatial-data)
+-   [Colores en Ggplot2](https://ggplot2-book.org/scale-colour.html)

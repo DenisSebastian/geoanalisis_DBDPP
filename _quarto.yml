@@ -15,7 +15,7 @@ book:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
-    #- datos_vectoriales.qmd
+    - datos_vectoriales.qmd
     #- raster.qmd
     #- inferencia.qmd
     #- autocorrelacion.qmd
@@ -26,7 +26,8 @@ book:
     #   - tarea_2.qmd
     - part: "Anexos"
       chapters:
-        - espacial_r.qmd
+        - r_project.qmd
+        # - espacial_r.qmd
           #   - luces_nocturnas.qmd
           #- john_snow.qmd
     - references.qmd
@@ -42,6 +43,8 @@ format:
     fig-cap-location: "margin"
     tab-cap-location: "left"
     mailto: "denis.berroeta@uai.cl"
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
   
 execute:
   warning: false
