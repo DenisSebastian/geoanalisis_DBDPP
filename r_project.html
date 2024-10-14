@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curso: Geoanálisis - 3&nbsp; R Project</title>
+<title>Curso: Geoanálisis - 4&nbsp; R Project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./espacial_r.html" rel="next">
-<link href="./datos_espaciales.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./datos_vectoriales.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_project.html">Anexos</a></li><li class="breadcrumb-item"><a href="./r_project.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">R Project</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_project.html">Anexos</a></li><li class="breadcrumb-item"><a href="./r_project.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">R Project</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -159,6 +159,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -171,13 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./r_project.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">R Project</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./espacial_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Objetos Espaciales en R</span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">R Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -198,39 +198,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#qué-es-r-project" id="toc-qué-es-r-project" class="nav-link active" data-scroll-target="#qué-es-r-project"><span class="header-section-number">3.1</span> ¿Qué es R Project?</a>
+  <li><a href="#qué-es-r-project" id="toc-qué-es-r-project" class="nav-link active" data-scroll-target="#qué-es-r-project"><span class="header-section-number">4.1</span> ¿Qué es R Project?</a>
   <ul class="collapse">
-  <li><a href="#ventajas-de-utilizar-r-project" id="toc-ventajas-de-utilizar-r-project" class="nav-link" data-scroll-target="#ventajas-de-utilizar-r-project"><span class="header-section-number">3.1.1</span> Ventajas de Utilizar R Project</a></li>
-  <li><a href="#desventajas-de-utilizar-r" id="toc-desventajas-de-utilizar-r" class="nav-link" data-scroll-target="#desventajas-de-utilizar-r"><span class="header-section-number">3.1.2</span> Desventajas de utilizar R</a></li>
+  <li><a href="#ventajas-de-utilizar-r-project" id="toc-ventajas-de-utilizar-r-project" class="nav-link" data-scroll-target="#ventajas-de-utilizar-r-project"><span class="header-section-number">4.1.1</span> Ventajas de Utilizar R Project</a></li>
+  <li><a href="#desventajas-de-utilizar-r" id="toc-desventajas-de-utilizar-r" class="nav-link" data-scroll-target="#desventajas-de-utilizar-r"><span class="header-section-number">4.1.2</span> Desventajas de utilizar R</a></li>
   </ul></li>
-  <li><a href="#instalación-de-r-project" id="toc-instalación-de-r-project" class="nav-link" data-scroll-target="#instalación-de-r-project"><span class="header-section-number">3.2</span> Instalación de R Project</a>
+  <li><a href="#instalación-de-r-project" id="toc-instalación-de-r-project" class="nav-link" data-scroll-target="#instalación-de-r-project"><span class="header-section-number">4.2</span> Instalación de R Project</a>
   <ul class="collapse">
-  <li><a href="#instalación-de-r-project-1" id="toc-instalación-de-r-project-1" class="nav-link" data-scroll-target="#instalación-de-r-project-1"><span class="header-section-number">3.2.1</span> Instalación de R Project</a></li>
-  <li><a href="#instalación-de-r-para-windows" id="toc-instalación-de-r-para-windows" class="nav-link" data-scroll-target="#instalación-de-r-para-windows"><span class="header-section-number">3.2.2</span> Instalación de R para Windows</a></li>
-  <li><a href="#instalar-rtools-solo-sistema-operativo-windows" id="toc-instalar-rtools-solo-sistema-operativo-windows" class="nav-link" data-scroll-target="#instalar-rtools-solo-sistema-operativo-windows"><span class="header-section-number">3.2.3</span> Instalar Rtools (solo Sistema Operativo Windows)</a></li>
-  <li><a href="#instalación-de-r-para-mac" id="toc-instalación-de-r-para-mac" class="nav-link" data-scroll-target="#instalación-de-r-para-mac"><span class="header-section-number">3.2.4</span> Instalación de R para Mac</a></li>
+  <li><a href="#instalación-de-r-project-1" id="toc-instalación-de-r-project-1" class="nav-link" data-scroll-target="#instalación-de-r-project-1"><span class="header-section-number">4.2.1</span> Instalación de R Project</a></li>
+  <li><a href="#instalación-de-r-para-windows" id="toc-instalación-de-r-para-windows" class="nav-link" data-scroll-target="#instalación-de-r-para-windows"><span class="header-section-number">4.2.2</span> Instalación de R para Windows</a></li>
+  <li><a href="#instalar-rtools-solo-sistema-operativo-windows" id="toc-instalar-rtools-solo-sistema-operativo-windows" class="nav-link" data-scroll-target="#instalar-rtools-solo-sistema-operativo-windows"><span class="header-section-number">4.2.3</span> Instalar Rtools (solo Sistema Operativo Windows)</a></li>
+  <li><a href="#instalación-de-r-para-mac" id="toc-instalación-de-r-para-mac" class="nav-link" data-scroll-target="#instalación-de-r-para-mac"><span class="header-section-number">4.2.4</span> Instalación de R para Mac</a></li>
   </ul></li>
-  <li><a href="#instalación-de-rstudio" id="toc-instalación-de-rstudio" class="nav-link" data-scroll-target="#instalación-de-rstudio"><span class="header-section-number">3.3</span> Instalación de RStudio</a>
+  <li><a href="#instalación-de-rstudio" id="toc-instalación-de-rstudio" class="nav-link" data-scroll-target="#instalación-de-rstudio"><span class="header-section-number">4.3</span> Instalación de RStudio</a>
   <ul class="collapse">
-  <li><a href="#rstudio-cloud" id="toc-rstudio-cloud" class="nav-link" data-scroll-target="#rstudio-cloud"><span class="header-section-number">3.3.1</span> RStudio Cloud</a></li>
+  <li><a href="#rstudio-cloud" id="toc-rstudio-cloud" class="nav-link" data-scroll-target="#rstudio-cloud"><span class="header-section-number">4.3.1</span> RStudio Cloud</a></li>
   </ul></li>
-  <li><a href="#instalar-librerías" id="toc-instalar-librerías" class="nav-link" data-scroll-target="#instalar-librerías"><span class="header-section-number">3.4</span> Instalar Librerías</a>
+  <li><a href="#instalar-librerías" id="toc-instalar-librerías" class="nav-link" data-scroll-target="#instalar-librerías"><span class="header-section-number">4.4</span> Instalar Librerías</a>
   <ul class="collapse">
-  <li><a href="#librerías-en-r" id="toc-librerías-en-r" class="nav-link" data-scroll-target="#librerías-en-r"><span class="header-section-number">3.4.1</span> Librerías en R</a></li>
-  <li><a href="#ejemplo-de-instalación-de-librerías-desde-r" id="toc-ejemplo-de-instalación-de-librerías-desde-r" class="nav-link" data-scroll-target="#ejemplo-de-instalación-de-librerías-desde-r"><span class="header-section-number">3.4.2</span> Ejemplo de Instalación de Librerías desde R</a></li>
-  <li><a href="#ejemplo-de-instalación-de-librerías-desde-rstudio" id="toc-ejemplo-de-instalación-de-librerías-desde-rstudio" class="nav-link" data-scroll-target="#ejemplo-de-instalación-de-librerías-desde-rstudio"><span class="header-section-number">3.4.3</span> Ejemplo de Instalación de Librerías desde Rstudio</a></li>
+  <li><a href="#librerías-en-r" id="toc-librerías-en-r" class="nav-link" data-scroll-target="#librerías-en-r"><span class="header-section-number">4.4.1</span> Librerías en R</a></li>
+  <li><a href="#ejemplo-de-instalación-de-librerías-desde-r" id="toc-ejemplo-de-instalación-de-librerías-desde-r" class="nav-link" data-scroll-target="#ejemplo-de-instalación-de-librerías-desde-r"><span class="header-section-number">4.4.2</span> Ejemplo de Instalación de Librerías desde R</a></li>
+  <li><a href="#ejemplo-de-instalación-de-librerías-desde-rstudio" id="toc-ejemplo-de-instalación-de-librerías-desde-rstudio" class="nav-link" data-scroll-target="#ejemplo-de-instalación-de-librerías-desde-rstudio"><span class="header-section-number">4.4.3</span> Ejemplo de Instalación de Librerías desde Rstudio</a></li>
   </ul></li>
-  <li><a href="#sec-wd" id="toc-sec-wd" class="nav-link" data-scroll-target="#sec-wd"><span class="header-section-number">3.5</span> Definición de Directorios de Trabajos</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">3.6</span> Referencias:</a></li>
+  <li><a href="#sec-wd" id="toc-sec-wd" class="nav-link" data-scroll-target="#sec-wd"><span class="header-section-number">4.5</span> Definición de Directorios de Trabajos</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">4.6</span> Referencias:</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_project.html">Anexos</a></li><li class="breadcrumb-item"><a href="./r_project.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">R Project</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r_project.html">Anexos</a></li><li class="breadcrumb-item"><a href="./r_project.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">R Project</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">R Project</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">R Project</span></h1>
 <p class="subtitle lead">Repaso de Lenguaje de Programación</p>
 </div>
 
@@ -248,11 +248,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="qué-es-r-project" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="qué-es-r-project"><span class="header-section-number">3.1</span> ¿Qué es R Project?</h2>
+<section id="qué-es-r-project" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="qué-es-r-project"><span class="header-section-number">4.1</span> ¿Qué es R Project?</h2>
 <p>R es un lenguaje programación multiparadigma (procedural, imperativo, orientado a objetos y <a href="https://es.wikipedia.org/wiki/Programación_funcional">funcional</a>) enfocado a aplicaciones estadísticas. Por estadísticas se debe entender también los campos de estudio que se basan o las utilizan como económía, finanzas, ciencia de datos, machine learning, etc.</p>
-<section id="ventajas-de-utilizar-r-project" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="ventajas-de-utilizar-r-project"><span class="header-section-number">3.1.1</span> Ventajas de Utilizar R Project</h3>
+<section id="ventajas-de-utilizar-r-project" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="ventajas-de-utilizar-r-project"><span class="header-section-number">4.1.1</span> Ventajas de Utilizar R Project</h3>
 <p><strong>1. R es un software libre</strong></p>
 <ul>
 <li>La libertad de ejecutar el programa como desee y con cualquier propósito</li>
@@ -273,29 +273,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>R remplaza la combinación de varios programas para el proceso de análisis de datos, por ejemplo Excel, ArcGis, QGis, SigmaPlot, entre otros. Esto no solo resulta en el alto costo de las licencias de múltiples programas, si no también, en la gran cantidad de archivos con diferentes formatos que no podrían leer otros programas. En cambio con solo utilizar R, puedes realizar todo el análisis de datos e inclusive leer archivos de diferentes formatos.</li>
 </ul>
 </section>
-<section id="desventajas-de-utilizar-r" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="desventajas-de-utilizar-r"><span class="header-section-number">3.1.2</span> Desventajas de utilizar R</h3>
+<section id="desventajas-de-utilizar-r" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="desventajas-de-utilizar-r"><span class="header-section-number">4.1.2</span> Desventajas de utilizar R</h3>
 <ul>
 <li>R tiene una vasta documentación de ayuda, descripción de paquetes y de funciones, que es difícil encontrar información específica en un momento dado.</li>
 <li>Los mensajes de error que R nos muestra, no es específica sobre los fallos que estamos realizando y solo un usuario con cierta experiencia en el uso de R puede saberlo.</li>
 </ul>
 </section>
 </section>
-<section id="instalación-de-r-project" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="instalación-de-r-project"><span class="header-section-number">3.2</span> Instalación de R Project</h2>
-<section id="instalación-de-r-project-1" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="instalación-de-r-project-1"><span class="header-section-number">3.2.1</span> Instalación de R Project</h3>
+<section id="instalación-de-r-project" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="instalación-de-r-project"><span class="header-section-number">4.2</span> Instalación de R Project</h2>
+<section id="instalación-de-r-project-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="instalación-de-r-project-1"><span class="header-section-number">4.2.1</span> Instalación de R Project</h3>
 <p>Primero se debe instalar <strong><a href="https://cran.r-project.org/bin/windows/base/">R Project</a></strong> desde su sitio oficial (https://cran.r-project.org/bin/windows/base/), se ejecuta el instalador que se descargó depende del sistema operativo del PC, como se muestra en las siguientes figuras:</p>
 <p><img src="images/install_r.png" class="img-fluid"></p>
 </section>
-<section id="instalación-de-r-para-windows" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="instalación-de-r-para-windows"><span class="header-section-number">3.2.2</span> Instalación de R para Windows</h3>
+<section id="instalación-de-r-para-windows" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="instalación-de-r-para-windows"><span class="header-section-number">4.2.2</span> Instalación de R para Windows</h3>
 <center>
 <img src="images/install_r_w.gif" class="img-fluid" style="width:90.0%">
 </center>
 </section>
-<section id="instalar-rtools-solo-sistema-operativo-windows" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="instalar-rtools-solo-sistema-operativo-windows"><span class="header-section-number">3.2.3</span> Instalar Rtools (solo Sistema Operativo Windows)</h3>
+<section id="instalar-rtools-solo-sistema-operativo-windows" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="instalar-rtools-solo-sistema-operativo-windows"><span class="header-section-number">4.2.3</span> Instalar Rtools (solo Sistema Operativo Windows)</h3>
 <center>
 <img src="images/w_rtools.png" class="img-fluid" style="width:60.0%">
 </center>
@@ -303,8 +303,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <img src="images/install_rtools.png" class="img-fluid" style="width:60.0%">
 </center>
 </section>
-<section id="instalación-de-r-para-mac" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="instalación-de-r-para-mac"><span class="header-section-number">3.2.4</span> Instalación de R para Mac</h3>
+<section id="instalación-de-r-para-mac" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="instalación-de-r-para-mac"><span class="header-section-number">4.2.4</span> Instalación de R para Mac</h3>
 <center>
 <img src="images/install_r_mac.gif" class="img-fluid" style="width:90.0%">
 </center>
@@ -312,8 +312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/r_project.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="instalación-de-rstudio" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="instalación-de-rstudio"><span class="header-section-number">3.3</span> Instalación de RStudio</h2>
+<section id="instalación-de-rstudio" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="instalación-de-rstudio"><span class="header-section-number">4.3</span> Instalación de RStudio</h2>
 <p>Se recomienta instalar <a href="https://www.rstudio.com/products/rstudio/download/">Rstudio</a>, que es Interfaz de Usuario de R Project, desde su sitio web oficial, el cual permite acceder con mayor facilidad a sus funciones y potencialidades de R.</p>
 <center>
 <img src="images/instaladores_rstudio.png" class="img-fluid" style="width:60.0%">
@@ -323,11 +323,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/rstudio-editor.svg" class="img-fluid" style="width:90.0%">
 </center>
-<section id="rstudio-cloud" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="rstudio-cloud"><span class="header-section-number">3.3.1</span> RStudio Cloud</h3>
+<section id="rstudio-cloud" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="rstudio-cloud"><span class="header-section-number">4.3.1</span> RStudio Cloud</h3>
 <p><a href="https://rstudio.cloud">RStudio Cloud</a> es una versión ligera del IDE RStudio alojada en la la nube que permite a cualquiera hacer, compartir, enseñar y aprender Ciencias de Datos Online. Tiene una versión gratuita limitada.</p>
-<section id="características" class="level4" data-number="3.3.1.1">
-<h4 data-number="3.3.1.1" class="anchored" data-anchor-id="características"><span class="header-section-number">3.3.1.1</span> Características:</h4>
+<section id="características" class="level4" data-number="4.3.1.1">
+<h4 data-number="4.3.1.1" class="anchored" data-anchor-id="características"><span class="header-section-number">4.3.1.1</span> Características:</h4>
 <ul>
 <li>Analyze your data using the RStudio IDE, directly from your browser.</li>
 <li>Share projects with your team, class, workshop or the world.</li>
@@ -349,24 +349,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 </section>
-<section id="instalar-librerías" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="instalar-librerías"><span class="header-section-number">3.4</span> Instalar Librerías</h2>
-<section id="librerías-en-r" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="librerías-en-r"><span class="header-section-number">3.4.1</span> Librerías en R</h3>
+<section id="instalar-librerías" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="instalar-librerías"><span class="header-section-number">4.4</span> Instalar Librerías</h2>
+<section id="librerías-en-r" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="librerías-en-r"><span class="header-section-number">4.4.1</span> Librerías en R</h3>
 <p>Las librerías o paquetes en R corresponden a una colección de funciones encapsuladas y diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, mineria de datos, interacción con servicios de internet y muchas otras cosas más.</p>
 <p>Estos paquetes se encuentran alojados principalmente en <a href="https://cran.r-project.org">CRAN</a> (Comprehensive R Archive Network), así que pasan por un control riguroso antes de estar disponibles para su uso generalizado, al día de hoy (29.11.2021) existen 18498 paquetes disponibles. En el siguiente enlace se deja una lista de temas y sus librerías asociadas disponibles, con una breve descripción (<a href="https://cran.r-project.org/web/views/">enlace</a>)</p>
 <p>Aunque las versiones de prueba de una librería pueden estar disponible en <a href="https://github.com">Github</a> (Respositorio de Control de Versiones) de cada autor.</p>
 </section>
-<section id="ejemplo-de-instalación-de-librerías-desde-r" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="ejemplo-de-instalación-de-librerías-desde-r"><span class="header-section-number">3.4.2</span> Ejemplo de Instalación de Librerías desde R</h3>
+<section id="ejemplo-de-instalación-de-librerías-desde-r" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="ejemplo-de-instalación-de-librerías-desde-r"><span class="header-section-number">4.4.2</span> Ejemplo de Instalación de Librerías desde R</h3>
 <p>Podemos instalar paquetes usando la función <code>install.packages()</code>, dando como argumento el nombre del paquete que deseamos instalar, entre comillas.</p>
 <p>Para instalar librerías se puede hacer directamente desde la consola de RStudio, por ejemplo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>) <span class="co"># Se puede instalar más de una librería a la vez</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="ejemplo-de-instalación-de-librerías-desde-rstudio" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="ejemplo-de-instalación-de-librerías-desde-rstudio"><span class="header-section-number">3.4.3</span> Ejemplo de Instalación de Librerías desde Rstudio</h3>
+<section id="ejemplo-de-instalación-de-librerías-desde-rstudio" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="ejemplo-de-instalación-de-librerías-desde-rstudio"><span class="header-section-number">4.4.3</span> Ejemplo de Instalación de Librerías desde Rstudio</h3>
 <p>También se pude instalar librerías del Panel “Packages”</p>
 <center>
 <img src="images/install_pack2.png" class="img-fluid" style="width:90.0%">
@@ -377,8 +377,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </center>
 </section>
 </section>
-<section id="sec-wd" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="sec-wd"><span class="header-section-number">3.5</span> Definición de Directorios de Trabajos</h2>
+<section id="sec-wd" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-wd"><span class="header-section-number">4.5</span> Definición de Directorios de Trabajos</h2>
 <p>Definir directorio de Trabajo con RStudio</p>
 <center>
 <img src="images/wdirectory.png" class="img-fluid" style="width:80.0%">
@@ -398,8 +398,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="referencias" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="referencias"><span class="header-section-number">3.6</span> Referencias:</h2>
+<section id="referencias" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="referencias"><span class="header-section-number">4.6</span> Referencias:</h2>
 <ul>
 <li><a href="https://es.r4ds.hadley.nz">R para Ciencia de Datos</a></li>
 <li><a href="https://bookdown.org/gboccardo/manual-ED-UCH/">RStudio para Estadística Descriptiva en Ciencias Sociales</a></li>
@@ -821,13 +821,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./datos_espaciales.html" class="pagination-link" aria-label="Datos Espaciales">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span>
+      <a href="./datos_vectoriales.html" class="pagination-link" aria-label="Datos Vectoriales">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./espacial_r.html" class="pagination-link" aria-label="Objetos Espaciales en R">
-        <span class="nav-page-text">Objetos Espaciales en R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

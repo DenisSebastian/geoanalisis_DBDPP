@@ -200,146 +200,210 @@
     ]
   },
   {
+    "objectID": "datos_vectoriales.html",
+    "href": "datos_vectoriales.html",
+    "title": "3  Datos Vectoriales",
+    "section": "",
+    "text": "3.1 Introducción\nLos datos vectoriales son uno de los tipos fundamentales en los que se representa la información espacial. Este formato se caracteriza por describir los elementos del espacio a través de puntos, líneas y polígonos. Cada uno de estos objetos puede tener atributos asociados que describen características adicionales como el uso del suelo, la densidad poblacional, o cualquier otra variable relevante para el análisis.\nEn políticas públicas, los datos vectoriales juegan un rol clave en la toma de decisiones, ya que permiten analizar la distribución espacial de fenómenos, desde la localización de infraestructuras hasta la incidencia de eventos sociales y delictivos. A través de las herramientas de análisis vectorial, es posible identificar patrones, relaciones espaciales y tomar decisiones fundamentadas sobre la planificación y gestión del territorio.\nEn este capítulo, utilizaremos la librería sf para la lectura y manipulación de datos vectoriales en R. Esta librería es ampliamente utilizada en la comunidad de análisis espacial debido a su eficiencia y su integración con otras herramientas como dplyr para el manejo de tablas de atributos.\nTipos de Datos Vectoriales espaciales básicos\nObjetivos del Módulo",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#introducción",
+    "href": "datos_vectoriales.html#introducción",
+    "title": "3  Datos Vectoriales",
+    "section": "",
+    "text": "Introducción\n\n\n\n\n\n\n\n\n\n\ntype\ndescription\n\n\n\n\nPOINT\nzero-dimensional geometry containing a single point\n\n\nLINESTRING\nsequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry\n\n\nPOLYGON\ngeometry with a positive area (two-dimensional); sequence of points form a closed, non-self intersecting ring; the first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring\n\n\nMULTIPOINT\nset of points; a MULTIPOINT is simple if no two Points in the MULTIPOINT are equal\n\n\nMULTILINESTRING\nset of linestrings\n\n\nMULTIPOLYGON\nset of polygons\n\n\nGEOMETRYCOLLECTION\nset of geometries of any type except GEOMETRYCOLLECTION\n\n\n\n\n\n\nManipulación de Datos Vectoriales\nOperaciones Espaciales\nEjemplo de Delitos",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#manipulación-de-datos-vectoriales",
+    "href": "datos_vectoriales.html#manipulación-de-datos-vectoriales",
+    "title": "3  Datos Vectoriales",
+    "section": "3.2 Manipulación de Datos Vectoriales",
+    "text": "3.2 Manipulación de Datos Vectoriales\nAdemás de las geometrías espaciales, los datos vectoriales incluyen una tabla de atributos que contiene información adicional sobre cada objeto espacial. Esta tabla de atributos es esencial para realizar análisis más profundos, ya que nos permite filtrar, seleccionar, crear columnas nuevas y resumir los datos según diferentes criterios.\nPara la manipulación de datos vectoriales se usará la sección de atributos que la estructura sf permite para lo cual utilizaremos la librería dplyr cómo si fuera un dataframe.\n\n3.2.1 Lectura de Insumos\n\n\n\nAl leer un archivo vectorial, obtenemos un objeto sf que combina tanto la geometría como la tabla de atributos.\n\n\nEl paquete sf facilita la importación de estos datos, que suelen estar en formatos como shapefile (.shp) o GeoJSON (.geojson), etc. la función nativa para esto es st_read(). Para los efectos prácticos de esta etapa se utilizará la base de datos del censo a nivel zonal a nivel nacional que en este caso esta almacenado bajo la estrucura rds nativa de R, pero manteniendo todos los atributos y geometrías espaciales.\nCargar librerías\n\n# install.packages(\"sf\") \nlibrary(sf) # manipulación de datos vectoriales\nlibrary(dplyr) # manipulación de tablas de atributos\nlibrary(mapview) # visualización de mapas dinámicos\nlibrary(ggplot2) # gráficos\nlibrary(RColorBrewer) #paleta de colores\nlibrary(viridis) #paleta de colores\n\n\n# sii_LC &lt;- st_read(\"data/sii/sii_urbe_LC.shp\")\nzonas_censales &lt;-  readRDS(\"data/censo/zonas_urb_consolidadas.rds\")\n\n\n\n\n\nTable 3.1: Registros de Zonas Censales del Censo 2017\n\n\n\n\n\n\n\nREGION\nNOM_REGION\nPROVINCIA\nNOM_PROVIN\nCOMUNA\nNOM_COMUNA\nURBANO\nDISTRITO\nLOC_ZON\nGEOCODIGO\nAREA\nCOD_INE_15\nCOD_INE_16\nVALIDO\nKM2\nESC_JH\nPERS\nM2_O\nM2_C\nDENS_HAB\nDENS_OF\nDENS_COM\ngeometry\n\n\n\n\n1\nREGIÓN DE TARAPACÁ\n14\nTAMARUGAL\n1405\nPICA\nPICA\n1\n1\n1405011001\n9336400.3\n1405011001\n1405011001\nTRUE\n9.3364003\n10.817377\n3876\n0.0000\n0.0000\n415.1493\n0.0000\n0.00000\nMULTIPOLYGON (((-69.31192 -...\n\n\n1\nREGIÓN DE TARAPACÁ\n14\nTAMARUGAL\n1401\nPOZO ALMONTE\nPOZO ALMONTE\n1\n1\n1401011001\n1941994.2\n1401011001\n1401011001\nTRUE\n1.9419942\n10.224880\n2771\n1476.0000\n4093.0000\n1426.8838\n760.0435\n2107.62731\nMULTIPOLYGON (((-69.78591 -...\n\n\n1\nREGIÓN DE TARAPACÁ\n14\nTAMARUGAL\n1401\nPOZO ALMONTE\nPOZO ALMONTE\n1\n2\n1401011002\n3572254.9\n1401011002\n1401011002\nTRUE\n3.5722549\n10.253158\n6506\n1905.0000\n9696.0000\n1821.2586\n533.2766\n2714.25201\nMULTIPOLYGON (((-69.76215 -...\n\n\n1\nREGIÓN DE TARAPACÁ\n14\nTAMARUGAL\n1404\nHUARA\nHUARA\n1\n1\n1404011001\n603314.2\n1404011001\n1404011001\nTRUE\n0.6033142\n9.523220\n1082\n0.0000\n0.0000\n1793.4270\n0.0000\n0.00000\nMULTIPOLYGON (((-69.7696 -1...\n\n\n1\nREGIÓN DE TARAPACÁ\n11\nIQUIQUE\n1107\nALTO HOSPICIO\nALTO HOSPICIO\n1\n2\n1107011002\n2272129.2\n1107011002\n1107011002\nTRUE\n2.2721292\n9.747321\n4360\n475.0686\n180.6789\n1918.9050\n209.0852\n79.51965\nMULTIPOLYGON (((-70.09246 -...\n\n\n1\nREGIÓN DE TARAPACÁ\n11\nIQUIQUE\n1107\nALTO HOSPICIO\nALTO HOSPICIO\n3\n2\n1107031002\n5820325.8\n1107031002\n1107031002\nTRUE\n5.8203258\n9.397516\n7099\n4003.6214\n1008.7833\n1219.6912\n687.8690\n173.32076\nMULTIPOLYGON (((-70.05305 -...\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.2 Filtros y selección de columnas\nUno de los pasos más comunes en la manipulación de datos vectoriales es filtrar y seleccionar filas o columnas de la tabla de atributos, lo que permite centrarse en elementos específicos para análisis más detallados. Para efectos de practicar la manipulación de datos espaciales se creará un subset de la base de zonas censales de alguna provincia de Chile y se realizarán cálculos sencillos de densidad.\nFiltrar\n\n\n\n\n\n\nOperador\nComparación\nEjemplo\nResultado\n\n\n\n\nx | y\nx Ó y es verdadero\nTRUE | FALSE\nTRUE\n\n\nx & y\nx Y y son verdaderos\nTRUE & FALSE\nFALSE\n\n\n!x\nx no es verdadero (negación)\n!TRUE\nFALSE\n\n\nisTRUE(x)\nx es verdadero (afirmación)\nisTRUE(TRUE)\nTRUE\n\n\n\n\n\n\n\n\n\n # zonas_censales$NOM_PROVIN %&gt;% unique() %&gt;% sort()\nzonas &lt;-  zonas_censales %&gt;% \n  filter(NOM_PROVIN == \"VALPARAÍSO\") %&gt;% \n  filter(URBANO %in% c(\"VIÑA DEL MAR\", \"VALPARAÍSO\") )\n\n# mapview::mapview(zonas, zcol = \"PERS\")\n\n\nggplot() +\n  geom_sf(data = zonas, aes(fill = PERS), color =NA, \n          alpha=0.8,  size= 0.1)+\n  scale_fill_distiller(palette= \"YlGnBu\", direction = 1)+\n  ggtitle(\"Población Zonas Censales - Urbano\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\nFigure 3.1: Zonas Censales de comunas de Valparaíso y Viña del Mar - Urbano\n\n\n\n\n\nSelección de columnas\n\nzonas &lt;-  zonas %&gt;% \n  dplyr::select(GEOCODIGO,NOM_REGION, NOM_PROVIN, \n                NOM_COMUNA, PERS, URBANO, ESC_JH)\n\nMutate\nCálculo de superficie por polígono\n\nzonas &lt;- zonas %&gt;% \n  mutate(AREA = as.numeric(st_area(.))) %&gt;% # en metros cuadrados\n  mutate(AREA = AREA/10000) %&gt;% # en hectárea cuadrada\n  mutate(DENS_PERS= round(PERS/AREA, 1))\n\n# zonas\n\nggplot() +\n  geom_sf(data = zonas, aes(fill = PERS), color =NA, \n          alpha=0.8,  size= 0.1)+\n  scale_fill_distiller(palette= \"YlGnBu\", direction = 1)+\n  ggtitle(\"Población Zonas Censales - Urbano\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\nggplot() +\n  geom_sf(data = zonas, aes(fill = DENS_PERS), color =NA, \n          alpha=0.8,  size= 0.1)+\n  scale_fill_distiller(palette= \"YlGnBu\", direction = 1)+\n  ggtitle(\"Densidad de Población Zonas Censales - Urbano\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.3 Resumen Estadísticos\nEl objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.\nUn punto importante para generar esta tabla es eficiente eliminar la geometría para los cálculos ya que la salida será una tabla.\n\ntab_com &lt;- zonas_censales %&gt;% \n  st_drop_geometry() %&gt;% # eliminar geometría.\n  group_by(NOM_COMUNA) %&gt;% \n  summarise(POB_COM = sum(PERS, na.rm = T),\n            ESC_JH_COM = round(mean(ESC_JH, na.rm= T), 1))\n\n\n\n\n\nTable 3.2: Registros de Población y Escolaridad por Comuna\n\n\n\n\n\n\n\nNOM_COMUNA\nPOB_COM\nESC_JH_COM\n\n\n\n\nALGARROBO\n10880\n12.1\n\n\nALHUÉ\n2706\n9.6\n\n\nALTO HOSPICIO\n105065\n10.4\n\n\nANCUD\n28162\n10.0\n\n\nANDACOLLO\n9989\n8.8\n\n\nANGOL\n48608\n10.1\n\n\nANTOFAGASTA\n349983\n12.2\n\n\nANTUCO\n2038\n9.2\n\n\nARAUCO\n27274\n9.8\n\n\nARICA\n203132\n11.5\n\n\n\n\n\n\n\n\n\n\n\n\n\n3.2.4 Joining\nEn este caso agregaremos a la tabla de resultados comunales antes creada, a la base de la comuna de Viña del Mar y Valparaíso, utilizaremos la función left_join.\n\nzonas &lt;-  zonas %&gt;% \n  left_join(tab_com, by = \"NOM_COMUNA\") %&gt;% # Ojo con las veces que se hace esta operación\n  mutate(DIF_EJH_COM = round(( ESC_JH-ESC_JH_COM), 2))\n\n\nggplot() +\n  geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, \n          alpha=0.8,  size= 0.1)+\n  scale_fill_distiller(palette= \"PRGn\", direction = 1)+\n  ggtitle(\"Diferencias Esc. Jefe Hogar Zona/Comuna - Urbano\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\nFigure 3.2: Diferencias Esc. Jefe Hogar respecto comuna - Urbano",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#operaciones-espaciales-con-sf",
+    "href": "datos_vectoriales.html#operaciones-espaciales-con-sf",
+    "title": "3  Datos Vectoriales",
+    "section": "3.3 Operaciones Espaciales con sf",
+    "text": "3.3 Operaciones Espaciales con sf\nLas operaciones espaciales son el conjunto de herramientas que permiten realizar cálculos y transformaciones sobre los datos espaciales vectoriales. Estas operaciones son fundamentales para análisis de proximidad, intersección, disolución de fronteras y creación de buffers, entre otras.\nPodemos clasificar las operaciones sobre geometrías en función de lo que toman como entrada y lo que devuelven como salida. En cuanto a la salida tenemos operaciones que devuelven:\n\npredicates: una lógica que afirma una determinada propiedad es TRUE\nmeasures: una cantidad (un valor numérico, posiblemente con unidad de medida)\ntransformations: nuevas geometrías generadas\n\ny en cuanto a lo que operan, distinguimos las operaciones que son:\n\nunary cuando trabajan en una única geometría\nbinary cuando trabajan con pares de geometrías\nn-ary cuando trabajan con conjuntos de geometrías\n\n\n3.3.1 Unary measures\nLas medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:\n\n\n\n\n\n\n\nmedida\ndevuelve\n\n\n\n\ndimension\n0 para puntos, 1 para líneas, 2 para polígonos, posiblemente NA para geometrías vacías\n\n\narea\nel área de una geometría\n\n\nlength\nla longitud de una geometría lineal\n\n\n\nEjemplo cuando calculamos el área de cada polígono de zona censal.\n\n# st_area(zonas)\n\nzonas &lt;- zonas %&gt;% \n  mutate(AREA = as.numeric(st_area(.))) %&gt;% # en metros cuadrados\n  mutate(AREA = AREA/10000) %&gt;% # en hectárea cuadrada\n  mutate(DENS_PERS= round(PERS/AREA, 1))\n\n\n\n3.3.2 Unary predicates\nLos predicados unitarios describen una determinada propiedad de una geometría. Los predicados is_simple, is_valid, y is_empty devolver respectivamente si una geometría es simple, válida o vacía. Dado un sistema de referencia de coordenadas, is_longlat devuelve si las coordenadas son geográficas o proyectadas. es(geometría, clase)` comprueba si una geometría pertenece a una clase determinada.\n\nst_is_valid(zonas) %&gt;% head(10)\n\n [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#binary-predicates",
+    "href": "datos_vectoriales.html#binary-predicates",
+    "title": "3  Datos Vectoriales",
+    "section": "3.4 Binary Predicates",
+    "text": "3.4 Binary Predicates\nUna lista de predicados binarios es:\n\n\n\n\n\n\n\n\npredicado\nsignificado\ninverso de\n\n\n\n\ncontains\nNinguno de los puntos de A está fuera de B\nwithin\n\n\ncontains_properly\nA contiene a B y B no tiene puntos en común con el límite de A\n\n\n\ncovers\nNingún punto de B está en el exterior de A\ncovered_by\n\n\ncovered_by\nInverso de covers\n\n\n\ncrosses\nA y B tienen algunos pero no todos los puntos interiores en común\n\n\n\ndisjoint\nA y B no tienen puntos en común\nintersects\n\n\nequals\nA y B son topológicamente iguales: el orden de los nodos o el número de nodos puede ser diferente; idéntico a A contiene B y A dentro de B\n\n\n\nequals_exact\nA y B son geométricamente iguales, y tienen el mismo orden de nodos\n\n\n\nintersects\nA y B no son disjuntos\ndisjoint\n\n\nis_within_distance\nA está más cerca de B que una distancia dada\n\n\n\nwithin\nNinguno de los puntos de B está fuera de A\ncontains\n\n\ntouches\nA y B tienen al menos un punto en el límite en común, pero ningún punto interior\n\n\n\noverlaps\nA y B tienen algunos puntos en común; la dimensión de estos es idéntica a la de A y B\n\n\n\nrelate\nDado un patrón de máscara, devuelve si A y B se adhieren a este patrón\n\n\n\n\nLa página DE-9IM de Wikipedia proporciona los patrones relate para cada uno de estos verbos. Es importante importante comprobarlos; por ejemplo, covers y contains (y sus (y sus inversos) no suelen ser del todo intuitivos:\n\nsi A contiene B, B no tiene puntos en común con el exterior o frontera de A\nsi A cubre B, B no tiene puntos en común con el exterior de A\n\n\n3.4.1 Unary transformers\nLas transformaciones unarias funcionan por geometría y devuelven para cada geometría una nueva geometría.\n\n\n\n\n\n\n\n\ntransformador\ndevuelve una geometría …\n\n\n\n\n\ncentroid\nde tipo POINT con el centroide de la geometría\n\n\n\nbuffer\nque es más grande (o más pequeña) que la geometría de entrada, dependiendo del tamaño del buffer\n\n\n\njitter\nque ha sido movida en el espacio una cierta cantidad, usando una distribución uniforme bivariada\n\n\n\nwrap_dateline\ncortada en piezas que ya no cruzan ni cubren la línea de cambio de fecha\n\n\n\nboundary\ncon el límite de la geometría de entrada\n\n\n\nconvex_hull\nque forma el envolvente convexo de la geometría de entrada\n\n\n\nline_merge\ndespués de unir elementos LINESTRING conectados de un MULTILINESTRING en LINESTRINGs más largos\n\n\n\nmake_valid\nque es válida\n\n\n\nnode\ncon nodos añadidos a geometrías lineales en las intersecciones sin nodo; solo funciona en geometrías lineales individuales\n\n\n\npoint_on_surface\ncon un (arbitrario) punto en una superficie\n\n\n\npolygonize\nde tipo polígono, creada a partir de líneas que forman un anillo cerrado\n\n\n\nsegmentize\nuna geometría (lineal) con nodos a una densidad o distancia mínima dada\n\n\n\nsimplify\nsimplificada mediante la eliminación de vértices/nodos (líneas o polígonos)\n\n\n\nsplit\nque ha sido dividida con una línea divisoria\n\n\n\ntransform\ntransformada o convertida a un nuevo sistema de referencia de coordenadas\n\n\n\ntriangulate\ncon polígonos triangulados de Delaunay\n\n\n\nvoronoi\ncon la teselación de Voronoi de una geometría de entrada\n\n\n\nzm\ncon coordenadas Z y/o M eliminadas o añadidas\n\n\n\ncollection_extract\ncon sub-geometrías de un GEOMETRYCOLLECTION de un tipo particular\n\n\n\ncast\nque se convierte a otro tipo\n\n\n\n+\nque se desplaza sobre un vector dado\n\n\n\n*\nque se multiplica por un escalar o matriz\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.3: Para un conjunto de puntos, izquierda: Convex Hull (rojo); centro: Polígonos de Voronoi; derecha: triangulación de Delauney\n\n\n\n\n\n\nTransformación de CRS\nLos sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido.\nPara el caso de Chile usamos dos sistemas de referencias de coordenadas:\n\nCoordenadas elipsoidales (geodésicas):\n\n4326 o \"+proj=longlat +datum=WGS84 +no_defs\"\n\nCoordenadas proyectadas (métricas):\n\n32719 o \"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs\"\n\n\nLas medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:\nReproyectar Vectores\n\nzonas_utm &lt;- zonas %&gt;% st_transform(32719)\n# st_crs(zonas_utm)\n# st_is_empty(zonas_utm) %&gt;% table()\n\n\n\nUnión de Polígonos\nPrimeramente se creará una geometría comunal basándose en las zonas censales utilizando la función st_union()\n\nvalpo_com &lt;-  zonas %&gt;% filter(NOM_COMUNA == \"VALPARAÍSO\") %&gt;% \n  st_union()\n\n\nggplot() +\n  geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, \n          alpha=0.3,  size= 0.1)+\n  scale_fill_distiller(palette= \"PRGn\", direction = 1)+\n  geom_sf(data = valpo_com,  color =\"magenta\", alpha=1,  size= 1, fill = NA)+\n  ggtitle(\"Resaltar la comuna de Valparaíso\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\nFigure 3.4: Resaltar la comuna de Valparaíso\n\n\n\n\n\n\n\nBuffer\nAplicación de Buffer con la función de st_buffer, que tiene el parámetro distque dice relación a los metros que se quiere hacer el buffer (también puede ser negativo)\n\n#buffer exterior cuando el valor  de dist es positivo\nvalpo_com_buffer &lt;-  valpo_com %&gt;% \n  st_buffer(dist = 1000) # %&gt;% st_simplify(dTolerance = 100) \n\n#buffer interior cuando el valor de dist es negativo\nvalpo_com_buffer_menos &lt;-  valpo_com %&gt;% \n  st_buffer(dist = - 500) # %&gt;% st_simplify(dTolerance = 100) \n\n\nggplot() +\n  geom_sf(data = valpo_com,  color =\"magenta\", alpha=0.3,  size= 1, fill = \"magenta\")+\n  geom_sf(data = valpo_com_buffer,  color =\"orange\", alpha=1,  size= 1, fill = NA)+\n  geom_sf(data = valpo_com_buffer_menos,  color =\"red\", alpha=1,  size= 1, fill = NA)+\n  ggtitle(\"Buffer de la comuna de Valparaíso - 1000 mts.\" ) +\n  theme_bw() +\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\nFigure 3.5: Buffer de la comuna de Valparaíso 1000 y 500 metros.\n\n\n\n\n\n\n\nTransformaciones Binarias\nLos transformadores binarios son funciones que devuelven una geometría basada en operar sobre un par de geometrías. Incluyen:\n\n\n\n\n\n\n\n\nfunción\ndevuelve\noperador infijo\n\n\n\n\nintersection\nlas geometrías superpuestas para un par de geometrías\n&\n\n\nunion\nla combinación de las geometrías; elimina límites internos y puntos, nodos o segmentos de línea duplicados\n|\n\n\ndifference\nlas geometrías de la primera después de eliminar la superposición con la segunda geometría\n/\n\n\nsym_difference\nlas combinaciones de las geometrías después de eliminar donde se intersectan; la negación (opuesto) de intersection\n%/%",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#sec-dataframes",
+    "href": "datos_vectoriales.html#sec-dataframes",
+    "title": "3  Datos Vectoriales",
+    "section": "3.5 Ejemplo de Delitos",
+    "text": "3.5 Ejemplo de Delitos\nEn esta sessión se realizará un flujo de trabajo para el análisis de delitos a nivel comunal utilizando R. Que contempla desde la lectura de la base de información (excel de delitos), agregar información de categorías, hacer filtros, resúmenes estadísticos (tablas dinámicas) y finalmente visualizaciones gráficas y espaciales.\n\n3.5.1 Lectura de una tabla\nSe leerá el archivo excel que se vio la semana pasada de delitos comunales.\n\nlibrary(openxlsx) # trabajar con archivos Excel\nlibrary(plotly) # gráficos dinámicos\ndelitos_tbl &lt;- read.xlsx(\"data/excel/delitos_comunales.xlsx\")\n\n# str(delitos_tbl)\n\nver los primeros 6 registros\n\nhead(delitos_tbl)\n\n  REGION                       NOM_REGION PROVINCIA  NOM_PROVIN COMUNA\n1     05             REGIÓN DE VALPARAÍSO       056 SAN ANTONIO  05602\n2     13 REGIÓN METROPOLITANA DE SANTIAGO       135   MELIPILLA  13502\n3     08                REGIÓN DEL BIOBÍO       083      BIOBÍO  08314\n4     01               REGIÓN DE TARAPACÁ       011     IQUIQUE  01107\n5     03                REGIÓN DE ATACAMA       033      HUASCO  03302\n6     10              REGIÓN DE LOS LAGOS       102      CHILOÉ  10202\n       NOM_COMUNA PERSONAS Tipo.Participante Subgrupo HOMBRE_delitos\n1       ALGARROBO    13794           VICTIMA Abigeato              0\n2           ALHUÉ     6365           VICTIMA Abigeato              1\n3     ALTO BIOBÍO     5823           VICTIMA Abigeato              2\n4   ALTO HOSPICIO   106297           VICTIMA Abigeato              0\n5 ALTO DEL CARMEN     5280           VICTIMA Abigeato              0\n6           ANCUD    38845           VICTIMA Abigeato              9\n  MUJER_delitos TOTAL_delitos\n1             0             0\n2             0             1\n3             3             5\n4             0             0\n5             0             0\n6             1            10",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#agregar-categoría",
+    "href": "datos_vectoriales.html#agregar-categoría",
+    "title": "3  Datos Vectoriales",
+    "section": "3.6 Agregar Categoría",
+    "text": "3.6 Agregar Categoría\nCategorizar los Delitos:\nPrimeros veremos los tipos de delitos que existen, contenidos en la columna Subgrupo:\n\nunique(delitos_tbl$Subgrupo)\n\n\n\n[1] \"Abigeato\"                           \"Abusos sexuales\"                   \n[3] \"Amenazas con armas\"                 \"Amenazas o riña\"                   \n[5] \"Animales sueltos en la vía pública\" \"Auxilio al suicidio\"               \n\n\n\nSe muestran los primeros 6 solo para buena visualización en el libro digital, en la práctica deben existir 50 categorias de delitos.\n\nCrear una categoría de delitos\nSe debe crear un grupo de delitos de su interés (Puede elegir los que usted quiera). Para este ejemplo se seleccionarán los delitos de violentos.\n\n#guardo los delitos violentos en un vector\nd_agrupados &lt;- c( \"Lesiones graves o gravísimas\", \"Lesiones menos graves\",\n                  \"Microtráfico de sustancias\", \"Otros homicidios\",\n                  \"Robo con homicidio\", \"Robo violento de vehículo motorizado\",\n                  \"Robos con violencia o intimidación\", \"Tráfico de sustancias\")\n\n# leves o incivilidades\n# d_agrupados &lt;- c( \"Amenazas con armas\", \"Amenazas o riña\", \n#                   \"Desórdenes públicos\", \"Comercio ilegal\" , \n#                   \"Consumo de alcohol y drogas en la vía pública\", \n#                   \"Daños\", \"Lesiones leves\" , \"Desórdenes públicos\",\n#                   \"Desórdenes públicos\", \"Ofensas al pudor\",\n#                   \"Porte de arma cortante o punzante\",\"Receptación\",\n#                   \"Robo de objetos de o desde vehículo\",\n#                   \"Robo por sorpresa\" )\n\nAgregar Categoría de delitos\nPara esto crearemos una nueva columna con la función mutate()\n\ndelitos_tbl &lt;- delitos_tbl %&gt;% \n  mutate(grupo = ifelse(Subgrupo %in% d_agrupados, TRUE, FALSE))\n\n\n# head(delitos_tbl)\n\ncount(delitos_tbl, grupo)\n\n  grupo     n\n1 FALSE 28980\n2  TRUE  5520\n\ndim(delitos_tbl)\n\n[1] 34500    13",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#filtros",
+    "href": "datos_vectoriales.html#filtros",
+    "title": "3  Datos Vectoriales",
+    "section": "3.7 Filtros",
+    "text": "3.7 Filtros\nFiltrar por Tipo de Participante\n\ndelitos_filtered &lt;- delitos_tbl %&gt;% \n  filter(Tipo.Participante == \"VICTIMA\")\n\nFiltrar por Región\n\n# * Pueden cambiar la región\ndelitos_filtered &lt;- delitos_filtered %&gt;% \n  filter(NOM_REGION == \"REGIÓN DE LA ARAUCANÍA\")\n\nFiltrar por Categortía\n\ndelitos_filtered &lt;- delitos_filtered %&gt;% \n  filter(grupo == T)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#generar-resúmenes-similar-a-tablas-dinámicas",
+    "href": "datos_vectoriales.html#generar-resúmenes-similar-a-tablas-dinámicas",
+    "title": "3  Datos Vectoriales",
+    "section": "3.8 Generar Resúmenes (similar a tablas dinámicas)",
+    "text": "3.8 Generar Resúmenes (similar a tablas dinámicas)\n\n\n\nSe buscará replicar desde R las operaciones correspondientes a esta tabla dinámica\n\n\n\n\n\n\n\n\ntabla_resumen &lt;- delitos_filtered %&gt;% \n  group_by(NOM_COMUNA) %&gt;% \n  summarise(total_delitos = sum(TOTAL_delitos),\n            pob = min(PERSONAS))\n  \ntabla_resumen\n\n# A tibble: 32 × 3\n   NOM_COMUNA total_delitos   pob\n   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt;\n 1 ANGOL                147 52958\n 2 CARAHUE               38 24458\n 3 CHOLCHOL              33 11581\n 4 COLLIPULLI           108 24439\n 5 CUNCO                 19 17275\n 6 CURACAUTÍN            33 17253\n 7 CURARREHUE            13  7361\n 8 ERCILLA               53  7704\n 9 FREIRE                67 24390\n10 GALVARINO             31 11914\n# ℹ 22 more rows\n\n\nPonderar por población\n\ntabla_resumen &lt;- tabla_resumen %&gt;% \n  mutate(pond_poblacion = total_delitos / pob) %&gt;% \n  mutate(del_10000_hab = pond_poblacion * 10000) %&gt;% \n  mutate(del_10000_hab = round(del_10000_hab,2))  # redondear con 2 decimales\n\nhead(tabla_resumen)\n\n# A tibble: 6 × 5\n  NOM_COMUNA total_delitos   pob pond_poblacion del_10000_hab\n  &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;\n1 ANGOL                147 52958        0.00278          27.8\n2 CARAHUE               38 24458        0.00155          15.5\n3 CHOLCHOL              33 11581        0.00285          28.5\n4 COLLIPULLI           108 24439        0.00442          44.2\n5 CUNCO                 19 17275        0.00110          11  \n6 CURACAUTÍN            33 17253        0.00191          19.1",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#visualización-gráfica",
+    "href": "datos_vectoriales.html#visualización-gráfica",
+    "title": "3  Datos Vectoriales",
+    "section": "3.9 Visualización gráfica",
+    "text": "3.9 Visualización gráfica\n\ng_barra &lt;- ggplot(tabla_resumen, aes(x = NOM_COMUNA, y = del_10000_hab)) +\n  geom_bar(fill = \"#6a51a3\", color =  \"gray90\", stat = \"identity\", width = 0.7)+\n  coord_flip()+\n  theme_bw()+\n  labs(title=\"Delitos Violentos en la Región de la Araucanía\", \n       y =\"Delitos Violentos / 10000 hebitantes\", x = \"Nombre de Comuna\")+\n  theme(plot.title = element_text(face = \"bold\",colour= \"gray20\", size=12)) \n  \ng_barra\n\n\n\n\n\n\n\n\nGuardar el gráfico de barras como imagen\n\nggsave(plot = g_barra, filename = \"images/del_violentos_R09.png\", width = 8, height = 7)\n\nGenerar gráfico dinámico\n\nggplotly(g_barra)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#visualización-espacial",
+    "href": "datos_vectoriales.html#visualización-espacial",
+    "title": "3  Datos Vectoriales",
+    "section": "3.10 Visualización Espacial",
+    "text": "3.10 Visualización Espacial\nPrimero se debe unir la tabla resumen delitos con Shapefile de comunas del INE.\nLeer Shapefile de comunas\n\ncomunas_r09 &lt;- st_read(\"data/shape/Comunas_Chile.shp\") %&gt;% \n  filter(NOM_REGION == \"REGIÓN DE LA ARAUCANÍA\")\n\nReading layer `Comunas_Chile' from data source \n  `/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book/data/shape/Comunas_Chile.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 346 features and 9 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -3701691 ymin: 3734031 xmax: 705926.2 ymax: 8065316\nProjected CRS: WGS 84 / UTM zone 19S\n\nhead(comunas_r09)\n\nSimple feature collection with 6 features and 9 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 105710.9 ymin: 5678347 xmax: 264088.7 ymax: 5814662\nProjected CRS: WGS 84 / UTM zone 19S\n  OBJECTID REGION             NOM_REGION PROVINCIA NOM_PROVIN COMUNA NOM_COMUNA\n1      196     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09102    CARAHUE\n2      197     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09116   SAAVEDRA\n3      198     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09121   CHOLCHOL\n4      199     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09106  GALVARINO\n5      200     09 REGIÓN DE LA ARAUCANÍA       092    MALLECO  09211   VICTORIA\n6      201     09 REGIÓN DE LA ARAUCANÍA       092    MALLECO  09202 COLLIPULLI\n  Shape_Leng Shape_Area                       geometry\n1   2.906029 0.13808364 MULTIPOLYGON (((121386.1 57...\n2   1.208166 0.04046546 MULTIPOLYGON (((116508.5 57...\n3   1.231271 0.04440834 MULTIPOLYGON (((154657.2 57...\n4   1.466943 0.05865461 MULTIPOLYGON (((169736.5 57...\n5   2.049851 0.12969648 MULTIPOLYGON (((200422.2 57...\n6   2.832457 0.13410231 MULTIPOLYGON (((195536.1 58...\n\n\nUnir shafile con tabla resumen\nSe utilizará la función left_join\n\n\n\n\n\n\ncomunas_r09 &lt;- comunas_r09 %&gt;% \n  left_join(tabla_resumen, by = \"NOM_COMUNA\")\n\nhead(comunas_r09)\n\nSimple feature collection with 6 features and 13 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 105710.9 ymin: 5678347 xmax: 264088.7 ymax: 5814662\nProjected CRS: WGS 84 / UTM zone 19S\n  OBJECTID REGION             NOM_REGION PROVINCIA NOM_PROVIN COMUNA NOM_COMUNA\n1      196     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09102    CARAHUE\n2      197     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09116   SAAVEDRA\n3      198     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09121   CHOLCHOL\n4      199     09 REGIÓN DE LA ARAUCANÍA       091     CAUTÍN  09106  GALVARINO\n5      200     09 REGIÓN DE LA ARAUCANÍA       092    MALLECO  09211   VICTORIA\n6      201     09 REGIÓN DE LA ARAUCANÍA       092    MALLECO  09202 COLLIPULLI\n  Shape_Leng Shape_Area total_delitos   pob pond_poblacion del_10000_hab\n1   2.906029 0.13808364            38 24458    0.001553684         15.54\n2   1.208166 0.04046546            32 12380    0.002584814         25.85\n3   1.231271 0.04440834            33 11581    0.002849495         28.49\n4   1.466943 0.05865461            31 11914    0.002601981         26.02\n5   2.049851 0.12969648           107 34103    0.003137554         31.38\n6   2.832457 0.13410231           108 24439    0.004419166         44.19\n                        geometry\n1 MULTIPOLYGON (((121386.1 57...\n2 MULTIPOLYGON (((116508.5 57...\n3 MULTIPOLYGON (((154657.2 57...\n4 MULTIPOLYGON (((169736.5 57...\n5 MULTIPOLYGON (((200422.2 57...\n6 MULTIPOLYGON (((195536.1 58...\n\n\n\nlibrary(viridis)\ndel_r09_m &lt;- ggplot() +\n  geom_sf(data = comunas_r09, aes(fill = del_10000_hab), alpha=0.8,  size= 0.5)+\n  scale_fill_viridis_c()+\n  ggtitle(\"Delitos Violentos en la Región de la Araucanía\" ) +\n  theme_bw() +\n  # theme(legend.position=\"none\")+\n  theme(panel.grid.major = element_line(colour = \"gray80\"), \n        panel.grid.minor = element_line(colour = \"gray80\"))\n\ndel_r09_m\n\n\n\n\n\n\n\n\nGuardar el Mapa como imagen\n\nggsave(plot = del_r09_m, filename = \"images/map_del_violentos_R09.png\", width = 8, height = 7)\n\nMapa Dinámico\n\nlibrary(mapview)\n\nmapview(comunas_r09, zcol = \"del_10000_hab\", alpha.regions = 0.9)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#guardar-resultados",
+    "href": "datos_vectoriales.html#guardar-resultados",
+    "title": "3  Datos Vectoriales",
+    "section": "3.11 Guardar Resultados",
+    "text": "3.11 Guardar Resultados\n\n# Excel\nwrite.xlsx(tabla_resumen, file = \"data/excel/R09_del_violentos.xlsx\")\n\n# Shapefile \nst_write(comunas_r09, \"data/shape/R09_del_violentos.shp\", delete_dsn = T)\n\n# rds\nsaveRDS(object = comunas_r09,file = \"data/rds/R09_del_violentos.rds\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
+    "objectID": "datos_vectoriales.html#referencias",
+    "href": "datos_vectoriales.html#referencias",
+    "title": "3  Datos Vectoriales",
+    "section": "3.12 Referencias",
+    "text": "3.12 Referencias\n\nSimple Features for R\nGeographic Data Science with R: Chapter 5 Vector Geospatial Data\nColores en Ggplot2",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Datos Vectoriales</span>"
+    ]
+  },
+  {
     "objectID": "r_project.html",
     "href": "r_project.html",
-    "title": "3  R Project",
+    "title": "4  R Project",
     "section": "",
-    "text": "3.1 ¿Qué es R Project?\nR es un lenguaje programación multiparadigma (procedural, imperativo, orientado a objetos y funcional) enfocado a aplicaciones estadísticas. Por estadísticas se debe entender también los campos de estudio que se basan o las utilizan como económía, finanzas, ciencia de datos, machine learning, etc.",
+    "text": "4.1 ¿Qué es R Project?\nR es un lenguaje programación multiparadigma (procedural, imperativo, orientado a objetos y funcional) enfocado a aplicaciones estadísticas. Por estadísticas se debe entender también los campos de estudio que se basan o las utilizan como económía, finanzas, ciencia de datos, machine learning, etc.",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#qué-es-r-project",
     "href": "r_project.html#qué-es-r-project",
-    "title": "3  R Project",
+    "title": "4  R Project",
     "section": "",
-    "text": "3.1.1 Ventajas de Utilizar R Project\n1. R es un software libre\n\nLa libertad de ejecutar el programa como desee y con cualquier propósito\nEstudiar el funcionamiento del programa y adaptarlo a sus necesidades.\nRescribir copias para ayudar a los demás.\nManejar el programa y publicar las mejorar, de manera que toda comunidad se beneficie.\n\n2. R es multiplataforma\n\nR funciona en Mac, Windows y en numerosos sistemas UNIX. Esto significa que cualquier persona puede trabajar con tus datos, figuras, análisis y más importante aún usar tus instrucciones (también conocido como scripts o código) para generar las figuras y el análisis. Así que cualquier persona, y en cualquier lugar del mundo, con acceso a cualquier SO puede usar R sin ninguna licencia.\n\n3. R es de código abierto\n\nExiste una gran comunidad de voluntarios trabajando para mejorarlo, lo cual permite ser moldeado y dirigido a cuestiones específicas. Creando así programas y paquetes que funcionen en el entorno R. Programas tales como R-studio, Java GUI for R, R- commander, RKWard, entre otros, y con más de 18000 paquetes indexado en CRAN, Biocoductor, GitHub y R-Forge.\n\n4. Todo dentro de un mismo entorno\n\nR remplaza la combinación de varios programas para el proceso de análisis de datos, por ejemplo Excel, ArcGis, QGis, SigmaPlot, entre otros. Esto no solo resulta en el alto costo de las licencias de múltiples programas, si no también, en la gran cantidad de archivos con diferentes formatos que no podrían leer otros programas. En cambio con solo utilizar R, puedes realizar todo el análisis de datos e inclusive leer archivos de diferentes formatos.\n\n\n\n3.1.2 Desventajas de utilizar R\n\nR tiene una vasta documentación de ayuda, descripción de paquetes y de funciones, que es difícil encontrar información específica en un momento dado.\nLos mensajes de error que R nos muestra, no es específica sobre los fallos que estamos realizando y solo un usuario con cierta experiencia en el uso de R puede saberlo.",
+    "text": "4.1.1 Ventajas de Utilizar R Project\n1. R es un software libre\n\nLa libertad de ejecutar el programa como desee y con cualquier propósito\nEstudiar el funcionamiento del programa y adaptarlo a sus necesidades.\nRescribir copias para ayudar a los demás.\nManejar el programa y publicar las mejorar, de manera que toda comunidad se beneficie.\n\n2. R es multiplataforma\n\nR funciona en Mac, Windows y en numerosos sistemas UNIX. Esto significa que cualquier persona puede trabajar con tus datos, figuras, análisis y más importante aún usar tus instrucciones (también conocido como scripts o código) para generar las figuras y el análisis. Así que cualquier persona, y en cualquier lugar del mundo, con acceso a cualquier SO puede usar R sin ninguna licencia.\n\n3. R es de código abierto\n\nExiste una gran comunidad de voluntarios trabajando para mejorarlo, lo cual permite ser moldeado y dirigido a cuestiones específicas. Creando así programas y paquetes que funcionen en el entorno R. Programas tales como R-studio, Java GUI for R, R- commander, RKWard, entre otros, y con más de 18000 paquetes indexado en CRAN, Biocoductor, GitHub y R-Forge.\n\n4. Todo dentro de un mismo entorno\n\nR remplaza la combinación de varios programas para el proceso de análisis de datos, por ejemplo Excel, ArcGis, QGis, SigmaPlot, entre otros. Esto no solo resulta en el alto costo de las licencias de múltiples programas, si no también, en la gran cantidad de archivos con diferentes formatos que no podrían leer otros programas. En cambio con solo utilizar R, puedes realizar todo el análisis de datos e inclusive leer archivos de diferentes formatos.\n\n\n\n4.1.2 Desventajas de utilizar R\n\nR tiene una vasta documentación de ayuda, descripción de paquetes y de funciones, que es difícil encontrar información específica en un momento dado.\nLos mensajes de error que R nos muestra, no es específica sobre los fallos que estamos realizando y solo un usuario con cierta experiencia en el uso de R puede saberlo.",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#instalación-de-r-project",
     "href": "r_project.html#instalación-de-r-project",
-    "title": "3  R Project",
-    "section": "3.2 Instalación de R Project",
-    "text": "3.2 Instalación de R Project\n\n3.2.1 Instalación de R Project\nPrimero se debe instalar R Project desde su sitio oficial (https://cran.r-project.org/bin/windows/base/), se ejecuta el instalador que se descargó depende del sistema operativo del PC, como se muestra en las siguientes figuras:\n\n\n\n3.2.2 Instalación de R para Windows\n\n\n\n\n\n3.2.3 Instalar Rtools (solo Sistema Operativo Windows)\n\n\n\n\n\n\n\n\n3.2.4 Instalación de R para Mac\n\n\n\nR Project Ejecutándose",
+    "title": "4  R Project",
+    "section": "4.2 Instalación de R Project",
+    "text": "4.2 Instalación de R Project\n\n4.2.1 Instalación de R Project\nPrimero se debe instalar R Project desde su sitio oficial (https://cran.r-project.org/bin/windows/base/), se ejecuta el instalador que se descargó depende del sistema operativo del PC, como se muestra en las siguientes figuras:\n\n\n\n4.2.2 Instalación de R para Windows\n\n\n\n\n\n4.2.3 Instalar Rtools (solo Sistema Operativo Windows)\n\n\n\n\n\n\n\n\n4.2.4 Instalación de R para Mac\n\n\n\nR Project Ejecutándose",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#instalación-de-rstudio",
     "href": "r_project.html#instalación-de-rstudio",
-    "title": "3  R Project",
-    "section": "3.3 Instalación de RStudio",
-    "text": "3.3 Instalación de RStudio\nSe recomienta instalar Rstudio, que es Interfaz de Usuario de R Project, desde su sitio web oficial, el cual permite acceder con mayor facilidad a sus funciones y potencialidades de R.\n\n\n\n\n\n\n\n\n\n3.3.1 RStudio Cloud\nRStudio Cloud es una versión ligera del IDE RStudio alojada en la la nube que permite a cualquiera hacer, compartir, enseñar y aprender Ciencias de Datos Online. Tiene una versión gratuita limitada.\n\n3.3.1.1 Características:\n\nAnalyze your data using the RStudio IDE, directly from your browser.\nShare projects with your team, class, workshop or the world.\nTeach data science with R to your students or colleagues.\nLearn data science in an instructor-led environment or with interactive tutorials.",
+    "title": "4  R Project",
+    "section": "4.3 Instalación de RStudio",
+    "text": "4.3 Instalación de RStudio\nSe recomienta instalar Rstudio, que es Interfaz de Usuario de R Project, desde su sitio web oficial, el cual permite acceder con mayor facilidad a sus funciones y potencialidades de R.\n\n\n\n\n\n\n\n\n\n4.3.1 RStudio Cloud\nRStudio Cloud es una versión ligera del IDE RStudio alojada en la la nube que permite a cualquiera hacer, compartir, enseñar y aprender Ciencias de Datos Online. Tiene una versión gratuita limitada.\n\n4.3.1.1 Características:\n\nAnalyze your data using the RStudio IDE, directly from your browser.\nShare projects with your team, class, workshop or the world.\nTeach data science with R to your students or colleagues.\nLearn data science in an instructor-led environment or with interactive tutorials.",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#instalar-librerías",
     "href": "r_project.html#instalar-librerías",
-    "title": "3  R Project",
-    "section": "3.4 Instalar Librerías",
-    "text": "3.4 Instalar Librerías\n\n3.4.1 Librerías en R\nLas librerías o paquetes en R corresponden a una colección de funciones encapsuladas y diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, mineria de datos, interacción con servicios de internet y muchas otras cosas más.\nEstos paquetes se encuentran alojados principalmente en CRAN (Comprehensive R Archive Network), así que pasan por un control riguroso antes de estar disponibles para su uso generalizado, al día de hoy (29.11.2021) existen 18498 paquetes disponibles. En el siguiente enlace se deja una lista de temas y sus librerías asociadas disponibles, con una breve descripción (enlace)\nAunque las versiones de prueba de una librería pueden estar disponible en Github (Respositorio de Control de Versiones) de cada autor.\n\n\n3.4.2 Ejemplo de Instalación de Librerías desde R\nPodemos instalar paquetes usando la función install.packages(), dando como argumento el nombre del paquete que deseamos instalar, entre comillas.\nPara instalar librerías se puede hacer directamente desde la consola de RStudio, por ejemplo:\n\ninstall.packages(\"dplyr\") # Se puede instalar más de una librería a la vez\n\n\n\n3.4.3 Ejemplo de Instalación de Librerías desde Rstudio\nTambién se pude instalar librerías del Panel “Packages”\n\n\n\nY por último se puede instalar desde Pestaña “Tools” -&gt; “Install Packages”:",
+    "title": "4  R Project",
+    "section": "4.4 Instalar Librerías",
+    "text": "4.4 Instalar Librerías\n\n4.4.1 Librerías en R\nLas librerías o paquetes en R corresponden a una colección de funciones encapsuladas y diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, mineria de datos, interacción con servicios de internet y muchas otras cosas más.\nEstos paquetes se encuentran alojados principalmente en CRAN (Comprehensive R Archive Network), así que pasan por un control riguroso antes de estar disponibles para su uso generalizado, al día de hoy (29.11.2021) existen 18498 paquetes disponibles. En el siguiente enlace se deja una lista de temas y sus librerías asociadas disponibles, con una breve descripción (enlace)\nAunque las versiones de prueba de una librería pueden estar disponible en Github (Respositorio de Control de Versiones) de cada autor.\n\n\n4.4.2 Ejemplo de Instalación de Librerías desde R\nPodemos instalar paquetes usando la función install.packages(), dando como argumento el nombre del paquete que deseamos instalar, entre comillas.\nPara instalar librerías se puede hacer directamente desde la consola de RStudio, por ejemplo:\n\ninstall.packages(\"dplyr\") # Se puede instalar más de una librería a la vez\n\n\n\n4.4.3 Ejemplo de Instalación de Librerías desde Rstudio\nTambién se pude instalar librerías del Panel “Packages”\n\n\n\nY por último se puede instalar desde Pestaña “Tools” -&gt; “Install Packages”:",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#sec-wd",
     "href": "r_project.html#sec-wd",
-    "title": "3  R Project",
-    "section": "3.5 Definición de Directorios de Trabajos",
-    "text": "3.5 Definición de Directorios de Trabajos\nDefinir directorio de Trabajo con RStudio\n\n\n\n\n\n\nDefinir Directorio de Trabajo con una función\n\nsetwd(\"~/OneDrive - Universidad Adolfo Ibanez/FONDECYT/capacitacion_SPD\")\n\nConsultar Directorio de Trabajo\n\ngetwd()\n\n[1] \"/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book\"",
+    "title": "4  R Project",
+    "section": "4.5 Definición de Directorios de Trabajos",
+    "text": "4.5 Definición de Directorios de Trabajos\nDefinir directorio de Trabajo con RStudio\n\n\n\n\n\n\nDefinir Directorio de Trabajo con una función\n\nsetwd(\"~/OneDrive - Universidad Adolfo Ibanez/FONDECYT/capacitacion_SPD\")\n\nConsultar Directorio de Trabajo\n\ngetwd()\n\n[1] \"/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book\"",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
     "objectID": "r_project.html#referencias",
     "href": "r_project.html#referencias",
-    "title": "3  R Project",
-    "section": "3.6 Referencias:",
-    "text": "3.6 Referencias:\n\nR para Ciencia de Datos\nRStudio para Estadística Descriptiva en Ciencias Sociales\nhttps://bookdown.org/jboscomendoza/r-principiantes4/estructuras-de-control.html",
+    "title": "4  R Project",
+    "section": "4.6 Referencias:",
+    "text": "4.6 Referencias:\n\nR para Ciencia de Datos\nRStudio para Estadística Descriptiva en Ciencias Sociales\nhttps://bookdown.org/jboscomendoza/r-principiantes4/estructuras-de-control.html",
     "crumbs": [
       "Anexos",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>R Project</span>"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html",
-    "href": "espacial_r.html",
-    "title": "Objetos Espaciales en R",
-    "section": "",
-    "text": "Introducción\nLos objetos espaciales en R representan datos georreferenciados, lo que significa que están vinculados a una ubicación en el mundo real. Los objetos espaciales se pueden representar en mapas y gráficos, y se pueden analizar para identificar patrones y tendencias en los datos.\nEl análisis espacial se utiliza en diversas áreas, como la geografía, la ecología, la planificación urbana y el análisis de datos de negocios, entre otros. La visualización y análisis de objetos espaciales puede proporcionar información valiosa para la toma de decisiones basada en datos.",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html#lectura-de-insumos-espaciales",
-    "href": "espacial_r.html#lectura-de-insumos-espaciales",
-    "title": "Objetos Espaciales en R",
-    "section": "Lectura de Insumos Espaciales",
-    "text": "Lectura de Insumos Espaciales\n\n# install.packages(\"sf\")\nlibrary(sf)\ncrs_ll &lt;- \"+proj=longlat +datum=WGS84 +no_defs\"\ncrs_utm &lt;- \"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0\"\ncenso &lt;-  readRDS(\"data/censo/zonas_urb_consolidadas.rds\")",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html#transformar-a-objeto-sf-simple-features",
-    "href": "espacial_r.html#transformar-a-objeto-sf-simple-features",
-    "title": "Objetos Espaciales en R",
-    "section": "Transformar a objeto sf (simple features)",
-    "text": "Transformar a objeto sf (simple features)\n\n# transformar a objeto sf (simple features)\ncenso_sf &lt;- st_as_sf(censo)\n# head(censo_sf)\nnames(censo_sf)\n\n [1] \"REGION\"     \"NOM_REGION\" \"PROVINCIA\"  \"NOM_PROVIN\" \"COMUNA\"    \n [6] \"NOM_COMUNA\" \"URBANO\"     \"DISTRITO\"   \"LOC_ZON\"    \"GEOCODIGO\" \n[11] \"AREA\"       \"COD_INE_15\" \"COD_INE_16\" \"VALIDO\"     \"KM2\"       \n[16] \"ESC_JH\"     \"PERS\"       \"M2_O\"       \"M2_C\"       \"DENS_HAB\"  \n[21] \"DENS_OF\"    \"DENS_COM\"   \"geometry\"",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html#filtros-espaciales-por-data",
-    "href": "espacial_r.html#filtros-espaciales-por-data",
-    "title": "Objetos Espaciales en R",
-    "section": "Filtros espaciales por data",
-    "text": "Filtros espaciales por data\n\nlibrary(dplyr)\nmi_communa &lt;-  \"LAS CONDES\"\n\nzonas_com &lt;-  censo_sf %&gt;% \n  filter(NOM_COMUNA == mi_communa)\n\nzonas_com %&gt;% head()\n\nSimple feature collection with 6 features and 22 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -70.56629 ymin: -33.41713 xmax: -70.47884 ymax: -33.36421\nGeodetic CRS:  +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0\n  REGION                       NOM_REGION PROVINCIA NOM_PROVIN COMUNA\n1     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n2     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n3     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n4     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n5     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n6     13 REGIÓN METROPOLITANA DE SANTIAGO       131   SANTIAGO  13114\n  NOM_COMUNA     URBANO DISTRITO LOC_ZON   GEOCODIGO      AREA  COD_INE_15\n1 LAS CONDES LAS CONDES        5       1 13114051001  346506.4 13114051001\n2 LAS CONDES LAS CONDES        4       1 13114041001 2797019.6 13114041001\n3 LAS CONDES LAS CONDES        4       3 13114041003 2530681.2 13114041003\n4 LAS CONDES LAS CONDES       16       2 13114161002 1497554.8 13114161002\n5 LAS CONDES LAS CONDES       15       3 13114151003  855603.3 13114151003\n6 LAS CONDES LAS CONDES        2       2 13114021002  594053.2 13114021002\n   COD_INE_16 VALIDO       KM2   ESC_JH PERS       M2_O      M2_C  DENS_HAB\n1 13114051001   TRUE 0.3465064 16.08958 4173  10910.000  18578.00 12043.068\n2 13114041001   TRUE 2.7970196 16.34331 4788   5820.806  48723.11  1711.822\n3 13114041003   TRUE 2.5306812 16.19528 6315 125513.194  84384.89  2495.376\n4 13114161002   TRUE 1.4975548 16.75400 2250    738.000     72.00  1502.449\n5 13114151003   TRUE 0.8556033 16.84848 4675   1130.005  51982.94  5463.981\n6 13114021002   TRUE 0.5940532 15.85904 3987  24382.000 298226.00  6711.520\n     DENS_OF     DENS_COM                       geometry\n1 31485.7121  53615.17494 MULTIPOLYGON (((-70.56008 -...\n2  2081.0745  17419.65356 MULTIPOLYGON (((-70.47951 -...\n3 49596.6041  33344.73221 MULTIPOLYGON (((-70.5267 -3...\n4   492.8033     48.07838 MULTIPOLYGON (((-70.50789 -...\n5  1320.7117  60755.89536 MULTIPOLYGON (((-70.51477 -...\n6 41043.4616 502019.00493 MULTIPOLYGON (((-70.53606 -...",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html#visualización-cartográficas",
-    "href": "espacial_r.html#visualización-cartográficas",
-    "title": "Objetos Espaciales en R",
-    "section": "Visualización Cartográficas",
-    "text": "Visualización Cartográficas\n\nVisualización estática Simple\n\n## Visualizar\n# Consideración el plot se realiza sobre la columna geometry\n\nnombre_plot &lt;-  paste0(\"COMUNA DE \", mi_communa)\nplot(zonas_com$geometry, main = nombre_plot,col =\"orange\")\n\n\n\n\n\n\n\n\n\n\nVisualización estática con ggplot2\n\nlibrary(ggplot2)\n\n# Visualización ggplot y sf\nggplot() +\n  geom_sf(data = zonas_com, fill = \"orange\", alpha=0.5)+\n  ggtitle(nombre_plot) +\n  theme_bw() +\n  theme(legend.position=\"none\")+\n  theme(panel.grid.major = element_line(colour = \"gray80\"),\n        panel.grid.minor = element_line(colour = \"gray80\"))\n\n\n\n\n\n\n\n\n\n\nVisualización Dinámica con mapview\n\n# install.packages(\"mapview\")\nlibrary(mapview)\nm &lt;- mapview(zonas_com, alpha = 0.5,\n        col.regions = \"orange\", color=\"gray80\",\n        legend =FALSE, cex = 3)\nm",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
-    ]
-  },
-  {
-    "objectID": "espacial_r.html#referencias",
-    "href": "espacial_r.html#referencias",
-    "title": "Objetos Espaciales en R",
-    "section": "Referencias:",
-    "text": "Referencias:\n\nSimple Features for R",
-    "crumbs": [
-      "Anexos",
-      "Objetos Espaciales en R"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>R Project</span>"
     ]
   },
   {
