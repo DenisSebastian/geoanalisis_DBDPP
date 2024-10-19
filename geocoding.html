@@ -376,8 +376,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Leer las Bases:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>direcciones <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/direcciones/dirs_60.rds"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(direcciones)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># direcciones &lt;- readRDS("data/direcciones/dirs_60.rds")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># direcciones$NUMERO &lt;- as.numeric(direcciones$NUMERO) + 5</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(direcciones, "data/direcciones/dirs_60.rds")</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>direcciones <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/direcciones/dirs_60.rds"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(direcciones)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -388,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">REGION</th>
 </tr>
@@ -398,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
 <td style="text-align: left;">VIII - BIO-BIO</td>
 </tr>
@@ -406,7 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_069161</td>
 <td style="text-align: left;">PLAZA VESPUCIO</td>
 <td style="text-align: left;">BOLIVAR</td>
-<td style="text-align: left;">5898</td>
+<td style="text-align: right;">5903</td>
 <td style="text-align: left;">PEÑALOLÉN</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -414,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_079411</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">SANTA SARA</td>
-<td style="text-align: left;">1722</td>
+<td style="text-align: right;">1727</td>
 <td style="text-align: left;">VILLA ALEMANA</td>
 <td style="text-align: left;">V - VALPARAISO</td>
 </tr>
@@ -422,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -430,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_008657</td>
 <td style="text-align: left;">PUENTE ALTO</td>
 <td style="text-align: left;">MARCELA PAZ</td>
-<td style="text-align: left;">3507</td>
+<td style="text-align: right;">3512</td>
 <td style="text-align: left;">LA FLORIDA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -438,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -446,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_072766</td>
 <td style="text-align: left;">SAN BERNARDO</td>
 <td style="text-align: left;">Volcan Antuco</td>
-<td style="text-align: left;">14483</td>
+<td style="text-align: right;">14488</td>
 <td style="text-align: left;">S/ BERNARDO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -454,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_021510</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">SAN AGUSTIN ORIENTE</td>
-<td style="text-align: left;">4357</td>
+<td style="text-align: right;">4362</td>
 <td style="text-align: left;">LAMPA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -462,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_076946</td>
 <td style="text-align: left;">SAN JOAQUIN</td>
 <td style="text-align: left;">EMILIO TAGLE</td>
-<td style="text-align: left;">10279</td>
+<td style="text-align: right;">10284</td>
 <td style="text-align: left;">LA FLORIDA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -470,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_047169</td>
 <td style="text-align: left;">VALPARAISO</td>
 <td style="text-align: left;">CALI</td>
-<td style="text-align: left;">786</td>
+<td style="text-align: right;">791</td>
 <td style="text-align: left;">LA CALERA</td>
 <td style="text-align: left;">V - VALPARAISO</td>
 </tr>
@@ -519,7 +522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">REGION</th>
 </tr>
@@ -529,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
 <td style="text-align: left;">VIII - BIO-BIO</td>
 </tr>
@@ -537,7 +540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_069161</td>
 <td style="text-align: left;">PLAZA VESPUCIO</td>
 <td style="text-align: left;">BOLIVAR</td>
-<td style="text-align: left;">5898</td>
+<td style="text-align: right;">5903</td>
 <td style="text-align: left;">PEÑALOLÉN</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -545,7 +548,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_079411</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">SANTA SARA</td>
-<td style="text-align: left;">1722</td>
+<td style="text-align: right;">1727</td>
 <td style="text-align: left;">VILLA ALEMANA</td>
 <td style="text-align: left;">V - VALPARAISO</td>
 </tr>
@@ -553,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -561,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_008657</td>
 <td style="text-align: left;">PUENTE ALTO</td>
 <td style="text-align: left;">MARCELA PAZ</td>
-<td style="text-align: left;">3507</td>
+<td style="text-align: right;">3512</td>
 <td style="text-align: left;">LA FLORIDA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -569,7 +572,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
 </tr>
@@ -595,7 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">REGION</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CONSULTA</th>
@@ -607,60 +610,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
 <td style="text-align: left;">VIII - BIO-BIO</td>
-<td style="text-align: left;">24 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
+<td style="text-align: left;">29 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_069161</td>
 <td style="text-align: left;">PLAZA VESPUCIO</td>
 <td style="text-align: left;">BOLIVAR</td>
-<td style="text-align: left;">5898</td>
+<td style="text-align: right;">5903</td>
 <td style="text-align: left;">PEÑALOLÉN</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">5898 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA</td>
+<td style="text-align: left;">5903 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">MT_079411</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">SANTA SARA</td>
-<td style="text-align: left;">1722</td>
+<td style="text-align: right;">1727</td>
 <td style="text-align: left;">VILLA ALEMANA</td>
 <td style="text-align: left;">V - VALPARAISO</td>
-<td style="text-align: left;">1722 SANTA SARA, VILLA ALEMANA, V - VALPARAISO</td>
+<td style="text-align: left;">1727 SANTA SARA, VILLA ALEMANA, V - VALPARAISO</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">8851 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
+<td style="text-align: left;">8856 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">DS_008657</td>
 <td style="text-align: left;">PUENTE ALTO</td>
 <td style="text-align: left;">MARCELA PAZ</td>
-<td style="text-align: left;">3507</td>
+<td style="text-align: right;">3512</td>
 <td style="text-align: left;">LA FLORIDA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">3507 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA</td>
+<td style="text-align: left;">3512 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">1620 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
+<td style="text-align: left;">1625 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -688,7 +691,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">REGION</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CONSULTA</th>
@@ -702,10 +705,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
 <td style="text-align: left;">VIII - BIO-BIO</td>
-<td style="text-align: left;">24 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
+<td style="text-align: left;">29 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -714,10 +717,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_069161</td>
 <td style="text-align: left;">PLAZA VESPUCIO</td>
 <td style="text-align: left;">BOLIVAR</td>
-<td style="text-align: left;">5898</td>
+<td style="text-align: right;">5903</td>
 <td style="text-align: left;">PEÑALOLÉN</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">5898 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA</td>
+<td style="text-align: left;">5903 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">-33.48036</td>
 <td style="text-align: right;">-70.57028</td>
@@ -726,10 +729,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_079411</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">SANTA SARA</td>
-<td style="text-align: left;">1722</td>
+<td style="text-align: right;">1727</td>
 <td style="text-align: left;">VILLA ALEMANA</td>
 <td style="text-align: left;">V - VALPARAISO</td>
-<td style="text-align: left;">1722 SANTA SARA, VILLA ALEMANA, V - VALPARAISO</td>
+<td style="text-align: left;">1727 SANTA SARA, VILLA ALEMANA, V - VALPARAISO</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">-33.06368</td>
 <td style="text-align: right;">-71.37489</td>
@@ -738,10 +741,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">8851 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
+<td style="text-align: left;">8856 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -750,25 +753,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_008657</td>
 <td style="text-align: left;">PUENTE ALTO</td>
 <td style="text-align: left;">MARCELA PAZ</td>
-<td style="text-align: left;">3507</td>
+<td style="text-align: right;">3512</td>
 <td style="text-align: left;">LA FLORIDA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">3507 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA</td>
+<td style="text-align: left;">3512 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">-33.52744</td>
-<td style="text-align: right;">-70.55770</td>
+<td style="text-align: right;">-33.52732</td>
+<td style="text-align: right;">-70.55762</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">1620 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
+<td style="text-align: left;">1625 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<p>Resultados de etapa 1</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">resultados</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">codificadas</td>
+<td style="text-align: left;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no_codificadas</td>
+<td style="text-align: left;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p_codificadas</td>
+<td style="text-align: left;">58.3333333333333%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p_no_codificadas</td>
+<td style="text-align: left;">41.6666666666667%</td>
 </tr>
 </tbody>
 </table>
@@ -796,7 +834,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">REGION</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CONSULTA</th>
@@ -808,100 +846,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
 <td style="text-align: left;">VIII - BIO-BIO</td>
-<td style="text-align: left;">24 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
+<td style="text-align: left;">29 PSJE ZARATE, ARAUCO, VIII - BIO-BIO</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">8851 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
+<td style="text-align: left;">8856 CASA GRANDE, LO ESPEJO, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">1620 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
+<td style="text-align: left;">1625 PSJE ARGEL, CONCHALÍ, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_021510</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">SAN AGUSTIN ORIENTE</td>
-<td style="text-align: left;">4357</td>
+<td style="text-align: right;">4362</td>
 <td style="text-align: left;">LAMPA</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">4357 SAN AGUSTIN ORIENTE, LAMPA, RM - METROPOLITANA</td>
+<td style="text-align: left;">4362 SAN AGUSTIN ORIENTE, LAMPA, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">MT_055164</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">LAS VERTIENTES VILUCO</td>
-<td style="text-align: left;">15</td>
+<td style="text-align: right;">20</td>
 <td style="text-align: left;">BUIN</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">15 LAS VERTIENTES VILUCO, BUIN, RM - METROPOLITANA</td>
+<td style="text-align: left;">20 LAS VERTIENTES VILUCO, BUIN, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">DS_007211</td>
 <td style="text-align: left;">PLAZA OESTE</td>
 <td style="text-align: left;">VILLA LOS PRESIDENTES PASAJE M</td>
-<td style="text-align: left;">128</td>
+<td style="text-align: right;">133</td>
 <td style="text-align: left;">TALAGANTE</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">128 VILLA LOS PRESIDENTES PASAJE M, TALAGANTE, RM - METROPOLITANA</td>
+<td style="text-align: left;">133 VILLA LOS PRESIDENTES PASAJE M, TALAGANTE, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SP_001181</td>
 <td style="text-align: left;">MAIPU</td>
 <td style="text-align: left;">AVENIDA EL CONQUISTADOR</td>
-<td style="text-align: left;">1331</td>
+<td style="text-align: right;">1336</td>
 <td style="text-align: left;">MAIPU</td>
 <td style="text-align: left;">RM - METROPOLITANA</td>
-<td style="text-align: left;">1331 AVENIDA EL CONQUISTADOR, MAIPU, RM - METROPOLITANA</td>
+<td style="text-align: left;">1336 AVENIDA EL CONQUISTADOR, MAIPU, RM - METROPOLITANA</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_071172</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">CALLE LIMACHE</td>
-<td style="text-align: left;">5045</td>
+<td style="text-align: right;">5050</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">V - VALPARAISO</td>
-<td style="text-align: left;">5045 CALLE LIMACHE, VIÑA DEL MAR, V - VALPARAISO</td>
+<td style="text-align: left;">5050 CALLE LIMACHE, VIÑA DEL MAR, V - VALPARAISO</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">DS_015664</td>
 <td style="text-align: left;">VIÑA DEL MAR</td>
 <td style="text-align: left;">LUIS EMILIO RECABARREN BLOCK 23 DEPTO 21 PLAYA ANCHA</td>
-<td style="text-align: left;">593</td>
+<td style="text-align: right;">598</td>
 <td style="text-align: left;">VALPARAISO</td>
 <td style="text-align: left;">V - VALPARAISO</td>
-<td style="text-align: left;">593 LUIS EMILIO RECABARREN BLOCK 23 DEPTO 21 PLAYA ANCHA, VALPARAISO, V - VALPARAISO</td>
+<td style="text-align: left;">598 LUIS EMILIO RECABARREN BLOCK 23 DEPTO 21 PLAYA ANCHA, VALPARAISO, V - VALPARAISO</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_056474</td>
 <td style="text-align: left;">VALPARAISO</td>
 <td style="text-align: left;">JULIAN FIERRO 160 CBARON</td>
-<td style="text-align: left;">160</td>
+<td style="text-align: right;">165</td>
 <td style="text-align: left;">VALPARAÍSO</td>
 <td style="text-align: left;">V - VALPARAISO</td>
-<td style="text-align: left;">160 JULIAN FIERRO 160 CBARON, VALPARAÍSO, V - VALPARAISO</td>
+<td style="text-align: left;">165 JULIAN FIERRO 160 CBARON, VALPARAÍSO, V - VALPARAISO</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -974,7 +1012,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CALLE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">NUMERO</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NUMERO</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">COMUNA</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CONSULTA</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">ETAPA</th>
@@ -989,9 +1027,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_090992</td>
 <td style="text-align: left;">CAMPUS ARAUCO</td>
 <td style="text-align: left;">PSJE ZARATE</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: right;">29</td>
 <td style="text-align: left;">ARAUCO</td>
-<td style="text-align: left;">24 ZARATE, ARAUCO, Región del Biobío</td>
+<td style="text-align: left;">29 ZARATE, ARAUCO, Región del Biobío</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">ZARATE</td>
 <td style="text-align: left;">Región del Biobío</td>
@@ -1002,9 +1040,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_029721</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">CASA GRANDE</td>
-<td style="text-align: left;">8851</td>
+<td style="text-align: right;">8856</td>
 <td style="text-align: left;">LO ESPEJO</td>
-<td style="text-align: left;">8851 CASA GRANDE, LO ESPEJO, Región Metropolitana de Santiago</td>
+<td style="text-align: left;">8856 CASA GRANDE, LO ESPEJO, Región Metropolitana de Santiago</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">CASA GRANDE</td>
 <td style="text-align: left;">Región Metropolitana de Santiago</td>
@@ -1015,22 +1053,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">DS_006472</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">PSJE ARGEL</td>
-<td style="text-align: left;">1620</td>
+<td style="text-align: right;">1625</td>
 <td style="text-align: left;">CONCHALÍ</td>
-<td style="text-align: left;">1620 ARGEL, CONCHALÍ, Región Metropolitana de Santiago</td>
+<td style="text-align: left;">1625 ARGEL, CONCHALÍ, Región Metropolitana de Santiago</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">ARGEL</td>
 <td style="text-align: left;">Región Metropolitana de Santiago</td>
-<td style="text-align: right;">-33.37374</td>
-<td style="text-align: right;">-70.67799</td>
+<td style="text-align: right;">-33.37353</td>
+<td style="text-align: right;">-70.67805</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">MT_021510</td>
 <td style="text-align: left;">PLAZA NORTE</td>
 <td style="text-align: left;">SAN AGUSTIN ORIENTE</td>
-<td style="text-align: left;">4357</td>
+<td style="text-align: right;">4362</td>
 <td style="text-align: left;">LAMPA</td>
-<td style="text-align: left;">4357 SAN AGUSTIN ORIENTE, LAMPA, Región Metropolitana de Santiago</td>
+<td style="text-align: left;">4362 SAN AGUSTIN ORIENTE, LAMPA, Región Metropolitana de Santiago</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">SAN AGUSTIN ORIENTE</td>
 <td style="text-align: left;">Región Metropolitana de Santiago</td>
@@ -1041,14 +1079,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MT_055164</td>
 <td style="text-align: left;">ALAMEDA</td>
 <td style="text-align: left;">LAS VERTIENTES VILUCO</td>
-<td style="text-align: left;">15</td>
+<td style="text-align: right;">20</td>
 <td style="text-align: left;">BUIN</td>
-<td style="text-align: left;">15 LAS VERTIENTES VILUCO, BUIN, Región Metropolitana de Santiago</td>
+<td style="text-align: left;">20 LAS VERTIENTES VILUCO, BUIN, Región Metropolitana de Santiago</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">LAS VERTIENTES VILUCO</td>
 <td style="text-align: left;">Región Metropolitana de Santiago</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<p>Resultados de etapa 2</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">resultados</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">codificadas</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no_codificadas</td>
+<td style="text-align: left;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p_codificadas</td>
+<td style="text-align: left;">24%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p_no_codificadas</td>
+<td style="text-align: left;">76%</td>
 </tr>
 </tbody>
 </table>
@@ -1082,7 +1155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="images/examples_JW.png" class="img-fluid figure-img"></p>
+<p><img src="images/examples_JW.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="margin-caption">Casos de aplicación Distancia Jaro Winkler</figcaption>
 </figure>
 </div>
@@ -1099,19 +1172,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span><span class="fu">select</span>(., ID, SEDE, ETAPA, CONSULTA, latitude, longitude)) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">SEDE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ETAPA</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">CONSULTA</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">latitude</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MT_069161</td>
+<td style="text-align: left;">PLAZA VESPUCIO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">5898 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.48036</td>
+<td style="text-align: right;">-70.57028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MT_079411</td>
+<td style="text-align: left;">VIÑA DEL MAR</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1722 SANTA SARA, VILLA ALEMANA, V - VALPARAISO</td>
+<td style="text-align: right;">-33.06368</td>
+<td style="text-align: right;">-71.37489</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DS_008657</td>
+<td style="text-align: left;">PUENTE ALTO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">3507 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.52744</td>
+<td style="text-align: right;">-70.55770</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MT_072766</td>
+<td style="text-align: left;">SAN BERNARDO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">14483 VOLCAN ANTUCO, S/ BERNARDO, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.59368</td>
+<td style="text-align: right;">-70.67159</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MT_076946</td>
+<td style="text-align: left;">SAN JOAQUIN</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">10279 EMILIO TAGLE, LA FLORIDA, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.55342</td>
+<td style="text-align: right;">-70.59105</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MT_047169</td>
+<td style="text-align: left;">VALPARAISO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">786 CALI, LA CALERA, V - VALPARAISO</td>
+<td style="text-align: right;">-32.78707</td>
+<td style="text-align: right;">-71.20373</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MT_020127</td>
+<td style="text-align: left;">SAN CARLOS DE APOQUINDO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">5150 IRARRAZAVAL, ÑUÑOA, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.45392</td>
+<td style="text-align: right;">-70.57652</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DS_011645</td>
+<td style="text-align: left;">SAN CARLOS DE APOQUINDO</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">5175 DIAGONAL ORIENTE, ÑUÑOA, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.44436</td>
+<td style="text-align: right;">-70.59910</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DS_002632</td>
+<td style="text-align: left;">MAIPU</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">5775 PASAJE NATRI, ESTACION CENTRAL, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.47642</td>
+<td style="text-align: right;">-70.71298</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MT_024599</td>
+<td style="text-align: left;">SAN JOAQUIN</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">10972 AV JOAQUIN EDWARDS BELLO, LA PINTANA, RM - METROPOLITANA</td>
+<td style="text-align: right;">-33.56392</td>
+<td style="text-align: right;">-70.62250</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
 <p>Transformar las corrdenadas en un objeto <code>sf</code> utilizando la función <code>st_as_sf()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>resultados_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(resultados, </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">coords =</span>  <span class="fu">c</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"longitude"</span>, <span class="st">"y"</span> <span class="ot">=</span> <span class="st">"latitude"</span>),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">4326</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">4326</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>resultados_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 41 features and 4 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -73.24424 ymin: -37.46137 xmax: -70.53918 ymax: -32.78707
+Geodetic CRS:  WGS 84
+# A tibble: 41 × 5
+   ID        SEDE                    ETAPA CONSULTA                 geometry
+ * &lt;chr&gt;     &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;                 &lt;POINT [°]&gt;
+ 1 MT_069161 PLAZA VESPUCIO              1 5898 BOLIV… (-70.57028 -33.48036)
+ 2 MT_079411 VIÑA DEL MAR                1 1722 SANTA… (-71.37489 -33.06368)
+ 3 DS_008657 PUENTE ALTO                 1 3507 MARCE…  (-70.5577 -33.52744)
+ 4 MT_072766 SAN BERNARDO                1 14483 VOLC… (-70.67159 -33.59368)
+ 5 MT_076946 SAN JOAQUIN                 1 10279 EMIL… (-70.59105 -33.55342)
+ 6 MT_047169 VALPARAISO                  1 786 CALI, … (-71.20373 -32.78707)
+ 7 MT_020127 SAN CARLOS DE APOQUINDO     1 5150 IRARR… (-70.57652 -33.45392)
+ 8 DS_011645 SAN CARLOS DE APOQUINDO     1 5175 DIAGO…  (-70.5991 -33.44436)
+ 9 DS_002632 MAIPU                       1 5775 PASAJ… (-70.71298 -33.47642)
+10 MT_024599 SAN JOAQUIN                 1 10972 AV J…  (-70.6225 -33.56392)
+# ℹ 31 more rows</code></pre>
+</div>
 </div>
 <p>Visualización de los puntos</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapview)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(resultados_sf, <span class="at">zcol =</span> <span class="st">"ETAPA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapview)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(resultados_sf, <span class="at">zcol =</span> <span class="st">"ETAPA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-6eccf7e57b74468f7299" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6eccf7e57b74468f7299">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[[-33.4803564,-33.0636769,-33.52744315,-33.5936774,-33.5534169,-32.787073,-33.45391875,-33.4443633,-33.47641976666667,-33.5639225,-35.4305592,-33.046851,-33.3626717,-33.3795672,-37.4613694,-33.5598265,-33.45932065714285,-33.5870896,-35.9618489,-33.51637407938144,-33.453409325,-33.2285071,-33.5116367,-33.5036837,-33.5290411,-33.542815365625,-33.046185,-33.3076309,-33.0474776,-33.6203924,-33.58301427142857,-33.5296582,-33.5256385,-33.4442844,-33.53339,-37.2532813,-33.3737363,-33.1991798,-33.5573852,-33.562602525,-33.4779898],[-70.5702847,-71.37489438565163,-70.55769856666667,-70.67158569999999,-70.5910453,-71.20373119999999,-70.5765244240452,-70.59909949999999,-70.71297833333334,-70.6224994,-71.6097195,-71.6193971,-70.63145830000001,-70.6816161,-72.3502986,-70.6513209,-70.73967571428571,-70.6643322,-72.3347845,-70.75863471546391,-70.5397686,-70.80195689999999,-70.78741340000001,-70.66894000000001,-70.6999754,-70.55875356874999,-71.3929253,-71.4112341,-71.4656083,-70.6140305,-70.59022187142857,-70.76792140000001,-70.6072547,-70.5955302,-70.6405341,-73.2442423,-70.6779887,-70.679304,-70.5726566,-70.652395525,-70.5391815],6,null,"resultados_sf - ETAPA",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"fill":true,"fillColor":["#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#FDE333","#FDE333","#FDE333","#FDE333","#FDE333","#FDE333"],"fillOpacity":[0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_069161&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5898 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_079411&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1722 SANTA SARA, VILLA ALEMANA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_008657&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>3507 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_072766&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>14483 VOLCAN ANTUCO, S/ BERNARDO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>5&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_076946&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN JOAQUIN&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10279 EMILIO TAGLE, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>6&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_047169&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>786 CALI, LA CALERA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>7&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_020127&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5150 IRARRAZAVAL, ÑUÑOA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_011645&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5175 DIAGONAL ORIENTE, ÑUÑOA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>9&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_002632&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5775 PASAJE NATRI, ESTACION CENTRAL, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>10&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_024599&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN JOAQUIN&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10972 AV JOAQUIN EDWARDS BELLO, LA PINTANA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>11&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_026436&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1550 41 ORIENTE, TALCA, VII - MAULE&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>12&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_097014&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2792 INDEPENDENCIA, VALPARAÍSO, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>13&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_016572&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ALAMEDA&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>902 LOS GOMEROS, HUECHURABA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>14&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_052161&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5477 TRES ORIENTE, CONCHALÍ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>15&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_074754&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CONCEPCION&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>340 LINCOYAN, LOS ÁNGELES, VIII - BIO-BIO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>16&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_006374&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10878 PASAJE GALA, LA PINTANA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>17&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_035927&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>505 LAS TAGUAS, PUDAHUEL, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>18&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_028295&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1993 MARMOLEJO 1929, SAN BERNARDO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>19&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_052669&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CONCEPCION&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>587 PASAJE 19 POBLACION CAUQUENES 0587, CAUQUENES, VII - MAULE&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>20&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_004226&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>97 AVENIDA PORTALES, MAIPÚ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>21&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_016913&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PADRE ALONSO DE OVALLE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>180 CHONCHI, LA REINA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>22&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_068359&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>770 PASAJE HONDURAS, LAMPA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>23&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_007997&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2191 PASAJE LLEU LLEU, MAIPU, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>24&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_023429&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ALAMEDA&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2573 CARELMAPU DAVILA, PEDRO AGUIRRE CERDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>25&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_045290&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>9119 FRANCISCO ENCINA, LO ESPEJO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>26&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_077972&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>9619 ALCAPARRA, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>27&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_059108&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1444 ALCALDE ALEJANDRO PERALTA 1444, VILLA ALEMANA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>28&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_015140&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>482 DR VILDOSOLA, CASABLANCA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>29&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_014470&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>818 ORTIZ VEGA, QUILPUÉ, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>30&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_010553&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>3280 ESTACION PURRANQUE, PUENTE ALTO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>31&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_013788&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>825 LOS SONETOS, PUENTE ALTO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>32&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_059840&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA OESTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>500 LUIS HERNANDEZ PARKER, MAIPÚ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>33&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_009729&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>7627 FRESIA, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>34&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_088442&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>409 DOCTOR PEDRO LAUTARO, PROVIDENCIA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>35&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_024813&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>8128 LOS CRISANTEMOS, SAN RAMON, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>36&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_090992&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CAMPUS ARAUCO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>24 ZARATE, ARAUCO, Región del Biobío&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>37&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_006472&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1620 ARGEL, CONCHALÍ, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>38&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_094193&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>801 BOLDO, COLINA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>39&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_003371&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1060 EL YESO, LA FLORIDA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>40&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_062311&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1555 LOS GORRIONES, LA PINTANA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>41&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_009099&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>8931 QUELHUE, PEÑALOLEN, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-73.2442423,-37.4613694,-70.5391815,-32.787073,true,"resultados_sf - ETAPA","Zoom to resultados_sf - ETAPA","<strong> resultados_sf - ETAPA <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"resultados_sf - ETAPA",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#4B0055 , #4B0055 0%, #723357 20%, #965D56 40%, #B98852 60%, #DBB548 80%, #FDE333 100%, #FDE333 "],"labels":["1.0","1.2","1.4","1.6","1.8","2.0"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"resultados_sf - ETAPA","extra":{"p_1":0,"p_n":1},"layerId":null,"className":"info legend","group":"resultados_sf - ETAPA"}]}],"limits":{"lat":[-37.4613694,-32.787073],"lng":[-73.2442423,-70.5391815]},"fitBounds":[-37.4613694,-73.2442423,-32.787073,-70.5391815,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-21d20e108c215ab9fc2b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-21d20e108c215ab9fc2b">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[[-33.4803564,-33.0636769,-33.52744315,-33.5936774,-33.5534169,-32.787073,-33.45391875,-33.4443633,-33.47641976666667,-33.5639225,-35.4305592,-33.046851,-33.3626717,-33.3795672,-37.4613694,-33.5598265,-33.45932065714285,-33.5870896,-35.9618489,-33.51637407938144,-33.453409325,-33.2285071,-33.5116367,-33.5036837,-33.5290411,-33.542815365625,-33.046185,-33.3076309,-33.0474776,-33.6203924,-33.58301427142857,-33.5296582,-33.5256385,-33.4442844,-33.53339,-37.2532813,-33.3737363,-33.1991798,-33.5573852,-33.562602525,-33.4779898],[-70.5702847,-71.37489438565163,-70.55769856666667,-70.67158569999999,-70.5910453,-71.20373119999999,-70.5765244240452,-70.59909949999999,-70.71297833333334,-70.6224994,-71.6097195,-71.6193971,-70.63145830000001,-70.6816161,-72.3502986,-70.6513209,-70.73967571428571,-70.6643322,-72.3347845,-70.75863471546391,-70.5397686,-70.80195689999999,-70.78741340000001,-70.66894000000001,-70.6999754,-70.55875356874999,-71.3929253,-71.4112341,-71.4656083,-70.6140305,-70.59022187142857,-70.76792140000001,-70.6072547,-70.5955302,-70.6405341,-73.2442423,-70.6779887,-70.679304,-70.5726566,-70.652395525,-70.5391815],6,null,"resultados_sf - ETAPA",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"fill":true,"fillColor":["#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#4B0055","#FDE333","#FDE333","#FDE333","#FDE333","#FDE333","#FDE333"],"fillOpacity":[0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_069161&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5898 BOLIVAR, PEÑALOLÉN, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_079411&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1722 SANTA SARA, VILLA ALEMANA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_008657&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>3507 MARCELA PAZ, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_072766&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>14483 VOLCAN ANTUCO, S/ BERNARDO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>5&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_076946&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN JOAQUIN&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10279 EMILIO TAGLE, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>6&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_047169&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>786 CALI, LA CALERA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>7&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_020127&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5150 IRARRAZAVAL, ÑUÑOA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_011645&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5175 DIAGONAL ORIENTE, ÑUÑOA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>9&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_002632&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5775 PASAJE NATRI, ESTACION CENTRAL, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>10&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_024599&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN JOAQUIN&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10972 AV JOAQUIN EDWARDS BELLO, LA PINTANA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>11&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_026436&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1550 41 ORIENTE, TALCA, VII - MAULE&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>12&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_097014&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2792 INDEPENDENCIA, VALPARAÍSO, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>13&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_016572&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ALAMEDA&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>902 LOS GOMEROS, HUECHURABA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>14&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_052161&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>5477 TRES ORIENTE, CONCHALÍ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>15&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_074754&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CONCEPCION&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>340 LINCOYAN, LOS ÁNGELES, VIII - BIO-BIO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>16&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_006374&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>10878 PASAJE GALA, LA PINTANA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>17&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_035927&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>505 LAS TAGUAS, PUDAHUEL, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>18&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_028295&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1993 MARMOLEJO 1929, SAN BERNARDO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>19&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_052669&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CONCEPCION&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>587 PASAJE 19 POBLACION CAUQUENES 0587, CAUQUENES, VII - MAULE&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>20&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_004226&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>MAIPU&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>97 AVENIDA PORTALES, MAIPÚ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>21&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_016913&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PADRE ALONSO DE OVALLE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>180 CHONCHI, LA REINA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>22&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_068359&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>770 PASAJE HONDURAS, LAMPA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>23&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_007997&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2191 PASAJE LLEU LLEU, MAIPU, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>24&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_023429&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ALAMEDA&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>2573 CARELMAPU DAVILA, PEDRO AGUIRRE CERDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>25&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_045290&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>9119 FRANCISCO ENCINA, LO ESPEJO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>26&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_077972&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>9619 ALCAPARRA, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>27&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_059108&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1444 ALCALDE ALEJANDRO PERALTA 1444, VILLA ALEMANA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>28&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_015140&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VIÑA DEL MAR&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>482 DR VILDOSOLA, CASABLANCA, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>29&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_014470&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>VALPARAISO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>818 ORTIZ VEGA, QUILPUÉ, V - VALPARAISO&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>30&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_010553&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PUENTE ALTO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>3280 ESTACION PURRANQUE, PUENTE ALTO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>31&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_013788&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>825 LOS SONETOS, PUENTE ALTO, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>32&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_059840&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA OESTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>500 LUIS HERNANDEZ PARKER, MAIPÚ, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>33&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_009729&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA VESPUCIO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>7627 FRESIA, LA FLORIDA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>34&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_088442&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>409 DOCTOR PEDRO LAUTARO, PROVIDENCIA, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>35&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_024813&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN BERNARDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>1&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>8128 LOS CRISANTEMOS, SAN RAMON, RM - METROPOLITANA&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>36&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_090992&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>CAMPUS ARAUCO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>24 ZARATE, ARAUCO, Región del Biobío&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>37&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>DS_006472&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1620 ARGEL, CONCHALÍ, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>38&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_094193&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>PLAZA NORTE&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>801 BOLDO, COLINA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>39&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>SP_003371&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1060 EL YESO, LA FLORIDA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>40&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_062311&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>SAN CARLOS DE APOQUINDO&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>1555 LOS GORRIONES, LA PINTANA, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>41&emsp;<\/td><\/tr><tr><td>1<\/td><th>ID&emsp;<\/th><td>MT_009099&emsp;<\/td><\/tr><tr><td>2<\/td><th>SEDE&emsp;<\/th><td>ANTONIO VARAS&emsp;<\/td><\/tr><tr><td>3<\/td><th>ETAPA&emsp;<\/th><td>2&emsp;<\/td><\/tr><tr><td>4<\/td><th>CONSULTA&emsp;<\/th><td>8931 QUELHUE, PEÑALOLEN, Región Metropolitana de Santiago&emsp;<\/td><\/tr><tr><td>5<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-73.2442423,-37.4613694,-70.5391815,-32.787073,true,"resultados_sf - ETAPA","Zoom to resultados_sf - ETAPA","<strong> resultados_sf - ETAPA <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],"resultados_sf - ETAPA",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#4B0055 , #4B0055 0%, #723357 20%, #965D56 40%, #B98852 60%, #DBB548 80%, #FDE333 100%, #FDE333 "],"labels":["1.0","1.2","1.4","1.6","1.8","2.0"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"numeric","title":"resultados_sf - ETAPA","extra":{"p_1":0,"p_n":1},"layerId":null,"className":"info legend","group":"resultados_sf - ETAPA"}]}],"limits":{"lat":[-37.4613694,-32.787073],"lng":[-73.2442423,-70.5391815]},"fitBounds":[-37.4613694,-73.2442423,-32.787073,-70.5391815,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
 </div>
 </div>
 </section>
