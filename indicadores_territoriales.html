@@ -1212,24 +1212,37 @@ Figure&nbsp;5.11: Indicador de Suficiencia de Viviendas (ISV) - Urbano
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>soc <span class="ot">&lt;-</span> censo <span class="sc">%&gt;%</span> </span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID_MANZ<span class="sc">:</span>PERSONAS, IEJ, IEM, IPJ, IRH, IVI, ISV)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Cáculo de la dimensión</strong> Es una alternativa. Lo oficial imputa NA con valores de los vecinos cercanos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">"IEJ"</span>, <span class="st">"IEM"</span>, <span class="st">"IPJ"</span>, <span class="st">"IRH"</span>, <span class="st">"IVI"</span>, <span class="st">"ISV"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>dim_soc <span class="ot">&lt;-</span> soc <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(inds), <span class="sc">~</span> <span class="fu">minmax</span>(.x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dim_soc =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(inds)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  <span class="sc">%&gt;%</span> <span class="co"># Calcula el promedio</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dim_soc =</span> <span class="fu">ifelse</span>(PERSONAS <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA</span>, dim_soc)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID_MANZCIT, dim_soc) </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>soc <span class="ot">&lt;-</span> soc <span class="sc">%&gt;%</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dim_soc, <span class="at">by =</span> <span class="st">"ID_MANZCIT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><strong>Visualización de los Indicadores</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>comuna <span class="ot">&lt;-</span> soc <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEM"</span>)<span class="sc">+</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IPJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IRH"</span>)<span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IVI"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"ISV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>comuna <span class="ot">&lt;-</span> soc <span class="sc">%&gt;%</span> <span class="fu">filter</span>(COD_COM <span class="sc">==</span> <span class="dv">4101</span> <span class="sc">&amp;</span> MANZ_EN <span class="sc">==</span> <span class="st">"URBANO"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IEM"</span>)<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IPJ"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IRH"</span>)<span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"IVI"</span>) <span class="sc">+</span> <span class="fu">mapview</span>(comuna, <span class="at">zcol =</span> <span class="st">"ISV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Guardar Resultados</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar shapefile</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>path_file_out <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/socioeconomicos/resultados/"</span>,</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.shp"</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(soc, path_file_out)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#guardar en RDS</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>path_file_out_rds <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/socioeconomicos/resultados/"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.rds"</span>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(soc, path_file_out_rds)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardar shapefile</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>path_file_out <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data/socioeconomicos/resultados/"</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.shp"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(soc, path_file_out, <span class="at">delete_dsn =</span> T)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#guardar en RDS</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>path_file_out_rds <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data/socioeconomicos/resultados/"</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                    reg, <span class="st">"_ind_socioeconomicos.rds"</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(soc, path_file_out_rds)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="referencias" class="level2" data-number="5.11">
