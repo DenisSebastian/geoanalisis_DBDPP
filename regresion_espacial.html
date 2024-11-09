@@ -255,6 +255,12 @@ window.Quarto = {
  <span class="menu-text">Tarea 1</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tarea 2</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -311,24 +317,30 @@ window.Quarto = {
   <li><a href="#modelo-sar-spatial-autoregressive-model" id="toc-modelo-sar-spatial-autoregressive-model" class="nav-link" data-scroll-target="#modelo-sar-spatial-autoregressive-model">Modelo SAR (Spatial Autoregressive Model):</a></li>
   <li><a href="#modelo-sem-spatial-error-model" id="toc-modelo-sem-spatial-error-model" class="nav-link" data-scroll-target="#modelo-sem-spatial-error-model">Modelo SEM (Spatial Error Model):</a></li>
   <li><a href="#matrices-de-ponderación-espacial" id="toc-matrices-de-ponderación-espacial" class="nav-link" data-scroll-target="#matrices-de-ponderación-espacial"><span class="header-section-number">8.3.3</span> Matrices de Ponderación Espacial</a></li>
+  <li><a href="#cálculo-de-regresión-espacial-en-r" id="toc-cálculo-de-regresión-espacial-en-r" class="nav-link" data-scroll-target="#cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.3.4</span> Cálculo de Regresión Espacial en R</a></li>
   </ul></li>
-  <li><a href="#cálculo-de-regresión-espacial-en-r" id="toc-cálculo-de-regresión-espacial-en-r" class="nav-link" data-scroll-target="#cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.4</span> Cálculo de Regresión Espacial en R</a>
+  <li><a href="#regresión-espacial-a-nivel-educacional" id="toc-regresión-espacial-a-nivel-educacional" class="nav-link" data-scroll-target="#regresión-espacial-a-nivel-educacional"><span class="header-section-number">8.4</span> Regresión Espacial a Nivel Educacional</a>
   <ul class="collapse">
-  <li><a href="#pasos-de-regresion-espacial" id="toc-pasos-de-regresion-espacial" class="nav-link" data-scroll-target="#pasos-de-regresion-espacial"><span class="header-section-number">8.4.1</span> Pasos de Regresion Espacial</a></li>
-  <li><a href="#selección-de-área-de-estudio" id="toc-selección-de-área-de-estudio" class="nav-link" data-scroll-target="#selección-de-área-de-estudio"><span class="header-section-number">8.4.2</span> Selección de Área de Estudio</a></li>
-  <li><a href="#crear-matriz-de-vecindad" id="toc-crear-matriz-de-vecindad" class="nav-link" data-scroll-target="#crear-matriz-de-vecindad"><span class="header-section-number">8.4.3</span> Crear Matriz de Vecindad</a></li>
-  <li><a href="#analizar-la-autorrelación-espacial-de-y" id="toc-analizar-la-autorrelación-espacial-de-y" class="nav-link" data-scroll-target="#analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.4</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></a></li>
-  <li><a href="#transformación-de-variables" id="toc-transformación-de-variables" class="nav-link" data-scroll-target="#transformación-de-variables"><span class="header-section-number">8.4.5</span> Transformación de Variables</a></li>
-  <li><a href="#estimar-un-modelo-de-regresión-ordinario-ols" id="toc-estimar-un-modelo-de-regresión-ordinario-ols" class="nav-link" data-scroll-target="#estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.6</span> Estimar un modelo de regresión ordinario (OLS)</a></li>
-  <li><a href="#autocorrelación-de-los-residuos" id="toc-autocorrelación-de-los-residuos" class="nav-link" data-scroll-target="#autocorrelación-de-los-residuos"><span class="header-section-number">8.4.7</span> Autocorrelación de los residuos</a></li>
-  <li><a href="#seleccionar-tipo-de-regresión-espacial" id="toc-seleccionar-tipo-de-regresión-espacial" class="nav-link" data-scroll-target="#seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.8</span> Seleccionar tipo de Regresión Espacial</a></li>
-  <li><a href="#modelo-de-error-espacial" id="toc-modelo-de-error-espacial" class="nav-link" data-scroll-target="#modelo-de-error-espacial"><span class="header-section-number">8.4.9</span> Modelo de error Espacial</a></li>
-  <li><a href="#modelo-de-lag-espacial" id="toc-modelo-de-lag-espacial" class="nav-link" data-scroll-target="#modelo-de-lag-espacial"><span class="header-section-number">8.4.10</span> Modelo de Lag Espacial</a></li>
-  <li><a href="#error-espacial" id="toc-error-espacial" class="nav-link" data-scroll-target="#error-espacial"><span class="header-section-number">8.4.11</span> Error espacial</a></li>
-  <li><a href="#lag-espacial" id="toc-lag-espacial" class="nav-link" data-scroll-target="#lag-espacial"><span class="header-section-number">8.4.12</span> Lag espacial</a></li>
-  <li><a href="#error-y-lag-espacial" id="toc-error-y-lag-espacial" class="nav-link" data-scroll-target="#error-y-lag-espacial"><span class="header-section-number">8.4.13</span> Error y Lag espacial</a></li>
+  <li><a href="#selección-de-área-de-estudio" id="toc-selección-de-área-de-estudio" class="nav-link" data-scroll-target="#selección-de-área-de-estudio"><span class="header-section-number">8.4.1</span> Selección de Área de Estudio</a></li>
+  <li><a href="#crear-matriz-de-vecindad" id="toc-crear-matriz-de-vecindad" class="nav-link" data-scroll-target="#crear-matriz-de-vecindad"><span class="header-section-number">8.4.2</span> Crear Matriz de Vecindad</a></li>
+  <li><a href="#analizar-la-autorrelación-espacial-de-y" id="toc-analizar-la-autorrelación-espacial-de-y" class="nav-link" data-scroll-target="#analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.3</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></a></li>
+  <li><a href="#transformación-de-variables" id="toc-transformación-de-variables" class="nav-link" data-scroll-target="#transformación-de-variables"><span class="header-section-number">8.4.4</span> Transformación de Variables</a></li>
+  <li><a href="#estimar-un-modelo-de-regresión-ordinario-ols" id="toc-estimar-un-modelo-de-regresión-ordinario-ols" class="nav-link" data-scroll-target="#estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.5</span> Estimar un modelo de regresión ordinario (OLS)</a></li>
+  <li><a href="#autocorrelación-de-los-residuos" id="toc-autocorrelación-de-los-residuos" class="nav-link" data-scroll-target="#autocorrelación-de-los-residuos"><span class="header-section-number">8.4.6</span> Autocorrelación de los residuos</a></li>
+  <li><a href="#seleccionar-tipo-de-regresión-espacial" id="toc-seleccionar-tipo-de-regresión-espacial" class="nav-link" data-scroll-target="#seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.7</span> Seleccionar tipo de Regresión Espacial</a></li>
+  <li><a href="#modelo-de-error-espacial" id="toc-modelo-de-error-espacial" class="nav-link" data-scroll-target="#modelo-de-error-espacial"><span class="header-section-number">8.4.8</span> Modelo de error Espacial</a></li>
   </ul></li>
-  <li><a href="#referencias-de-capítulo" id="toc-referencias-de-capítulo" class="nav-link" data-scroll-target="#referencias-de-capítulo"><span class="header-section-number">8.5</span> Referencias de Capítulo:</a></li>
+  <li><a href="#regresión-espacial-a-delitos-violentos" id="toc-regresión-espacial-a-delitos-violentos" class="nav-link" data-scroll-target="#regresión-espacial-a-delitos-violentos"><span class="header-section-number">8.5</span> Regresión Espacial a Delitos Violentos</a>
+  <ul class="collapse">
+  <li><a href="#consolidación-de-datos" id="toc-consolidación-de-datos" class="nav-link" data-scroll-target="#consolidación-de-datos"><span class="header-section-number">8.5.1</span> Consolidación de Datos</a></li>
+  <li><a href="#matriz-de-vecidad" id="toc-matriz-de-vecidad" class="nav-link" data-scroll-target="#matriz-de-vecidad">Matriz de Vecidad</a></li>
+  <li><a href="#transformaciones" id="toc-transformaciones" class="nav-link" data-scroll-target="#transformaciones">Transformaciones</a></li>
+  <li><a href="#modelo-ols" id="toc-modelo-ols" class="nav-link" data-scroll-target="#modelo-ols"><span class="header-section-number">8.5.2</span> Modelo OLS</a></li>
+  <li><a href="#modelo-de-error-espacial-1" id="toc-modelo-de-error-espacial-1" class="nav-link" data-scroll-target="#modelo-de-error-espacial-1"><span class="header-section-number">8.5.3</span> Modelo de Error espacial</a></li>
+  <li><a href="#modelo-de-lag-espacial" id="toc-modelo-de-lag-espacial" class="nav-link" data-scroll-target="#modelo-de-lag-espacial"><span class="header-section-number">8.5.4</span> MOdelo de Lag Espacial</a></li>
+  <li><a href="#modelo-de-error-y-lag-espacial" id="toc-modelo-de-error-y-lag-espacial" class="nav-link" data-scroll-target="#modelo-de-error-y-lag-espacial"><span class="header-section-number">8.5.5</span> Modelo de Error y Lag espacial</a></li>
+  </ul></li>
+  <li><a href="#referencias-de-capítulo" id="toc-referencias-de-capítulo" class="nav-link" data-scroll-target="#referencias-de-capítulo"><span class="header-section-number">8.6</span> Referencias de Capítulo:</a></li>
   </ul>
 </nav>
     </div>
@@ -414,12 +426,14 @@ window.Quarto = {
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="matrices-de-ponderación-espacial"><span class="header-section-number">8.3.3</span> Matrices de Ponderación Espacial</h3>
 <p>Una matriz de ponderación espacial es fundamental en el análisis de regresión espacial. Esta matriz define la relación de vecindad entre las áreas geográficas y asigna un peso a cada par de áreas. Referencias en <a href="autocorrelacion.html#sec-matrizVec" class="quarto-xref"><span>Section 7.4</span></a></p>
 </section>
-</section>
-<section id="cálculo-de-regresión-espacial-en-r" class="level2 page-columns page-full" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.4</span> Cálculo de Regresión Espacial en R</h2>
+<section id="cálculo-de-regresión-espacial-en-r" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.3.4</span> Cálculo de Regresión Espacial en R</h3>
 <p>A continuación se realizarán dos modelos de regresión espacial, el primero con error espacial y la variable a explicar es el nivel socioecómico. En segundo caso la variable a explicar será el indicador de delitos violentos en la comuna de Las Condes, y se aplicará modelo error y lag espacial, además del un modelo que combina ambos llamado <code>sacsar</code>.</p>
-<section id="pasos-de-regresion-espacial" class="level3" data-number="8.4.1">
-<h3 data-number="8.4.1" class="anchored" data-anchor-id="pasos-de-regresion-espacial"><span class="header-section-number">8.4.1</span> Pasos de Regresion Espacial</h3>
+</section>
+</section>
+<section id="regresión-espacial-a-nivel-educacional" class="level2 page-columns page-full" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="regresión-espacial-a-nivel-educacional"><span class="header-section-number">8.4</span> Regresión Espacial a Nivel Educacional</h2>
+<p>Pasos de Regresion Espacial</p>
 <ol start="0" type="1">
 <li>Selección de Área de Estudio</li>
 <li>Crear Matriz de Vecindad</li>
@@ -428,9 +442,8 @@ window.Quarto = {
 <li>Seleccionar tipo de Regresión Espacial</li>
 <li>Estimar Modelo de Regresión Espacial</li>
 </ol>
-</section>
-<section id="selección-de-área-de-estudio" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="selección-de-área-de-estudio"><span class="header-section-number">8.4.2</span> Selección de Área de Estudio</h3>
+<section id="selección-de-área-de-estudio" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="selección-de-área-de-estudio"><span class="header-section-number">8.4.1</span> Selección de Área de Estudio</h3>
 <p><strong>Cargar Librerías</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -504,8 +517,8 @@ Projected CRS: WGS 84 / UTM zone 19S</code></pre>
 </div>
 </div>
 </section>
-<section id="crear-matriz-de-vecindad" class="level3" data-number="8.4.3">
-<h3 data-number="8.4.3" class="anchored" data-anchor-id="crear-matriz-de-vecindad"><span class="header-section-number">8.4.3</span> Crear Matriz de Vecindad</h3>
+<section id="crear-matriz-de-vecindad" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="crear-matriz-de-vecindad"><span class="header-section-number">8.4.2</span> Crear Matriz de Vecindad</h3>
 <p>Definir un criterio de vecidad, para el caso de estudio es la distancia y asignar pesos espciales</p>
 <p><strong>Polígonos a puntos</strong></p>
 <div class="cell">
@@ -545,7 +558,7 @@ Projected CRS: WGS 84 / UTM zone 19S</code></pre>
 </div>
 </div>
 <p><strong>Asignar Pesos Espaciales por población</strong></p>
-<p>Primero crearemos uina función</p>
+<p>Primero crearemos una función</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos la función que calcula los pesos de la población</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>calcular_pesos_poblacion <span class="ot">&lt;-</span> <span class="cf">function</span>(mz_comuna, nb, <span class="at">var =</span> <span class="st">"POBLACION"</span>) {</span>
@@ -597,8 +610,8 @@ Projected CRS: WGS 84 / UTM zone 19S</code></pre>
 </div>
 </div>
 </section>
-<section id="analizar-la-autorrelación-espacial-de-y" class="level3" data-number="8.4.4">
-<h3 data-number="8.4.4" class="anchored" data-anchor-id="analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.4</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></h3>
+<section id="analizar-la-autorrelación-espacial-de-y" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.3</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></h3>
 <p>A través del test estadítico índice de Moran analizar la autocorrelación espacial de la variable dependiente que se pretende explicar.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test de Moran</span></span>
@@ -618,8 +631,8 @@ Moran I statistic       Expectation          Variance
 </div>
 </div>
 </section>
-<section id="transformación-de-variables" class="level3" data-number="8.4.5">
-<h3 data-number="8.4.5" class="anchored" data-anchor-id="transformación-de-variables"><span class="header-section-number">8.4.5</span> Transformación de Variables</h3>
+<section id="transformación-de-variables" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="transformación-de-variables"><span class="header-section-number">8.4.4</span> Transformación de Variables</h3>
 <p>Las transformaciones de variables son una práctica común en análisis estadísticos, incluida la regresión espacial, para mejorar la relación entre las variables y garantizar que se cumplan los supuestos del modelo. A continuación, se explican los motivos y las implicaciones de realizar transformaciones de variables, junto con ejemplos y analogías que ayudan a comprender mejor la necesidad de hacerlo.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">sin</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Con</a></li></ul>
@@ -813,8 +826,8 @@ Guía para Decidir Cuándo y Cómo Hacer Transformaciones
 </div>
 </section>
 </section>
-<section id="estimar-un-modelo-de-regresión-ordinario-ols" class="level3 page-columns page-full" data-number="8.4.6">
-<h3 data-number="8.4.6" class="anchored" data-anchor-id="estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.6</span> Estimar un modelo de regresión ordinario (OLS)</h3>
+<section id="estimar-un-modelo-de-regresión-ordinario-ols" class="level3 page-columns page-full" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.5</span> Estimar un modelo de regresión ordinario (OLS)</h3>
 <p><strong>Modelo OLS</strong></p>
 <p>Modelo estadístico que relaciona funcionalmente dos variables de forma lineal (una recta o, en su versión generalizada, un plano o un hiperplano). El caso más simple contiene una variable respuesta (Y; i.e.&nbsp;lo que se quiere explicar o predecir), y una variable explicativa o predictor (X; i.e., variables que se usan para explicar o predecir Y). A veces estas variables también son llamadas dependiente e independiente.</p>
 <p>Que exista una relación funcional significativa entre ambas variables no implica una causalidad, <del>pero la puede sugerir</del>.</p>
@@ -906,8 +919,8 @@ Interpretación de Resultados de modelos de Regresión lineal
 <p>Rango de residuos: <code>-1.32156</code> a <code>0.63572</code> La mediana (<code>0.05718</code>) está cerca de cero. Hay cierta asimetría en los residuos, ya que el valor mínimo (<code>-1.32</code>) es más extremo que el máximo (<code>0.64</code>) Los cuartiles sugieren una distribución no perfectamente simétrica</p>
 </section>
 </section>
-<section id="autocorrelación-de-los-residuos" class="level3" data-number="8.4.7">
-<h3 data-number="8.4.7" class="anchored" data-anchor-id="autocorrelación-de-los-residuos"><span class="header-section-number">8.4.7</span> Autocorrelación de los residuos</h3>
+<section id="autocorrelación-de-los-residuos" class="level3" data-number="8.4.6">
+<h3 data-number="8.4.6" class="anchored" data-anchor-id="autocorrelación-de-los-residuos"><span class="header-section-number">8.4.6</span> Autocorrelación de los residuos</h3>
 <p>La aplicación del I de Moran a los residuos es fundamental en el contexto de análisis espacial por varias razones clave:</p>
 <dl>
 <dt>Detección de Autocorrelación Espacial:</dt>
@@ -972,8 +985,8 @@ Moran I statistic       Expectation          Variance
 
 </div>
 </section>
-<section id="seleccionar-tipo-de-regresión-espacial" class="level3" data-number="8.4.8">
-<h3 data-number="8.4.8" class="anchored" data-anchor-id="seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.8</span> Seleccionar tipo de Regresión Espacial</h3>
+<section id="seleccionar-tipo-de-regresión-espacial" class="level3" data-number="8.4.7">
+<h3 data-number="8.4.7" class="anchored" data-anchor-id="seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.7</span> Seleccionar tipo de Regresión Espacial</h3>
 <div class="cell">
 
 </div>
@@ -1054,8 +1067,8 @@ SARMA = 2266.7, df = 2, p-value &lt; 2.2e-16</code></pre>
 <li>Tanto el modelo de error espacial (SEM) como el modelo de rezago espacial (SLM) parecen ser apropiados para abordar esta dependencia espacial.</li>
 </ul>
 </section>
-<section id="modelo-de-error-espacial" class="level3" data-number="8.4.9">
-<h3 data-number="8.4.9" class="anchored" data-anchor-id="modelo-de-error-espacial"><span class="header-section-number">8.4.9</span> Modelo de error Espacial</h3>
+<section id="modelo-de-error-espacial" class="level3" data-number="8.4.8">
+<h3 data-number="8.4.8" class="anchored" data-anchor-id="modelo-de-error-espacial"><span class="header-section-number">8.4.8</span> Modelo de error Espacial</h3>
 <p>A pesar de que nuestro modelo goza de las características ideales asociadas a un modelo de regresión líneal estándar, hemos comprobado que los residuos de la regresión presentan autocorrelación espacial. Por tanto, para reconocer la existencia de esta estructura espacial en los errores, usamos el Modelo del Error Espacial. Este modelo se define como:</p>
 <p><span class="math display">y=\beta_0+X\beta+\varepsilon</span></p>
 <p><span class="math display">\varepsilon= \lambda W \varepsilon+ \xi</span></p>
@@ -1286,9 +1299,11 @@ Moran I statistic       Expectation          Variance
 <p>En resumen, los resultados de la prueba de Moran I confirman que el modelo de errores espaciales ha manejado de manera adecuada la autocorrelación espacial, ya que los residuos del modelo no muestran patrones espaciales significativos. Esto respalda la validez del modelo para inferencias y análisis posteriores.</p>
 </section>
 </section>
-<section id="modelo-de-lag-espacial" class="level3" data-number="8.4.10">
-<h3 data-number="8.4.10" class="anchored" data-anchor-id="modelo-de-lag-espacial"><span class="header-section-number">8.4.10</span> Modelo de Lag Espacial</h3>
-<p><strong>Consolidar Base Inicial</strong></p>
+</section>
+<section id="regresión-espacial-a-delitos-violentos" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="regresión-espacial-a-delitos-violentos"><span class="header-section-number">8.5</span> Regresión Espacial a Delitos Violentos</h2>
+<section id="consolidación-de-datos" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="consolidación-de-datos"><span class="header-section-number">8.5.1</span> Consolidación de Datos</h3>
 <p>INE</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mi_comuna <span class="ot">&lt;-</span>  <span class="st">"LAS CONDES"</span></span>
@@ -1361,8 +1376,9 @@ Geodetic CRS:  GCS_unknown</code></pre>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                vivienda, atractor,idelv) <span class="sc">%&gt;%</span> </span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">densidad_hec =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(POBLACION<span class="sc">/</span>(<span class="fu">st_area</span>(.)<span class="sc">/</span><span class="dv">10000</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="matriz-de-vecidad" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="matriz-de-vecidad">Matriz de Vecidad</h4>
+</section>
+<section id="matriz-de-vecidad" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="matriz-de-vecidad">Matriz de Vecidad</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ptos_comuna <span class="ot">&lt;-</span> mz_estudio<span class="sc">%&gt;%</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>() <span class="sc">%&gt;%</span></span>
@@ -1384,8 +1400,8 @@ Geodetic CRS:  GCS_unknown</code></pre>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">calcular_pesos_poblacion</span>(mz_estudio, nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="transformaciones" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="transformaciones">Transformaciones</h4>
+<section id="transformaciones" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="transformaciones">Transformaciones</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"idelv"</span>, <span class="st">"IEJ"</span>,<span class="st">"IEM"</span>,<span class="st">"IPJ"</span>, <span class="st">"IRH"</span>, <span class="st">"IVI"</span>, <span class="st">"ISV"</span>,</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"vivienda"</span>, <span class="st">"atractor"</span>,<span class="st">"densidad_hec"</span>)</span>
@@ -1436,7 +1452,9 @@ Geodetic CRS:  GCS_unknown</code></pre>
 </div>
 </div>
 </div>
-<p>Modelo OLS</p>
+</section>
+<section id="modelo-ols" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="modelo-ols"><span class="header-section-number">8.5.2</span> Modelo OLS</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mod_idelv <span class="ot">=</span> <span class="fu">lm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>               IVI<span class="sc">+</span> ISV<span class="sc">+</span>l_vivienda<span class="sc">+</span>l_atractor<span class="sc">+</span>densidad_hec, </span>
@@ -1616,9 +1634,8 @@ Moran I statistic       Expectation          Variance
 </div>
 </div>
 </section>
-</section>
-<section id="error-espacial" class="level3" data-number="8.4.11">
-<h3 data-number="8.4.11" class="anchored" data-anchor-id="error-espacial"><span class="header-section-number">8.4.11</span> Error espacial</h3>
+<section id="modelo-de-error-espacial-1" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="modelo-de-error-espacial-1"><span class="header-section-number">8.5.3</span> Modelo de Error espacial</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SDEM Spatial Durbin Error Model</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>fit.errdurb_del<span class="ot">=</span><span class="fu">errorsarlm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
@@ -1634,6 +1651,45 @@ Moran I statistic       Expectation          Variance
 <p>Ecuación del modelo:</p>
 <p><span class="math display">rc\_idelv = \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \beta_3 \times c\_IPJ + \ldots + u</span></p>
 <p>donde <span class="math inline">u</span> es el término de error que sigue un proceso de autocorrelación espacial con el parámetro <span class="math inline">\lambda</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.errdurb_del, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:errorsarlm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + 
+    IVI + ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio, 
+    listw = spdep::nb2listw(nb_mzs), etype = "error", method = "eigen")
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-2.091196 -0.076581  0.013512  0.094119  0.780073 
+
+Type: error 
+Coefficients: (asymptotic standard errors) 
+                Estimate  Std. Error z value  Pr(&gt;|z|)
+(Intercept)   3.0199e+00  8.2223e-01  3.6729 0.0002399
+c_IEJ        -2.2135e-05  8.3740e-06 -2.6433 0.0082103
+c_IEM        -1.8031e-03  5.8272e-02 -0.0309 0.9753159
+c_IPJ        -9.4856e-03  3.2060e-02 -0.2959 0.7673329
+c_IRH         9.5417e-03  3.4635e-02  0.2755 0.7829369
+IVI           1.3756e-01  4.1672e-01  0.3301 0.7413153
+ISV          -7.2707e-01  6.9537e-01 -1.0456 0.2957544
+l_vivienda   -2.9810e-03  1.3054e-03 -2.2836 0.0223934
+l_atractor    4.4685e-03  9.0312e-04  4.9478 7.505e-07
+densidad_hec  6.3043e-02  8.4138e-03  7.4928 6.750e-14
+
+Lambda: 0.98379, LR test value: 3066.1, p-value: &lt; 2.22e-16
+Asymptotic standard error: 0.0032122
+    z-value: 306.27, p-value: &lt; 2.22e-16
+Wald statistic: 93801, p-value: &lt; 2.22e-16
+
+Log likelihood: 233.4893 for error model
+ML residual variance (sigma squared): 0.03258, (sigma: 0.1805)
+Nagelkerke pseudo-R-squared: 0.95312 
+Number of observations: 1400 
+Number of parameters estimated: 12 
+AIC: -442.98, (AIC for lm: 2621.1)</code></pre>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1750,43 +1806,6 @@ Moran I statistic       Expectation          Variance
 </ul>
 <p>El modelo SDEM es adecuado para capturar tanto la dependencia espacial en los errores como las influencias espaciales de las variables independientes, proporcionando un análisis más robusto y preciso para la explicar de delitos violentos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.errdurb_del, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:errorsarlm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + 
-    IVI + ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio, 
-    listw = spdep::nb2listw(nb_mzs), etype = "error", method = "eigen")
-
-Residuals:
-      Min        1Q    Median        3Q       Max 
--2.091196 -0.076581  0.013512  0.094119  0.780073 
-
-Type: error 
-Coefficients: (asymptotic standard errors) 
-                Estimate  Std. Error z value  Pr(&gt;|z|)
-(Intercept)   3.0199e+00  8.2223e-01  3.6729 0.0002399
-c_IEJ        -2.2135e-05  8.3740e-06 -2.6433 0.0082103
-c_IEM        -1.8031e-03  5.8272e-02 -0.0309 0.9753159
-c_IPJ        -9.4856e-03  3.2060e-02 -0.2959 0.7673329
-c_IRH         9.5417e-03  3.4635e-02  0.2755 0.7829369
-IVI           1.3756e-01  4.1672e-01  0.3301 0.7413153
-ISV          -7.2707e-01  6.9537e-01 -1.0456 0.2957544
-l_vivienda   -2.9810e-03  1.3054e-03 -2.2836 0.0223934
-l_atractor    4.4685e-03  9.0312e-04  4.9478 7.505e-07
-densidad_hec  6.3043e-02  8.4138e-03  7.4928 6.750e-14
-
-Lambda: 0.98379, LR test value: 3066.1, p-value: &lt; 2.22e-16
-Asymptotic standard error: 0.0032122
-    z-value: 306.27, p-value: &lt; 2.22e-16
-Wald statistic: 93801, p-value: &lt; 2.22e-16
-
-Log likelihood: 233.4893 for error model
-ML residual variance (sigma squared): 0.03258, (sigma: 0.1805)
-Nagelkerke pseudo-R-squared: 0.95312 
-Number of observations: 1400 
-Number of parameters estimated: 12 
-AIC: -442.98, (AIC for lm: 2621.1)</code></pre>
-</div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test Moran residuos</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>res.err<span class="ot">=</span>fit.errdurb_del<span class="sc">$</span>residuals</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(res.err,nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1822,8 +1841,8 @@ Moran I statistic       Expectation          Variance
 <li>Incluir más variables explicativas: Puede ser que variables omitidas importantes estén influyendo en los residuos y creando autocorrelación espacial.</li>
 </ol>
 </section>
-<section id="lag-espacial" class="level3" data-number="8.4.12">
-<h3 data-number="8.4.12" class="anchored" data-anchor-id="lag-espacial"><span class="header-section-number">8.4.12</span> Lag espacial</h3>
+<section id="modelo-de-lag-espacial" class="level3" data-number="8.5.4">
+<h3 data-number="8.5.4" class="anchored" data-anchor-id="modelo-de-lag-espacial"><span class="header-section-number">8.5.4</span> MOdelo de Lag Espacial</h3>
 <p>Modelo ajustado: Este es un modelo de regresión con rezago espacial (lag), que incluye tanto los efectos de las variables explicativas como la influencia espacial de la variable dependiente.</p>
 <p>Ecuación del modelo:</p>
 <p><span class="math display">rc\_idelv = \rho W(rc\_idelv) + \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \beta_3 \times c\_IPJ + \ldots + \epsilon</span></p>
@@ -2056,8 +2075,8 @@ Moran I statistic       Expectation          Variance
 <li>Incluir variables adicionales: Podría haber variables omisas que capturen parte de la variabilidad espacial no explicada.</li>
 </ul>
 </section>
-<section id="error-y-lag-espacial" class="level3" data-number="8.4.13">
-<h3 data-number="8.4.13" class="anchored" data-anchor-id="error-y-lag-espacial"><span class="header-section-number">8.4.13</span> Error y Lag espacial</h3>
+<section id="modelo-de-error-y-lag-espacial" class="level3" data-number="8.5.5">
+<h3 data-number="8.5.5" class="anchored" data-anchor-id="modelo-de-error-y-lag-espacial"><span class="header-section-number">8.5.5</span> Modelo de Error y Lag espacial</h3>
 <p>Modelo ajustado: El modelo SAC es una combinación de un modelo de rezago espacial (SAR) y un modelo de error espacial (SEM), lo que permite capturar tanto la dependencia espacial en la variable dependiente como la autocorrelación espacial en los errores.</p>
 <p>Ecuación del modelo:</p>
 <p><span class="math inline">rc\_idelv = \rho W(rc\_idelv) + \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \ldots + \epsilon</span></p>
@@ -2232,7 +2251,7 @@ AIC: -821.04, (AIC for lm: 2621.1)</code></pre>
 </dl>
 <p><strong>Conclusión</strong></p>
 <ul>
-<li>Variables significativas: Las variables <code>c_IEJ</code>, <code>ISV</code>, <code>l_vivienda</code>, <code>l_atractor</code>, y <code>densidad_hec</code> son significativas y contribuyen al modelo.</li>
+<li>Variables significativas: Las variables <code>c_IEJ</code>, <code>l_vivienda</code>, <code>l_atractor</code>, y <code>densidad_hec</code> son significativas y contribuyen al modelo.</li>
 <li>Dependencia espacial: Los parámetros <span class="math inline">\rho</span> y <span class="math inline">\lambda</span> indican que tanto la dependencia espacial de la variable dependiente como la autocorrelación en los errores son significativas y necesarias para modelar adecuadamente los datos.</li>
 <li>Modelo robusto: El alto valor de pseudo-R² y el AIC bajo sugieren que el modelo SAC proporciona un ajuste muy robusto y captura adecuadamente la estructura espacial de los datos.</li>
 </ul>
@@ -2257,7 +2276,7 @@ Moran I statistic       Expectation          Variance
 </div>
 <p>Los resultados de la prueba de Moran I aplicada a los residuos del modelo SAC (Spatial Autoregressive Combined Model) muestran que todavía hay autocorrelación espacial significativa en los residuos, aunque menor que en los modelos anteriores. Aquí tienes la interpretación detallada:</p>
 <dl>
-<dt><code>Moran I statistic</code>: 0.0856</dt>
+<dt><code>Moran I statistic</code>: 0.07671</dt>
 <dd>
 <p>Interpretación: Un valor de Moran I de 0.0856 indica que todavía hay una leve autocorrelación espacial positiva en los residuos. Este valor es menor que en modelos anteriores, lo que sugiere una mejora, pero no elimina por completo la dependencia espacial.</p>
 </dd>
@@ -2276,8 +2295,8 @@ Moran I statistic       Expectation          Variance
 </ol>
 </section>
 </section>
-<section id="referencias-de-capítulo" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="referencias-de-capítulo"><span class="header-section-number">8.5</span> Referencias de Capítulo:</h2>
+<section id="referencias-de-capítulo" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="referencias-de-capítulo"><span class="header-section-number">8.6</span> Referencias de Capítulo:</h2>
 <ul>
 <li><p><a href="https://geo200cn.github.io/spatialreg.html#Why_run_a_spatial_regression">GEO 200CN: Quantitative Geography</a></p></li>
 <li><p><a href="https://spatial.uchicago.edu/sites/spatial.uchicago.edu/files/10_specification_tests_2_slides.pdf">Spatial Regression 10. Specification Tests</a></p></li>
