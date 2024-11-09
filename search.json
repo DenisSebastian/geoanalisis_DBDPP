@@ -763,39 +763,6 @@
     ]
   },
   {
-    "objectID": "tarea_2.html",
-    "href": "tarea_2.html",
-    "title": "Tarea 2",
-    "section": "",
-    "text": "Antecedentes",
-    "crumbs": [
-      "Tareas",
-      "Tarea 2"
-    ]
-  },
-  {
-    "objectID": "tarea_2.html#antecedentes",
-    "href": "tarea_2.html#antecedentes",
-    "title": "Tarea 2",
-    "section": "",
-    "text": "Fecha de entrega: 24 de Noviembre 2024\nFormato: Informe (pdf o html) + Código (.r o .rmd)\nIntegrantes: Individual o Grupal (máximo 4)",
-    "crumbs": [
-      "Tareas",
-      "Tarea 2"
-    ]
-  },
-  {
-    "objectID": "tarea_2.html#instrucciones",
-    "href": "tarea_2.html#instrucciones",
-    "title": "Tarea 2",
-    "section": "Instrucciones",
-    "text": "Instrucciones\n\nParte 1: Interpolación de Inverso a la Distancia Poderada.\n\n\n\nDescripción gráfica de los resultados de interpolación de inverso a la distancia ponderada\n\n\n\nDefina un área de estudio Urbana (no la comunas vistas en clases)\nRealice 3 calculos de interpolación de Inverso a al Distancia (IDW) con los datos del SII correspodiente a comercio, oficina y atractor. (1.5 pt)\nCalcule un indicador de territorial por cada uno de los resultados de las IDW del punto anterior, visualice y describa los los resultados. (1.5 pt)\n\n\n\nParte 2: Autocorrelación espacial.\n\nDefina un área de estudio Urbana (no la comunas vistas en clases) y visualice una variable que usted decida evaluar su autocorrelación espacial (Ej: Nivel Educacional). Justifique la selección de variable a modo de hipótesis breve. (1 pt)\nGenere una Matriz de Vecidad ponderada por la variable que usted encuentre idónea (Ej: Población) (1 pt)\nCálculo de índice de Moran (global) y visualice sus resultados en gráfico de cuadrantes. Interprete los resultados de forma general. (1 pt)\nCálculo de índice de local Moran e identifique los grupos o cluster haciendo uso de los resultados significancia estadística, visualice los resultados en un Mapa e Interprete los resultados de forma general. (1 pt)\n\n\n\n\nAutocorrelación Espacial",
-    "crumbs": [
-      "Tareas",
-      "Tarea 2"
-    ]
-  },
-  {
     "objectID": "r_project.html",
     "href": "r_project.html",
     "title": "R Project",
