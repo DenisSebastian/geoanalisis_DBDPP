@@ -46,13 +46,23 @@ h3{
 }
 h4{
   font-size: 16px
+  font-weight: bold;
 }
 
 h5{
   font-size: 15px
+  font-weight: bold;
 }
 
+dd {
+  font-size: 15px
+}
 
 li.sidebar-menu-container{
   font-size: 14px
+}
+
+.highlight {
+    color: #20B2AA;
+    font-weight: bold;
 }

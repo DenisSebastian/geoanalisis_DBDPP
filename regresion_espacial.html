@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Curso: Geoanálisis - 8&nbsp; Regresión Espacial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tarea_1.html" rel="next">
+<link href="./autocorrelacion.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regresion_espacial.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regresión Espacial</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Curso: Geoanálisis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Antecedentes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./indicadores_territoriales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inferencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regresion_espacial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regresión Espacial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Tareas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tarea 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tarea 2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Anexos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geocoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Geocoding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./john_snow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapa de Cólera</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"><span class="header-section-number">8.1</span> Objetivos</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">8.2</span> Introducción</a></li>
+  <li><a href="#marco-teórico" id="toc-marco-teórico" class="nav-link" data-scroll-target="#marco-teórico"><span class="header-section-number">8.3</span> Marco Teórico</a>
+  <ul class="collapse">
+  <li><a href="#dependencia-espacial-y-autocorrelación-espacial" id="toc-dependencia-espacial-y-autocorrelación-espacial" class="nav-link" data-scroll-target="#dependencia-espacial-y-autocorrelación-espacial"><span class="header-section-number">8.3.1</span> Dependencia Espacial y Autocorrelación Espacial</a></li>
+  <li><a href="#tipos-de-modelos-de-regresión-espacial" id="toc-tipos-de-modelos-de-regresión-espacial" class="nav-link" data-scroll-target="#tipos-de-modelos-de-regresión-espacial"><span class="header-section-number">8.3.2</span> Tipos de Modelos de Regresión Espacial</a></li>
+  <li><a href="#modelo-sar-spatial-autoregressive-model" id="toc-modelo-sar-spatial-autoregressive-model" class="nav-link" data-scroll-target="#modelo-sar-spatial-autoregressive-model">Modelo SAR (Spatial Autoregressive Model):</a></li>
+  <li><a href="#modelo-sem-spatial-error-model" id="toc-modelo-sem-spatial-error-model" class="nav-link" data-scroll-target="#modelo-sem-spatial-error-model">Modelo SEM (Spatial Error Model):</a></li>
+  <li><a href="#matrices-de-ponderación-espacial" id="toc-matrices-de-ponderación-espacial" class="nav-link" data-scroll-target="#matrices-de-ponderación-espacial"><span class="header-section-number">8.3.3</span> Matrices de Ponderación Espacial</a></li>
+  </ul></li>
+  <li><a href="#cálculo-de-regresión-espacial-en-r" id="toc-cálculo-de-regresión-espacial-en-r" class="nav-link" data-scroll-target="#cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.4</span> Cálculo de Regresión Espacial en R</a>
+  <ul class="collapse">
+  <li><a href="#pasos-de-regresion-espacial" id="toc-pasos-de-regresion-espacial" class="nav-link" data-scroll-target="#pasos-de-regresion-espacial"><span class="header-section-number">8.4.1</span> Pasos de Regresion Espacial</a></li>
+  <li><a href="#selección-de-área-de-estudio" id="toc-selección-de-área-de-estudio" class="nav-link" data-scroll-target="#selección-de-área-de-estudio"><span class="header-section-number">8.4.2</span> Selección de Área de Estudio</a></li>
+  <li><a href="#crear-matriz-de-vecindad" id="toc-crear-matriz-de-vecindad" class="nav-link" data-scroll-target="#crear-matriz-de-vecindad"><span class="header-section-number">8.4.3</span> Crear Matriz de Vecindad</a></li>
+  <li><a href="#analizar-la-autorrelación-espacial-de-y" id="toc-analizar-la-autorrelación-espacial-de-y" class="nav-link" data-scroll-target="#analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.4</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></a></li>
+  <li><a href="#transformación-de-variables" id="toc-transformación-de-variables" class="nav-link" data-scroll-target="#transformación-de-variables"><span class="header-section-number">8.4.5</span> Transformación de Variables</a></li>
+  <li><a href="#estimar-un-modelo-de-regresión-ordinario-ols" id="toc-estimar-un-modelo-de-regresión-ordinario-ols" class="nav-link" data-scroll-target="#estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.6</span> Estimar un modelo de regresión ordinario (OLS)</a></li>
+  <li><a href="#autocorrelación-de-los-residuos" id="toc-autocorrelación-de-los-residuos" class="nav-link" data-scroll-target="#autocorrelación-de-los-residuos"><span class="header-section-number">8.4.7</span> Autocorrelación de los residuos</a></li>
+  <li><a href="#seleccionar-tipo-de-regresión-espacial" id="toc-seleccionar-tipo-de-regresión-espacial" class="nav-link" data-scroll-target="#seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.8</span> Seleccionar tipo de Regresión Espacial</a></li>
+  <li><a href="#modelo-de-error-espacial" id="toc-modelo-de-error-espacial" class="nav-link" data-scroll-target="#modelo-de-error-espacial"><span class="header-section-number">8.4.9</span> Modelo de error Espacial</a></li>
+  <li><a href="#modelo-de-lag-espacial" id="toc-modelo-de-lag-espacial" class="nav-link" data-scroll-target="#modelo-de-lag-espacial"><span class="header-section-number">8.4.10</span> Modelo de Lag Espacial</a></li>
+  <li><a href="#error-espacial" id="toc-error-espacial" class="nav-link" data-scroll-target="#error-espacial"><span class="header-section-number">8.4.11</span> Error espacial</a></li>
+  <li><a href="#lag-espacial" id="toc-lag-espacial" class="nav-link" data-scroll-target="#lag-espacial"><span class="header-section-number">8.4.12</span> Lag espacial</a></li>
+  <li><a href="#error-y-lag-espacial" id="toc-error-y-lag-espacial" class="nav-link" data-scroll-target="#error-y-lag-espacial"><span class="header-section-number">8.4.13</span> Error y Lag espacial</a></li>
+  </ul></li>
+  <li><a href="#referencias-de-capítulo" id="toc-referencias-de-capítulo" class="nav-link" data-scroll-target="#referencias-de-capítulo"><span class="header-section-number">8.5</span> Referencias de Capítulo:</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regresión Espacial</span></h1>
+<p class="subtitle lead">Modelos de Regresión Espacial con error y lag espacial</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="objetivos" class="level2 page-columns page-full" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">8.1</span> Objetivos</h2>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m7_geoanalisis.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Objetivos</figcaption>
+</figure>
+</div>
+</section>
+<section id="introducción" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">8.2</span> Introducción</h2>
+<!-- <span class="highlight">explicar</span>  -->
+<p>La regresión espacial es una técnica de análisis de datos que permite estudiar y modelar relaciones entre variables considerando no solo sus valores individuales, sino también cómo se relacionan en el espacio geográfico. A diferencia de los modelos tradicionales de regresión, que asumen que las observaciones son independientes entre sí, la regresión espacial reconoce que los datos pueden estar influenciados por la proximidad o las características de sus vecinos. Esta consideración es fundamental, ya que muchas veces los fenómenos sociales, económicos y ambientales no están distribuidos al azar, sino que muestran patrones de agrupamiento o dispersión en el territorio.</p>
+<p><span class="highlight">¿Por qué es importante entender la regresión espacial y cuál es su relevancia para las políticas públicas?</span> Pensemos en ejemplos concretos: la distribución de la criminalidad en una ciudad, la propagación de enfermedades, o la accesibilidad a servicios básicos como la educación y la salud. Estos fenómenos no solo dependen de las características de una sola zona o comunidad, sino también de lo que ocurre en las áreas circundantes. Ignorar estas interrelaciones espaciales puede llevar a conclusiones erróneas y, por ende, a políticas públicas ineficaces.</p>
+<p>En el ámbito de las políticas públicas, la regresión espacial se convierte en una herramienta esencial para la planificación y la toma de decisiones informadas. Por ejemplo, un análisis que considere la influencia espacial puede ayudar a los gobiernos locales a diseñar estrategias más efectivas de prevención del crimen, a ubicar servicios de salud en áreas estratégicas, o a implementar programas de desarrollo económico que beneficien no solo a un sector específico, sino a toda una región.</p>
+</section>
+<section id="marco-teórico" class="level2 page-columns page-full" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="marco-teórico"><span class="header-section-number">8.3</span> Marco Teórico</h2>
+<section id="dependencia-espacial-y-autocorrelación-espacial" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="dependencia-espacial-y-autocorrelación-espacial"><span class="header-section-number">8.3.1</span> Dependencia Espacial y Autocorrelación Espacial</h3>
+<p>Imagina que estás en una ciudad y observas un barrio donde los precios de las viviendas son muy altos. Es común que los barrios vecinos también tengan precios elevados debido a factores compartidos como el acceso a servicios de calidad, seguridad o prestigio. Este es un ejemplo de dependencia espacial, donde las características de una región están relacionadas con las características de sus vecinas.</p>
+<p>La autocorrelación espacial es una medida de esta dependencia. Si observamos que los valores altos o bajos de una variable (por ejemplo, ingresos, tasas de criminalidad o acceso a la salud) tienden a agruparse en el espacio, decimos que hay autocorrelación espacial positiva. Por otro lado, si observamos un patrón en el que las áreas con valores altos están rodeadas de áreas con valores bajos (y viceversa), hablamos de autocorrelación espacial negativa.</p>
+</section>
+<section id="tipos-de-modelos-de-regresión-espacial" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="tipos-de-modelos-de-regresión-espacial"><span class="header-section-number">8.3.2</span> Tipos de Modelos de Regresión Espacial</h3>
+<p>Cuando analizamos datos espaciales, es posible que un modelo de regresión lineal clásico (OLS) no capture adecuadamente la dependencia espacial, lo que podría llevar a conclusiones incorrectas. Por esta razón, se utilizan modelos de regresión espacial. A continuación, se explican los tipos principales:</p>
+</section>
+<section id="modelo-sar-spatial-autoregressive-model" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="modelo-sar-spatial-autoregressive-model">Modelo SAR (Spatial Autoregressive Model):</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m_lag.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="margin-caption">Explicación Modelo de lag Espacial</figcaption>
+</figure>
+</div>
+<p>Definición: Este modelo incluye un término adicional que representa la influencia de la variable dependiente en las áreas vecinas.</p>
+<blockquote class="blockquote">
+<p>Ejemplo: Si analizamos la tasa de criminalidad de un barrio, el modelo SAR considerará cómo la tasa de criminalidad en los barrios vecinos afecta la tasa de criminalidad en el barrio analizado.</p>
+</blockquote>
+<p>Analogía: Imagina que estás en una sala donde la temperatura de una sección afecta la temperatura de las secciones adyacentes. El modelo SAR capturaría cómo los cambios de temperatura en un área influyen en las áreas cercanas.</p>
+</section>
+<section id="modelo-sem-spatial-error-model" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="modelo-sem-spatial-error-model">Modelo SEM (Spatial Error Model):</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m_error.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="margin-caption">Explicación Modelo de Error Espacial</figcaption>
+</figure>
+</div>
+<p>Definición: Este modelo captura la autocorrelación que existe en los errores del modelo. Es útil cuando la dependencia espacial no se debe a la variable en sí, sino a factores no observados que afectan a varias áreas cercanas.</p>
+<blockquote class="blockquote">
+<p>Ejemplo: Supongamos que estamos analizando el nivel educativo en diferentes comunas y existe un factor común, como la infraestructura escolar de la región, que no se incluye explícitamente en el modelo. El SEM ajustaría los errores del modelo para reflejar esta influencia compartida.</p>
+</blockquote>
+<p>Analogía: Es como si varias personas en la fiesta hablaran con diferentes volúmenes, pero todas estuvieran influenciadas por un ruido de fondo compartido, como la música que suena en la sala.</p>
+</section>
+<section id="matrices-de-ponderación-espacial" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="matrices-de-ponderación-espacial"><span class="header-section-number">8.3.3</span> Matrices de Ponderación Espacial</h3>
+<p>Una matriz de ponderación espacial es fundamental en el análisis de regresión espacial. Esta matriz define la relación de vecindad entre las áreas geográficas y asigna un peso a cada par de áreas. Referencias en <a href="autocorrelacion.html#sec-matrizVec" class="quarto-xref"><span>Section 7.4</span></a></p>
+</section>
+</section>
+<section id="cálculo-de-regresión-espacial-en-r" class="level2 page-columns page-full" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="cálculo-de-regresión-espacial-en-r"><span class="header-section-number">8.4</span> Cálculo de Regresión Espacial en R</h2>
+<p>A continuación se realizarán dos modelos de regresión espacial, el primero con error espacial y la variable a explicar es el nivel socioecómico. En segundo caso la variable a explicar será el indicador de delitos violentos en la comuna de Las Condes, y se aplicará modelo error y lag espacial, además del un modelo que combina ambos llamado <code>sacsar</code>.</p>
+<section id="pasos-de-regresion-espacial" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="pasos-de-regresion-espacial"><span class="header-section-number">8.4.1</span> Pasos de Regresion Espacial</h3>
+<ol start="0" type="1">
+<li>Selección de Área de Estudio</li>
+<li>Crear Matriz de Vecindad</li>
+<li>Analizar la Autorrelación Espacial de <span class="math inline">y</span></li>
+<li>Estimar un modelo de regresión ordinario (OLS)</li>
+<li>Seleccionar tipo de Regresión Espacial</li>
+<li>Estimar Modelo de Regresión Espacial</li>
+</ol>
+</section>
+<section id="selección-de-área-de-estudio" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="selección-de-área-de-estudio"><span class="header-section-number">8.4.2</span> Selección de Área de Estudio</h3>
+<p><strong>Cargar Librerías</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapview)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Selección de Área de Estudio</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mi_comuna <span class="ot">&lt;-</span>  <span class="st">"LAS CONDES"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ine</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/censo/manzanas.rds"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NOM_COM <span class="sc">==</span> mi_comuna) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CODINE017 =</span> <span class="fu">as.character</span>(CODINE017)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(COD_INE_ID, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">32719</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Agregar variables de estudio</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># socioeconomicos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>soc <span class="ot">&lt;-</span>  <span class="fu">st_read</span>(<span class="st">"data/socioeconomicos/resultados/R13_ind_socioeconomicos.shp"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID_MANZ, ID_MANZCIT, IEJ, IEM, IPJ, IRH, IVI, ISV) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(ID_MANZ, <span class="at">.keep_all =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `R13_ind_socioeconomicos' from data source 
+  `/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book/data/socioeconomicos/resultados/R13_ind_socioeconomicos.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 55754 features and 20 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 249067.9 ymin: 6205212 xmax: 428360.8 ymax: 6356031
+Projected CRS: WGS 84 / UTM zone 19S</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span>  mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(soc,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"CODINE017"</span> <span class="ot">=</span> <span class="st">"ID_MANZ"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># head(mz_comuna)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Agregar Variable de Densidad Poblacional</strong></p>
+<p>Calcula la densidad poblacional por hetárea</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span> mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nived =</span> IEJ) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">densidad_hec =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(POBLACION<span class="sc">/</span>(<span class="fu">st_area</span>(.)<span class="sc">/</span><span class="dv">10000</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Eliminar Valores Nulos</strong></p>
+<p>Primero se crea una variable que se prentende explicar</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span>  mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nived))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mz_comuna, <span class="fu">aes</span>(<span class="at">fill =</span> nived), <span class="at">color =</span><span class="st">"gray80"</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette=</span> <span class="st">"RdPu"</span>, <span class="at">direction =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Nivel Educacional del Jefe de Hogar"</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>))<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="crear-matriz-de-vecindad" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="crear-matriz-de-vecindad"><span class="header-section-number">8.4.3</span> Crear Matriz de Vecindad</h3>
+<p>Definir un criterio de vecidad, para el caso de estudio es la distancia y asignar pesos espciales</p>
+<p><strong>Polígonos a puntos</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ptos_comuna <span class="ot">&lt;-</span> mz_comuna<span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Calcular Vecinos Cercanos (</strong><span class="math inline">k</span>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vecinos mas cercanos (neighbours)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="co"># numero de vecinos a buscar</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>nb_mzs <span class="ot">&lt;-</span> <span class="fu">knearneigh</span>(ptos_comuna, <span class="at">k =</span> k) <span class="sc">%&gt;%</span>  <span class="co"># por punto calcula K vecinos</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">knn2nb</span>() <span class="co"># Knn a matriz de vecindad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Visualización de la relaciones por cada Centroide</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># matri&lt; de vecindad a lines solo oara visualizaciñon</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>neighbors_sf <span class="ot">&lt;-</span> <span class="fu">as</span>(<span class="fu">nb2lines</span>(nb_mzs, <span class="at">coords =</span> <span class="fu">st_geometry</span>(ptos_comuna)), <span class="st">'sf'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>p_mv <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mz_comuna, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span><span class="st">"gray60"</span>, <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> neighbors_sf,  <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>,  <span class="at">size=</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ptos_comuna,  <span class="at">color =</span><span class="st">"#525252"</span>, <span class="at">alpha=</span><span class="dv">1</span>,  <span class="at">size=</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Relaciones de Vecindad por cada manzana (k = 8)"</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>))<span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>), </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"gray80"</span>))</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>p_mv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Asignar Pesos Espaciales por población</strong></p>
+<p>Primero crearemos uina función</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos la función que calcula los pesos de la población</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>calcular_pesos_poblacion <span class="ot">&lt;-</span> <span class="cf">function</span>(mz_comuna, nb, <span class="at">var =</span> <span class="st">"POBLACION"</span>) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Utilizamos map para iterar sobre los índices de las filas de mz_comuna</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  nb<span class="sc">$</span>weights <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mz_comuna), <span class="sc">~</span> {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    vecinos <span class="ot">&lt;-</span> nb<span class="sc">$</span>neighbours[[.x]]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filtramos la población de los vecinos y calculamos los pesos</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    poblacion_vecinos <span class="ot">&lt;-</span> mz_comuna <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(id <span class="sc">%in%</span> vecinos) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(<span class="sc">!!</span>var)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    poblacion_vecinos <span class="sc">/</span> <span class="fu">sum</span>(poblacion_vecinos)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(nb)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora asignaremos pesos por a los vecinos de acuerdo a su población</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_mzs)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mz_comuna<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mz_comuna)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Llamamos a la función para calcular los pesos de población</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">calcular_pesos_poblacion</span>(mz_comuna, nb)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>nb<span class="sc">$</span>weights <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.06053812 0.28699552 0.11210762 0.21973094 0.11883408 0.05381166 0.06950673
+[8] 0.07847534
+
+[[2]]
+[1] 0.41724618 0.17802503 0.06954103 0.13630042 0.07371349 0.03337969 0.04311544
+[8] 0.04867872
+
+[[3]]
+[1] 0.48231511 0.04340836 0.15755627 0.08520900 0.03858521 0.04983923 0.08681672
+[8] 0.05627010
+
+[[4]]
+[1] 0.38119441 0.12452351 0.21092757 0.10165184 0.06734435 0.03049555 0.03939009
+[8] 0.04447268
+
+[[5]]
+[1] 0.43731778 0.03935860 0.07288630 0.24198251 0.07725948 0.03498542 0.04518950
+[8] 0.05102041</code></pre>
+</div>
+</div>
+</section>
+<section id="analizar-la-autorrelación-espacial-de-y" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="analizar-la-autorrelación-espacial-de-y"><span class="header-section-number">8.4.4</span> Analizar la Autorrelación Espacial de <span class="math inline">y</span></h3>
+<p>A través del test estadítico índice de Moran analizar la autocorrelación espacial de la variable dependiente que se pretende explicar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test de Moran</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(mz_comuna<span class="sc">$</span>nived,<span class="at">listw=</span>nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  mz_comuna$nived  
+weights: nb    
+
+Moran I statistic standard deviate = 53.773, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.7846827915     -0.0006756757      0.0002133076 </code></pre>
+</div>
+</div>
+</section>
+<section id="transformación-de-variables" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="transformación-de-variables"><span class="header-section-number">8.4.5</span> Transformación de Variables</h3>
+<p>Las transformaciones de variables son una práctica común en análisis estadísticos, incluida la regresión espacial, para mejorar la relación entre las variables y garantizar que se cumplan los supuestos del modelo. A continuación, se explican los motivos y las implicaciones de realizar transformaciones de variables, junto con ejemplos y analogías que ayudan a comprender mejor la necesidad de hacerlo.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">sin</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Con</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mz_comuna<span class="sc">$</span>densidad_hec, <span class="at">breaks=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(mz_comuna<span class="sc">$</span>densidad_hec), <span class="at">breaks=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Por Qué Conviene Hacer Transformaciones
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Mejora la Linealidad</strong>: En un modelo de regresión lineal, se asume que la relación entre la variable dependiente (por ejemplo, delitos violentos en una comuna, idelv) y las variables independientes es lineal. Sin embargo, en muchos casos, las relaciones entre las variables pueden no ser lineales. Transformar las variables puede ayudar a linealizar la relación, haciendo que los modelos lineales sean más precisos y apropiados.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Analogía: Imagina que estás tratando de representar la relación entre la temperatura y el crecimiento de una planta. Si usas una línea recta para representarlo, es posible que no captures bien el patrón, ya que el crecimiento puede aumentar rápidamente al principio y luego estabilizarse. Transformar la variable puede ayudar a ajustar mejor la curva y hacer que la representación sea más precisa.</p>
+</blockquote>
+<ul>
+<li><strong>Normaliza la Distribución</strong>: Las transformaciones pueden ayudar a que la distribución de las variables sea más cercana a una distribución normal. Esto es importante porque muchos métodos estadísticos, incluida la regresión, asumen que los errores del modelo siguen una distribución normal.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Ejemplo: Si la variable idelv tiene una distribución sesgada, aplicar una transformación logarítmica puede ayudar a reducir la asimetría y acercar la distribución a la normalidad, mejorando la validez del modelo.</p>
+</blockquote>
+<ul>
+<li><strong>Reducción de la Heterocedasticidad</strong>: La heterocedasticidad ocurre cuando la variabilidad de los errores del modelo no es constante a lo largo del rango de valores de la variable independiente. Las transformaciones pueden ayudar a homogeneizar la varianza de los errores, haciendo que el modelo sea más robusto.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Analogía: Imagina que estás midiendo la velocidad del viento a lo largo de diferentes alturas. Si a mayor altura la variabilidad de la velocidad es mucho mayor, una transformación puede ayudar a estabilizar esa variabilidad.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Por Qué No Conviene Hacer Transformaciones
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Pérdida de Interpretabilidad</strong>: Transformar las variables puede hacer que los coeficientes del modelo sean más difíciles de interpretar directamente. Por ejemplo, interpretar el coeficiente de una variable transformada con log(y) es diferente a interpretar el coeficiente de la variable original.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Ejemplo: Si transformas la variable idelv a log(idelv), el coeficiente del modelo indicará cómo cambia el logaritmo de idelv por cada unidad de cambio en la variable independiente, lo cual puede ser menos intuitivo para quienes no tienen un trasfondo en estadísticas avanzadas.</p>
+</blockquote>
+<ul>
+<li><strong>Complejidad Adicional</strong>: La transformación de variables añade un paso adicional al análisis que puede complicar la comparación con otros estudios o la interpretación de los resultados en un contexto de políticas públicas.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Ejemplo: Si estás trabajando con un equipo multidisciplinario y usas transformaciones logarítmicas, algunos colegas podrían tener dificultades para entender cómo se relacionan los resultados transformados con los datos reales.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Guía para Decidir Cuándo y Cómo Hacer Transformaciones
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Evalúa la Relación Original: Grafica la relación entre las variables para ver si es lineal o si muestra un patrón que pueda beneficiarse de una transformación.</p></li>
+<li><p>Prueba Diferentes Transformaciones: Aplica distintas transformaciones y evalúa si mejoran la linealidad, la normalidad y la homocedasticidad de los datos.</p></li>
+<li><p>Considera la Interpretabilidad: Decide si la mejora en el ajuste del modelo justifica la pérdida potencial de interpretabilidad.</p></li>
+<li><p>Usa Transformaciones Comunes Primero: Empieza con transformaciones comunes como log(y) o log(y) contra log(x) antes de probar opciones más complejas.</p></li>
+<li><p>Documenta y Justifica: Asegúrate de documentar y justificar por qué se ha aplicado una transformación específica para que otros investigadores y profesionales puedan entender y reproducir tu trabajo.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<section id="revisión-de-la-distribución-de-variables" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="revisión-de-la-distribución-de-variables">Revisión de la distribución de Variables</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"nived"</span>,<span class="st">"densidad_hec"</span>,<span class="st">"ISV"</span>,<span class="st">"IRH"</span>, <span class="st">"IEM"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ciclo para graficos agrupados</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> colnames) {</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(mz_comuna <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="sc">!!</span>v), </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">breaks=</span><span class="dv">100</span>, <span class="at">main=</span>v, <span class="at">probability=</span> T, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Lo mismo anterior pero usando programación funcional</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames %&gt;%</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   purrr::map(\(x) hist(mz_comuna %&gt;% st_drop_geometry() %&gt;% pull(!!x),</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                        breaks = 100, main = x, probability = TRUE,</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                        col = "gray")) %&gt;% </span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   invisible()# Para que no muestre resultados por consola del hist</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Transformaciones de Datos en modelos</strong></p>
+<p>Se pueden transformar los datos para obtener mejor linealidad entre sus relaciones entre las variables respuesta y predictivas.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span> mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_nived =</span> <span class="fu">sqrt</span>(nived),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_densidad_hec =</span> <span class="fu">log</span>(densidad_hec <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_ISV =</span><span class="fu">log</span>(ISV <span class="sc">+</span> <span class="fl">1e-6</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_IRH =</span> <span class="fu">log</span>(IRH <span class="sc">+</span> <span class="fl">1e-6</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_IEM =</span> IEM <span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"l_nived"</span>,<span class="st">"l_densidad_hec"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">"l_ISV"</span>,<span class="st">"l_IRH"</span>, <span class="st">"l_IEM"</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ciclo para graficos agrupados</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> mz_comuna <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> colnames) {</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(com <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="sc">!!</span>v), <span class="at">breaks=</span><span class="dv">100</span>, <span class="at">main=</span>v, <span class="at">probability=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="estimar-un-modelo-de-regresión-ordinario-ols" class="level3 page-columns page-full" data-number="8.4.6">
+<h3 data-number="8.4.6" class="anchored" data-anchor-id="estimar-un-modelo-de-regresión-ordinario-ols"><span class="header-section-number">8.4.6</span> Estimar un modelo de regresión ordinario (OLS)</h3>
+<p><strong>Modelo OLS</strong></p>
+<p>Modelo estadístico que relaciona funcionalmente dos variables de forma lineal (una recta o, en su versión generalizada, un plano o un hiperplano). El caso más simple contiene una variable respuesta (Y; i.e.&nbsp;lo que se quiere explicar o predecir), y una variable explicativa o predictor (X; i.e., variables que se usan para explicar o predecir Y). A veces estas variables también son llamadas dependiente e independiente.</p>
+<p>Que exista una relación funcional significativa entre ambas variables no implica una causalidad, <del>pero la puede sugerir</del>.</p>
+<p><span class="math display">y = b_0 + b_1*x_1 + b_2*x_2 + b_3*x_3 + … + b_n*x_n+\varepsilon</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mod_nived <span class="ot">=</span> <span class="fu">lm</span>(l_nived <span class="sc">~</span> l_densidad_hec <span class="sc">+</span> l_ISV  <span class="sc">+</span> l_IRH <span class="sc">+</span> l_IEM,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mz_comuna)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_nived)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM, 
+    data = mz_comuna)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.32156 -0.04192  0.05718  0.14501  0.63572 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     0.051529   0.619455   0.083 0.933717    
+l_densidad_hec -0.030132   0.009079  -3.319 0.000926 ***
+l_ISV           7.836936   0.836630   9.367  &lt; 2e-16 ***
+l_IRH           0.281087   0.083633   3.361 0.000797 ***
+l_IEM           4.130982   0.618714   6.677 3.45e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2592 on 1476 degrees of freedom
+Multiple R-squared:  0.1443,    Adjusted R-squared:  0.142 
+F-statistic: 62.21 on 4 and 1476 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(mod_nived)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretación de Resultados de modelos de Regresión lineal
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure" aria-labelledby="-caption">
+<p><img src="images/output_model.png" class="img-fluid figure-img"></p>
+
+</figure>
+</div>
+<p><strong>P - Valor</strong> <span class="math inline">p-value</span></p>
+<p><span class="math inline">p-value</span> Probabilidad de que el la H0 sea verdad. P-valores significativos, ej., bajo alpha = 0.05, lleva a interpretar la probabilidad de que el modelo de regresión no explique una porción significativa de la varianza de Y es baja.</p>
+<ul>
+<li><span class="math inline">H_0</span>: El modelo NO explica la varianza de los datos Y</li>
+<li><span class="math inline">H_1</span>: El modelo SI explica la varianza de los datos Y</li>
+</ul>
+<p><strong>Coeficiente de determinación (</strong><span class="math inline">R^2</span>)</p>
+<p>El coeficiente de determinación (o el cuadrado de la correlación de Pearson) es una de las métricas más utilizadas. Si bien esta es muy útil, pueden haber ocasiones donde valores altos de R² se obtienen cuando la dispersión o error de las predicciones es alta. Los valores van entre 0 y 1. Es una medida de ajuste relativa (porcentual), por lo que puede ser usada para comparar modelos entre sí.</p>
+<p><strong>Distribución F de Fisher</strong></p>
+<p>Comparar si hay diferencias significativas entre dos varianzas. En caso de las regresiones proporciona esencialmente una medida de la cantidad de variación que explica el modelo frente a la cantidad de variación no explicada (por grados de libertad restantes).</p>
+<p>Valores de <span class="math inline">F</span> altos significa que su modelo explica mucho más de la variación por parámetro que el error por grado de libertad restante.</p>
+<p><strong>Residuos</strong></p>
+<p>Los residuos son la diferencia entre los valores observados y los predichos (obs - pred). Los residuos se utilizan mucho en post-hoc tests (o tests para analizar los resultados de los modelos). Los residuos, por un lado, dan estimaciones de posibles sesgos del modelo.</p>
+<p>Es muy importante que los residuos se distribuyan de manera aleatoria en el modelo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure" aria-labelledby="-caption">
+<p><img src="images/plot_residuos.png" class="img-fluid figure-img" width="300"></p>
+
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="-caption" class="margin-figure-caption column-margin callout-4-contents callout-collapse collapse callout-margin-content">Output de modelos de regesión</div><div id="-caption" class="margin-figure-caption column-margin callout-4-contents callout-collapse collapse callout-margin-content">Visualización de los residuos</div><section id="resultados-estadisticas-generales-del-modelo" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="resultados-estadisticas-generales-del-modelo">Resultados Estadisticas Generales del Modelo</h4>
+<p><strong>Significancia global del modelo:</strong></p>
+<p>El F-statistic (<code>62.21</code>) tiene un p-value extremadamente bajo (<code>&lt; 2.2e-16</code>), lo que indica que el modelo en su conjunto es estadísticamente significativo. Sin embargo, el R² ajustado es de <code>0.142</code>, lo que significa que el modelo solo explica el <code>14.2%</code> de la variabilidad en el nivel educacional, lo cual es relativamente bajo.</p>
+<p><strong>Análisis de coeficientes individuales:</strong></p>
+<p>Todos los predictores son estadísticamente significativos (<code>p &lt; 0.001</code>):</p>
+<ul>
+<li><p>Densidad por hectárea (l_densidad_hec): Coeficiente: <code>-0.030132</code> Relación negativa: a mayor densidad poblacional, menor nivel educacional Por cada 1% de aumento en la densidad, el nivel educacional disminuye en aproximadamente <code>0.03%</code></p></li>
+<li><p>ISV: Coeficiente: <code>7.836936</code> El efecto más fuerte del modelo Relación positiva muy marcada con el nivel educacional</p></li>
+<li><p>IRH: Coeficiente: <code>0.281087</code> Relación positiva moderada con el nivel educacional</p></li>
+<li><p>IEM: Coeficiente: <code>4.130982</code> Segunda variable con mayor impacto Relación positiva fuerte con el nivel educacional</p></li>
+</ul>
+<p><strong>Análisis de residuos:</strong></p>
+<p>Rango de residuos: <code>-1.32156</code> a <code>0.63572</code> La mediana (<code>0.05718</code>) está cerca de cero. Hay cierta asimetría en los residuos, ya que el valor mínimo (<code>-1.32</code>) es más extremo que el máximo (<code>0.64</code>) Los cuartiles sugieren una distribución no perfectamente simétrica</p>
+</section>
+</section>
+<section id="autocorrelación-de-los-residuos" class="level3" data-number="8.4.7">
+<h3 data-number="8.4.7" class="anchored" data-anchor-id="autocorrelación-de-los-residuos"><span class="header-section-number">8.4.7</span> Autocorrelación de los residuos</h3>
+<p>La aplicación del I de Moran a los residuos es fundamental en el contexto de análisis espacial por varias razones clave:</p>
+<dl>
+<dt>Detección de Autocorrelación Espacial:</dt>
+<dd>
+<p>El I de Moran nos permite identificar si existe dependencia espacial en los residuos Si los residuos están espacialmente autocorrelacionados, significa que nuestro modelo OLS está violando el supuesto de independencia de las observaciones Un I de Moran significativo en los residuos indica que hay patrones espaciales que no han sido capturados por el modelo tradicional</p>
+</dd>
+<dt>Justificación para Modelos Espaciales:</dt>
+<dd>
+<p>Si encontramos autocorrelación espacial significativa en los residuos, esto justifica el uso de Modelo de Error Espacial (SEM): si la autocorrelación está en el término de error Modelo de Rezago Espacial (SLM/LAG): si la autocorrelación está en la variable dependiente</p>
+</dd>
+<dt>Diagnóstico para la Selección del Modelo:</dt>
+<dd>
+<p>El tipo y la magnitud de la autocorrelación espacial en los residuos nos ayuda a decidir qué modelo espacial es más apropiado: Si la autocorrelación es fuerte en los residuos → SEM podría ser más apropiado Si la variable dependiente muestra fuerte dependencia espacial → SLM podría ser mejor opción</p>
+</dd>
+<dt>Eficiencia de los Estimadores:</dt>
+<dd>
+<p>La presencia de autocorrelación espacial en los residuos indica que los estimadores OLS: No son eficientes (no tienen varianza mínima) Pueden llevar a inferencias estadísticas incorrectas Los errores estándar podrían estar subestimados</p>
+</dd>
+<dt>Guía para la Especificación de la Matriz W:</dt>
+<dd>
+<p>El análisis de autocorrelación espacial en los residuos también puede ayudar a evaluar diferentes especificaciones de la matriz de pesos espaciales (W) Nos permite validar si nuestra definición de “vecindad” es apropiada</p>
+</dd>
+</dl>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>residuals_mod_nived <span class="ot">&lt;-</span> <span class="fu">residuals</span>(mod_nived)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(residuals_mod_nived, <span class="at">listw =</span> nb,  <span class="at">randomisation =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  residuals_mod_nived  
+weights: nb    
+
+Moran I statistic standard deviate = 45.8, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.6680655640     -0.0006756757      0.0002131993 </code></pre>
+</div>
+</div>
+<dl>
+<dt><strong>Estadístico I de Moran:</strong></dt>
+<dd>
+<p>El valor <code>I = 0.6680655640</code> es positivo y relativamente alto (el I de Moran varía entre -1 y 1). Este valor indica una fuerte autocorrelación espacial positiva en los residuos. Significa que residuos similares tienden a agruparse espacialmente (clusters)</p>
+</dd>
+</dl>
+<p><strong>Significancia Estadística:</strong></p>
+<ul>
+<li>El z-score (desviación estándar) es extremadamente alto: <code>45.8</code></li>
+<li>El p-valor es muy pequeño (<code>&lt; 2.2e-16</code>)</li>
+</ul>
+<p>Esto indica que la autocorrelación espacial es altamente significativa por ende podemos rechazar contundentemente la hipótesis nula de aleatoriedad espacial</p>
+<p><strong>Implicaciones para el Modelo:</strong></p>
+<p>La fuerte autocorrelación espacial positiva en los residuos indica que:</p>
+<ul>
+<li>El modelo OLS actual está mal especificado espacialmente</li>
+<li>Está violando el supuesto de independencia de las observaciones</li>
+<li>Hay patrones espaciales importantes que no están siendo capturados</li>
+<li>Los estimadores OLS no son eficientes y podrían ser sesgados</li>
+</ul>
+<div class="cell">
+
+</div>
+</section>
+<section id="seleccionar-tipo-de-regresión-espacial" class="level3" data-number="8.4.8">
+<h3 data-number="8.4.8" class="anchored" data-anchor-id="seleccionar-tipo-de-regresión-espacial"><span class="header-section-number">8.4.8</span> Seleccionar tipo de Regresión Espacial</h3>
+<div class="cell">
+
+</div>
+<p>Para determinar si es necesario utilizar un modelo espacial (de error o de lag) en lugar del modelo OLS, se tiene que utilizar el test de Lagrange Multiplier (LM) se utiliza para diagnosticar la presencia de dependencia espacial en un modelo de regresión lineal tradicional. El cual realiza los siguientes tipos de análisis:</p>
+<p>Tipos de tests:</p>
+<ul>
+<li><code>LMerr</code>: Test para detectar dependencia espacial en el término de error.</li>
+<li><code>LMlag</code>: Test para detectar dependencia espacial en la variable dependiente (rezago espacial).</li>
+<li><code>RLMerr</code> y <code>RLMlag</code>: Versiones “robustas” de los tests anteriores, que son más confiables cuando se viola algún supuesto.</li>
+<li><code>SARMA</code>: Test conjunto para detectar dependencia espacial tanto en el error como en la variable dependiente.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Tipo de dependencia</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm.LMtests</span>(mod_nived,nb,<span class="at">test=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Lagrange multiplier diagnostics for spatial dependence
+
+data:  
+model: lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM,
+data = mz_comuna)
+weights: nb
+
+LMerr = 2075.2, df = 1, p-value &lt; 2.2e-16
+
+
+    Lagrange multiplier diagnostics for spatial dependence
+
+data:  
+model: lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM,
+data = mz_comuna)
+weights: nb
+
+LMlag = 2197, df = 1, p-value &lt; 2.2e-16
+
+
+    Lagrange multiplier diagnostics for spatial dependence
+
+data:  
+model: lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM,
+data = mz_comuna)
+weights: nb
+
+RLMerr = 69.74, df = 1, p-value &lt; 2.2e-16
+
+
+    Lagrange multiplier diagnostics for spatial dependence
+
+data:  
+model: lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM,
+data = mz_comuna)
+weights: nb
+
+RLMlag = 191.58, df = 1, p-value &lt; 2.2e-16
+
+
+    Lagrange multiplier diagnostics for spatial dependence
+
+data:  
+model: lm(formula = l_nived ~ l_densidad_hec + l_ISV + l_IRH + l_IEM,
+data = mz_comuna)
+weights: nb
+
+SARMA = 2266.7, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Interpretación de Resultados:</strong></p>
+<ul>
+<li>Todos los tests muestran p-valores extremadamente bajos (<code>&lt; 2.2e-16</code>).</li>
+<li>Esto indica que tanto el test LMerr como el LMlag son altamente significativos.</li>
+<li>Los resultados robustos (RLMerr y RLMlag) también son significativos.</li>
+<li>El test SARMA también es significativo, lo que sugiere que hay una dependencia espacial general.</li>
+</ul>
+<p><strong>Conclusiones e implicaciones:</strong></p>
+<ul>
+<li>Los resultados del test de Lagrange Multiplier proporcionan evidencia sólida de que existe dependencia espacial significativa en tu modelo.</li>
+<li>Esto confirma que el modelo OLS original está mal especificado y que debes proceder con la estimación de modelos espaciales.</li>
+<li>Tanto el modelo de error espacial (SEM) como el modelo de rezago espacial (SLM) parecen ser apropiados para abordar esta dependencia espacial.</li>
+</ul>
+</section>
+<section id="modelo-de-error-espacial" class="level3" data-number="8.4.9">
+<h3 data-number="8.4.9" class="anchored" data-anchor-id="modelo-de-error-espacial"><span class="header-section-number">8.4.9</span> Modelo de error Espacial</h3>
+<p>A pesar de que nuestro modelo goza de las características ideales asociadas a un modelo de regresión líneal estándar, hemos comprobado que los residuos de la regresión presentan autocorrelación espacial. Por tanto, para reconocer la existencia de esta estructura espacial en los errores, usamos el Modelo del Error Espacial. Este modelo se define como:</p>
+<p><span class="math display">y=\beta_0+X\beta+\varepsilon</span></p>
+<p><span class="math display">\varepsilon= \lambda W \varepsilon+ \xi</span></p>
+<p>Donde <span class="math inline">X</span> son las variables predictoras, mientras que <span class="math inline">W</span> es la matriz de peso espacial. El parámetro <span class="math inline">\lambda</span> es el indicador que mide la fuerza espacial de los residuos y los residuos de los vecinos.</p>
+<p>En R, estimamos el modelo vía Maximum Likelihood (máxima verosimilitud) de la siguiente forma:</p>
+<p><span class="math display">
+l\_nived = \beta_0 + \beta_1 \times l\_densidad\_hec + \beta_2 \times l\_ISV + \beta_3 \times l\_IRH + \beta_4 \times l\_IEM + u
+</span></p>
+<p>donde <span class="math inline">u</span> es el término de error que sigue un proceso de autocorrelación espacial con el parámetro <span class="math inline">\lambda</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Maximum Likelihood
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Es un método estadístico para encontrar los valores de los parámetros que mejor explican los datos observados. En términos simples, busca los valores que hacen que nuestros datos sean “más probables” o “más verosímiles”. Es como buscar el mejor ajuste posible entre nuestro modelo y los datos reales.</p>
+<p>Funciona así:</p>
+<ul>
+<li>Prueba diferentes valores para los parámetros del modelo</li>
+<li>Calcula qué tan probable es obtener los datos observados con cada conjunto de valores</li>
+<li>Selecciona los valores que maximizan esta probabilidad</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SDEM Spatial Durbin Error Model</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>fit.err <span class="ot">=</span> spatialreg<span class="sc">::</span><span class="fu">errorsarlm</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  l_nived <span class="sc">~</span> l_densidad_hec <span class="sc">+</span> l_ISV  <span class="sc">+</span> l_IRH <span class="sc">+</span> l_IEM,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mz_comuna,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">listw =</span> spdep<span class="sc">::</span><span class="fu">nb2listw</span>(nb_mzs),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">etype =</span> <span class="st">"error"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"eigen"</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(fit.err, "data/models/fit.err_nived.rds")</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>fit.err <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/models/fit.err_nived.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.err, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:spatialreg::errorsarlm(formula = l_nived ~ l_densidad_hec + l_ISV + 
+    l_IRH + l_IEM, data = mz_comuna, listw = spdep::nb2listw(nb_mzs), 
+    etype = "error", method = "eigen")
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-1.073083 -0.050816  0.006941  0.066264  0.825131 
+
+Type: error 
+Coefficients: (asymptotic standard errors) 
+                Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept)    3.3780208  0.3092596 10.9229 &lt; 2.2e-16
+l_densidad_hec 0.0144867  0.0054057  2.6799 0.0073653
+l_ISV          1.2114483  0.4643550  2.6089 0.0090838
+l_IRH          0.1458525  0.0415539  3.5100 0.0004482
+l_IEM          0.5357974  0.3082430  1.7382 0.0821702
+
+Lambda: 0.88656, LR test value: 1809.1, p-value: &lt; 2.22e-16
+Asymptotic standard error: 0.01296
+    z-value: 68.405, p-value: &lt; 2.22e-16
+Wald statistic: 4679.3, p-value: &lt; 2.22e-16
+
+Log likelihood: 805.3594 for error model
+ML residual variance (sigma squared): 0.016911, (sigma: 0.13004)
+Nagelkerke pseudo-R-squared: 0.74775 
+Number of observations: 1481 
+Number of parameters estimated: 7 
+AIC: -1596.7, (AIC for lm: 210.37)</code></pre>
+</div>
+</div>
+<p><strong>Interpretación de Resultados</strong></p>
+<p><strong>1. Coeficientes del Modelo</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Estimación</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Error.Estándar</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Valor.z</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-value</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(Intercepto)</td>
+<td style="text-align: center;">3.378</td>
+<td style="text-align: center;">0.309</td>
+<td style="text-align: center;">10.92</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">El nivel educativo transformado (l_nived) tiene un valor base de 3.378 cuando todas las otras variables son 0.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_densidad_hec</td>
+<td style="text-align: center;">0.015</td>
+<td style="text-align: center;">0.005</td>
+<td style="text-align: center;">2.68</td>
+<td style="text-align: center;">0.0074</td>
+<td style="text-align: center;">Un aumento de una unidad en l_densidad_hec se asocia con un incremento significativo de 0.0145 en l_nived.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_ISV</td>
+<td style="text-align: center;">1.211</td>
+<td style="text-align: center;">0.464</td>
+<td style="text-align: center;">2.61</td>
+<td style="text-align: center;">0.0091</td>
+<td style="text-align: center;">Un aumento en l_ISV se asocia con un incremento significativo de 1.211 en l_nived.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_IRH</td>
+<td style="text-align: center;">0.146</td>
+<td style="text-align: center;">0.042</td>
+<td style="text-align: center;">3.51</td>
+<td style="text-align: center;">0.0004</td>
+<td style="text-align: center;">Un aumento de una unidad en l_IRH se asocia con un incremento de 0.146 en l_nived, con un alto nivel de significancia.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_IEM</td>
+<td style="text-align: center;">0.536</td>
+<td style="text-align: center;">0.308</td>
+<td style="text-align: center;">1.74</td>
+<td style="text-align: center;">0.0822</td>
+<td style="text-align: center;">La variable l_IEM tiene un coeficiente positivo, pero es marginalmente significativa (p &lt; 0.1).</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<p><strong>2. Parámetro</strong> <span class="math inline">\lambda</span></p>
+<dl>
+<dt><span class="math inline">\lambda</span> (Lambda): <code>0.88656</code></dt>
+<dd>
+<p>Interpretación: El parámetro mide la autocorrelación espacial en los errores del modelo. Un valor cercano a 1 indica una fuerte correlación espacial entre los errores. El hecho de que sea 0.88656 y altamente significativo (p &lt; 0.0001) confirma que la dependencia espacial es importante y que el modelo espacial es más adecuado que un modelo de regresión lineal clásico.</p>
+</dd>
+</dl>
+<p><strong>3. Pruebas de Significancia y Estadísticas del Modelo</strong></p>
+<dl>
+<dt><code>LR Test Value: 1809.1, p-value &lt; 0.0001</code></dt>
+<dd>
+<p>Interpretación: Esta prueba de razón de verosimilitud muestra que el modelo espacial es significativamente mejor que un modelo de regresión lineal clásico sin corrección por autocorrelación.</p>
+</dd>
+<dt><code>Wald Statistic: 4679.3, p-value &lt; 0.0001</code></dt>
+<dd>
+<p>Interpretación: Indica la significancia global del modelo y confirma que el parámetro es altamente significativo.</p>
+</dd>
+<dt><code>Log Likelihood: 805.3594</code></dt>
+<dd>
+<p>Interpretación: Un valor de log-verosimilitud más alto indica un mejor ajuste del modelo.</p>
+</dd>
+<dt><code>Nagelkerke pseudo-R-squared: 0.74775</code></dt>
+<dd>
+<p>Interpretación: Este pseudo-R² sugiere que el modelo explica aproximadamente el 74.78% de la variabilidad en l_nived, lo cual es un buen ajuste.</p>
+</dd>
+<dt><code>AIC: -1596.7</code> (comparado con 210.37 del modelo OLS)</dt>
+<dd>
+<p>Interpretación: Un AIC más bajo indica que el modelo de errores espaciales es preferible al modelo OLS.</p>
+</dd>
+</dl>
+<p><strong>4. Residuos del Modelo</strong></p>
+<ul>
+<li>Resumen de los residuos: Los residuos tienen un rango de -1.073 a 0.825, con un cuartil superior e inferior relativamente cercano a 0, lo que sugiere que los errores están centrados en torno a la media y que el modelo ajusta bien los datos. Los residuos tienen un rango de -1.073 a 0.825, con un cuartil superior e inferior relativamente cercano a 0, lo que sugiere que los errores están centrados en torno a la media y que el modelo ajusta bien los datos.</li>
+</ul>
+<p><strong>Conclusiones</strong></p>
+<p>Variables Significativas: <code>l_densidad_hec</code>, <code>l_ISV</code>, y <code>l_IRH</code> son significativamente positivas, lo que sugiere que estas variables están positivamente asociadas con el nivel educativo transformado (l_nived).</p>
+<p>Dependencia Espacial: La inclusión de un término de error espacial (<span class="math inline">\lambda</span>) es esencial, dado su alto valor y significancia, lo que indica que existe una dependencia espacial significativa en los errores del modelo.</p>
+<p>Modelo Robusto: Las estadísticas de ajuste (pseudo-R² y AIC) indican que este modelo es una mejora significativa sobre un modelo OLS simple, capturando adecuadamente la autocorrelación espacial en los errores.</p>
+<p>Estos resultados confirman que un modelo de errores espaciales es apropiado y ofrece un ajuste superior al modelo lineal clásico al incorporar la dependencia espacial en los errores.</p>
+<section id="análisis-de-residuos" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="análisis-de-residuos">Análisis de Residuos</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test Moran residuos</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>res.err<span class="ot">=</span>fit.err<span class="sc">$</span>residuals</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(res.err,nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  res.err  
+weights: nb    
+
+Moran I statistic standard deviate = -1.7025, p-value = 0.9557
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+    -0.0255015425     -0.0006756757      0.0002126329 </code></pre>
+</div>
+</div>
+<p>Prueba de Moran I: Esta prueba evalúa la autocorrelación espacial en los residuos de un modelo de regresión. Si la autocorrelación espacial persiste en los residuos, significa que el <strong>modelo no ha capturado completamente la dependencia espacial en los datos</strong>.</p>
+<p><strong>Resultados Detallados</strong></p>
+<dl>
+<dt><code>Moran I statistic: -0.0255</code></dt>
+<dd>
+<p>Interpretación: El valor de Moran I es cercano a 0, lo que indica que no hay autocorrelación espacial significativa en los residuos del modelo. Un valor de Moran I negativo y cercano a 0 sugiere una ligera tendencia a una distribución aleatoria de los residuos.</p>
+</dd>
+<dt><code>p-value: 0.9557</code></dt>
+<dd>
+<p>Interpretación: Un p-value alto (mayor que 0.05) indica que no hay evidencia suficiente para rechazar la hipótesis nula de que no existe autocorrelación espacial en los residuos. En este caso, el p-value de 0.9557 confirma que los residuos se distribuyen de forma aleatoria, y no hay autocorrelación espacial remanente.</p>
+</dd>
+<dt><code>Expectation: -0.0007</code></dt>
+<dd>
+<p>Interpretación: Este es el valor esperado de Moran I bajo la hipótesis nula. Es cercano a 0, lo que refuerza la idea de que no debería haber autocorrelación espacial si los residuos siguen una distribución aleatoria.</p>
+</dd>
+<dt><code>Variance: 0.0002</code></dt>
+<dd>
+<p>Interpretación: La varianza del estadístico de Moran I se usa para calcular el valor z y evaluar la significancia de la prueba.</p>
+</dd>
+</dl>
+<p><strong>Conclusión</strong></p>
+<ul>
+<li><p>No hay autocorrelación espacial en los residuos: El valor de Moran I (<code>-0.0255</code>) y el p-value (<code>0.9557</code>) indican que los residuos del modelo de errores espaciales no presentan autocorrelación espacial significativa. Esto significa que el modelo ha capturado adecuadamente la dependencia espacial presente en los datos.</p></li>
+<li><p>Modelo bien especificado: La ausencia de autocorrelación espacial en los residuos sugiere que el modelo de errores espaciales fue una buena elección y ha capturado eficazmente la estructura espacial de los datos. No es necesario realizar ajustes adicionales para controlar la autocorrelación en los residuos.</p></li>
+</ul>
+<p>En resumen, los resultados de la prueba de Moran I confirman que el modelo de errores espaciales ha manejado de manera adecuada la autocorrelación espacial, ya que los residuos del modelo no muestran patrones espaciales significativos. Esto respalda la validez del modelo para inferencias y análisis posteriores.</p>
+</section>
+</section>
+<section id="modelo-de-lag-espacial" class="level3" data-number="8.4.10">
+<h3 data-number="8.4.10" class="anchored" data-anchor-id="modelo-de-lag-espacial"><span class="header-section-number">8.4.10</span> Modelo de Lag Espacial</h3>
+<p><strong>Consolidar Base Inicial</strong></p>
+<p>INE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mi_comuna <span class="ot">&lt;-</span>  <span class="st">"LAS CONDES"</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ine</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>mz_comuna <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/censo/manzanas.rds"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NOM_COM <span class="sc">==</span> mi_comuna) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">32719</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>socioeconomicos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>soc <span class="ot">&lt;-</span>  <span class="fu">st_read</span>(<span class="st">"data/socioeconomicos/resultados/R13_ind_socioeconomicos.shp"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID_MANZ, ID_MANZCIT, IEJ, IEM, IPJ, IRH, IVI, ISV)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `R13_ind_socioeconomicos' from data source 
+  `/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book/data/socioeconomicos/resultados/R13_ind_socioeconomicos.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 55754 features and 20 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 249067.9 ymin: 6205212 xmax: 428360.8 ymax: 6356031
+Projected CRS: WGS 84 / UTM zone 19S</code></pre>
+</div>
+</div>
+<p>Sii</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sii <span class="ot">&lt;-</span>  <span class="fu">st_read</span>(<span class="st">"data/sii/urbes.shp"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n_com <span class="sc">==</span> mi_comuna) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_crs</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">32719</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `urbes' from data source 
+  `/Users/denisberroeta/Documents/Docencia/Goblab/geoanalisis_book/data/sii/urbes.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 210662 features and 11 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -75.72058 ymin: -54.48149 xmax: -68.02319 ymax: -17.98338
+Geodetic CRS:  GCS_unknown</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sii_com <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(sii, mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                             dplyr<span class="sc">::</span><span class="fu">select</span>(CODINE017)) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CODINE017,oficinas<span class="sc">:</span> atractor) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CODINE017 =</span> <span class="fu">as.character</span>(CODINE017)) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># mapview(sii, zcol ="atractor", cex=2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>delitos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>idel_violentos_LC <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/delitos/idel_violentos_LC.rds"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CODINE017, idelv) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CODINE017 =</span> <span class="fu">as.character</span>(CODINE017)) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Consolidación</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mz_estudio <span class="ot">&lt;-</span>  mz_comuna <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CODINE017 =</span> <span class="fu">as.character</span>(CODINE017)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(soc,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"CODINE017"</span> <span class="ot">=</span> <span class="st">"ID_MANZ"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sii_com,<span class="at">by =</span> <span class="st">"CODINE017"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(idel_violentos_LC,<span class="at">by =</span> <span class="st">"CODINE017"</span>) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(CODINE017, <span class="at">.keep_all =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Selección de variables</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mz_estudio <span class="ot">&lt;-</span> mz_estudio<span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(CODINE017, POBLACION, IEJ,IEM,IPJ, IRH, IVI, ISV,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                vivienda, atractor,idelv) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">densidad_hec =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(POBLACION<span class="sc">/</span>(<span class="fu">st_area</span>(.)<span class="sc">/</span><span class="dv">10000</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="matriz-de-vecidad" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="matriz-de-vecidad">Matriz de Vecidad</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ptos_comuna <span class="ot">&lt;-</span> mz_estudio<span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Calcular Vecinos Cercanos</strong> (<span class="math inline">k</span>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vecinos mas cercanos (neighbours)</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="co"># numero de vecinos a buscar</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>nb_mzs <span class="ot">&lt;-</span> <span class="fu">knearneigh</span>(ptos_comuna, <span class="at">k =</span> k) <span class="sc">%&gt;%</span>  <span class="co"># por punto calcula K vecinos</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">knn2nb</span>() <span class="co"># Knn a matriz de vecindad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_mzs)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>mz_estudio<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mz_estudio)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Llamamos a la función para calcular los pesos de población</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">calcular_pesos_poblacion</span>(mz_estudio, nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transformaciones" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="transformaciones">Transformaciones</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"idelv"</span>, <span class="st">"IEJ"</span>,<span class="st">"IEM"</span>,<span class="st">"IPJ"</span>, <span class="st">"IRH"</span>, <span class="st">"IVI"</span>, <span class="st">"ISV"</span>,</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"vivienda"</span>, <span class="st">"atractor"</span>,<span class="st">"densidad_hec"</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ciclo para graficos agrupados</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> colnames) {</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(mz_estudio <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="sc">!!</span>v), <span class="at">breaks=</span><span class="dv">100</span>, <span class="at">main=</span>v, <span class="at">probability=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mz_estudio <span class="ot">&lt;-</span> mz_estudio <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">rc_idelv =</span> idelv<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_IEJ =</span> IEJ <span class="sc">**</span><span class="dv">3</span>,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_IEM =</span> IEM <span class="sc">**</span><span class="dv">3</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_IPJ =</span> IPJ <span class="sc">**</span><span class="dv">3</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">c_IRH =</span> IRH <span class="sc">**</span><span class="dv">3</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_vivienda=</span> <span class="fu">log</span>(<span class="fu">ifelse</span>(vivienda<span class="sc">==</span><span class="dv">0</span>, <span class="fl">0.001</span>, vivienda)),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">l_atractor=</span> <span class="fu">log</span>(<span class="fu">ifelse</span>(atractor<span class="sc">==</span><span class="dv">0</span>, <span class="fl">0.001</span>, atractor)),</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">densidad_hec=</span> <span class="fu">log</span>(<span class="fu">ifelse</span>(densidad_hec<span class="sc">==</span><span class="dv">0</span>, <span class="fl">0.001</span>, densidad_hec))</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rc_idelv"</span>,<span class="st">"c_IEJ"</span>,<span class="st">"c_IEM"</span>,<span class="st">"c_IPJ"</span>,<span class="st">"c_IRH"</span>, </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">"l_vivienda"</span>, <span class="st">"l_atractor"</span>, <span class="st">"densidad_hec"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ciclo para graficos agrupados</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> colnames) {</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(mz_estudio <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">pull</span>(<span class="sc">!!</span>v), <span class="at">breaks=</span><span class="dv">100</span>, <span class="at">main=</span>v, <span class="at">probability=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regresion_espacial_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Modelo OLS</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mod_idelv <span class="ot">=</span> <span class="fu">lm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>               IVI<span class="sc">+</span> ISV<span class="sc">+</span>l_vivienda<span class="sc">+</span>l_atractor<span class="sc">+</span>densidad_hec, </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mz_estudio)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_idelv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + IVI + 
+    ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.29030 -0.39193  0.02738  0.41042  2.35025 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   6.048e+00  2.524e+00   2.396  0.01672 *  
+c_IEJ        -4.124e-04  1.778e-05 -23.190  &lt; 2e-16 ***
+c_IEM        -1.892e-01  2.057e-01  -0.920  0.35784    
+c_IPJ        -6.003e-02  1.121e-01  -0.536  0.59225    
+c_IRH         7.057e-01  1.177e-01   5.994  2.6e-09 ***
+IVI          -6.562e-01  1.421e+00  -0.462  0.64435    
+ISV          -2.651e+00  2.264e+00  -1.171  0.24175    
+l_vivienda   -1.233e-02  4.518e-03  -2.729  0.00642 ** 
+l_atractor    3.219e-02  2.479e-03  12.983  &lt; 2e-16 ***
+densidad_hec  4.718e-01  2.351e-02  20.071  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6144 on 1390 degrees of freedom
+Multiple R-squared:  0.5811,    Adjusted R-squared:  0.5784 
+F-statistic: 214.2 on 9 and 1390 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Resultados de los Coeficientes</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Estimación</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Error.Estándar</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Valor.t</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-valor</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(Intercepto)</td>
+<td style="text-align: center;">19.334</td>
+<td style="text-align: center;">2.603</td>
+<td style="text-align: center;">7.427</td>
+<td style="text-align: center;">0.000000000000193</td>
+<td style="text-align: center;">Significativo, representa el valor base de rc_idelv cuando todas las variables independientes son cero.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IEJ</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">-22.768</td>
+<td style="text-align: center;">&lt; 0.0000000000000002</td>
+<td style="text-align: center;">Muy significativo, un aumento en c_IEJ se asocia con una ligera disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IEM</td>
+<td style="text-align: center;">-0.470</td>
+<td style="text-align: center;">0.222</td>
+<td style="text-align: center;">-2.113</td>
+<td style="text-align: center;">0.0348</td>
+<td style="text-align: center;">Significativo, un aumento en c_IEM se asocia con una disminución en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IPJ</td>
+<td style="text-align: center;">-0.243</td>
+<td style="text-align: center;">0.121</td>
+<td style="text-align: center;">-2.011</td>
+<td style="text-align: center;">0.0446</td>
+<td style="text-align: center;">Significativo, un aumento en c_IPJ se asocia con una disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IRH</td>
+<td style="text-align: center;">0.593</td>
+<td style="text-align: center;">0.128</td>
+<td style="text-align: center;">4.647</td>
+<td style="text-align: center;">0.0000037</td>
+<td style="text-align: center;">Muy significativo, un aumento en c_IRH se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IVI</td>
+<td style="text-align: center;">0.554</td>
+<td style="text-align: center;">1.545</td>
+<td style="text-align: center;">0.359</td>
+<td style="text-align: center;">0.7198</td>
+<td style="text-align: center;">No significativa, no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ISV</td>
+<td style="text-align: center;">-15.415</td>
+<td style="text-align: center;">2.300</td>
+<td style="text-align: center;">-6.701</td>
+<td style="text-align: center;">0.000000000030026</td>
+<td style="text-align: center;">Muy significativo, un aumento en ISV se asocia con una fuerte disminución en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_vivienda</td>
+<td style="text-align: center;">-0.004</td>
+<td style="text-align: center;">0.005</td>
+<td style="text-align: center;">-0.879</td>
+<td style="text-align: center;">0.3796</td>
+<td style="text-align: center;">No significativa, no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_atractor</td>
+<td style="text-align: center;">0.031</td>
+<td style="text-align: center;">0.003</td>
+<td style="text-align: center;">11.580</td>
+<td style="text-align: center;">&lt; 0.0000000000000002</td>
+<td style="text-align: center;">Muy significativo, un aumento en l_atractor se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">densidad_hec</td>
+<td style="text-align: center;">0.586</td>
+<td style="text-align: center;">0.050</td>
+<td style="text-align: center;">11.630</td>
+<td style="text-align: center;">&lt; 0.0000000000000002</td>
+<td style="text-align: center;">Muy significativo, un aumento en densidad_hec se asocia con un aumento en rc_idelv.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<p><strong>Interpretación de resaultados</strong></p>
+<dl>
+<dt>Variables significativamente predictoras (p &lt; 0.05):</dt>
+<dd>
+<p><code>c_IEJ</code>, <code>c_IEM</code>, <code>c_IPJ</code>, <code>c_IRH</code>, <code>ISV</code>, <code>l_atractor</code>, y densidad_hec son significativas y contribuyen de manera importante al modelo.</p>
+</dd>
+<dt>Variables no significativas (p &gt; 0.05):</dt>
+<dd>
+<p><code>IVI</code> y <code>l_vivienda</code> no son significativas, lo que sugiere que no tienen un impacto claro en la variable dependiente rc_idelv.</p>
+</dd>
+<dt>Interpretación de Coeficientes:</dt>
+<dd>
+<p>Los coeficientes significativos indican el cambio en rc_idelv asociado con un cambio de una unidad en la variable predictora, manteniendo constantes las demás variables.</p>
+</dd>
+<dt>Signos de los coeficientes:</dt>
+<dd>
+<p>Coeficientes positivos (e.g., <code>c_IRH</code>, <code>l_atractor</code>, <code>densidad_hec</code>) indican que a medida que estas variables aumentan, también lo hace <code>rc_idelv.</code> Coeficientes negativos (e.g., <code>c_IEJ</code>, <code>c_IEM</code>, <code>c_IPJ</code>, <code>ISV</code>) sugieren que un aumento en estas variables se asocia con una disminución en <code>rc_idelv.</code></p>
+</dd>
+</dl>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>residuals_idelv <span class="ot">&lt;-</span><span class="fu">residuals</span>(mod_idelv)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(residuals_idelv, <span class="at">listw =</span> spdep<span class="sc">::</span><span class="fu">nb2listw</span>(nb_mzs),  <span class="at">randomisation =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Presencia de autocorrelación espacial en los residuos: Dado que el valor de Moran I es alto y positivo (<code>0.6275</code>) y el p-value es menor que cualquier umbral de significancia común (<code>p &lt; 0.05</code>), se concluye que los residuos del modelo OLS presentan autocorrelación espacial significativa. Esto sugiere que el modelo OLS no ha capturado adecuadamente la estructura espacial de los datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(mz_estudio<span class="sc">$</span>rc_idelv,<span class="at">listw=</span>nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  mz_estudio$rc_idelv  
+weights: nb    
+
+Moran I statistic standard deviate = 62.385, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.9391514754     -0.0007147963      0.0002269724 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="error-espacial" class="level3" data-number="8.4.11">
+<h3 data-number="8.4.11" class="anchored" data-anchor-id="error-espacial"><span class="header-section-number">8.4.11</span> Error espacial</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SDEM Spatial Durbin Error Model</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>fit.errdurb_del<span class="ot">=</span><span class="fu">errorsarlm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>               IVI<span class="sc">+</span> ISV<span class="sc">+</span>l_vivienda<span class="sc">+</span>l_atractor<span class="sc">+</span>densidad_hec, </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mz_estudio,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">listw=</span>spdep<span class="sc">::</span><span class="fu">nb2listw</span>(nb_mzs),</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">etype=</span><span class="st">"error"</span>,<span class="at">method=</span><span class="st">"eigen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<p>Modelo ajustado: Se ha utilizado un modelo de error espacial Durbin para capturar tanto la autocorrelación espacial en los errores como las interacciones espaciales de las variables independientes.</p>
+<p>Ecuación del modelo:</p>
+<p><span class="math display">rc\_idelv = \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \beta_3 \times c\_IPJ + \ldots + u</span></p>
+<p>donde <span class="math inline">u</span> es el término de error que sigue un proceso de autocorrelación espacial con el parámetro <span class="math inline">\lambda</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Estimación</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Error.Estándar</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Valor.z</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-valor</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(Intercepto)</td>
+<td style="text-align: center;">3.020</td>
+<td style="text-align: center;">0.822</td>
+<td style="text-align: center;">3.673</td>
+<td style="text-align: center;">0.0002399</td>
+<td style="text-align: center;">El valor base de rc_idelv es 3.0199 cuando todas las demás variables son cero.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IEJ</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">-2.643</td>
+<td style="text-align: center;">0.0082</td>
+<td style="text-align: center;">Significativo, un aumento en c_IEJ se asocia con una ligera disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IEM</td>
+<td style="text-align: center;">-0.002</td>
+<td style="text-align: center;">0.058</td>
+<td style="text-align: center;">-0.031</td>
+<td style="text-align: center;">0.9753</td>
+<td style="text-align: center;">No significativa, c_IEM no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IPJ</td>
+<td style="text-align: center;">-0.010</td>
+<td style="text-align: center;">0.032</td>
+<td style="text-align: center;">-0.296</td>
+<td style="text-align: center;">0.7673</td>
+<td style="text-align: center;">No significativa, c_IPJ no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IRH</td>
+<td style="text-align: center;">0.010</td>
+<td style="text-align: center;">0.035</td>
+<td style="text-align: center;">0.276</td>
+<td style="text-align: center;">0.7829</td>
+<td style="text-align: center;">No significativa, c_IRH no muestra un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IVI</td>
+<td style="text-align: center;">0.138</td>
+<td style="text-align: center;">0.417</td>
+<td style="text-align: center;">0.330</td>
+<td style="text-align: center;">0.7413</td>
+<td style="text-align: center;">No significativa, IVI no muestra un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ISV</td>
+<td style="text-align: center;">-0.727</td>
+<td style="text-align: center;">0.695</td>
+<td style="text-align: center;">-1.046</td>
+<td style="text-align: center;">0.2958</td>
+<td style="text-align: center;">No significativa, ISV no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_vivienda</td>
+<td style="text-align: center;">-0.003</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">-2.284</td>
+<td style="text-align: center;">0.0224</td>
+<td style="text-align: center;">Significativa, un aumento en l_vivienda se asocia con una ligera disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_atractor</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">4.948</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en l_atractor se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">densidad_hec</td>
+<td style="text-align: center;">0.063</td>
+<td style="text-align: center;">0.008</td>
+<td style="text-align: center;">7.493</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en densidad_hec se asocia con un aumento en rc_idelv.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<dl>
+<dt><code>Lambda: 0.98379</code></dt>
+<dd>
+<p>Interpretación: El valor de <span class="math inline">\lambda</span> cercano a 1 indica una fuerte autocorrelación espacial en los errores del modelo, lo que justifica el uso de un modelo de error espacial.</p>
+</dd>
+</dl>
+<p>Resumen:</p>
+<ul>
+<li>Variables Significativas: Las variables <code>c_IEJ</code>, <code>l_vivienda</code>, <code>l_atractor</code>, y densidad_hec tienen un impacto significativo en <code>rc_idelv.</code></li>
+<li>Autocorrelación Espacial: El parámetro <span class="math inline">\lambda</span> y las pruebas de significancia confirman la presencia de autocorrelación espacial, justificando el uso del modelo espacial.</li>
+<li>Modelo Robusto: El alto valor de pseudo-R² y el bajo AIC sugieren que el modelo SDEM ofrece un ajuste superior y captura adecuadamente la dependencia espacial.</li>
+</ul>
+<p>El modelo SDEM es adecuado para capturar tanto la dependencia espacial en los errores como las influencias espaciales de las variables independientes, proporcionando un análisis más robusto y preciso para la explicar de delitos violentos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.errdurb_del, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:errorsarlm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + 
+    IVI + ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio, 
+    listw = spdep::nb2listw(nb_mzs), etype = "error", method = "eigen")
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-2.091196 -0.076581  0.013512  0.094119  0.780073 
+
+Type: error 
+Coefficients: (asymptotic standard errors) 
+                Estimate  Std. Error z value  Pr(&gt;|z|)
+(Intercept)   3.0199e+00  8.2223e-01  3.6729 0.0002399
+c_IEJ        -2.2135e-05  8.3740e-06 -2.6433 0.0082103
+c_IEM        -1.8031e-03  5.8272e-02 -0.0309 0.9753159
+c_IPJ        -9.4856e-03  3.2060e-02 -0.2959 0.7673329
+c_IRH         9.5417e-03  3.4635e-02  0.2755 0.7829369
+IVI           1.3756e-01  4.1672e-01  0.3301 0.7413153
+ISV          -7.2707e-01  6.9537e-01 -1.0456 0.2957544
+l_vivienda   -2.9810e-03  1.3054e-03 -2.2836 0.0223934
+l_atractor    4.4685e-03  9.0312e-04  4.9478 7.505e-07
+densidad_hec  6.3043e-02  8.4138e-03  7.4928 6.750e-14
+
+Lambda: 0.98379, LR test value: 3066.1, p-value: &lt; 2.22e-16
+Asymptotic standard error: 0.0032122
+    z-value: 306.27, p-value: &lt; 2.22e-16
+Wald statistic: 93801, p-value: &lt; 2.22e-16
+
+Log likelihood: 233.4893 for error model
+ML residual variance (sigma squared): 0.03258, (sigma: 0.1805)
+Nagelkerke pseudo-R-squared: 0.95312 
+Number of observations: 1400 
+Number of parameters estimated: 12 
+AIC: -442.98, (AIC for lm: 2621.1)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test Moran residuos</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>res.err<span class="ot">=</span>fit.errdurb_del<span class="sc">$</span>residuals</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(res.err,nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  res.err  
+weights: nb    
+
+Moran I statistic standard deviate = 15.222, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.2271133371     -0.0007147963      0.0002240170 </code></pre>
+</div>
+</div>
+<dl>
+<dt>Presencia de autocorrelación espacial</dt>
+<dd>
+<p>A pesar de que el modelo SDEM ha mejorado el ajuste y ha capturado parte de la dependencia espacial, los residuos todavía muestran autocorrelación espacial significativa. Esto indica que aún queda estructura espacial en los datos que no ha sido completamente modelada.</p>
+</dd>
+<dt>Implicaciones</dt>
+<dd>
+<p>La persistencia de la autocorrelación espacial en los residuos sugiere que, aunque el modelo SDEM es una mejora con respecto al OLS, puede que no haya capturado toda la complejidad de la dependencia espacial en los datos.</p>
+</dd>
+</dl>
+<p>Próximos Pasos</p>
+<ol type="1">
+<li>Revisar la matriz de ponderación espacial: Podría ser útil probar diferentes configuraciones de la matriz de vecindad (por ejemplo, incluir más vecinos o cambiar la distancia) para ver si se captura mejor la estructura espacial.</li>
+<li>Probar otros modelos espaciales: Modelos como el Spatial Lag Model (SAR) o modelos mixtos que combinen efectos de rezago y error podrían proporcionar un mejor ajuste.</li>
+<li>Incluir más variables explicativas: Puede ser que variables omitidas importantes estén influyendo en los residuos y creando autocorrelación espacial.</li>
+<li>Incluir más variables explicativas: Puede ser que variables omitidas importantes estén influyendo en los residuos y creando autocorrelación espacial.</li>
+</ol>
+</section>
+<section id="lag-espacial" class="level3" data-number="8.4.12">
+<h3 data-number="8.4.12" class="anchored" data-anchor-id="lag-espacial"><span class="header-section-number">8.4.12</span> Lag espacial</h3>
+<p>Modelo ajustado: Este es un modelo de regresión con rezago espacial (lag), que incluye tanto los efectos de las variables explicativas como la influencia espacial de la variable dependiente.</p>
+<p>Ecuación del modelo:</p>
+<p><span class="math display">rc\_idelv = \rho W(rc\_idelv) + \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \beta_3 \times c\_IPJ + \ldots + \epsilon</span></p>
+<p>donde <span class="math inline">\rho</span> es el coeficiente de lag espacial y <span class="math inline">W(rc\_idelv)</span> representa los valores rezagados espacialmente de la variable dependiente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SDM Spatial Durbin Lag Model</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>fit.durb<span class="ot">=</span><span class="fu">lagsarlm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>               IVI<span class="sc">+</span> ISV<span class="sc">+</span>l_vivienda<span class="sc">+</span>l_atractor<span class="sc">+</span>densidad_hec, </span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mz_estudio,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">listw=</span>spdep<span class="sc">::</span><span class="fu">nb2listw</span>(nb_mzs),</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">type=</span><span class="st">"lag"</span>,<span class="at">method=</span><span class="st">"eigen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.durb, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:lagsarlm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + 
+    IVI + ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio, 
+    listw = spdep::nb2listw(nb_mzs), type = "lag", method = "eigen")
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-2.115647 -0.079678  0.014756  0.091165  0.781566 
+
+Type: lag 
+Coefficients: (asymptotic standard errors) 
+                Estimate  Std. Error z value  Pr(&gt;|z|)
+(Intercept)  -8.4457e-01  7.3677e-01 -1.1463 0.2516614
+c_IEJ        -2.0973e-05  5.5517e-06 -3.7777 0.0001583
+c_IEM        -5.0629e-02  5.9916e-02 -0.8450 0.3981132
+c_IPJ        -8.0253e-03  3.2630e-02 -0.2460 0.8057191
+c_IRH         1.1099e-02  3.4490e-02  0.3218 0.7476151
+IVI           8.1293e-01  4.1409e-01  1.9632 0.0496276
+ISV           2.9736e-02  6.5950e-01  0.0451 0.9640363
+l_vivienda   -3.8165e-03  1.3175e-03 -2.8967 0.0037711
+l_atractor    5.6371e-03  7.4572e-04  7.5592 4.063e-14
+densidad_hec  7.3144e-02  7.2004e-03 10.1583 &lt; 2.2e-16
+
+Rho: 0.94859, LR test value: 3158.1, p-value: &lt; 2.22e-16
+Asymptotic standard error: 0.0057153
+    z-value: 165.97, p-value: &lt; 2.22e-16
+Wald statistic: 27547, p-value: &lt; 2.22e-16
+
+Log likelihood: 279.5202 for lag model
+ML residual variance (sigma squared): 0.032001, (sigma: 0.17889)
+Nagelkerke pseudo-R-squared: 0.9561 
+Number of observations: 1400 
+Number of parameters estimated: 12 
+AIC: -535.04, (AIC for lm: 2621.1)
+LM test for residual autocorrelation
+test value: 394.9, p-value: &lt; 2.22e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Estimación</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Error.Estándar</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Valor.z</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-valor</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(Intercepto)</td>
+<td style="text-align: center;">-0.845</td>
+<td style="text-align: center;">0.737</td>
+<td style="text-align: center;">-1.146</td>
+<td style="text-align: center;">0.2517</td>
+<td style="text-align: center;">No significativa, el intercepto no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IEJ</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">-3.778</td>
+<td style="text-align: center;">0.0002</td>
+<td style="text-align: center;">Significativo, un aumento en c_IEJ se asocia con una disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IEM</td>
+<td style="text-align: center;">-0.051</td>
+<td style="text-align: center;">0.060</td>
+<td style="text-align: center;">-0.845</td>
+<td style="text-align: center;">0.3981</td>
+<td style="text-align: center;">No significativa, c_IEM no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IPJ</td>
+<td style="text-align: center;">-0.008</td>
+<td style="text-align: center;">0.033</td>
+<td style="text-align: center;">-0.246</td>
+<td style="text-align: center;">0.8057</td>
+<td style="text-align: center;">No significativa, c_IPJ no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IRH</td>
+<td style="text-align: center;">0.011</td>
+<td style="text-align: center;">0.034</td>
+<td style="text-align: center;">0.322</td>
+<td style="text-align: center;">0.7476</td>
+<td style="text-align: center;">No significativa, c_IRH no muestra un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IVI</td>
+<td style="text-align: center;">0.813</td>
+<td style="text-align: center;">0.414</td>
+<td style="text-align: center;">1.963</td>
+<td style="text-align: center;">0.0496</td>
+<td style="text-align: center;">Marginalmente significativa, un aumento en IVI se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ISV</td>
+<td style="text-align: center;">0.030</td>
+<td style="text-align: center;">0.659</td>
+<td style="text-align: center;">0.045</td>
+<td style="text-align: center;">0.9640</td>
+<td style="text-align: center;">No significativa, ISV no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_vivienda</td>
+<td style="text-align: center;">-0.004</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">-2.897</td>
+<td style="text-align: center;">0.0038</td>
+<td style="text-align: center;">Significativa, un aumento en l_vivienda se asocia con una ligera disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_atractor</td>
+<td style="text-align: center;">0.006</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">7.559</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en l_atractor se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">densidad_hec</td>
+<td style="text-align: center;">0.073</td>
+<td style="text-align: center;">0.007</td>
+<td style="text-align: center;">10.158</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en densidad_hec se asocia con un aumento en rc_idelv.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<dl>
+<dt><code>Rho: 0.94859</code></dt>
+<dd>
+<p>Interpretación: Un valor de cercano a 1 indica una fuerte dependencia espacial en la variable dependiente. Esto confirma que los valores de <code>rc_idelv</code> en una región están altamente influenciados por los valores en las regiones vecinas.</p>
+</dd>
+</dl>
+<p><strong>Pruebas de Significancia y Estadísticas del Modelo</strong></p>
+<dl>
+<dt><code>LR Test Value</code>: 3158.1, p-value &lt; 0.0001</dt>
+<dd>
+<p>Interpretación: La prueba de razón de verosimilitud indica que el modelo espacial es significativamente mejor que un modelo OLS.</p>
+</dd>
+<dt><code>Wald Statistic</code>: 27547, p-value &lt; 0.0001</dt>
+<dd>
+<p>Interpretación: La prueba de Wald confirma la significancia de <span class="math inline">\rho</span> y, por lo tanto, la relevancia de la dependencia espacial.</p>
+</dd>
+</dl>
+<p><code>Log Likelihood</code>: 279.5202 :Interpretación: Un valor de log-verosimilitud más alto sugiere un buen ajuste del modelo.</p>
+<dl>
+<dt><code>Nagelkerke pseudo-R-squared</code>: 0.9561</dt>
+<dd>
+<p>Interpretación: Indica que el modelo explica aproximadamente el 95.61% de la variabilidad en rc_idelv, lo cual es excelente.</p>
+</dd>
+<dt><code>AIC</code>: -535.04 (comparado con 2621.1 del modelo OLS)</dt>
+<dd>
+<p>Interpretación: Un AIC significativamente más bajo indica que el modelo SDM es preferible al modelo OLS.</p>
+</dd>
+</dl>
+<p><strong>Conclusión</strong></p>
+<ul>
+<li>Variables significativas: Las variables <code>c_IEJ</code>, <code>l_vivienda</code>, <code>l_atractor</code>, y <code>densidad_hec</code> tienen un impacto significativo en la predicción de rc_idelv.</li>
+<li>Autocorrelación espacial: El valor alto de y la significancia del modelo confirman que la dependencia espacial es un componente crítico en la estructura de los datos.</li>
+<li>Modelo robusto: El alto pseudo-R² y el bajo AIC sugieren que el modelo SDM es robusto y captura adecuadamente la influencia espacial en los datos.</li>
+</ul>
+<p>El modelo SDM proporciona un análisis más detallado al incluir tanto el efecto de las variables independientes como el rezago espacial de la variable dependiente. Esto lo convierte en una herramienta poderosa para entender y predecir la distribución espacial de los delitos violentos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test Moran residuos</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>res.lag<span class="ot">=</span>fit.durb<span class="sc">$</span>residuals</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(res.lag,nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  res.lag  
+weights: nb    
+
+Moran I statistic standard deviate = 14.772, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.2202237290     -0.0007147963      0.0002237133 </code></pre>
+</div>
+</div>
+<p>Los resultados de la prueba de Moran I aplicada a los residuos del modelo Spatial Durbin Lag Model (SDM) indican que todavía hay autocorrelación espacial significativa en los residuos. Aquí tienes la interpretación:</p>
+<p>Resultados de la Prueba de Moran I en los Residuos del Modelo SDM</p>
+<dl>
+<dt><code>Moran I statistic</code>: 0.2202</dt>
+<dd>
+<p>Interpretación: Un valor de Moran I positivo de 0.2202 indica que hay autocorrelación espacial positiva en los residuos del modelo. Aunque menor que en el modelo OLS, sigue siendo significativa.</p>
+</dd>
+<dt><code>p-value</code>: &lt; 0.00000000000000022</dt>
+<dd>
+<p>Interpretación: Un p-value extremadamente bajo indica que hay evidencia estadísticamente significativa para rechazar la hipótesis nula de ausencia de autocorrelación espacial. Esto confirma que la autocorrelación espacial en los residuos es significativa.</p>
+</dd>
+</dl>
+<p><strong>Conclusión</strong></p>
+<p>La presencia de autocorrelación espacial en los residuos indica que el modelo, aunque mejor que el OLS, no ha logrado capturar completamente toda la estructura espacial. Esto puede sugerir que hay características espaciales adicionales o interacciones no modeladas que contribuyen a la autocorrelación.</p>
+<p><strong>Posibles ajustes:</strong></p>
+<ul>
+<li>Revisar la matriz de vecindad: Modificar la matriz de ponderación espacial (por ejemplo, aumentar el número de vecinos o cambiar el criterio de distancia) podría ayudar a capturar mejor la estructura espacial.</li>
+<li><strong>Modelos más complejos: Considerar modelos espaciales mixtos o modelos que combinen efectos de error y rezago podría mejorar el ajuste.</strong></li>
+<li>Incluir variables adicionales: Podría haber variables omisas que capturen parte de la variabilidad espacial no explicada.</li>
+</ul>
+</section>
+<section id="error-y-lag-espacial" class="level3" data-number="8.4.13">
+<h3 data-number="8.4.13" class="anchored" data-anchor-id="error-y-lag-espacial"><span class="header-section-number">8.4.13</span> Error y Lag espacial</h3>
+<p>Modelo ajustado: El modelo SAC es una combinación de un modelo de rezago espacial (SAR) y un modelo de error espacial (SEM), lo que permite capturar tanto la dependencia espacial en la variable dependiente como la autocorrelación espacial en los errores.</p>
+<p>Ecuación del modelo:</p>
+<p><span class="math inline">rc\_idelv = \rho W(rc\_idelv) + \beta_0 + \beta_1 \times c\_IEJ + \beta_2 \times c\_IEM + \ldots + \epsilon</span></p>
+<p>donde <span class="math inline">\epsilon</span> sigue un proceso de autocorrelación espacial con el parámetro <span class="math inline">\lambda</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="do">## SAC Spatial Autocorrelation Model</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>fit.sac<span class="ot">=</span><span class="fu">sacsarlm</span>(rc_idelv <span class="sc">~</span> c_IEJ <span class="sc">+</span> c_IEM <span class="sc">+</span> c_IPJ <span class="sc">+</span> c_IRH<span class="sc">+</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>               IVI<span class="sc">+</span> ISV<span class="sc">+</span>l_vivienda<span class="sc">+</span>l_atractor<span class="sc">+</span>densidad_hec, </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mz_estudio,</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">listw=</span>spdep<span class="sc">::</span><span class="fu">nb2listw</span>(nb_mzs),</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">type=</span><span class="st">"sac"</span>,<span class="at">method=</span><span class="st">"eigen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.sac, <span class="at">Nagelkerke=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:sacsarlm(formula = rc_idelv ~ c_IEJ + c_IEM + c_IPJ + c_IRH + 
+    IVI + ISV + l_vivienda + l_atractor + densidad_hec, data = mz_estudio, 
+    listw = spdep::nb2listw(nb_mzs), type = "sac", method = "eigen")
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-2.043099 -0.060682  0.011753  0.082708  0.710074 
+
+Type: sac 
+Coefficients: (asymptotic standard errors) 
+                Estimate  Std. Error z value  Pr(&gt;|z|)
+(Intercept)   3.9902e-01  7.1714e-01  0.5564   0.57794
+c_IEJ        -2.1712e-05  7.2012e-06 -3.0150   0.00257
+c_IEM        -9.8963e-03  5.1903e-02 -0.1907   0.84878
+c_IPJ        -1.4253e-02  2.8550e-02 -0.4992   0.61761
+c_IRH         1.8878e-02  3.0755e-02  0.6138   0.53933
+IVI           1.6905e-01  3.6976e-01  0.4572   0.64754
+ISV          -2.9932e-01  6.1299e-01 -0.4883   0.62533
+l_vivienda   -2.8556e-03  1.1606e-03 -2.4605   0.01388
+l_atractor    4.0783e-03  7.8870e-04  5.1709 2.329e-07
+densidad_hec  5.9578e-02  7.3603e-03  8.0945 6.661e-16
+
+Rho: 0.86465
+Asymptotic standard error: 0.053203
+    z-value: 16.252, p-value: &lt; 2.22e-16
+Lambda: 0.79199
+Asymptotic standard error: 0.07445
+    z-value: 10.638, p-value: &lt; 2.22e-16
+
+LR test value: 3446.1, p-value: &lt; 2.22e-16
+
+Log likelihood: 423.5215 for sac model
+ML residual variance (sigma squared): 0.024916, (sigma: 0.15785)
+Nagelkerke pseudo-R-squared: 0.96426 
+Number of observations: 1400 
+Number of parameters estimated: 13 
+AIC: -821.04, (AIC for lm: 2621.1)</code></pre>
+</div>
+</div>
+<p><strong>Resultados de los Coeficientes</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Estimación</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Error.Estándar</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Valor.z</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-valor</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(Intercepto)</td>
+<td style="text-align: center;">1.585</td>
+<td style="text-align: center;">0.721</td>
+<td style="text-align: center;">2.199</td>
+<td style="text-align: center;">0.0279</td>
+<td style="text-align: center;">Significativa, indica el valor base de rc_idelv cuando todas las variables explicativas son cero.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IEJ</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">0.000</td>
+<td style="text-align: center;">-2.790</td>
+<td style="text-align: center;">0.0053</td>
+<td style="text-align: center;">Significativa, un aumento en c_IEJ se asocia con una disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IEM</td>
+<td style="text-align: center;">-0.026</td>
+<td style="text-align: center;">0.052</td>
+<td style="text-align: center;">-0.505</td>
+<td style="text-align: center;">0.6134</td>
+<td style="text-align: center;">No significativa, c_IEM no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">c_IPJ</td>
+<td style="text-align: center;">-0.036</td>
+<td style="text-align: center;">0.028</td>
+<td style="text-align: center;">-1.266</td>
+<td style="text-align: center;">0.2055</td>
+<td style="text-align: center;">No significativa, c_IPJ no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">c_IRH</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">0.031</td>
+<td style="text-align: center;">0.145</td>
+<td style="text-align: center;">0.8847</td>
+<td style="text-align: center;">No significativa, c_IRH no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IVI</td>
+<td style="text-align: center;">0.124</td>
+<td style="text-align: center;">0.371</td>
+<td style="text-align: center;">0.334</td>
+<td style="text-align: center;">0.7385</td>
+<td style="text-align: center;">No significativa, IVI no tiene un impacto claro en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ISV</td>
+<td style="text-align: center;">-1.274</td>
+<td style="text-align: center;">0.587</td>
+<td style="text-align: center;">-2.171</td>
+<td style="text-align: center;">0.0299</td>
+<td style="text-align: center;">Significativa, un aumento en ISV se asocia con una disminución en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">l_vivienda</td>
+<td style="text-align: center;">-0.002</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">-1.953</td>
+<td style="text-align: center;">0.0509</td>
+<td style="text-align: center;">Marginalmente significativa, un aumento en l_vivienda se asocia con una ligera disminución en rc_idelv.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">l_atractor</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">0.001</td>
+<td style="text-align: center;">4.513</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en l_atractor se asocia con un aumento en rc_idelv.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">densidad_hec</td>
+<td style="text-align: center;">0.090</td>
+<td style="text-align: center;">0.012</td>
+<td style="text-align: center;">7.288</td>
+<td style="text-align: center;">&lt; 0.0001</td>
+<td style="text-align: center;">Muy significativa, un aumento en densidad_hec se asocia con un aumento en rc_idelv.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+<p><strong>Parámetros Espaciales</strong></p>
+<dl>
+<dt>Rho (<span class="math inline">\rho</span>): 0.8624</dt>
+<dd>
+<p>Interpretación: El valor de cercano a 1 indica una fuerte dependencia espacial en la variable dependiente, sugiriendo que rc_idelv en una región está fuertemente influenciada por los valores en las regiones vecinas.</p>
+</dd>
+<dt>Lambda (<span class="math inline">\lambda</span>): 0.8105</dt>
+<dd>
+<p>Interpretación: El valor de también cercano a 1 sugiere una significativa autocorrelación espacial en los errores, lo que respalda la elección de un modelo SAC.</p>
+</dd>
+</dl>
+<p><strong>Conclusión</strong></p>
+<ul>
+<li>Variables significativas: Las variables <code>c_IEJ</code>, <code>ISV</code>, <code>l_vivienda</code>, <code>l_atractor</code>, y <code>densidad_hec</code> son significativas y contribuyen al modelo.</li>
+<li>Dependencia espacial: Los parámetros <span class="math inline">\rho</span> y <span class="math inline">\lambda</span> indican que tanto la dependencia espacial de la variable dependiente como la autocorrelación en los errores son significativas y necesarias para modelar adecuadamente los datos.</li>
+<li>Modelo robusto: El alto valor de pseudo-R² y el AIC bajo sugieren que el modelo SAC proporciona un ajuste muy robusto y captura adecuadamente la estructura espacial de los datos.</li>
+</ul>
+<p>El modelo SAC es adecuado cuando se necesita capturar tanto la autocorrelación espacial en los residuos como la influencia espacial de la variable dependiente. Este modelo proporciona un ajuste superior para análisis de datos geoespaciales complejos como la distribución de delitos violentos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Test Moran residuos</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>res.sac<span class="ot">=</span>fit.sac<span class="sc">$</span>residuals</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(res.sac,nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
+
+data:  res.sac  
+weights: nb    
+
+Moran I statistic standard deviate = 5.1903, p-value = 1.05e-07
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.0767180984     -0.0007147963      0.0002225737 </code></pre>
+</div>
+</div>
+<p>Los resultados de la prueba de Moran I aplicada a los residuos del modelo SAC (Spatial Autoregressive Combined Model) muestran que todavía hay autocorrelación espacial significativa en los residuos, aunque menor que en los modelos anteriores. Aquí tienes la interpretación detallada:</p>
+<dl>
+<dt><code>Moran I statistic</code>: 0.0856</dt>
+<dd>
+<p>Interpretación: Un valor de Moran I de 0.0856 indica que todavía hay una leve autocorrelación espacial positiva en los residuos. Este valor es menor que en modelos anteriores, lo que sugiere una mejora, pero no elimina por completo la dependencia espacial.</p>
+</dd>
+<dt><code>p-value</code>: 0.000000003402</dt>
+<dd>
+<p>Interpretación: Un p-value muy bajo indica que hay evidencia estadísticamente significativa para rechazar la hipótesis nula de ausencia de autocorrelación espacial. Esto confirma que los residuos aún muestran una dependencia espacial significativa.</p>
+</dd>
+</dl>
+<p><strong>Conclusión</strong></p>
+<p>Persistencia de la autocorrelación espacial: A pesar de que el modelo SAC ha capturado una gran parte de la estructura espacial de los datos, los residuos todavía muestran autocorrelación espacial significativa. Esto sugiere que, aunque el modelo es una mejora con respecto a modelos anteriores, la complejidad espacial de los datos aún no se ha modelado completamente.</p>
+<p><strong>Implicaciones y Próximos Pasos</strong></p>
+<ol type="1">
+<li><p>Revisar la especificación del modelo: Puede ser útil explorar la inclusión de más variables explicativas que capturen patrones espaciales no modelados o interacciones espaciales adicionales.</p></li>
+<li><p>Evaluar la matriz de ponderación espacial: Probar diferentes configuraciones de la matriz de vecindad (por ejemplo, matrices basadas en distancias o incluir más vecinos) para ver si mejora la captura de la dependencia espacial.</p></li>
+<li><p>Modelos más avanzados: Si la autocorrelación persiste, considerar modelos más avanzados o híbridos que combinen efectos espaciales y no espaciales, como modelos de rezago y error mixtos.</p></li>
+</ol>
+</section>
+</section>
+<section id="referencias-de-capítulo" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="referencias-de-capítulo"><span class="header-section-number">8.5</span> Referencias de Capítulo:</h2>
+<ul>
+<li><p><a href="https://geo200cn.github.io/spatialreg.html#Why_run_a_spatial_regression">GEO 200CN: Quantitative Geography</a></p></li>
+<li><p><a href="https://spatial.uchicago.edu/sites/spatial.uchicago.edu/files/10_specification_tests_2_slides.pdf">Spatial Regression 10. Specification Tests</a></p></li>
+<li><p><a href="https://dces.wisc.edu/wp-content/uploads/sites/128/2013/08/W14_Anselin2007.pdf">Spatial Regression Analysis in R A Workbook - Luc Anselin</a></p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./autocorrelacion.html" class="pagination-link" aria-label="Autocorrelación Espacial">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./tarea_1.html" class="pagination-link" aria-label="Tarea 1">
+        <span class="nav-page-text">Tarea 1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2024, Denis Berroeta</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

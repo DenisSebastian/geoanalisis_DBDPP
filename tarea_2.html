@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curso: Geoanálisis - Tarea 1</title>
+<title>Curso: Geoanálisis - Tarea 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tarea_2.html" rel="next">
-<link href="./regresion_espacial.html" rel="prev">
+<link href="./r_project.html" rel="next">
+<link href="./tarea_1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_1.html">Tarea 1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_2.html">Tarea 2</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -172,13 +172,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tarea 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">
+  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Tarea 2</span></a>
   </div>
 </li>
@@ -232,19 +232,19 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
   <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones">Instrucciones</a>
   <ul class="collapse">
-  <li><a href="#parte-1-indicadores-ambientales" id="toc-parte-1-indicadores-ambientales" class="nav-link" data-scroll-target="#parte-1-indicadores-ambientales">Parte 1: Indicadores Ambientales</a></li>
-  <li><a href="#parte-2-indicadores-socioeconómicos" id="toc-parte-2-indicadores-socioeconómicos" class="nav-link" data-scroll-target="#parte-2-indicadores-socioeconómicos">Parte 2: Indicadores Socioeconómicos</a></li>
+  <li><a href="#parte-1-interpolación-de-inverso-a-la-distancia-poderada." id="toc-parte-1-interpolación-de-inverso-a-la-distancia-poderada." class="nav-link" data-scroll-target="#parte-1-interpolación-de-inverso-a-la-distancia-poderada.">Parte 1: Interpolación de Inverso a la Distancia Poderada.</a></li>
+  <li><a href="#parte-2-autocorrelación-espacial." id="toc-parte-2-autocorrelación-espacial." class="nav-link" data-scroll-target="#parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_1.html">Tarea 1</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_2.html">Tarea 2</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Tarea 1</h1>
-<p class="subtitle lead">Datos Vectoriales y Raster</p>
+<h1 class="title">Tarea 2</h1>
+<p class="subtitle lead">Inferencia y Autocorrelación Espacial</p>
 </div>
 
 
@@ -264,41 +264,41 @@ ul.task-list li input[type="checkbox"] {
 <section id="antecedentes" class="level2">
 <h2 class="anchored" data-anchor-id="antecedentes">Antecedentes</h2>
 <ul>
-<li>Fecha de entrega: <strong>08 de Noviembre 2024</strong></li>
-<li>Formato: Informe (pdf o html) + Código</li>
-<li>Integrantes: 1 o 2 Integrates</li>
-<li>Ponderación de tarea sobre Nota Final: 40%</li>
+<li>Fecha de entrega: <strong>24 de Noviembre 2024</strong></li>
+<li>Formato: Informe (pdf o html) + Código (.r o .rmd)</li>
+<li>Integrantes: Individual o Grupal (máximo 4)</li>
 </ul>
 </section>
-<section id="instrucciones" class="level2">
+<section id="instrucciones" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="instrucciones">Instrucciones</h2>
-<section id="parte-1-indicadores-ambientales" class="level3">
-<h3 class="anchored" data-anchor-id="parte-1-indicadores-ambientales">Parte 1: Indicadores Ambientales</h3>
+<section id="parte-1-interpolación-de-inverso-a-la-distancia-poderada." class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="parte-1-interpolación-de-inverso-a-la-distancia-poderada.">Parte 1: Interpolación de Inverso a la Distancia Poderada.</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/exp_idw.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Descripción gráfica de los resultados de interpolación de inverso a la distancia ponderada</figcaption>
+</figure>
+</div>
 <ol type="1">
-<li><p><em>(1pt)</em> Selecciona una comuna de la Región Metropolitana (excepto Las Condes) (<a href="raster.html#sec-cortaraster" class="quarto-xref"><span>4.5.3 Cortar Imagen Raster desde archivo Shapefile</span></a>) y calcular NDVI usando la función vista en clases (<a href="raster.html#sec-calcndvi" class="quarto-xref"><span>4.6.1 Calcular NDVI</span></a>).</p></li>
-<li><p><em>(1pt)</em> Calcula la cantidad de vegetación en la comuna seleccionada, filtrando los píxeles por un umbral que tú determines (<a href="raster.html#sec-umbralicv" class="quarto-xref"><span>4.6.2 Definición de Umbral</span></a>)</p></li>
-<li><p><em>(1 pt)</em> Calcula el indicador de cobertura vegetal para las manzanas urbanas de la comuna seleccionada (<a href="raster.html#sec-calcicv" class="quarto-xref"><span>4.7 Construcción del Indicador de Cobertura Vegetacional</span></a>). <strong>Describa los resultados</strong>.</p></li>
+<li>Defina un área de estudio Urbana (no la comunas vistas en clases)</li>
+<li>Realice 3 calculos de interpolación de Inverso a al Distancia (IDW) con los datos del SII correspodiente a <em>comercio</em>, <em>oficina</em> y <em>atractor</em>. <em>(1.5 pt)</em></li>
+<li>Calcule un indicador de territorial por cada uno de los resultados de las IDW del punto anterior, visualice y describa los los resultados. <em>(1.5 pt)</em></li>
 </ol>
 </section>
-<section id="parte-2-indicadores-socioeconómicos" class="level3">
-<h3 class="anchored" data-anchor-id="parte-2-indicadores-socioeconómicos">Parte 2: Indicadores Socioeconómicos</h3>
+<section id="parte-2-autocorrelación-espacial." class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</h3>
 <ol type="1">
-<li><p><em>(1pt)</em> Calcula seis indicadores socioeconómicos en una región de tu área de estudio (<a href="indicadores_territoriales.html#sec-indsoc" class="quarto-xref"><span>5.3 Construcción de Indicadores Socioconómicos</span></a>).</p></li>
-<li><p><em>(1 pt)</em> Selecciona una provincia y elige un indicador socioeconómico que consideres que evidencia una necesidad prioritaria en esa provincia. <strong>Define y justifique</strong> un umbral crítico para el indicador seleccionado (por ejemplo: menor a 0.25) y genera una tabla resumen usando la función <code>group_by()</code> (<a href="datos_vectoriales.html#sec-groupby" class="quarto-xref"><span>3.2.3 Resumen Estadísticos</span></a>). En la tabla, debes mostrar:</p></li>
+<li><p>Defina un área de estudio Urbana (no la comunas vistas en clases) y visualice una variable que usted decida evaluar su autocorrelación espacial (Ej: Nivel Educacional). Justifique la selección de variable a modo de hipótesis breve. <em>(1 pt)</em></p></li>
+<li><p>Genere una Matriz de Vecidad ponderada por la variable que usted encuentre idónea (Ej: Población) <em>(1 pt)</em></p></li>
+<li><p>Cálculo de índice de Moran (global) y visualice sus resultados en gráfico de cuadrantes. Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
+<li><p>Cálculo de índice de local Moran e identifique los grupos o cluster haciendo uso de los resultados significancia estadística, visualice los resultados en un Mapa e Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
 </ol>
-<ul>
-<li>La cantidad de personas que están por debajo del umbral crítico.</li>
-<li>El promedio del indicador por comuna dentro de la provincia seleccionada.</li>
-</ul>
-<ol start="3" type="1">
-<li><em>(1 pt)</em> De la tabla anterior, elige una comuna basada en uno de estos criterios (justifica tu elección):</li>
-</ol>
-<ul>
-<li>Mayor cantidad de personas por debajo del umbral crítico.</li>
-<li>Valor promedio más bajo del indicador.</li>
-<li>Realiza una representación cartográfica del valor del indicador a nivel de manzana censal. <strong>Identifica y describe</strong> si existen concentraciones de valores altos o bajos del indicador y describe la situación del sector basándote en tu conocimiento, experiencia o los valores de los indicadores.</li>
-</ul>
-<p><img src="images/Tarea_1.1.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/cluster_LC.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="margin-caption">Autocorrelación Espacial</figcaption>
+</figure>
+</div>
 
 
 </section>
@@ -716,13 +716,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./regresion_espacial.html" class="pagination-link" aria-label="Regresión Espacial">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Regresión Espacial</span></span>
+      <a href="./tarea_1.html" class="pagination-link" aria-label="Tarea 1">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tarea 1</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./tarea_2.html" class="pagination-link" aria-label="Tarea 2">
-        <span class="nav-page-text">Tarea 2</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./r_project.html" class="pagination-link" aria-label="R Project">
+        <span class="nav-page-text">R Project</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
