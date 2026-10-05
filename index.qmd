@@ -1,6 +1,6 @@
 # Antecedentes {.unnumbered}
 
-Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Ciencia de Datos para Políticas Públicas 2024, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
+Este libro corresponde al material de estudio del curso de Geoanálisis del Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas 2026, dictado por Escuela de Gobierno de la Universidad Adolfo Ibáñez.
 
 ## Introducción
 
@@ -36,11 +36,12 @@ Profesor:
 
 - Coordinador de Investigación Centro de Inteligencia Territorial UAI
 - Magister en Inteligencia Artificial FIC-UAI
-- Doctorado y Master of Data Science FIC-UAI (cursando)
+- Doctorado (cursando) y Master of Data Science FIC-UAI 
 - Ingeniero en Prevención en Riesgos 
 
 Ayudante:
-: Eduardo Silva Gaete (<eduardo.silva.g@edu.uai.cl>)
+: Alexis Gamboa Maldonado(<algamboa@alumnos.uai.cl>)
 
-- Estudiante de Ingeniería Civil Eléctrica UChile
-- Estudiante de Magister en Ciecnia de Datos UCHile
+- Analista Metodólogo / Percepción remota en INE Chile.
+- Geógrafo, PUC
+- Diplomado en Ciencia de Datos para Políticas Públicas UAI

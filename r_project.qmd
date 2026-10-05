@@ -1,9 +1,8 @@
 ---
-title: "R Project"
 subtitle: "Repaso de Lenguaje de Programación"
 ---
 
-
+# R Project {.unnumbered}
 
 ## ¿Qué es R Project?
 

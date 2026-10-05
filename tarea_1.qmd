@@ -6,31 +6,40 @@ editor_options:
 
 # Tarea 1 {.unnumbered}
 
-
 ## Antecedentes
 
-- Fecha de entrega: **05 de Novimbre 2022**
-- Formato: Informe (pdf, html) + Código
-- Integrantes: 3 o 4 
-
+-   Fecha de entrega: **08 de Noviembre 2024**
+-   Formato: Informe (pdf o html) + Código
+-   Integrantes: 1 o 2 Integrates
+-   Ponderación de tarea sobre Nota Final: 40%
 
 ## Instrucciones
 
 
-### Parte 1: Indicadores Socioeconómicos
+### Parte 1: Indicadores Ambientales
 
-1. Calcular los 6 Indicadores Socioenómicos en una Región de su área de estudio _(1 pt)_ @sec-indsoc
+1.  *(1pt)* Selecciona una comuna de la Región Metropolitana (excepto Las Condes) (@sec-cortaraster) y calcular NDVI usando la función vista en clases (@sec-calcndvi). 
 
-2. Seleccione una Provincia y **un indicador socioeconómico** que consideren que evidencia una nencesidad prioritaria en la provincia. Defina un valor de indicador como umbral crítico (ej: menor a 0.25) y genere una tabla resumen (usar función `group_by()`) donde se contabilice la **cantidad de personas** que están bajo el umbral crítico y **promedio del indicador** por comuna en la provincia seleccionada. _(1 pt)_
+2.  *(1pt)*  Calcula la cantidad de vegetación en la comuna seleccionada, filtrando los píxeles por un umbral que tú determines (@sec-umbralicv)
 
-3. De la tabla anterior, **seleccione una comuna**, ya sea por la mayor cantidad de personas (bajo el umbral) o por valor promedio del indicador más bajo (justifique la selección de comuna). Realicé representación cartográfica del valor del indicador  a nivel de manzana censal e identifique visualmente si existen concentraciones de valores de indicadores altos y/o bajos y haga una descripción del sector basándose en su conocimiento en terreno, experiencia general o valores de indicadores. _(1 pt)_
-
-### Parte 2: Indicadores Ambientales
-
-1. Seleccionar una Comuna de la Región metropolitana (no Las Condes) @sec-cortaraster y calcular NDVI usando la función vista en clases @sec-calcndvi . _(1pt)_
-
-2. Calcular Vegentación que existe en la comuna seleccionada, filtrando y dejando solo los pixeles sobre un valor de umbral que ustedes determinen. @sec-calcicv _(1pt)_
-
-3. Calcule el indicador de cobertura vegetal para la manzanas urbanas de la comuna seleccionada. @sec-calcicv _(1 pt)_
+3. *(1 pt)* Calcula el indicador de cobertura vegetal para las manzanas urbanas de la comuna seleccionada (@sec-calcicv). **Describa los resultados**.
 
 
+
+### Parte 2: Indicadores Socioeconómicos
+
+    
+1.  *(1pt)* Calcula seis indicadores socioeconómicos en una región de tu área de estudio (@sec-indsoc). 
+
+2.  *(1 pt)* Selecciona una provincia y elige un indicador socioeconómico que consideres que evidencia una necesidad prioritaria en esa provincia. **Define y justifique** un umbral crítico para el indicador seleccionado (por ejemplo: menor a 0.25) y genera una tabla resumen usando la función `group_by()` (@sec-groupby). En la tabla, debes mostrar:
+
+* La cantidad de personas que están por debajo del umbral crítico.
+* El promedio del indicador por comuna dentro de la provincia seleccionada. 
+
+3. *(1 pt)* De la tabla anterior, elige una comuna basada en uno de estos criterios (justifica tu elección):
+
+* Mayor cantidad de personas por debajo del umbral crítico.
+* Valor promedio más bajo del indicador.
+* Realiza una representación cartográfica del valor del indicador a nivel de manzana censal. **Identifica y describe** si existen concentraciones de valores altos o bajos del indicador y describe la situación del sector basándote en tu conocimiento, experiencia o los valores de los indicadores. 
+
+![](images/Tarea_1.1.png)

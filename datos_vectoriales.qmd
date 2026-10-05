@@ -4,6 +4,7 @@ subtitle: "Manejo y Representación de datos vectoriales"
 number-depth: 3
 editor_options: 
   chunk_output_type: console
+
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +18,8 @@ suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(require(knitr))
 suppressPackageStartupMessages(library(viridis))
 suppressPackageStartupMessages(library(tidyr))
+
+
 ```
 
 ## Introducción
@@ -234,7 +237,7 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-### Resumen Estadísticos
+### Resumen Estadísticos {#sec-groupby}
 
 El objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.
 

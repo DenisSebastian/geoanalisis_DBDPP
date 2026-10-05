@@ -41,26 +41,49 @@ La estadística en general es una disciplina amplia que se aplica a diversos tip
 
 ![Dependencia espacial en geoestadística](images/dep_espacial.png)
 
-## Condideraciones generales
 
-La inferencia estadística convencional se basa en dos supuestos fundamentales
+## La Primera Ley de la Geografía y su Relevancia Social
 
-* Los valores de una variable se distribuyen de forma aleatoria
+Waldo Tobler (1931–2018) formuló en 1970 su célebre Primera Ley de la Geografía:
 
-* Los valores de una variable son independientes unos de otros
+![](images/tobler-frase.png){fig-align="center" width="600"}
+<!-- > “Todas las cosas están relacionadas entre sí, pero las cosas más próximas en el espacio tienen una relación mayor que las distantes.” -->
 
-Pero ninguno de estos dos supuestos se cumple al utilizar datos espaciales, ya que:
+Este principio refleja cómo las interacciones humanas y sociales están condicionadas por la proximidad espacial. En política pública esto significa, por ejemplo, que las intervenciones en un barrio tienen efectos directos en los barrios vecinos, y que ignorar la dimensión espacial conduce a políticas sesgadas.
 
-* Los fenómenos más próximos en el espacio están más estrechamente relacionados entre sí. Ley de @Tobler_1970
+O como lo resume Cervantes en El Quijote:
 
-* La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales. @Lefebvre_1974
+![](images/cervantes-frase.png){fig-align="center" width="600"}
+<!-- > “Dime con quién andas y te diré quién eres.” -->
 
-Para resolver esta limitación existen dos enfoques principales
+⸻
 
-* La econometría espacial, que trata el efecto espacial como un error y lo elimina para generar estimaciones sin sesgo
-* La geoestadística, que identifica y cuantifica el efecto que el espacio genera en la estructura de la información
+## El Espacio y el Tiempo: Coproducción Espacio-Temporal del Bienestar
 
-## Ejemplos de Correlación Espacial
+El bienestar social es resultado de una coproducción espacio-temporal: las políticas, las acciones colectivas y las dinámicas naturales configuran el territorio, que a su vez influye en las oportunidades y limitaciones de sus habitantes.
+
+Henri Lefebvre (1901–1991) lo expresó así:
+
+![](images/lefebvre-frase.png){fig-align="center" width="600"}
+<!-- > “La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales.” -->
+
+El espacio no es simplemente un escenario pasivo, sino un actor en las dinámicas sociales. Por ejemplo, la segregación urbana o la concentración delictual en ciertas áreas no son casualidad, sino resultado de una autoproducción espacial donde factores históricos, económicos y sociales se retroalimentan.
+
+
+
+
+## Por Qué Medir: La Importancia de las Estadísticas Territoriales
+
+> Lo que no se mide, no se gestiona.
+
+Las estadísticas territoriales permiten entender y actuar sobre el territorio con evidencia. Sin embargo, presentan desafíos particulares. La inferencia estadística clásica asume independencia entre observaciones y aleatoriedad, pero los datos espaciales violan ambos supuestos:
+
+* Las observaciones cercanas tienden a estar correlacionadas (Ley de Tobler).
+* El espacio actúa como un soporte material indispensable para las relaciones sociales.
+
+
+
+## Ejemplos de Dependencia Espacial
 
 ### Autoproducción: Tráfico de Drogas
 
@@ -91,13 +114,5 @@ Para resolver esta limitación existen dos enfoques principales
 
 ![Valores de Vivienda](images/val_vivienda.png)
 
-## Inconsistencia estadística de datos espaciales agregados: MAUP
-
-**Modifiable Areal Unit Problem**: inconsistencia de indicadores estadísticos al modificar los perímetros de agregación (Gehlke & Biehl 1934, Openshaw & Taylor 1979)
-
-
-![ Modifiable Areal Unit Problem](images/maup.png)
-
-En general, es recomendable trabajar con datos a la menor escala posible, o agregarlos en zonas homogéneas
 
 

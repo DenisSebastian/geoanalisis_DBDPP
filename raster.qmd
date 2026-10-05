@@ -20,11 +20,157 @@ options(scipen = 999)
 
 ## Objetivos del Módulo
 
-- Definción de Conceptos 
+- Definición de Raster como Objeto Espacial
+- Raster en R
 - Manipulación de datos Raster de imágenes satelitales.
 - Construcción de Indicadores ambientales
 
-## Definición de Conceptos
+
+## Raster como objeto espacial
+
+### Definición de Raster
+
+Los objetos raster representan entidades geográficas dividiendo el espacio físico en celdas discretas cuadradas o rectangulares dispuestas en una cuadrícula.
+
+![Raster espacial](images/raster_concept.png){fig-align="center" width="500"}
+
+### Matriz de un Raster
+
+Un ráster consta de una matriz de celdas (o píxeles) organizadas en filas y columnas (o una cuadrícula) en la que cada celda contiene un valor que representa información.
+
+![Matirz de datos de un Raster](images/matriz.gif){fig-align="center" width="600"}
+
+
+### Resolución Espacial de un Raster
+
+Cuanto más pequeño sea el tamaño de celda, más suave o más detallado será el ráster. Sin embargo, cuanto mayor sea el número de celdas, más tiempo tardará en procesar, aumentándose a su vez la demanda de espacio de almacenamiento.
+
+![Resolución espacial de un raster](images/raster_resolucion.gif){fig-align="center" width="400"}
+
+### Referencia Espacial de un Raster
+
+La matriz queda representada por un Sistema de coordenadas cartesianas, en las que las filas de la matriz son paralelas al eje x y las columnas al eje y del plano cartesiano
+
+![Referencia espacial](images/crs_raster.gif){fig-align="center" width="400"}
+
+
+
+## Raster en R 
+
+A continuación haremos una revisión rápida de manipulación de datos tipo Raster en R para lo cual lo utilizaremos en la librería `raster` que se encuentra en CRAN.
+
+### Creación de un Objeto Raster
+
+```{r}
+library(raster)
+r <- raster(ncol=10, nrow=10)
+values(r) <- 1:ncell(r)
+r
+```
+
+**Visualización de los creado**
+
+```{r}
+plot(r)
+```
+
+
+### Operaciones Básicas sobre un Raster
+
+Los objetos Raster en R se le puede aplicar operaciones directamente como las detalladas a continuación:
+
+- Operaciones Básicas : `+, -, *, /`
+- Operadores Lógicos: `>, >=, <, ==, !`
+- Otras Funciones: `abs`, `round`, `ceiling`, `floor`, `trunc`, `sqrt`, `log`, `log10`, `exp`, `cos`, `sin`, `atan`, `tan`, `max`, `min`, `range`, `prod`, `sum`, `any`, `all.`
+
+Algunos ejemplos
+```{r}
+s <- r + 10
+s <- sqrt(s)
+s <- s * r + 5
+```
+
+Una forma de asignar valores honraste de forma aleatoria
+
+```{r}
+r[] <- runif(ncell(r))
+r <- round(r)
+```
+
+
+### Apilar Layers en un Raster
+
+![Referencia espacial](images/single_multi_raster.png){fig-align="center" width="600"}
+
+```{r}
+r <- raster(ncol=5, nrow=5)
+r[] <- 1
+s <- stack(r, r+1)
+q <- stack(r, r+2, r+4, r+6)
+x <- r + s + q
+x
+
+```
+
+
+
+### Funciones Básicas sobre un Raster
+
+**Calc**
+
+Con la librería Raster uno puede aplicar funciones propias utilizando la función `calc()` cómo veremos a continuación:
+
+
+```{r}
+r <- raster(ncol=3, nrow=2)
+r[] <- 1:ncell(r)
+getValues(r)
+
+
+# cambiar los valores menores de 4 a NA
+s <- calc(r, fun=function(x){ x[x < 4] <- NA; return(x)} )
+as.matrix(s) # solo para visualizar la respuesta en el libro digital
+```
+
+
+
+**Overlay**
+
+En el caso que quisiera hacer una operación sobre dos o más Raster podría utilizar la función `overlay()` cómo se observa a continuación:
+
+
+
+```{r}
+# Overlay
+w <- overlay(r, s, fun=function(x, y){ x / (2 * sqrt(y)) + 5 } )
+as.matrix(w)
+```
+
+**Reclassify**
+
+La función reclassify de la librería `raster` (parte del ecosistema de la librería `terra` en versiones más recientes) se utiliza para reasignar valores en un conjunto de datos raster, de acuerdo a un conjunto de reglas de reclasificación. Esto es útil cuando deseamos agrupar o reasignar valores específicos en rangos definidos a nuevos valores. Para entender esta función, es importante comprender la notación de intervalos, que define los rangos de valores que serán reclasificados.
+
+En la notación de intervalos, los subconjuntos se describen utilizando paréntesis redondos o corchetes cuadrados para indicar si los extremos de los intervalos están incluidos o excluidos. Un corchete cuadrado `[ ]` significa que el valor extremo está incluido en el intervalo, mientras que un paréntesis redondo `( )` indica que el valor no está incluido.
+
+En el contexto de la función `reclassify()`, los intervalos se manejan de manera que el valor máximo del intervalo está incluido en dicho intervalo, representado por corchetes cuadrados `[ ]`, mientras que en el intervalo siguiente, ese valor no se incluye, como si estuviera delimitado por un paréntesis redondo `( ]`. Por ejemplo, en el código `c(0,2,1)`, se está reclasificando el intervalo `[0, 2]`, lo que significa que los valores 0, 1 y 2 se reclasifican a 1. Sin embargo, el siguiente intervalo `c(2,4,2)` reclasifica el intervalo `(2, 4]`, donde el 2 no está incluido, pero el 4 sí.
+
+
+
+```{r}
+# Cambiar los valores entre 0 y 2 a 1, etc.
+w <- raster(ncol=3, nrow=2)
+w[] <- 1:ncell(w)
+as.matrix(w)
+x <- reclassify(w, c(0,2,1, # [0 a 2] = 1
+                     2,4,2, # (2 a 4] = 2
+                     4,6,3)) # (4 a 6] = 3
+as.matrix(x)
+```
+
+
+Esta convención es importante para garantizar que no haya solapamiento entre intervalos consecutivos y se defina claramente cómo se gestionan los valores límites en el proceso de reclasificación.
+
+## Definición de Conceptos en Percepción Remotra
 
 Percepción Remota:
 : Percepción Remota o en una disciplina científica que entrega un amplio conjunto de conocimientos y tecnologías utilizadas para observación, análisis, la interpretación de fenómenos en el territorio. La percepción remota nos permite efectuar observaciones y mediciones de la superficie terrestre mediante dispositivos remotos instalados sobre plataformas como satélites, aviones y actualmente hasta en drones. Los sensores instalados en estas plataformas miden una gran variedad de datos como radiaciones electromagnéticas, espectro electromagnético, perturbaciones atmosféricas, firmas espectrales y captura de imágenes, entre otros.
@@ -92,6 +238,29 @@ Características de Satélites y Sensores:
 
 ![Aplicaciones Antrópicas; deforestación](images/deforestacion.png){width=70%}
 
+### Imágenes disponibles
+
+Existe una gran cantidad de imágenes disponibles, a continuación se presenta una tabla con información sobre los satélites Landsat y Sentinel (Copernicus), junto con sus fechas de disponibilidad:
+
+| Satélite            | Programa     | Fecha de Lanzamiento | Disponibilidad de Datos       | Tipo de Imágenes                    | Acceso                                                                 |
+|---------------------|--------------|----------------------|-------------------------------|--------------------------------------|------------------------------------------------------------------------|
+| **Landsat 1**        | Landsat      | 23 de julio de 1972   | 1972 - 1978                   | Multiespectral                      | [Earth Explorer](https://earthexplorer.usgs.gov)                        |
+| **Landsat 8**        | Landsat      | 11 de febrero de 2013 | Desde 2013 - Presente         | Multiespectral y térmica             | [Earth Explorer](https://earthexplorer.usgs.gov)                        |
+| **Landsat 9**        | Landsat      | 27 de septiembre 2021 | Desde 2021 - Presente         | Multiespectral y térmica             | [Earth Explorer](https://earthexplorer.usgs.gov)                        |
+| **Sentinel-1**       | Copernicus   | 3 de abril de 2014    | Desde 2014 - Presente         | Radar (SAR)                         | [Copernicus Data Space](https://dataspace.copernicus.eu)               |
+| **Sentinel-2**       | Copernicus   | 23 de junio de 2015   | Desde 2015 - Presente         | Multiespectral (óptico)              | [Copernicus Data Space](https://dataspace.copernicus.eu)               |
+| **Sentinel-3**       | Copernicus   | 16 de febrero de 2016 | Desde 2016 - Presente         | Óptico, térmico y altimetría         | [Copernicus Data Space](https://dataspace.copernicus.eu)               |
+| **Sentinel-5P**      | Copernicus   | 13 de octubre de 2017 | Desde 2017 - Presente         | Monitorización atmosférica (óptico) | [Copernicus Data Space](https://dataspace.copernicus.eu)               |
+
+Los satélites Landsat son administrados por NASA y USGS, proporcionando datos desde 1972, mientras que Sentinel, parte del programa Copernicus, administrado por la ESA, comenzó a operar en 2014. Ambos programas ofrecen acceso gratuito a los datos, permitiendo su uso en estudios de medio ambiente, cambio climático y monitoreo de la Tierra.
+
+Existe una plataforma de acceso y procesamiento de información satelital cloud llamada Google Earth Engine, que disponibiliza casi todos los productos satelitales de libre acceso en un solo lugar denominado [Earth Engine Data Catalog](https://developers.google.com/earth-engine/datasets). 
+
+![Ejemplos de recursos Satelitales de Google Earth Engine](images/recursos_rgee.jpg)
+
+Se puede accesar y preocesar directamente en los servidores de google mediante el lenguaje de programación Javascript y Python, y desde R de forma indirecta mediante la librería [rgee](https://github.com/r-spatial/rgee).
+
+![Librería [rgee](https://github.com/r-spatial/rgee)](images/logo_rgee.png){fig-align="center" width="150"}
 
 
 ## Manipulación de datos Raster de imágenes satelitales.
@@ -113,6 +282,7 @@ names(OLI) <- c("aerosol", "blue", "green", "red", "nir",
 # OLI
 ```
 
+![Un raster que proviene de un insumo satelital normalmente tiene más de una banda o también llamada layer](images/bands.jpg){width=70%}
 
 ```{r eval=FALSE}
 library(raster)
@@ -124,6 +294,10 @@ OLI
 ```{r echo=FALSE}
 OLI
 ```
+
+Los nombres de las bandas satelitales tienen que confirmarse con la información satelital, para el caso de Landsat 8 corresponden a la siguiente denominación:
+
+![Nombres de Bandas del Satélite Landsat 8](images/bandas_landsat8.png){width=70%}
 
 
 ### Visualización Raster
@@ -323,7 +497,7 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-### Calcular Indicador de Cobertura Vegetacional {#sec-calcicv}
+### Definición de Umbral {#sec-umbralicv}
 
 
 Se ha estudiado que el umbral de valores de NDVI superiores a 0.4 se entienede como vegetación y sana
@@ -399,6 +573,9 @@ mview
 
 
 <br>
+
+## Construcción del Indicador de Cobertura Vegetacional {#sec-calcicv}
+
 
 Crear Indicador por manzana:
 : Para esto se debe contar los pixeles que existe por manzana calcular su superficie sabiendo la resolución espacila (30x30) y dividirla por el toral de superficie de la manzana, afin de obtener un porcentaje de cobertura vegetal por manzana.

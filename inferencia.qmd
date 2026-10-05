@@ -19,7 +19,7 @@ suppressPackageStartupMessages(library(mapview))
 
 
 
-![Objetivos del Módulo](images/m4_geoanalisis.png)
+![Objetivos del Módulo](images/m5_geoanalisis.png)
 
 
 - Conocer los fundamentos teóricos de la inferencia espacial
@@ -160,7 +160,7 @@ Los elementos del KDE Univariado tambien están presentes en el caso espacial co
 
 
 
-### Kernel Density Estimation en delitos Violentos
+### Kernel Density Estimation en delitos Violentos {#sec-kdeVio}
 
 
 Existe una gama importante de métodos de interpolación como el Kriging, las superficies de tendencia, el inverso de la distancia y los modelos de regresión local, (Anselin, 1992; Clevelend at al. 1993, Venables & Ripley, 1997) los cuales requieren en su mayoría que los puntos de muestreo/entrada asuman valores heterogéneos diferentes de cero.
@@ -339,9 +339,17 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
+Guardar Resultados
+
+```{r eval = FALSE}
+
+st_write(mz_comuna, "data/delitos/LC_idel.shp")
+
+```
 
 
-## Interpolación Inverso a Distancia Ponderada IDW
+
+## Interpolación Inverso a Distancia Ponderada IDW {#sec-IDW}
 
 
 ### Definiciones

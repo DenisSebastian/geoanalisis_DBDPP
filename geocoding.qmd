@@ -1,0 +1,421 @@
+---
+subtitle: "Direcciones a Coordenadas"
+editor_options: 
+  chunk_output_type: console
+---
+
+# Geocoding {.unnumbered}
+
+```{r setup, include=FALSE}
+# parámetros
+font_size = 2
+n_head = 10
+# librerías
+suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(purrr))
+suppressPackageStartupMessages(library(readr))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(mapdeck))
+suppressPackageStartupMessages(require(knitr))
+suppressPackageStartupMessages(library(tidygeocoder))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(stringdist))
+
+
+# direcciones <- readRDS("data/direcciones/dirs_60.rds")
+# direcciones$NUMERO <- as.numeric(direcciones$NUMERO) + 5
+# saveRDS(direcciones, "data/direcciones/dirs_60.rds")
+```
+
+## Introducción
+
+La geocodificación es el proceso de convertir direcciones físicas (por ejemplo, "Presidente Errázuriz 3485, Las Condes") en coordenadas geográficas (latitud y longitud), que se pueden utilizar para posicionar elementos o eventos en el espacio de un mapa o para análisis espaciales. Este proceso es fundamental en diversos proyectos de análisis espacial, ya que permite transformar datos textuales en información espacial.
+
+![](images/geocoding.png){fig-align="center" width="500"}
+
+Para realizar el proceso de geocodificación de direcciones es necesario contar con un **motor de geocodificación** que es un servicio o sistema que convierte direcciones físicas en coordenadas geográficas (latitud y longitud), o viceversa, un proceso conocido como “reverse geocoding”. Estos motores son esenciales para analizar datos espaciales cuando la información disponible está en formato de texto (como direcciones postales). Los motores de geocodificación utilizan bases de datos geográficas y algoritmos de correspondencia para ubicar puntos específicos en un mapa a partir de descripciones textuales. Dependiendo del motor, pueden ofrecer características adicionales, como filtrado por región, cálculos de rutas, o integración con sistemas de tráfico en tiempo real. La siguiente tabla compara varios motores de geocodificación en cuanto a características, cobertura, precisión y si son gratuitos o de pago.
+
+| Motor | Tipo | Cobertura | Precisión | Límite Gratuito | Características Adicionales |
+|------------|------------|------------|------------|------------|------------|
+| Google Geocoding API | De pago | Mundial | Alta | 40,000 diarias | Geocodificación y "reverse geocoding", alta calidad. |
+| OpenStreetMap Nominatim | Gratuito | Mundial | Buena | Límite bajo | Basado en OpenStreetMap, infraestructura propia recomendada. |
+| HERE Geocoder API | De pago | Mundial | Alta | 250,000 mensuales | Filtrado avanzado, datos de tráfico en tiempo real. |
+| Mapbox Geocoding API | De pago | Mundial | Alta | 100,000 mensuales | Integración con Mapbox, geocodificación en tiempo real. |
+| Bing Maps Geocoding API | De pago | Mundial | Alta | 125,000 mensuales | Información adicional sobre tipo de localización. |
+| Geocode.xyz | Gratuito | Mundial | Moderada | 1,000 diarias | Servicio gratuito con opciones de pago. |
+| TomTom Geocoding API | De pago | Mundial | Alta | 2,500 diarias | Uso en navegación y tráfico en tiempo real. |
+
+**Etapas** En los procesos de geocodificación de direcciones, las etapas de transformación pueden ser numerosas y variadas, dependiendo del tipo de direcciones y los errores que puedan contener. Cada dirección puede presentar desafíos únicos, como errores tipográficos, variaciones en la nomenclatura o información incompleta, lo que hace que estos procesos sean, en cierto modo, artesanales, ya que requieren ajustes específicos para mejorar la precisión de los resultados. En este capítulo nos enfocaremos en tres etapas fundamentales, pero es importante destacar que el número de etapas puede ampliarse dependiendo de la complejidad de las direcciones:
+
+**Etapa 0**: Consolidación de Bases, Integración de las diferentes fuentes de datos para generar una base unificada de direcciones.
+
+**Etapa 1**: Limpieza Inicial: Normalización básica de las direcciones, como eliminar tildes y convertir todo a mayúsculas.
+
+**Etapa 2**: Limpieza Específica: Ajustes más detallados, dependiendo de la estructura de las direcciones, para corregir errores comunes.
+
+**Etapa 3**: Distancia Jaro-Winkler: Comparación y corrección de nombres de calles utilizando la métrica de similitud Jaro-Winkler.
+
+Aunque nos enfocamos en estas tres etapas, los procesos de geocodificación pueden incluir muchas más fases según las características de los datos y la precisión deseada.
+
+Este documento presenta un enfoque paso a paso del proceso de geocodificación utilizando R. Exploraremos cómo convertir direcciones en coordenadas y cómo calcular distancias entre puntos geográficos utilizando varias librerías de R, como `tidygeocoder`, `sf`, y `dplyr`.
+
+## Consolidación de Bases
+
+**Objetivos:**
+
+-   Conocer la base de datos, en estructura y contenidos, para analizarla a fin de estimar niveles de complejidad en su posterior procesamiento.
+-   Consolidar las bases de datos en una sola con solamente la información necesaria para la georeferenciación, donde cada registro tiene una variable denominada ID que permite identificar su fuente y correlativo.
+
+Librerías
+
+```{r}
+# librerías
+library(sf)
+library(dplyr)
+library(tidygeocoder)
+library(tidyr)
+library(stringdist)
+
+```
+
+**Leer las Bases:**
+
+```{r eval=FALSE}
+
+direcciones <- readRDS("data/direcciones/dirs_60.rds")
+head(direcciones)
+```
+
+```{r echo=FALSE}
+direcciones <- readRDS("data/direcciones/dirs_60.rds")
+head(direcciones, 10 ) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+Tomaremos como ejemplo 60 direcciones para hacer el proceso de geocodificación, donde ya tenemos filtradas las columnas de interés como también un ID único para cada registro.
+
+## Etapa 1: Limpieza Inicial
+
+Para el proceso de limpieza inicial, se puede escribir cualquier función que se considere adecuada según la naturaleza de las direcciones, teniendo siempre en cuenta el **motor de geocodificación** que se utilizará. Estos motores son sensibles al formato del texto, por lo que es crucial que las direcciones estén bien formateadas para mejorar la precisión del proceso de geocodificación. A continuación, presentamos un ejemplo de función. La función limpieza() es útil cuando necesitamos estandarizar cadenas de texto eliminando tildes, convirtiendo todo a mayúsculas y limpiando ciertos caracteres no deseados. Su funcionamiento es el siguiente:
+
+1.  Conversión a mayúsculas: Utiliza la función stringr::str_to_upper para convertir todas las letras en mayúsculas.
+2.  Eliminación de tildes: Mediante chartr, las vocales con tilde (ÁÉÍÓÚ) son reemplazadas por sus equivalentes sin tilde (AEIOU), normalizando las vocales.
+3.  Eliminación de puntuación: Se eliminan todos los signos de puntuación excepto el apóstrofe (esto es útil para nombres como “O’Higgins”).
+4.  Limpieza de caracteres no deseados: Elimina símbolos específicos, como el carácter º.
+5.  Espacios: Usa str_squish para eliminar espacios innecesarios, como los que se encuentran al inicio o los que están repetidos entre palabras.
+
+Esta función es muy útil para preparar texto en análisis de datos o cuando queremos asegurarnos de que las entradas de texto sean uniformes y fáciles de comparar.
+
+```{r}
+# Función para dejar todo en mayúscula y sin tildes
+limpieza <- function(x) {
+  # x <- stri_trans_general(x,"latin-ASCII") # eliminar tildes
+  x <- stringr::str_to_upper(x) # mayúsculas
+  x <- chartr("ÁÉÍÓÚ", "AEIOU", x)
+  x <- gsub("(?!')[[:punct:]]", "", x, perl=TRUE) #Excepción apostrofe de o'higgins
+  x <- gsub(pattern = 'º', "", x)
+  x <- stringr::str_squish(x) # eliminar espacios al comienzo y espacios repetidos
+  x
+}
+
+```
+
+**Aplicación de la función de limpieza**
+
+```{r}
+direcciones <- direcciones %>% mutate(CALLE = limpieza(CALLE))
+```
+
+```{r echo=FALSE}
+head(direcciones) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+**Generar columna de Consulta**:
+
+El siguiente código crea dos nuevas columnas en el marco de datos direcciones. La columna `CONSULTA` concatena el número, la calle, la comuna y la región en un solo campo. Esto es necesario para la geocodificación, ya que los motores de geocodificación requieren una dirección completa en un formato estándar para poder convertirla en coordenadas geográficas. (Ejemplo ver parámetros de [búsqueda en nominatim](https://nominatim.org/release-docs/latest/api/Search/))
+
+Además, se crea la columna `ETAPA`, que registra el valor 1 para indicar que la dirección se encuentra en la primera etapa del proceso de geocodificación. Esta columna es útil para rastrear el progreso de la geocodificación en varias etapas, permitiendo un seguimiento más detallado de cada paso del proceso.
+
+```{r echo = T}
+direcciones <- direcciones %>% 
+  mutate(CONSULTA = paste0(NUMERO, " ", CALLE, ", ", COMUNA, ", ", REGION)) %>% 
+  mutate(ETAPA = "1")
+```
+
+```{r echo=FALSE}
+head(direcciones) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+**Geocodificación**
+
+Se utilizará una librería llamada [tidygeocoder](https://jessecambon.github.io/tidygeocoder/) que da acceso a los servicios de geocodificación en este caso Nominatim online. El procedimiento que se realizó en el proyecto difiere ya que se utilizó el motor de geocodificación local que ofrece mayor performance.
+
+Aquí utilizamos la función `geocode` para convertir una dirección textual en coordenadas geográficas (latitud y longitud) utilizando el servicio de OpenStreetMap (OSM). Este es un paso esencial para cualquier análisis espacial que involucre ubicaciones basadas en direcciones.
+
+```{r eval=FALSE}
+library(tidygeocoder)
+# geocode the addresses
+geocoding <- direcciones %>%
+  geocode(CONSULTA, method = 'osm', lat = latitude , long = longitude)
+
+
+```
+
+```{r echo=FALSE}
+# saveRDS(geocoding, "data/direcciones/geocoding_e1.rds")
+geocoding <- readRDS("data/direcciones/geocoding_e1.rds")
+head(geocoding, 6) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+Guardar los Geocodificados correctamente
+
+```{r eval=FALSE}
+geocoding %>% 
+  filter(!is.na(latitude)) %>% 
+  saveRDS( file = "data/direcciones/geocoding_e1.rds")
+```
+
+
+
+
+Resultados de etapa 1
+
+```{r echo=FALSE}
+geocoding <- readRDS("data/direcciones/geocoding_e1.rds")
+# tabla de resultados
+tablas_e1 <- geocoding %>% 
+  mutate(res_geocod = ifelse(!is.na(latitude), 1, 0)) %>% 
+  summarise( 
+    codificadas = sum(res_geocod),
+    no_codificadas = n()-sum(res_geocod),
+    p_codificadas = paste0((sum(res_geocod)/n())*100, "%"),
+    p_no_codificadas = paste0(((n()-sum(res_geocod))/n())*100, "%")) %>% 
+  t() %>% as.data.frame() 
+names(tablas_e1) <- "resultados"
+
+head(tablas_e1) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+
+```
+
+
+
+## Etapa 2: Limpieza Específica
+
+**Lectura de no geocodificados**
+
+```{r eval=FALSE}
+geocoding2 <-  geocoding %>% 
+  filter(is.na(latitude))  %>% 
+  select(-latitude, -longitude)
+head(geocoding2)
+```
+
+```{r echo=FALSE}
+geocoding2 <-  geocoding %>% 
+  filter(is.na(latitude)) %>% 
+  select(-latitude, -longitude)
+
+head(geocoding2, 10) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+**Limpieza por expresiones regulares o Patrones**
+
+```{r}
+geocoding2 <- geocoding2 %>% 
+  mutate(NOM_CALLE = CALLE) %>% 
+  mutate(NOM_CALLE = gsub(pattern = "AV ",replacement = "AVENIDA ",
+                          x =  NOM_CALLE)) %>% 
+  mutate(NOM_CALLE = gsub(pattern = "PSJE ",replacement = "PASAJE ",
+                          x =  NOM_CALLE)) %>%
+  mutate(NOM_CALLE = gsub(pattern = "PASAJE ",replacement = " ",
+                          x =  NOM_CALLE)) %>% 
+  mutate(NOM_CALLE = gsub(pattern = "S/N ",replacement = " ",
+                          x =  NOM_CALLE)) %>% 
+  mutate(NOM_CALLE = stringr::str_squish(NOM_CALLE))
+```
+
+**Limpieza de Nombre de Región**
+
+```{r}
+
+# Encuentra y reemplaza
+find_replace <-  function(patron, reemplazo, data_vector){
+  ids <- grep(pattern = patron, data_vector)
+  data_vector[ids] <- reemplazo
+  return(data_vector)
+}
+
+geocoding2 <- geocoding2 %>% 
+  mutate(NOM_REGION = REGION) %>% 
+  mutate(NOM_REGION = find_replace(
+    patron = "ÑUBLE", reemplazo = "Región de Ñuble",
+    data_vector =  NOM_REGION)) %>% 
+  mutate(NOM_REGION = find_replace(
+    patron = "METROPOLITANA", 
+    reemplazo = "Región Metropolitana de Santiago",
+    data_vector =  NOM_REGION)) %>% 
+  mutate(NOM_REGION = find_replace(
+    patron = "BIO", reemplazo = "Región del Biobío",
+    data_vector =  NOM_REGION)) %>% 
+  mutate(NOM_REGION = find_replace(
+    patron = "MAULE", reemplazo = "Región del Maule",
+    data_vector =  NOM_REGION)) %>% 
+  mutate(NOM_REGION = find_replace(
+    patron = "V - VALPARAISO", reemplazo = "Región de Valparaíso",
+    data_vector =  NOM_REGION))
+  
+```
+
+**Geocodificación**
+
+```{r eval = FALSE}
+
+geocoding2 <-  geocoding2  %>%
+  mutate(CONSULTA = paste0(NUMERO, " ", NOM_CALLE, ", ", 
+                           COMUNA, ", ", NOM_REGION)) %>% 
+  mutate(ETAPA = "2")
+
+# gecodificación
+res_geocoding2 <- geocoding2 %>%
+  geocode(CONSULTA,  method = 'osm', 
+          lat = latitude , long = longitude)
+
+```
+
+Guardar los resultados geocodificados correctamente
+
+```{r eval=FALSE}
+res_geocoding2 %>% 
+  filter(!is.na(latitude)) %>% 
+  saveRDS( file = "data/direcciones/geocoding_e2.rds")
+```
+
+
+
+```{r echo=FALSE}
+# saveRDS(res_geocoding2, "data/direcciones/geocoding_e2.rds")
+res_geocoding2 <- readRDS("data/direcciones/geocoding_e2.rds")
+head(res_geocoding2, 5) %>%
+  select(-REGION) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+
+Resultados de etapa 2
+
+```{r echo=FALSE}
+res_geocoding2 <- readRDS("data/direcciones/geocoding_e2.rds")
+# tabla de resultados
+tablas_e2 <- res_geocoding2 %>% 
+  mutate(res_geocod = ifelse(!is.na(latitude), 1, 0)) %>% 
+  summarise( 
+    codificadas = sum(res_geocod),
+    no_codificadas = n()-sum(res_geocod),
+    p_codificadas = paste0((sum(res_geocod)/n())*100, "%"),
+    p_no_codificadas = paste0(((n()-sum(res_geocod))/n())*100, "%")) %>% 
+  t() %>% as.data.frame() 
+names(tablas_e2) <- "resultados"
+
+head(tablas_e2) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+
+```
+
+
+## Etapa 3: Distancia Jaro-Winkler
+
+En esta etapa de transformación de las direcciones, se compara cada dirección del conjunto de datos con un maestro de calles, que contiene un listado oficial o validado de nombres de calles. El objetivo es corregir posibles errores en la escritura de las direcciones, como faltas de ortografía o variaciones en los nombres de calles, que podrían afectar la precisión del proceso de geocodificación.
+
+Para realizar esta comparación y corrección, se utiliza la métrica de distancia [Jaro-Winkler](https://en.wikipedia.org/wiki/Jaro–Winkler_distance), un algoritmo que mide la similitud entre dos cadenas de texto. Este método asigna un valor de similitud que varía entre 0 y 1, donde 1 significa una coincidencia exacta. A diferencia de otros métodos de comparación, Jaro-Winkler favorece las coincidencias al principio de las cadenas, lo que es útil para corregir nombres de calles, ya que las primeras letras suelen ser más importantes en la coincidencia.
+
+![Explicación de Distancia Jaro Winkler](images/JW_explain.jpeg)
+
+Mediante esta técnica, las direcciones incorrectas o mal escritas pueden ser ajustadas automáticamente para coincidir con los nombres oficiales, mejorando significativamente la precisión de la geocodificación posterior. A continuación, se mostrará el método sólo a modo ejemplo en una dirección ya queda para hacerlo más se necesita un maestro de calle a a nivel nacional.
+
+**Ejemplo de Cálculo de Distancia de Jaro Winkler**
+
+```{r eval=FALSE}
+# install.packages('stringdist')
+library(stringdist)
+
+calle_base <- "ALEJANDRO FLEMINS"
+calle_maestro_osm <- "ALEJANDRO FLEMING"
+
+distance_jw <- stringdist(calle_base,calle_maestro_osm, method='jw')
+distance_jw
+
+```
+
+![Casos de aplicación Distancia Jaro Winkler](images/examples_JW.png){fig-align="center" width="70%"}
+
+Referencias de algoritmos de distancias de textos ([link](https://search.r-project.org/CRAN/refmans/stringdist/html/stringdist-metrics.html))
+
+## Consolidación y Transformación espacial
+
+Lectura de bases de consolidadas por etapas
+```{r eval=FALSE}
+library(purrr)
+resultados <- list.files(path = "data/direcciones/", 
+                         pattern = "^geocoding", full.names = T) %>%
+  map(readRDS) %>% 
+  map_df(~select(., ID, SEDE, ETAPA, CONSULTA, latitude, longitude)) %>% 
+  filter(!is.na(longitude)) 
+
+```
+
+
+```{r echo=FALSE}
+# saveRDS(resultados, "data/direcciones/resultados_geocod.rds")
+resultados <- readRDS("data/direcciones/resultados_geocod.rds")
+head(resultados, n_head) %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                 font_size =font_size)
+```
+
+
+Transformar las corrdenadas en un objeto `sf` utilizando la función `st_as_sf()`
+
+```{r}
+
+resultados_sf <- st_as_sf(resultados, 
+                          coords =  c("x" = "longitude", "y" = "latitude"),
+                          crs = st_crs(4326))
+
+resultados_sf
+```
+
+Visualización de los puntos
+
+```{r}
+library(mapview)
+mapview(resultados_sf, zcol = "ETAPA")
+```
+
+
+
+## Conclusión
+
+En esta sección, hemos cubierto el proceso de geocodificación de direcciones, proceso escencial para cualquier análisis espacial que involucre ubicaciones basadas en texto. El proceso de geocodificación es, en gran medida, artesanal, ya que las etapas a seguir dependen de la naturaleza de las direcciones y los errores que puedan contener. La selección y diseño de estas etapas es una decisión del analista o desarrollador, quien debe adaptar el flujo de trabajo según las características y necesidades de los datos. Con estas herramientas, puedes aplicar la geocodificación a tus propios conjuntos de datos y generar análisis espaciales significativos.
