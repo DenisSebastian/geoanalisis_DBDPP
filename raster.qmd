@@ -9,7 +9,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(sf))
-suppressPackageStartupMessages(library(raster))
+suppressPackageStartupMessages(library(terra))
 suppressPackageStartupMessages(library(mapview))
 suppressPackageStartupMessages(library(ggplot2))
 options(scipen = 999)
@@ -57,13 +57,13 @@ La matriz queda representada por un Sistema de coordenadas cartesianas, en las q
 
 ## Raster en R 
 
-A continuación haremos una revisión rápida de manipulación de datos tipo Raster en R para lo cual lo utilizaremos en la librería `raster` que se encuentra en CRAN.
+A continuación haremos una revisión rápida de la manipulación de datos ráster en R con la librería `terra`. Sus objetos ráster son de clase `SpatRaster`.
 
 ### Creación de un Objeto Raster
 
 ```{r}
-library(raster)
-r <- raster(ncol=10, nrow=10)
+library(terra)
+r <- rast(ncols=10, nrows=10)
 values(r) <- 1:ncell(r)
 r
 ```
@@ -103,10 +103,10 @@ r <- round(r)
 ![Referencia espacial](images/single_multi_raster.png){fig-align="center" width="600"}
 
 ```{r}
-r <- raster(ncol=5, nrow=5)
+r <- rast(ncols=5, nrows=5)
 r[] <- 1
-s <- stack(r, r+1)
-q <- stack(r, r+2, r+4, r+6)
+s <- c(r, r+1)
+q <- c(r, r+2, r+4, r+6)
 x <- r + s + q
 x
 
@@ -116,54 +116,55 @@ x
 
 ### Funciones Básicas sobre un Raster
 
-**Calc**
+**Aplicar una función a las celdas**
 
-Con la librería Raster uno puede aplicar funciones propias utilizando la función `calc()` cómo veremos a continuación:
+Con `terra` podemos aplicar funciones propias a las celdas mediante `app()`:
 
 
 ```{r}
-r <- raster(ncol=3, nrow=2)
+r <- rast(ncols=3, nrows=2)
 r[] <- 1:ncell(r)
-getValues(r)
+values(r)
 
 
 # cambiar los valores menores de 4 a NA
-s <- calc(r, fun=function(x){ x[x < 4] <- NA; return(x)} )
+s <- app(r, fun=function(x){ x[x < 4] <- NA; return(x)} )
 as.matrix(s) # solo para visualizar la respuesta en el libro digital
 ```
 
 
 
-**Overlay**
+**Operaciones entre rásteres**
 
-En el caso que quisiera hacer una operación sobre dos o más Raster podría utilizar la función `overlay()` cómo se observa a continuación:
+Para combinar dos o más rásteres con la misma geometría, `terra` permite operar directamente entre sus celdas:
 
 
 
 ```{r}
-# Overlay
-w <- overlay(r, s, fun=function(x, y){ x / (2 * sqrt(y)) + 5 } )
+w <- r / (2 * sqrt(s)) + 5
 as.matrix(w)
 ```
 
-**Reclassify**
+**Reclasificación**
 
-La función reclassify de la librería `raster` (parte del ecosistema de la librería `terra` en versiones más recientes) se utiliza para reasignar valores en un conjunto de datos raster, de acuerdo a un conjunto de reglas de reclasificación. Esto es útil cuando deseamos agrupar o reasignar valores específicos en rangos definidos a nuevos valores. Para entender esta función, es importante comprender la notación de intervalos, que define los rangos de valores que serán reclasificados.
+La función `classify()` de `terra` permite reasignar valores de un ráster según una tabla de reglas. Esto es útil cuando deseamos agrupar valores específicos en rangos definidos. Para entender esta función, es importante comprender la notación de intervalos, que define los rangos de valores que serán reclasificados.
 
 En la notación de intervalos, los subconjuntos se describen utilizando paréntesis redondos o corchetes cuadrados para indicar si los extremos de los intervalos están incluidos o excluidos. Un corchete cuadrado `[ ]` significa que el valor extremo está incluido en el intervalo, mientras que un paréntesis redondo `( )` indica que el valor no está incluido.
 
-En el contexto de la función `reclassify()`, los intervalos se manejan de manera que el valor máximo del intervalo está incluido en dicho intervalo, representado por corchetes cuadrados `[ ]`, mientras que en el intervalo siguiente, ese valor no se incluye, como si estuviera delimitado por un paréntesis redondo `( ]`. Por ejemplo, en el código `c(0,2,1)`, se está reclasificando el intervalo `[0, 2]`, lo que significa que los valores 0, 1 y 2 se reclasifican a 1. Sin embargo, el siguiente intervalo `c(2,4,2)` reclasifica el intervalo `(2, 4]`, donde el 2 no está incluido, pero el 4 sí.
+Con `right=TRUE`, `classify()` incluye el extremo superior de cada intervalo. Al usar `include.lowest=TRUE`, el primer intervalo también incluye su extremo inferior: `[0, 2]` se reclasifica a 1; `(2, 4]` se reclasifica a 2.
 
 
 
 ```{r}
 # Cambiar los valores entre 0 y 2 a 1, etc.
-w <- raster(ncol=3, nrow=2)
+w <- rast(ncols=3, nrows=2)
 w[] <- 1:ncell(w)
 as.matrix(w)
-x <- reclassify(w, c(0,2,1, # [0 a 2] = 1
-                     2,4,2, # (2 a 4] = 2
-                     4,6,3)) # (4 a 6] = 3
+reglas <- matrix(c(0,2,1, # [0 a 2] = 1
+                   2,4,2, # (2 a 4] = 2
+                   4,6,3), # (4 a 6] = 3
+                 ncol=3, byrow=TRUE)
+x <- classify(w, reglas, right=TRUE, include.lowest=TRUE)
 as.matrix(x)
 ```
 
@@ -275,8 +276,8 @@ Se puede accesar y preocesar directamente en los servidores de google mediante e
 ### Leer Archivos Raster (Imagen Satelital)
 
 ```{r echo=FALSE}
-suppressMessages(library(raster))
-OLI <- brick("data/raster/corte_rm_m.tif")
+suppressMessages(library(terra))
+OLI <- rast("data/raster/corte_rm_m.tif")
 names(OLI) <- c("aerosol", "blue", "green", "red", "nir",
                 "swir1", "swir2", "thermal")
 # OLI
@@ -285,8 +286,8 @@ names(OLI) <- c("aerosol", "blue", "green", "red", "nir",
 ![Un raster que proviene de un insumo satelital normalmente tiene más de una banda o también llamada layer](images/bands.jpg){width=70%}
 
 ```{r eval=FALSE}
-library(raster)
-OLI <- brick("data/raster/corte_rm_m.tif")
+library(terra)
+OLI <- rast("data/raster/corte_rm_m.tif")
 names(OLI) <- c("aerosol", "blue", "green", "red", "nir", "swir1", "swir2", "thermal")
 OLI
 ```
@@ -303,8 +304,7 @@ Los nombres de las bandas satelitales tienen que confirmarse con la información
 ### Visualización Raster
 
 ```{r}
-plotRGB(OLI, r = 4, g = 3, b = 2, stretch = "lin")
-# viewRGB(OLI, r = 4, g = 3, b = 2)
+terra::plotRGB(OLI, r = 4, g = 3, b = 2, stretch = "lin")
 ```
 
 
@@ -341,10 +341,11 @@ ggplot() +
 Realizar el corte de la comuna que seleccione
 
 ```{r}
-comuna_img <- mask(crop(OLI, extent(comuna), snap="out"), comuna)
+comuna_vect <- terra::vect(comuna)
+comuna_img <- terra::mask(terra::crop(OLI, comuna_vect, snap="out"), comuna_vect)
 comuna_img
 
-plotRGB(comuna_img, r = 4, g = 3, b = 2, stretch = "lin")
+terra::plotRGB(comuna_img, r = 4, g = 3, b = 2, stretch = "lin")
 ```
 
 
@@ -376,14 +377,14 @@ hist_bandas
 
 
 ```{r echo=TRUE}
-crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"# geográficas o elipsoidales
-crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # UTM o cartográficas
+crs_latlon <- "EPSG:4326" # geográficas o elipsoidales
+crs_utm <- "EPSG:32719" # UTM o cartográficas
 
 # utm a latlon
-comuna_img <- projectRaster(comuna_img, crs = crs_latlon)
+comuna_img <- terra::project(comuna_img, crs_latlon)
 
 # latlon a utm
-comuna_img <- projectRaster(comuna_img, crs = crs_utm)
+comuna_img <- terra::project(comuna_img, crs_utm)
 ```
 
 
@@ -399,49 +400,49 @@ Referencias: [https://mappinggis.com/2019/05/combinaciones-de-bandas-en-imagenes
 
 ```{r fig.align="center"}
 # Falso Color (7,6,4)
-plotRGB(comuna_img, r = 7, g = 6, b = 4, stretch = "lin")
+terra::plotRGB(comuna_img, r = 7, g = 6, b = 4, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Infrarojo (5,4,3)
-plotRGB(comuna_img, r = 5, g = 4, b = 3, stretch = "lin")
+terra::plotRGB(comuna_img, r = 5, g = 4, b = 3, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Agricultura (6,5,2)
-plotRGB(comuna_img, r = 6, g = 5, b = 2, stretch = "lin")
+terra::plotRGB(comuna_img, r = 6, g = 5, b = 2, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Penetración de la Radiación en la Atmósfera (7,6,5)
-plotRGB(comuna_img, r = 7, g = 6, b = 5, stretch = "lin")
+terra::plotRGB(comuna_img, r = 7, g = 6, b = 5, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Uso del Suelo / Masas de Agua (5,6,4)
-plotRGB(comuna_img, r = 5, g = 6, b = 4, stretch = "lin")
+terra::plotRGB(comuna_img, r = 5, g = 6, b = 4, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Infrarojo de Onda Corta (7,5,4)
-plotRGB(comuna_img, r = 7, g = 5, b = 4, stretch = "lin")
+terra::plotRGB(comuna_img, r = 7, g = 5, b = 4, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Análisis de Vegetación (6,5,4)
-plotRGB(comuna_img, r = 6, g = 5, b = 4, stretch = "lin")
+terra::plotRGB(comuna_img, r = 6, g = 5, b = 4, stretch = "lin")
 ```
 
 
 ```{r fig.align="center"}
 # Análisis de Vegetación Sana (5,6,2)
-plotRGB(comuna_img, r = 5, g = 6, b = 2, stretch = "lin")
+terra::plotRGB(comuna_img, r = 5, g = 6, b = 2, stretch = "lin")
 ```
 
 
@@ -472,6 +473,7 @@ NDVI <- function(img, i, k) {
 
 ```{r}
 NDVI_com <- NDVI(comuna_img, 4, 5)
+names(NDVI_com) <- "layer"
 ```
 
 
@@ -479,8 +481,8 @@ Visualización de NDVI en ggplot2
 
 ```{r}
 
-# rastero to df (na omit)
-NDVI_com_df <- raster::as.data.frame(NDVI_com, xy = TRUE) %>% na.omit()
+# ráster a tabla (sin celdas NA)
+NDVI_com_df <- as.data.frame(NDVI_com, xy = TRUE, na.rm = TRUE)
 
 #paleta
 pal_ndvi<- colorRampPalette(c("gray20", "yellow", "green","springgreen4"))( 200 )
@@ -533,16 +535,17 @@ mapview(NDVI_com, na.color = "transparent")
 
 
 
-Aplicación de la función para definir umbral utilizando `calc()`:
+Aplicación de la función para definir umbral utilizando `terra::app()`:
 
 ```{r echo=TRUE, eval=TRUE}
-vegetacion <- calc(NDVI_com, fun = corte_eq_may(value = 0.30))
+vegetacion <- terra::app(NDVI_com, fun = corte_eq_may(value = 0.30))
+names(vegetacion) <- "layer"
 ```
 
 
 ```{r warning=F}
 
-vegetacion_df <- raster::as.data.frame(vegetacion, xy = TRUE) %>% na.omit()
+vegetacion_df <- as.data.frame(vegetacion, xy = TRUE, na.rm = TRUE)
 ggplot() +
   geom_sf(data = comuna, fill = NA, color ="orange", 
           alpha=0.8,  size= 0.5)+

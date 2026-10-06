@@ -1,118 +1,80 @@
 ---
-title: "Estadística Espacial"
-subtitle: "Módulo 1: Teórico"
+title: "Estadística espacial"
+subtitle: "Módulo 1: Introducción"
 ---
 
-## Objetivos
+## Una decisión que depende del lugar
 
-![Objetivos](images/m1_geoanalisis.png)
+Imaginemos dos sectores de una ciudad. En cada uno viven 500 personas mayores. Si solo miramos ese número, ambos parecen necesitar la misma atención. Pero en uno hay calles arboladas y un centro de salud cercano; en el otro escasea la sombra y llegar a una consulta requiere un viaje largo. Si debemos decidir dónde instalar un punto de descanso durante una ola de calor, **saber cuántas personas viven allí no basta: necesitamos saber dónde están y a qué pueden acceder**.
 
-* Conocer teóricos fundamentales de la estadística espacial.
+La ubicación permite conectar los datos de población con las condiciones de cada lugar. También ayuda a ver diferencias que un total comunal puede esconder. Esa es la pregunta que guiará este capítulo: **¿qué cambia cuando sabemos dónde ocurre algo?**
 
+## Una breve mirada al origen
 
-## Origen de la Estadística
+La estadística y la cartografía han servido durante siglos para conocer y administrar territorios. Los censos reunían información sobre la población; los mapas mostraban dónde estaban los asentamientos, las rutas y los recursos. Leídos juntos, números y mapas permitían responder preguntas que ninguno resolvía por separado. Hoy usamos esa combinación para estudiar problemas públicos y evaluar dónde conviene actuar.
 
-Estadística deriva del italiano statista (hombre de Estado) y se desarrolla desde la antigüedad para facilitar la gestión tributaria y estimar la capacidad bélica de un reino. Ej: censos egipcios desde el 3050 a.C.
+![Mapa histórico de África: un ejemplo de cómo la cartografía representaba los territorios en su época.](images/mapa_africa.png){#fig-mapa-africa width="70%"}
 
-Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarrolla la estadística en estrecha relación con la cartografía, principalmente para la administración y dominio de territorios.
+## De la estadística a la estadística espacial
 
-![Origen de la Estadística](images/mapa_africa.png)
-
-
-## Definición General
-
-La estadística es una herramienta fundamental en la ciencia de datos que nos permite comprender y analizar datos para obtener información significativa. En términos simples, es como un lenguaje que utilizamos para describir, resumir y tomar decisiones basadas en la información que los datos nos proporcionan. Al aplicar métodos estadísticos, podemos identificar patrones, tendencias y relaciones en los datos, lo que es esencial tanto para la investigación académica como para la toma de decisiones en el mundo real.
-
-## Estadística vs Estadística Espacial
-
-La estadística en general es una disciplina amplia que se aplica a diversos tipos de datos y problemas, utilizando métodos estadísticos convencionales. La estadística espacial, por otro lado, se enfoca en datos con ubicaciones geográficas explícitas y se especializa en el análisis de la dependencia espacial y la modelización de patrones espaciales.
+La estadística nos ayuda a resumir datos, comparar grupos y estudiar relaciones. Por ejemplo, podemos calcular la edad promedio de una comuna o comparar los tiempos de viaje de dos grupos de personas. Algunas preguntas se responden sin conocer la ubicación exacta de cada observación.
 
 
-**Estadística:**
+![Curva normal, ejemplo de un modelo para describir la distribución de valores.](images/gauss_graph.png){#fig-curva-normal width="65%"}
 
-* Análisis de la estructura de datos representativos de una población (en áreas arbitrarias)
-* Se basa en matemáticas relativamente complejas
+La estadística espacial agrega esa ubicación al análisis. Pregunta dónde se concentran los valores, qué ocurre en los lugares vecinos y si la distancia o la conexión entre lugares ayuda a entender un fenómeno. Los mismos datos pueden contar una historia distinta cuando los ubicamos en un mapa.
 
-![Distribución normal en estadística](images/gauss_graph.png)
-**Geoestadística**
+La diferencia no significa que toda la estadística convencional exija observaciones independientes. Algunos métodos usan ese supuesto; otros permiten estudiar relaciones entre observaciones. En el análisis espacial, la cercanía es una de esas posibles relaciones y debemos examinarla según la pregunta y los datos.
 
-* Análisis de relaciones de dependencia espacial entre datos georreferenciados y modelamiento de datos espacilizados.
-* Complejidad de cálculo que hacía inviable su uso masivo 
+![Grafo de vecindad, ejemplo de cómo definir relaciones entre lugares para un análisis espacial.](images/dep_espacial.png){#fig-grafo-vecindad width="65%"}
 
-![Dependencia espacial en geoestadística](images/dep_espacial.png)
-
-
-## La Primera Ley de la Geografía y su Relevancia Social
-
-Waldo Tobler (1931–2018) formuló en 1970 su célebre Primera Ley de la Geografía:
-
-![](images/tobler-frase.png){fig-align="center" width="600"}
-<!-- > “Todas las cosas están relacionadas entre sí, pero las cosas más próximas en el espacio tienen una relación mayor que las distantes.” -->
-
-Este principio refleja cómo las interacciones humanas y sociales están condicionadas por la proximidad espacial. En política pública esto significa, por ejemplo, que las intervenciones en un barrio tienen efectos directos en los barrios vecinos, y que ignorar la dimensión espacial conduce a políticas sesgadas.
-
-O como lo resume Cervantes en El Quijote:
-
-![](images/cervantes-frase.png){fig-align="center" width="600"}
-<!-- > “Dime con quién andas y te diré quién eres.” -->
-
-⸻
-
-## El Espacio y el Tiempo: Coproducción Espacio-Temporal del Bienestar
-
-El bienestar social es resultado de una coproducción espacio-temporal: las políticas, las acciones colectivas y las dinámicas naturales configuran el territorio, que a su vez influye en las oportunidades y limitaciones de sus habitantes.
-
-Henri Lefebvre (1901–1991) lo expresó así:
-
-![](images/lefebvre-frase.png){fig-align="center" width="600"}
-<!-- > “La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales.” -->
-
-El espacio no es simplemente un escenario pasivo, sino un actor en las dinámicas sociales. Por ejemplo, la segregación urbana o la concentración delictual en ciertas áreas no son casualidad, sino resultado de una autoproducción espacial donde factores históricos, económicos y sociales se retroalimentan.
+La curva normal es una imagen conocida de la estadística: muestra cómo se distribuye una variable bajo un modelo particular. En cambio, un grafo de vecindad representa qué lugares consideramos conectados. Son dos referencias visuales distintas para las preguntas que podemos hacer con los datos; ninguna resume por sí sola toda una disciplina.
 
 
 
+## ¿Se parecen los lugares vecinos?
 
-## Por Qué Medir: La Importancia de las Estadísticas Territoriales
+En algunos fenómenos, los lugares cercanos presentan valores semejantes. Un parque puede refrescar su entorno y una mejora del transporte puede beneficiar a varios sectores próximos. Waldo Tobler resumió esta intuición en su Primera Ley de la Geografía: las cosas cercanas suelen estar más relacionadas que las distantes [@Tobler_1970].
 
-> Lo que no se mide, no se gestiona.
+![Waldo Tobler y la formulación de su Primera Ley de la Geografía, usada aquí como punto de partida para investigar la proximidad.](images/tobler-frase.png){#fig-tobler width="75%"}
 
-Las estadísticas territoriales permiten entender y actuar sobre el territorio con evidencia. Sin embargo, presentan desafíos particulares. La inferencia estadística clásica asume independencia entre observaciones y aleatoriedad, pero los datos espaciales violan ambos supuestos:
+**Es una hipótesis útil, no una regla universal.** Los vecinos también pueden ser muy diferentes: una avenida puede separar áreas con condiciones distintas, y un servicio puede ser más accesible desde un lugar lejano conectado por Metro que desde uno próximo sin una ruta directa. La relación depende del fenómeno, de la escala de análisis y de cómo definamos qué lugares son vecinos.
 
-* Las observaciones cercanas tienden a estar correlacionadas (Ley de Tobler).
-* El espacio actúa como un soporte material indispensable para las relaciones sociales.
+Cuando los valores semejantes se agrupan hablamos de *autocorrelación espacial positiva*. Cuando los lugares vecinos tienden a mostrar valores opuestos, hablamos de *autocorrelación espacial negativa*. Si no aparece un patrón de semejanza o contraste entre vecinos, no observamos autocorrelación espacial en los datos y la escala estudiados. Esto último no demuestra, por sí solo, que las observaciones sean independientes. La figura ilustra las tres posibilidades.
 
+![Tres patrones posibles: valores semejantes agrupados, valores opuestos entre vecinos y ausencia de un patrón espacial claro.](images/autocorrelacion-dif.png){#fig-autocorrelacion-dif width="85%"}
 
+Encontrar un patrón no explica por sí solo su causa. Si varios barrios cercanos tienen tiempos de viaje altos, podríamos investigar la red de transporte, la ubicación de los empleos o las barreras físicas. El mapa nos ayuda a formular mejores preguntas; para responderlas necesitamos más evidencia.
 
-## Ejemplos de Dependencia Espacial
+## Las personas también transforman el territorio
 
-### Autoproducción: Tráfico de Drogas
+La relación va en ambas direcciones. Las condiciones de un lugar influyen en las oportunidades de sus habitantes, y las decisiones de las personas y las instituciones modifican ese lugar. Esta idea suele llamarse *coproducción del espacio* [@Lefebvre_1974].
 
-![Autoproducción Espacial en tráfico de Drogas](images/drogas_autoproducion.png)
+![Henri Lefebvre y la idea de que la historia, la sociedad y el espacio se producen mutuamente.](images/lefebvre-frase.png){#fig-lefebvre width="75%"}
 
+Pensemos en una nueva estación de Metro. Puede acortar los viajes y facilitar el acceso a empleos y servicios. Con el tiempo, más personas y negocios pueden interesarse en el sector; eso puede cambiar la demanda de vivienda, transporte y espacio público. Esas nuevas necesidades influyen, a su vez, en futuras decisiones de inversión. El ejemplo describe un mecanismo posible: para saber si ocurrió en un barrio concreto habría que observar los cambios y considerar otras explicaciones.
 
-### Co-producción: Mercado inmobiliario local
+El esquema del Metro de Santiago ayuda a visualizar este ejemplo: agregar una estación o una conexión puede cambiar los recorridos de un sector y, con ello, las oportunidades de quienes viven o trabajan allí. A medida que cambia el barrio, también pueden cambiar las decisiones sobre la red de transporte.
 
-![Co-producción Espacial en Mercado inmobiliario local](images/mercado_inmob.png)
+![Esquema del Metro de Santiago utilizado para pensar cómo una nueva estación puede transformar el acceso y las decisiones de inversión en un barrio.](images/mapa-metro-santiago.png){#fig-metro-santiago width="65%"}
 
-### Segregación y delincuencia
+Algo parecido sucede cuando una actividad se expande hacia zonas cercanas. Por ejemplo, un aumento de denuncias por tráfico de drogas en sectores vecinos podría indicar una expansión de la actividad, pero también una mayor fiscalización o cambios en la disposición a denunciar. La concentración en un mapa no permite elegir entre esas explicaciones por sí sola.
 
-::: {layout-ncol=3}
+## Los límites del mapa también importan
 
-![](images/lc_vulnerabilidad.png)
+Para construir indicadores solemos reunir personas u observaciones en zonas: manzanas, barrios o comunas. Al cambiar los límites o el tamaño de esas zonas, puede cambiar el resultado agregado aunque las personas sigan viviendo en los mismos lugares. Este es el *problema de la unidad espacial modificable* (MAUP).
 
-![](images/lc_delitos_dom.png)
+En la siguiente figura, los puntos y triángulos no se mueven. La primera división separa ambos grupos; la segunda cambia los límites y los mezcla; la tercera reúne todo en una sola zona. El patrón territorial que vemos depende, por tanto, de cómo agrupamos los datos.
 
-![](images/LC_delitos_drogas.png)
+![Las mismas personas agrupadas con límites y escalas diferentes producen indicadores distintos.](images/maup.png){#fig-maup width="95%"}
 
-:::
+Por eso conviene elegir unidades territoriales acordes con la pregunta, revisar qué diferencias quedan dentro de cada zona y, cuando sea posible, comprobar si la conclusión se mantiene con otra delimitación.
 
-<!-- ![Segregación y delincuencia](images/segregacion_del.png){width=70%} -->
+## De los datos a una decisión pública
 
-### Valores de Vivienda
-
-
-
-![Valores de Vivienda](images/val_vivienda.png)
-
+Volvamos a los dos sectores del comienzo. Un análisis territorial podría reunir el número de personas mayores, la cobertura de sombra, las rutas peatonales, el tiempo de viaje a centros de salud y la ubicación de los puntos de descanso existentes. Con esa información podemos identificar dónde la necesidad es mayor y explicar por qué priorizamos un lugar. La decisión también requiere verificar la calidad de los datos y escuchar a quienes usan esos espacios.
 
 
+A lo largo del curso aprenderemos a representar datos vectoriales y ráster, construir indicadores territoriales y explorar relaciones de vecindad, interpolación, autocorrelación y agrupamientos espaciales. Cada técnica responde una parte de la misma pregunta: **cómo usar la ubicación para comprender mejor un problema y orientar una decisión pública**.
+
+![Ilustración del paso desde la observación del territorio y el análisis de mapas hasta la planificación de espacios y servicios públicos.](images/decision-pub.png){#fig-decision-publica width="95%"}

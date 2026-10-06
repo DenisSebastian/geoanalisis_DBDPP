@@ -9,7 +9,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(sf))
-suppressPackageStartupMessages(library(raster))
+suppressPackageStartupMessages(library(terra))
 suppressPackageStartupMessages(library(mapview))
 ```
 
@@ -167,7 +167,7 @@ Para ejemplificar el uso y ver características de Raster vamos a utilizar una i
 
 ![Imágenes Satelitales](images/Sentinel-2Poster.jpg)
 
-Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de información tipos raster conformando una especie de brick de raster.
+Este tipo de imágenes satelitales generalmente contiene una serie de bandas que corresponden a capas de información ráster. En `terra`, las bandas se almacenan juntas en un objeto `SpatRaster` de varias capas.
 
 ![Configuración de Bandas](images/3D-array.jpg)
 
@@ -185,8 +185,8 @@ Para este ejemplo de visualización necesitamos conocer las bandas satelitales q
 ### lectura de imagen Raster.
 
 ```{r}
-library(raster)
-las_condes_raster <- brick("data/raster/OLI_LC.tif")
+library(terra)
+las_condes_raster <- rast("data/raster/OLI_LC.tif")
 names(las_condes_raster) <- c("aerosol", "blue", "green", "red" , "nir", "swir1", "swir2", "tirs1")
 las_condes_raster
 
@@ -195,63 +195,7 @@ las_condes_raster
 ### Visualización Raster
 ```{r}
 # Visualización de imagen recortada de Las Condes en Color Natural
-plotRGB(las_condes_raster, r = 4, g = 3, b = 2, stretch = "lin")
-# viewRGB(las_condes_raster, r = 4, g = 3, b = 2)
-```
-
-
-## Sistema de Referencias de Coordenadas
-
-
-
-![Sistema de Referencias de Coordenadas](images/crs.png)
-
-Los sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido. Los tipos de sistemas de coordenadas principales
-que existen son:
-
-Coordenadas elipsoidales
-: son la representación de las coordenadas sobre la superficie de un elipsoide determinado, se representan por  [φ, λ, h] siendo respectivamente, la latitud, longitud y altura elipsoidal. 
-
-![Coordenadas Geodésicas. Fuente: (Drewes & Sánchez, 2011)](images/geodesicas.png){width=60%}
-
-Coordenadas proyectadas o cartográficas
-: Según la proyección empleada las coordenadas elipsoidales pueden representarse en un plano, en el caso de Chile continental, se emplea la proyección Universal Transversal de Mercator (UTM), huso 19 y huso 18. 
-
-![proyección Universal Transversal Mercator (UTM) Fuente: (Drewes & Sánchez,
-2011)](images/utm.png){width=60%}
-
-
-
-Para hacer reproyecciones en R, se le tiene que asignar el Sistema de Referencia de Coordenadas de dos formas, uno como cadena de texto (`"+proj=longlat +datum=WGS84 +no_defs"`) o como número que corresponde a EPSG ([EPSG es el acrónimo de European Petroleum Survey Group](https://mappinggis.com/2016/04/los-codigos-epsg-srid-vinculacion-postgis/)) que representan sistema de referencia de coordenadas también.
-
-
-Para el caso de Chile usamos dos sistemas de referencias de coordenadas:
-
-Coordenadas elipsoidales (geodésicas):
-: 4326 o `"+proj=longlat +datum=WGS84 +no_defs"`
-
-Coordenadas proyectadas (métricas):
-: 32719 o `"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"` 
-
-### Reproyectar Vectores
-
-```{r}
-
-LC_mz_32719 <- las_condes_mz %>% st_transform(32719)
-st_crs(LC_mz_32719)
-
-```
-
-
-
-### Reproyectar Raster
-
-```{r}
-# las_condes_raster
-crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"# geográficas o elipsoidales
-crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs" # UTM o cartográficas
-las_condes_raster2 <- projectRaster(from= las_condes_raster,                                             crs = crs_latlon)
-las_condes_raster2
+terra::plotRGB(las_condes_raster, r = 4, g = 3, b = 2, stretch = "lin")
 ```
 
 
@@ -294,9 +238,6 @@ las_condes_raster2
 ## Referencias
 
 
-[Geodesia en Chile, teoría y aplicación
-del Sistema de Referencia
-Geocéntrico para las Américas
-(SIRGAS) - 2018](https://www.ide.cl/descargas/Geodesia-en-Chile.pdf)
+
 
 [Simple Features for R](https://r-spatial.github.io/sf/)

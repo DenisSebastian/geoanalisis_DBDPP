@@ -23,11 +23,12 @@ Los objetivos específicos son:
 ![Modulos](images/modulos.png)
 
 1.	Introducción a la Estadística Espacial y a Datos Espaciales
-2.	Manejo y Representación de datos vectoriales, construcción de indicadores
-3.	Manejo y Representación de datos raster, construcción de indicadores
-4.	Inferencia Espacial: Interpolación y mapas de calor
-5.	Relaciones de Vecindad y autocorrelación espacial
-6.	Modelos de Regresión Espacial
+2.	Manejo y Representación de datos vectoriales
+3.	Manejo y Representación de datos raster
+4. Construcción de indicadores territoriales
+5.	Inferencia Espacial 
+6.	Relaciones de Vecindad y autocorrelación espacial
+7.	Clustering Espacial
 
 ## Docentes
 

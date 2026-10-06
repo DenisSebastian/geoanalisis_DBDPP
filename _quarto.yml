@@ -15,24 +15,25 @@ book:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
-    - datos_vectoriales.qmd
-    - raster.qmd
-    - indicadores_territoriales.qmd
-    - inferencia.qmd
-    - autocorrelacion.qmd
-    # - regresion_espacial.qmd
-    - clustering.qmd
+    # - datos_vectoriales.qmd
+    # - raster.qmd
+    # - indicadores_territoriales.qmd
+    # - inferencia.qmd
+    # - autocorrelacion.qmd
+    # - clustering.qmd
     # - part: "Tareas"
       # chapters:
         # - tarea_1.qmd
         # - tarea_2.qmd
     - part: "Anexos"
       chapters:
-        - r_project.qmd
-        - geocoding.qmd
-        - espacial_r.qmd
+        # - r_project.qmd
+        - crs.qmd
+        # - geocode.qmd
+        # - espacial_r.qmd
             # - luces_nocturnas.qmd
-        - john_snow.qmd
+        # - john_snow.qmd
+        # - quiebres.qmd
     - references.qmd
 
 bibliography: references.bib

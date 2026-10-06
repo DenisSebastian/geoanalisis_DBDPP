@@ -179,10 +179,8 @@ Como no en toda la superficie de una zona de estudio han sucedido delitos, pero 
 
 Cargar Librerías
 ```{r}
-library(rgdal)
 library(sf)
 library(dplyr)
-library(rgeos)
 library(raster)
 library(spatstat)
 library(spdep)
