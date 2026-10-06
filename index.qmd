@@ -41,7 +41,7 @@ Profesor:
 - Ingeniero en Prevención en Riesgos 
 
 Ayudante:
-: Alexis Gamboa Maldonado(<algamboa@alumnos.uai.cl>)
+: Alexis Gamboa Maldonado(<alexis.gamboa.m@edu.uai.cl>)
 
 - Analista Metodólogo / Percepción remota en INE Chile.
 - Geógrafo, PUC
