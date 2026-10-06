@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Estadística Espacial – Curso: Geoanálisis</title>
+<title>1&nbsp; Estadística espacial – Curso: Geoanálisis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -83,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_estad_esp.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro_estad_esp.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -117,49 +137,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./indicadores_territoriales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./inferencia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering Espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -173,26 +157,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Project</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./geocode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Geocoding</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./espacial_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Objetos Espaciales en R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./john_snow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mapa de Cólera</span></a>
+  <a href="./crs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CRS en R</span></a>
   </div>
 </li>
       </ul>
@@ -213,20 +179,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"><span class="header-section-number">1.1</span> Objetivos</a></li>
-  <li><a href="#origen-de-la-estadística" id="toc-origen-de-la-estadística" class="nav-link" data-scroll-target="#origen-de-la-estadística"><span class="header-section-number">1.2</span> Origen de la Estadística</a></li>
-  <li><a href="#definición-general" id="toc-definición-general" class="nav-link" data-scroll-target="#definición-general"><span class="header-section-number">1.3</span> Definición General</a></li>
-  <li><a href="#estadística-vs-estadística-espacial" id="toc-estadística-vs-estadística-espacial" class="nav-link" data-scroll-target="#estadística-vs-estadística-espacial"><span class="header-section-number">1.4</span> Estadística vs Estadística Espacial</a></li>
-  <li><a href="#la-primera-ley-de-la-geografía-y-su-relevancia-social" id="toc-la-primera-ley-de-la-geografía-y-su-relevancia-social" class="nav-link" data-scroll-target="#la-primera-ley-de-la-geografía-y-su-relevancia-social"><span class="header-section-number">1.5</span> La Primera Ley de la Geografía y su Relevancia Social</a></li>
-  <li><a href="#el-espacio-y-el-tiempo-coproducción-espacio-temporal-del-bienestar" id="toc-el-espacio-y-el-tiempo-coproducción-espacio-temporal-del-bienestar" class="nav-link" data-scroll-target="#el-espacio-y-el-tiempo-coproducción-espacio-temporal-del-bienestar"><span class="header-section-number">1.6</span> El Espacio y el Tiempo: Coproducción Espacio-Temporal del Bienestar</a></li>
-  <li><a href="#por-qué-medir-la-importancia-de-las-estadísticas-territoriales" id="toc-por-qué-medir-la-importancia-de-las-estadísticas-territoriales" class="nav-link" data-scroll-target="#por-qué-medir-la-importancia-de-las-estadísticas-territoriales"><span class="header-section-number">1.7</span> Por Qué Medir: La Importancia de las Estadísticas Territoriales</a></li>
-  <li><a href="#ejemplos-de-dependencia-espacial" id="toc-ejemplos-de-dependencia-espacial" class="nav-link" data-scroll-target="#ejemplos-de-dependencia-espacial"><span class="header-section-number">1.8</span> Ejemplos de Dependencia Espacial</a>
-  <ul class="collapse">
-  <li><a href="#autoproducción-tráfico-de-drogas" id="toc-autoproducción-tráfico-de-drogas" class="nav-link" data-scroll-target="#autoproducción-tráfico-de-drogas"><span class="header-section-number">1.8.1</span> Autoproducción: Tráfico de Drogas</a></li>
-  <li><a href="#co-producción-mercado-inmobiliario-local" id="toc-co-producción-mercado-inmobiliario-local" class="nav-link" data-scroll-target="#co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.8.2</span> Co-producción: Mercado inmobiliario local</a></li>
-  <li><a href="#segregación-y-delincuencia" id="toc-segregación-y-delincuencia" class="nav-link" data-scroll-target="#segregación-y-delincuencia"><span class="header-section-number">1.8.3</span> Segregación y delincuencia</a></li>
-  <li><a href="#valores-de-vivienda" id="toc-valores-de-vivienda" class="nav-link" data-scroll-target="#valores-de-vivienda"><span class="header-section-number">1.8.4</span> Valores de Vivienda</a></li>
-  </ul></li>
+  <li><a href="#una-decisión-que-depende-del-lugar" id="toc-una-decisión-que-depende-del-lugar" class="nav-link active" data-scroll-target="#una-decisión-que-depende-del-lugar"><span class="header-section-number">1.1</span> Una decisión que depende del lugar</a></li>
+  <li><a href="#una-breve-mirada-al-origen" id="toc-una-breve-mirada-al-origen" class="nav-link" data-scroll-target="#una-breve-mirada-al-origen"><span class="header-section-number">1.2</span> Una breve mirada al origen</a></li>
+  <li><a href="#de-la-estadística-a-la-estadística-espacial" id="toc-de-la-estadística-a-la-estadística-espacial" class="nav-link" data-scroll-target="#de-la-estadística-a-la-estadística-espacial"><span class="header-section-number">1.3</span> De la estadística a la estadística espacial</a></li>
+  <li><a href="#se-parecen-los-lugares-vecinos" id="toc-se-parecen-los-lugares-vecinos" class="nav-link" data-scroll-target="#se-parecen-los-lugares-vecinos"><span class="header-section-number">1.4</span> ¿Se parecen los lugares vecinos?</a></li>
+  <li><a href="#las-personas-también-transforman-el-territorio" id="toc-las-personas-también-transforman-el-territorio" class="nav-link" data-scroll-target="#las-personas-también-transforman-el-territorio"><span class="header-section-number">1.5</span> Las personas también transforman el territorio</a></li>
+  <li><a href="#los-límites-del-mapa-también-importan" id="toc-los-límites-del-mapa-también-importan" class="nav-link" data-scroll-target="#los-límites-del-mapa-también-importan"><span class="header-section-number">1.6</span> Los límites del mapa también importan</a></li>
+  <li><a href="#de-los-datos-a-una-decisión-pública" id="toc-de-los-datos-a-una-decisión-pública" class="nav-link" data-scroll-target="#de-los-datos-a-una-decisión-pública"><span class="header-section-number">1.7</span> De los datos a una decisión pública</a></li>
   </ul>
 </nav>
     </div>
@@ -235,8 +194,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></h1>
-<p class="subtitle lead">Módulo 1: Teórico</p>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></h1>
+<p class="subtitle lead">Módulo 1: Introducción</p>
 </div>
 
 
@@ -253,128 +212,146 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="objetivos" class="level2 page-columns page-full" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">1.1</span> Objetivos</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/m1_geoanalisis.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Objetivos</figcaption>
-</figure>
-</div>
-<ul>
-<li>Conocer teóricos fundamentales de la estadística espacial.</li>
-</ul>
+<section id="una-decisión-que-depende-del-lugar" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="una-decisión-que-depende-del-lugar"><span class="header-section-number">1.1</span> Una decisión que depende del lugar</h2>
+<p>Imaginemos dos sectores de una ciudad. En cada uno viven 500 personas mayores. Si solo miramos ese número, ambos parecen necesitar la misma atención. Pero en uno hay calles arboladas y un centro de salud cercano; en el otro escasea la sombra y llegar a una consulta requiere un viaje largo. Si debemos decidir dónde instalar un punto de descanso durante una ola de calor, <strong>saber cuántas personas viven allí no basta: necesitamos saber dónde están y a qué pueden acceder</strong>.</p>
+<p>La ubicación permite conectar los datos de población con las condiciones de cada lugar. También ayuda a ver diferencias que un total comunal puede esconder. Esa es la pregunta que guiará este capítulo: <strong>¿qué cambia cuando sabemos dónde ocurre algo?</strong></p>
 </section>
-<section id="origen-de-la-estadística" class="level2 page-columns page-full" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="origen-de-la-estadística"><span class="header-section-number">1.2</span> Origen de la Estadística</h2>
-<p>Estadística deriva del italiano statista (hombre de Estado) y se desarrolla desde la antigüedad para facilitar la gestión tributaria y estimar la capacidad bélica de un reino. Ej: censos egipcios desde el 3050 a.C.</p>
-<p>Durante la expansión de los imperios coloniales (siglos XVI - XIX) se desarrolla la estadística en estrecha relación con la cartografía, principalmente para la administración y dominio de territorios.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/mapa_africa.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Origen de la Estadística</figcaption>
+<section id="una-breve-mirada-al-origen" class="level2 page-columns page-full" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="una-breve-mirada-al-origen"><span class="header-section-number">1.2</span> Una breve mirada al origen</h2>
+<p>La estadística y la cartografía han servido durante siglos para conocer y administrar territorios. Los censos reunían información sobre la población; los mapas mostraban dónde estaban los asentamientos, las rutas y los recursos. Leídos juntos, números y mapas permitían responder preguntas que ninguno resolvía por separado. Hoy usamos esa combinación para estudiar problemas públicos y evaluar dónde conviene actuar.</p>
+<div id="fig-mapa-africa" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-mapa-africa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/mapa_africa.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-mapa-africa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Mapa histórico de África: un ejemplo de cómo la cartografía representaba los territorios en su época.
+</figcaption>
 </figure>
 </div>
 </section>
-<section id="definición-general" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="definición-general"><span class="header-section-number">1.3</span> Definición General</h2>
-<p>La estadística es una herramienta fundamental en la ciencia de datos que nos permite comprender y analizar datos para obtener información significativa. En términos simples, es como un lenguaje que utilizamos para describir, resumir y tomar decisiones basadas en la información que los datos nos proporcionan. Al aplicar métodos estadísticos, podemos identificar patrones, tendencias y relaciones en los datos, lo que es esencial tanto para la investigación académica como para la toma de decisiones en el mundo real.</p>
-</section>
-<section id="estadística-vs-estadística-espacial" class="level2 page-columns page-full" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="estadística-vs-estadística-espacial"><span class="header-section-number">1.4</span> Estadística vs Estadística Espacial</h2>
-<p>La estadística en general es una disciplina amplia que se aplica a diversos tipos de datos y problemas, utilizando métodos estadísticos convencionales. La estadística espacial, por otro lado, se enfoca en datos con ubicaciones geográficas explícitas y se especializa en el análisis de la dependencia espacial y la modelización de patrones espaciales.</p>
-<p><strong>Estadística:</strong></p>
-<ul>
-<li>Análisis de la estructura de datos representativos de una población (en áreas arbitrarias)</li>
-<li>Se basa en matemáticas relativamente complejas</li>
-</ul>
-<p><img src="images/gauss_graph.png" class="img-fluid" alt="Distribución normal en estadística"> <strong>Geoestadística</strong></p>
-<ul>
-<li>Análisis de relaciones de dependencia espacial entre datos georreferenciados y modelamiento de datos espacilizados.</li>
-<li>Complejidad de cálculo que hacía inviable su uso masivo</li>
-</ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/dep_espacial.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Dependencia espacial en geoestadística</figcaption>
+<section id="de-la-estadística-a-la-estadística-espacial" class="level2 page-columns page-full" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="de-la-estadística-a-la-estadística-espacial"><span class="header-section-number">1.3</span> De la estadística a la estadística espacial</h2>
+<p>La estadística nos ayuda a resumir datos, comparar grupos y estudiar relaciones. Por ejemplo, podemos calcular la edad promedio de una comuna o comparar los tiempos de viaje de dos grupos de personas. Algunas preguntas se responden sin conocer la ubicación exacta de cada observación.</p>
+<div id="fig-curva-normal" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-curva-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/gauss_graph.png" class="img-fluid figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-curva-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Curva normal, ejemplo de un modelo para describir la distribución de valores.
+</figcaption>
 </figure>
 </div>
-</section>
-<section id="la-primera-ley-de-la-geografía-y-su-relevancia-social" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="la-primera-ley-de-la-geografía-y-su-relevancia-social"><span class="header-section-number">1.5</span> La Primera Ley de la Geografía y su Relevancia Social</h2>
-<p>Waldo Tobler (1931–2018) formuló en 1970 su célebre Primera Ley de la Geografía:</p>
-<p><img src="images/tobler-frase.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> <!-- > “Todas las cosas están relacionadas entre sí, pero las cosas más próximas en el espacio tienen una relación mayor que las distantes.” --></p>
-<p>Este principio refleja cómo las interacciones humanas y sociales están condicionadas por la proximidad espacial. En política pública esto significa, por ejemplo, que las intervenciones en un barrio tienen efectos directos en los barrios vecinos, y que ignorar la dimensión espacial conduce a políticas sesgadas.</p>
-<p>O como lo resume Cervantes en El Quijote:</p>
-<p><img src="images/cervantes-frase.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> <!-- > “Dime con quién andas y te diré quién eres.” --></p>
-<p>⸻</p>
-</section>
-<section id="el-espacio-y-el-tiempo-coproducción-espacio-temporal-del-bienestar" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="el-espacio-y-el-tiempo-coproducción-espacio-temporal-del-bienestar"><span class="header-section-number">1.6</span> El Espacio y el Tiempo: Coproducción Espacio-Temporal del Bienestar</h2>
-<p>El bienestar social es resultado de una coproducción espacio-temporal: las políticas, las acciones colectivas y las dinámicas naturales configuran el territorio, que a su vez influye en las oportunidades y limitaciones de sus habitantes.</p>
-<p>Henri Lefebvre (1901–1991) lo expresó así:</p>
-<p><img src="images/lefebvre-frase.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> <!-- > “La historia, el espacio y la sociedad se co-producen, por lo que el espacio tiene un rol activo en la reproducción y acumulación de fenómenos sociales.” --></p>
-<p>El espacio no es simplemente un escenario pasivo, sino un actor en las dinámicas sociales. Por ejemplo, la segregación urbana o la concentración delictual en ciertas áreas no son casualidad, sino resultado de una autoproducción espacial donde factores históricos, económicos y sociales se retroalimentan.</p>
-</section>
-<section id="por-qué-medir-la-importancia-de-las-estadísticas-territoriales" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="por-qué-medir-la-importancia-de-las-estadísticas-territoriales"><span class="header-section-number">1.7</span> Por Qué Medir: La Importancia de las Estadísticas Territoriales</h2>
-<blockquote class="blockquote">
-<p>Lo que no se mide, no se gestiona.</p>
-</blockquote>
-<p>Las estadísticas territoriales permiten entender y actuar sobre el territorio con evidencia. Sin embargo, presentan desafíos particulares. La inferencia estadística clásica asume independencia entre observaciones y aleatoriedad, pero los datos espaciales violan ambos supuestos:</p>
-<ul>
-<li>Las observaciones cercanas tienden a estar correlacionadas (Ley de Tobler).</li>
-<li>El espacio actúa como un soporte material indispensable para las relaciones sociales.</li>
-</ul>
-</section>
-<section id="ejemplos-de-dependencia-espacial" class="level2 page-columns page-full" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="ejemplos-de-dependencia-espacial"><span class="header-section-number">1.8</span> Ejemplos de Dependencia Espacial</h2>
-<section id="autoproducción-tráfico-de-drogas" class="level3 page-columns page-full" data-number="1.8.1">
-<h3 data-number="1.8.1" class="anchored" data-anchor-id="autoproducción-tráfico-de-drogas"><span class="header-section-number">1.8.1</span> Autoproducción: Tráfico de Drogas</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/drogas_autoproducion.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Autoproducción Espacial en tráfico de Drogas</figcaption>
+<p>La estadística espacial agrega esa ubicación al análisis. Pregunta dónde se concentran los valores, qué ocurre en los lugares vecinos y si la distancia o la conexión entre lugares ayuda a entender un fenómeno. Los mismos datos pueden contar una historia distinta cuando los ubicamos en un mapa.</p>
+<p>La diferencia no significa que toda la estadística convencional exija observaciones independientes. Algunos métodos usan ese supuesto; otros permiten estudiar relaciones entre observaciones. En el análisis espacial, la cercanía es una de esas posibles relaciones y debemos examinarla según la pregunta y los datos.</p>
+<div id="fig-grafo-vecindad" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-grafo-vecindad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/dep_espacial.png" class="img-fluid figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-grafo-vecindad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Grafo de vecindad, ejemplo de cómo definir relaciones entre lugares para un análisis espacial.
+</figcaption>
 </figure>
 </div>
+<p>La curva normal es una imagen conocida de la estadística: muestra cómo se distribuye una variable bajo un modelo particular. En cambio, un grafo de vecindad representa qué lugares consideramos conectados. Son dos referencias visuales distintas para las preguntas que podemos hacer con los datos; ninguna resume por sí sola toda una disciplina.</p>
 </section>
-<section id="co-producción-mercado-inmobiliario-local" class="level3 page-columns page-full" data-number="1.8.2">
-<h3 data-number="1.8.2" class="anchored" data-anchor-id="co-producción-mercado-inmobiliario-local"><span class="header-section-number">1.8.2</span> Co-producción: Mercado inmobiliario local</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/mercado_inmob.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Co-producción Espacial en Mercado inmobiliario local</figcaption>
+<section id="se-parecen-los-lugares-vecinos" class="level2 page-columns page-full" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="se-parecen-los-lugares-vecinos"><span class="header-section-number">1.4</span> ¿Se parecen los lugares vecinos?</h2>
+<p>En algunos fenómenos, los lugares cercanos presentan valores semejantes. Un parque puede refrescar su entorno y una mejora del transporte puede beneficiar a varios sectores próximos. Waldo Tobler resumió esta intuición en su Primera Ley de la Geografía: las cosas cercanas suelen estar más relacionadas que las distantes <span class="citation" data-cites="Tobler_1970">(<a href="references.html#ref-Tobler_1970" role="doc-biblioref">Tobler 1970</a>)</span>.</p>
+<div id="fig-tobler" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-tobler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tobler-frase.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-tobler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.4: Waldo Tobler y la formulación de su Primera Ley de la Geografía, usada aquí como punto de partida para investigar la proximidad.
+</figcaption>
 </figure>
 </div>
+<p><strong>Es una hipótesis útil, no una regla universal.</strong> Los vecinos también pueden ser muy diferentes: una avenida puede separar áreas con condiciones distintas, y un servicio puede ser más accesible desde un lugar lejano conectado por Metro que desde uno próximo sin una ruta directa. La relación depende del fenómeno, de la escala de análisis y de cómo definamos qué lugares son vecinos.</p>
+<p>Cuando los valores semejantes se agrupan hablamos de <em>autocorrelación espacial positiva</em>. Cuando los lugares vecinos tienden a mostrar valores opuestos, hablamos de <em>autocorrelación espacial negativa</em>. Si no aparece un patrón de semejanza o contraste entre vecinos, no observamos autocorrelación espacial en los datos y la escala estudiados. Esto último no demuestra, por sí solo, que las observaciones sean independientes. La figura ilustra las tres posibilidades.</p>
+<div id="fig-autocorrelacion-dif" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-autocorrelacion-dif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/autocorrelacion-dif.png" class="img-fluid figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-autocorrelacion-dif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.5: Tres patrones posibles: valores semejantes agrupados, valores opuestos entre vecinos y ausencia de un patrón espacial claro.
+</figcaption>
+</figure>
+</div>
+<p>Encontrar un patrón no explica por sí solo su causa. Si varios barrios cercanos tienen tiempos de viaje altos, podríamos investigar la red de transporte, la ubicación de los empleos o las barreras físicas. El mapa nos ayuda a formular mejores preguntas; para responderlas necesitamos más evidencia.</p>
 </section>
-<section id="segregación-y-delincuencia" class="level3" data-number="1.8.3">
-<h3 data-number="1.8.3" class="anchored" data-anchor-id="segregación-y-delincuencia"><span class="header-section-number">1.8.3</span> Segregación y delincuencia</h3>
-<div class="quarto-layout-panel" data-layout-ncol="3">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/lc_vulnerabilidad.png" class="img-fluid"></p>
+<section id="las-personas-también-transforman-el-territorio" class="level2 page-columns page-full" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="las-personas-también-transforman-el-territorio"><span class="header-section-number">1.5</span> Las personas también transforman el territorio</h2>
+<p>La relación va en ambas direcciones. Las condiciones de un lugar influyen en las oportunidades de sus habitantes, y las decisiones de las personas y las instituciones modifican ese lugar. Esta idea suele llamarse <em>coproducción del espacio</em> <span class="citation" data-cites="Lefebvre_1974">(<a href="references.html#ref-Lefebvre_1974" role="doc-biblioref">Lefebvre 1974</a>)</span>.</p>
+<div id="fig-lefebvre" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-lefebvre-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lefebvre-frase.png" class="img-fluid figure-img" style="width:75.0%">
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/lc_delitos_dom.png" class="img-fluid"></p>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-lefebvre-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.6: Henri Lefebvre y la idea de que la historia, la sociedad y el espacio se producen mutuamente.
+</figcaption>
+</figure>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="images/LC_delitos_drogas.png" class="img-fluid"></p>
+<p>Pensemos en una nueva estación de Metro. Puede acortar los viajes y facilitar el acceso a empleos y servicios. Con el tiempo, más personas y negocios pueden interesarse en el sector; eso puede cambiar la demanda de vivienda, transporte y espacio público. Esas nuevas necesidades influyen, a su vez, en futuras decisiones de inversión. El ejemplo describe un mecanismo posible: para saber si ocurrió en un barrio concreto habría que observar los cambios y considerar otras explicaciones.</p>
+<p>El esquema del Metro de Santiago ayuda a visualizar este ejemplo: agregar una estación o una conexión puede cambiar los recorridos de un sector y, con ello, las oportunidades de quienes viven o trabajan allí. A medida que cambia el barrio, también pueden cambiar las decisiones sobre la red de transporte.</p>
+<div id="fig-metro-santiago" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-metro-santiago-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/mapa-metro-santiago.png" class="img-fluid figure-img" style="width:65.0%">
 </div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-metro-santiago-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.7: Esquema del Metro de Santiago utilizado para pensar cómo una nueva estación puede transformar el acceso y las decisiones de inversión en un barrio.
+</figcaption>
+</figure>
 </div>
-</div>
-<!-- ![Segregación y delincuencia](images/segregacion_del.png){width=70%} -->
+<p>Algo parecido sucede cuando una actividad se expande hacia zonas cercanas. Por ejemplo, un aumento de denuncias por tráfico de drogas en sectores vecinos podría indicar una expansión de la actividad, pero también una mayor fiscalización o cambios en la disposición a denunciar. La concentración en un mapa no permite elegir entre esas explicaciones por sí sola.</p>
 </section>
-<section id="valores-de-vivienda" class="level3 page-columns page-full" data-number="1.8.4">
-<h3 data-number="1.8.4" class="anchored" data-anchor-id="valores-de-vivienda"><span class="header-section-number">1.8.4</span> Valores de Vivienda</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/val_vivienda.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Valores de Vivienda</figcaption>
+<section id="los-límites-del-mapa-también-importan" class="level2 page-columns page-full" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="los-límites-del-mapa-también-importan"><span class="header-section-number">1.6</span> Los límites del mapa también importan</h2>
+<p>Para construir indicadores solemos reunir personas u observaciones en zonas: manzanas, barrios o comunas. Al cambiar los límites o el tamaño de esas zonas, puede cambiar el resultado agregado aunque las personas sigan viviendo en los mismos lugares. Este es el <em>problema de la unidad espacial modificable</em> (MAUP).</p>
+<p>En la siguiente figura, los puntos y triángulos no se mueven. La primera división separa ambos grupos; la segunda cambia los límites y los mezcla; la tercera reúne todo en una sola zona. El patrón territorial que vemos depende, por tanto, de cómo agrupamos los datos.</p>
+<div id="fig-maup" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-maup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/maup.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-maup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.8: Las mismas personas agrupadas con límites y escalas diferentes producen indicadores distintos.
+</figcaption>
+</figure>
+</div>
+<p>Por eso conviene elegir unidades territoriales acordes con la pregunta, revisar qué diferencias quedan dentro de cada zona y, cuando sea posible, comprobar si la conclusión se mantiene con otra delimitación.</p>
+</section>
+<section id="de-los-datos-a-una-decisión-pública" class="level2 page-columns page-full" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="de-los-datos-a-una-decisión-pública"><span class="header-section-number">1.7</span> De los datos a una decisión pública</h2>
+<p>Volvamos a los dos sectores del comienzo. Un análisis territorial podría reunir el número de personas mayores, la cobertura de sombra, las rutas peatonales, el tiempo de viaje a centros de salud y la ubicación de los puntos de descanso existentes. Con esa información podemos identificar dónde la necesidad es mayor y explicar por qué priorizamos un lugar. La decisión también requiere verificar la calidad de los datos y escuchar a quienes usan esos espacios.</p>
+<p>A lo largo del curso aprenderemos a representar datos vectoriales y ráster, construir indicadores territoriales y explorar relaciones de vecindad, interpolación, autocorrelación y agrupamientos espaciales. Cada técnica responde una parte de la misma pregunta: <strong>cómo usar la ubicación para comprender mejor un problema y orientar una decisión pública</strong>.</p>
+<div id="fig-decision-publica" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-decision-publica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/decision-pub.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-decision-publica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.9: Ilustración del paso desde la observación del territorio y el análisis de mapas hasta la planificación de espacios y servicios públicos.
+</figcaption>
 </figure>
 </div>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Lefebvre_1974" class="csl-entry" role="listitem">
+Lefebvre, Henri. 1974. <span>“La Production de l<span></span>espace.”</span> <em>L Homme Et La Soci<span>é</span>t<span>é</span></em> 31 (1): 15–32. <a href="https://doi.org/10.3406/homso.1974.1855">https://doi.org/10.3406/homso.1974.1855</a>.
+</div>
+<div id="ref-Tobler_1970" class="csl-entry" role="listitem">
+Tobler, W. R. 1970. <span>“A Computer Movie Simulating Urban Growth in the Detroit Region.”</span> <em>Economic Geography</em> 46 (June): 234. <a href="https://doi.org/10.2307/143141">https://doi.org/10.2307/143141</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

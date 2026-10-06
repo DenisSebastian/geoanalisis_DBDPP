@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./datos_vectoriales.html" rel="next">
+<link href="./crs.html" rel="next">
 <link href="./intro_estad_esp.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -152,49 +152,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datos_espaciales.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos Espaciales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./datos_vectoriales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./indicadores_territoriales.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./inferencia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering Espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -208,26 +172,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Project</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./geocode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Geocoding</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./espacial_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Objetos Espaciales en R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./john_snow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mapa de Cólera</span></a>
+  <a href="./crs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CRS en R</span></a>
   </div>
 </li>
       </ul>
@@ -264,12 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#lectura-de-imagen-raster." id="toc-lectura-de-imagen-raster." class="nav-link" data-scroll-target="#lectura-de-imagen-raster."><span class="header-section-number">2.4.1</span> lectura de imagen Raster.</a></li>
   <li><a href="#visualización-raster" id="toc-visualización-raster" class="nav-link" data-scroll-target="#visualización-raster"><span class="header-section-number">2.4.2</span> Visualización Raster</a></li>
   </ul></li>
-  <li><a href="#sistema-de-referencias-de-coordenadas" id="toc-sistema-de-referencias-de-coordenadas" class="nav-link" data-scroll-target="#sistema-de-referencias-de-coordenadas"><span class="header-section-number">2.5</span> Sistema de Referencias de Coordenadas</a>
-  <ul class="collapse">
-  <li><a href="#reproyectar-vectores" id="toc-reproyectar-vectores" class="nav-link" data-scroll-target="#reproyectar-vectores"><span class="header-section-number">2.5.1</span> Reproyectar Vectores</a></li>
-  <li><a href="#reproyectar-raster" id="toc-reproyectar-raster" class="nav-link" data-scroll-target="#reproyectar-raster"><span class="header-section-number">2.5.2</span> Reproyectar Raster</a></li>
-  </ul></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">2.6</span> Referencias</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">2.5</span> Referencias</a></li>
   </ul>
 </nav>
     </div>
@@ -539,7 +480,7 @@ Representación del espacio mediante una matriz de celdas organizada en filas y 
 <figcaption class="margin-caption">Imágenes Satelitales</figcaption>
 </figure>
 </div>
-<p>Este tipos de imágenes satelitales generalmente contiene una series de de bandas que corresponden a capas de información tipos raster conformando una especie de brick de raster.</p>
+<p>Este tipo de imágenes satelitales generalmente contiene una serie de bandas que corresponden a capas de información ráster. En <code>terra</code>, las bandas se almacenan juntas en un objeto <code>SpatRaster</code> de varias capas.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="images/3D-array.jpg" class="img-fluid figure-img"></p>
@@ -556,20 +497,20 @@ Representación del espacio mediante una matriz de celdas organizada en filas y 
 <section id="lectura-de-imagen-raster." class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="lectura-de-imagen-raster."><span class="header-section-number">2.4.1</span> lectura de imagen Raster.</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>las_condes_raster <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="st">"data/raster/OLI_LC.tif"</span>)</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>las_condes_raster <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/raster/OLI_LC.tif"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(las_condes_raster) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aerosol"</span>, <span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span> , <span class="st">"nir"</span>, <span class="st">"swir1"</span>, <span class="st">"swir2"</span>, <span class="st">"tirs1"</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>las_condes_raster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class      : RasterBrick 
-dimensions : 449, 562, 252338, 8  (nrow, ncol, ncell, nlayers)
-resolution : 30, 30  (x, y)
-extent     : 350505, 367365, 6293905, 6307375  (xmin, xmax, ymin, ymax)
-crs        : +proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs 
-source     : OLI_LC.tif 
-names      : aerosol,  blue, green,   red,   nir, swir1, swir2, tirs1 
-min values :    8465,  7604,  6500,  5924,  5520,  5191,  5197,  5002 
-max values :   19119, 20517, 21248, 23237, 29344, 30012, 31166,  5512 </code></pre>
+<pre><code>class       : SpatRaster
+size        : 449, 562, 8  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : 350505, 367365, 6293905, 6307375  (xmin, xmax, ymin, ymax)
+coord. ref. : WGS 84 / UTM zone 19S (EPSG:32719)
+source      : OLI_LC.tif
+names       : aerosol,  blue, green,   red,   nir, swir1, ...
+min values  :    8465,  7604,  6500,  5924,  5520,  5191, ...
+max values  :   19119, 20517, 21248, 23237, 29344, 30012, ...</code></pre>
 </div>
 </div>
 </section>
@@ -577,140 +518,13 @@ max values :   19119, 20517, 21248, 23237, 29344, 30012, 31166,  5512 </code></p
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="visualización-raster"><span class="header-section-number">2.4.2</span> Visualización Raster</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de imagen recortada de Las Condes en Color Natural</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(las_condes_raster, <span class="at">r =</span> <span class="dv">4</span>, <span class="at">g =</span> <span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plotRGB</span>(las_condes_raster, <span class="at">r =</span> <span class="dv">4</span>, <span class="at">g =</span> <span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="datos_espaciales_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewRGB(las_condes_raster, r = 4, g = 3, b = 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="sistema-de-referencias-de-coordenadas" class="level2 page-columns page-full" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="sistema-de-referencias-de-coordenadas"><span class="header-section-number">2.5</span> Sistema de Referencias de Coordenadas</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/crs.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Sistema de Referencias de Coordenadas</figcaption>
-</figure>
-</div>
-<p>Los sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido. Los tipos de sistemas de coordenadas principales que existen son:</p>
-<dl>
-<dt>Coordenadas elipsoidales</dt>
-<dd>
-son la representación de las coordenadas sobre la superficie de un elipsoide determinado, se representan por [φ, λ, h] siendo respectivamente, la latitud, longitud y altura elipsoidal.
-</dd>
-</dl>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/geodesicas.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="margin-caption">Coordenadas Geodésicas. Fuente: (Drewes &amp; Sánchez, 2011)</figcaption>
-</figure>
-</div>
-<dl>
-<dt>Coordenadas proyectadas o cartográficas</dt>
-<dd>
-Según la proyección empleada las coordenadas elipsoidales pueden representarse en un plano, en el caso de Chile continental, se emplea la proyección Universal Transversal de Mercator (UTM), huso 19 y huso 18.
-</dd>
-</dl>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/utm.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="margin-caption">proyección Universal Transversal Mercator (UTM) Fuente: (Drewes &amp; Sánchez, 2011)</figcaption>
-</figure>
-</div>
-<p>Para hacer reproyecciones en R, se le tiene que asignar el Sistema de Referencia de Coordenadas de dos formas, uno como cadena de texto (<code>"+proj=longlat +datum=WGS84 +no_defs"</code>) o como número que corresponde a EPSG (<a href="https://mappinggis.com/2016/04/los-codigos-epsg-srid-vinculacion-postgis/">EPSG es el acrónimo de European Petroleum Survey Group</a>) que representan sistema de referencia de coordenadas también.</p>
-<p>Para el caso de Chile usamos dos sistemas de referencias de coordenadas:</p>
-<dl>
-<dt>Coordenadas elipsoidales (geodésicas):</dt>
-<dd>
-4326 o <code>"+proj=longlat +datum=WGS84 +no_defs"</code>
-</dd>
-<dt>Coordenadas proyectadas (métricas):</dt>
-<dd>
-32719 o <code>"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"</code>
-</dd>
-</dl>
-<section id="reproyectar-vectores" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="reproyectar-vectores"><span class="header-section-number">2.5.1</span> Reproyectar Vectores</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>LC_mz_32719 <span class="ot">&lt;-</span> las_condes_mz <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">32719</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(LC_mz_32719)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Coordinate Reference System:
-  User input: EPSG:32719 
-  wkt:
-PROJCRS["WGS 84 / UTM zone 19S",
-    BASEGEOGCRS["WGS 84",
-        ENSEMBLE["World Geodetic System 1984 ensemble",
-            MEMBER["World Geodetic System 1984 (Transit)"],
-            MEMBER["World Geodetic System 1984 (G730)"],
-            MEMBER["World Geodetic System 1984 (G873)"],
-            MEMBER["World Geodetic System 1984 (G1150)"],
-            MEMBER["World Geodetic System 1984 (G1674)"],
-            MEMBER["World Geodetic System 1984 (G1762)"],
-            MEMBER["World Geodetic System 1984 (G2139)"],
-            MEMBER["World Geodetic System 1984 (G2296)"],
-            ELLIPSOID["WGS 84",6378137,298.257223563,
-                LENGTHUNIT["metre",1]],
-            ENSEMBLEACCURACY[2.0]],
-        PRIMEM["Greenwich",0,
-            ANGLEUNIT["degree",0.0174532925199433]],
-        ID["EPSG",4326]],
-    CONVERSION["UTM zone 19S",
-        METHOD["Transverse Mercator",
-            ID["EPSG",9807]],
-        PARAMETER["Latitude of natural origin",0,
-            ANGLEUNIT["degree",0.0174532925199433],
-            ID["EPSG",8801]],
-        PARAMETER["Longitude of natural origin",-69,
-            ANGLEUNIT["degree",0.0174532925199433],
-            ID["EPSG",8802]],
-        PARAMETER["Scale factor at natural origin",0.9996,
-            SCALEUNIT["unity",1],
-            ID["EPSG",8805]],
-        PARAMETER["False easting",500000,
-            LENGTHUNIT["metre",1],
-            ID["EPSG",8806]],
-        PARAMETER["False northing",10000000,
-            LENGTHUNIT["metre",1],
-            ID["EPSG",8807]]],
-    CS[Cartesian,2],
-        AXIS["(E)",east,
-            ORDER[1],
-            LENGTHUNIT["metre",1]],
-        AXIS["(N)",north,
-            ORDER[2],
-            LENGTHUNIT["metre",1]],
-    USAGE[
-        SCOPE["Navigation and medium accuracy spatial referencing."],
-        AREA["Between 72°W and 66°W, southern hemisphere between 80°S and equator, onshore and offshore. Argentina. Bolivia. Brazil. Chile. Colombia. Peru."],
-        BBOX[-80,-72,0,-66]],
-    ID["EPSG",32719]]</code></pre>
-</div>
-</div>
-</section>
-<section id="reproyectar-raster" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="reproyectar-raster"><span class="header-section-number">2.5.2</span> Reproyectar Raster</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># las_condes_raster</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>crs_latlon <span class="ot">&lt;-</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs"</span><span class="co"># geográficas o elipsoidales</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>crs_utm <span class="ot">&lt;-</span> <span class="st">"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"</span> <span class="co"># UTM o cartográficas</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>las_condes_raster2 <span class="ot">&lt;-</span> <span class="fu">projectRaster</span>(<span class="at">from=</span> las_condes_raster,                                             <span class="at">crs =</span> crs_latlon)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>las_condes_raster2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>class      : RasterBrick 
-dimensions : 470, 578, 271660, 8  (nrow, ncol, ncell, nlayers)
-resolution : 0.000323, 0.00027  (x, y)
-extent     : -70.61069, -70.424, -33.48775, -33.36085  (xmin, xmax, ymin, ymax)
-crs        : +proj=longlat +datum=WGS84 +no_defs 
-source     : memory
-names      :  aerosol,     blue,    green,      red,      nir,    swir1,    swir2,    tirs1 
-min values : 8592.067, 7778.388, 6806.291, 6280.802, 5729.628, 5316.893, 5303.627, 5005.409 
-max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.15,  5495.00 </code></pre>
 </div>
 </div>
 <!-- ## Actividades Prácticas -->
@@ -733,9 +547,8 @@ max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.1
 <!-- ::: -->
 </section>
 </section>
-<section id="referencias" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.6</span> Referencias</h2>
-<p><a href="https://www.ide.cl/descargas/Geodesia-en-Chile.pdf">Geodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018</a></p>
+<section id="referencias" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.5</span> Referencias</h2>
 <p><a href="https://r-spatial.github.io/sf/">Simple Features for R</a></p>
 
 
@@ -1143,13 +956,13 @@ max values : 18590.84, 19485.05, 20596.61, 22406.07, 28732.09, 26707.17, 26787.1
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro_estad_esp.html" class="pagination-link" aria-label="Estadística Espacial">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span>
+      <a href="./intro_estad_esp.html" class="pagination-link" aria-label="Estadística espacial">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./datos_vectoriales.html" class="pagination-link" aria-label="Datos Vectoriales">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Datos Vectoriales</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./crs.html" class="pagination-link" aria-label="CRS en R">
+        <span class="nav-page-text">CRS en R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
