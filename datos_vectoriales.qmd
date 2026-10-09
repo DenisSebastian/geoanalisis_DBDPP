@@ -1,25 +1,22 @@
 ---
-title: "Datos Vectoriales"
-subtitle: "Manejo y Representación de datos vectoriales"
+title: "Datos vectoriales"
+subtitle: "Manejo y representación de datos vectoriales"
 number-depth: 3
 editor_options: 
   chunk_output_type: console
-
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(sf))
-suppressPackageStartupMessages(library(raster))
 suppressPackageStartupMessages(library(mapview))
 suppressPackageStartupMessages(library(kableExtra))
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(require(knitr))
 suppressPackageStartupMessages(library(viridis))
-suppressPackageStartupMessages(library(tidyr))
-
-
+suppressPackageStartupMessages(library(openxlsx))
+suppressPackageStartupMessages(library(plotly))
 ```
 
 ## Introducción
@@ -28,21 +25,21 @@ Los datos vectoriales son uno de los tipos fundamentales en los que se represent
 
 En políticas públicas, los datos vectoriales juegan un rol clave en la toma de decisiones, ya que permiten analizar la distribución espacial de fenómenos, desde la localización de infraestructuras hasta la incidencia de eventos sociales y delictivos. A través de las herramientas de análisis vectorial, es posible identificar patrones, relaciones espaciales y tomar decisiones fundamentadas sobre la planificación y gestión del territorio.
 
-En este capítulo, utilizaremos la librería [sf](https://r-spatial.github.io/sf/index.html) para la lectura y manipulación de datos vectoriales en R. Esta librería es ampliamente utilizada en la comunidad de análisis espacial debido a su eficiencia y su integración con otras herramientas como dplyr para el manejo de tablas de atributos.
+En el capítulo anterior se presentaron los puntos, las líneas y los polígonos. Aquí utilizaremos [sf](https://r-spatial.github.io/sf/index.html) para leer, manipular y analizar esos datos en R. Un objeto `sf` reúne una tabla de atributos y una columna de geometría; por eso puede combinarse con `dplyr`.
 
 ![Introducción](images/m2_geoanalisis.png)
 
-**Tipos de Datos Vectoriales espaciales básicos**
+**Tipos de geometría que encontraremos**
 
-| type | description |
+| Tipo | Descripción |
 |------------------------------------|------------------------------------|
-| POINT | zero-dimensional geometry containing a single point |
-| LINESTRING | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry |
-| POLYGON | geometry with a positive area (two-dimensional); sequence of points form a closed, non-self intersecting ring; the first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring |
-| MULTIPOINT | set of points; a MULTIPOINT is simple if no two Points in the MULTIPOINT are equal |
-| MULTILINESTRING | set of linestrings |
-| MULTIPOLYGON | set of polygons |
-| GEOMETRYCOLLECTION | set of geometries of any type except GEOMETRYCOLLECTION |
+| `POINT` | Un punto, de dimensión cero. |
+| `LINESTRING` | Una secuencia de vértices conectados que representa una línea. |
+| `POLYGON` | Una superficie delimitada por un anillo exterior cerrado; puede tener anillos interiores que forman huecos. |
+| `MULTIPOINT` | Un conjunto de puntos en una misma entidad. |
+| `MULTILINESTRING` | Un conjunto de líneas en una misma entidad. |
+| `MULTIPOLYGON` | Un conjunto de polígonos en una misma entidad. |
+| `GEOMETRYCOLLECTION` | Una colección que reúne geometrías de distintos tipos. |
 
 ```{r echo=FALSE}
 par(mfrow = c(2,4))
@@ -99,41 +96,38 @@ box(col = 'grey')
 
 ```
 
-**Objetivos del Módulo**
+**Al terminar este capítulo podrás:**
 
--   Manipulación de Datos Vectoriales
--   Operaciones Espaciales
--   Ejemplo de Delitos
+-   Leer un archivo vectorial y distinguir su geometría de sus atributos.
+-   Filtrar, resumir y unir atributos sin perder la geometría.
+-   Elegir un sistema de referencia apropiado para medir áreas y distancias.
+-   Aplicar una unión, un buffer y un predicado espacial, y comprobar sus resultados.
+-   Construir e interpretar un mapa comunal a partir de una tabla de indicadores.
 
 ## Manipulación de Datos Vectoriales
 
 Además de las geometrías espaciales, los datos vectoriales incluyen una tabla de atributos que contiene información adicional sobre cada objeto espacial. Esta tabla de atributos es esencial para realizar análisis más profundos, ya que nos permite filtrar, seleccionar, crear columnas nuevas y resumir los datos según diferentes criterios.
 
-Para la manipulación de datos vectoriales se usará la sección de atributos que la estructura sf permite para lo cual utilizaremos la librería `dplyr` cómo si fuera un dataframe.
+Manipularemos los atributos con `dplyr`, como en una tabla de datos, mientras `sf` conserva la columna de geometría.
 
 ### Lectura de Insumos
 
 ![Al leer un archivo vectorial, obtenemos un objeto sf que combina tanto la geometría como la tabla de atributos.](images/feature_at_glance.png)
 
-El paquete [sf](https://r-spatial.github.io/sf/index.html) facilita la importación de estos datos, que suelen estar en formatos como shapefile (.shp) o GeoJSON (.geojson), etc. la función nativa para esto es `st_read()`. Para los efectos prácticos de esta etapa se utilizará la base de datos del censo a nivel zonal a nivel nacional que en este caso esta almacenado bajo la estrucura `rds` nativa de R, pero manteniendo todos los atributos y geometrías espaciales.
+Para leer un archivo vectorial como Shapefile o GeoJSON se usa `st_read()`. En cambio, `readRDS()` recupera un objeto de R previamente guardado. El primer ejemplo muestra ambas formas de lectura; el análisis posterior usa un objeto `sf` de zonas censales urbanas guardado en RDS.
 
-Cargar librerías
+**Lectura de un Shapefile y de un objeto `sf` guardado en RDS**
 
 ```{r}
-# install.packages("sf") 
-library(sf) # manipulación de datos vectoriales
-library(dplyr) # manipulación de tablas de atributos
-library(mapview) # visualización de mapas dinámicos
-library(ggplot2) # gráficos
-library(RColorBrewer) #paleta de colores
-library(viridis) #paleta de colores
-
+comunas_ejemplo <- st_read("data/shape/Comunas_Chile.shp", quiet = TRUE)
+class(comunas_ejemplo)
+st_geometry_type(comunas_ejemplo) |> head()
 ```
 
 ```{r}
-# sii_LC <- st_read("data/sii/sii_urbe_LC.shp")
-zonas_censales <-  readRDS("data/censo/zonas_urb_consolidadas.rds")
-
+zonas_censales <- readRDS("data/censo/zonas_urb_consolidadas.rds")
+stopifnot(inherits(zonas_censales, "sf"), !is.na(st_crs(zonas_censales)))
+st_is_longlat(zonas_censales)
 ```
 
 ```{r echo=FALSE}
@@ -149,7 +143,7 @@ zonas_censales  %>%
 
 ### Filtros y selección de columnas
 
-Uno de los pasos más comunes en la manipulación de datos vectoriales es filtrar y seleccionar filas o columnas de la tabla de atributos, lo que permite centrarse en elementos específicos para análisis más detallados. Para efectos de practicar la manipulación de datos espaciales se creará un subset de la base de zonas censales de alguna provincia de Chile y se realizarán cálculos sencillos de densidad.
+Filtrar filas y seleccionar columnas permite concentrarnos en un territorio y sus variables. Trabajaremos con las zonas urbanas de dos localidades de la provincia de Valparaíso. El filtro por `URBANO` excluye otras localidades de la comuna de Valparaíso, como Placilla de Peñuelas y Laguna Verde: estos resultados describen las **zonas seleccionadas**, no toda la comuna.
 
 **Filtrar**
 
@@ -171,9 +165,9 @@ kable(op_logicos, digits = 3, row.names = FALSE, align = "c",
 ```{r}
 
  # zonas_censales$NOM_PROVIN %>% unique() %>% sort()
-zonas <-  zonas_censales %>% 
-  filter(NOM_PROVIN == "VALPARAÍSO") %>% 
-  filter(URBANO %in% c("VIÑA DEL MAR", "VALPARAÍSO") )
+zonas <- zonas_censales %>%
+  filter(NOM_PROVIN == "VALPARAÍSO",
+         URBANO %in% c("VIÑA DEL MAR", "VALPARAÍSO"))
 
 # mapview::mapview(zonas, zcol = "PERS")
 ```
@@ -197,20 +191,19 @@ ggplot() +
 
 ```{r}
 zonas <-  zonas %>% 
-  dplyr::select(GEOCODIGO,NOM_REGION, NOM_PROVIN, 
+  dplyr::select(GEOCODIGO, REGION, COMUNA, NOM_REGION, NOM_PROVIN,
                 NOM_COMUNA, PERS, URBANO, ESC_JH)
 
 ```
 
 **Mutate**
 
-Cálculo de superficie por polígono
+Cálculo de superficie por polígono. `st_area()` devuelve valores con unidades; los convertimos explícitamente a hectáreas y solo entonces quitamos la unidad para crear una columna numérica. La densidad resultante se expresa en personas por hectárea.
 
 ```{r}
-zonas <- zonas %>% 
-  mutate(AREA = as.numeric(st_area(.))) %>% # en metros cuadrados
-  mutate(AREA = AREA/10000) %>% # en hectárea cuadrada
-  mutate(DENS_PERS= round(PERS/AREA, 1))
+zonas <- zonas %>%
+  mutate(AREA_HA = as.numeric(units::set_units(st_area(.), ha)),
+         DENS_PERS_HA = if_else(AREA_HA > 0, round(PERS / AREA_HA, 1), NA_real_))
 
 # zonas
 ```
@@ -228,33 +221,34 @@ ggplot() +
         panel.grid.minor = element_line(colour = "gray80"))
 
 ggplot() +
-  geom_sf(data = zonas, aes(fill = DENS_PERS), color =NA, 
+  geom_sf(data = zonas, aes(fill = DENS_PERS_HA), color = NA,
           alpha=0.8,  size= 0.1)+
   scale_fill_distiller(palette= "YlGnBu", direction = 1)+
-  ggtitle("Densidad de Población Zonas Censales - Urbano" ) +
+  ggtitle("Densidad de población (personas/ha)" ) +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-### Resumen Estadísticos {#sec-groupby}
+### Resúmenes estadísticos {#sec-groupby}
 
-El objetivo de este punto es que con bases de datos espaciales también se pueden hacer resúmenes estadísticos, como se hacen normalmente con bases de datos. Ahora, se creará tabla con las poblaciones y promedio de años de estudio del Jefe de Hogar en todas las comunas de Chile.
+También podemos resumir los atributos de una base espacial. Sumaremos la población de las zonas disponibles y calcularemos el promedio simple del indicador zonal `ESC_JH` para cada comuna. Como cada zona pesa lo mismo, **este promedio de zonas no equivale necesariamente al promedio de todos los jefes de hogar de la comuna**; para ese cálculo haría falta el número de jefes de hogar por zona.
 
-Un punto importante para generar esta tabla es eficiente eliminar la geometría para los cálculos ya que la salida será una tabla.
+Como la salida es una tabla, eliminamos la geometría antes del resumen. Incluimos el código regional y comunal en la clave de agrupación para identificar cada comuna sin depender solo de su nombre.
 
 ```{r}
-tab_com <- zonas_censales %>% 
-  st_drop_geometry() %>% # eliminar geometría.
-  group_by(NOM_COMUNA) %>% 
-  summarise(POB_COM = sum(PERS, na.rm = T),
-            ESC_JH_COM = round(mean(ESC_JH, na.rm= T), 1))
+tab_com <- zonas_censales %>%
+  st_drop_geometry() %>%
+  group_by(REGION, COMUNA, NOM_COMUNA) %>%
+  summarise(POB_ZONAS = sum(PERS, na.rm = TRUE),
+            ESC_JH_PROM_ZONAS = round(mean(ESC_JH, na.rm = TRUE), 1),
+            .groups = "drop")
 
 ```
 
 ```{r echo=FALSE}
 #| label: tbl-censo-comunas
-#| tbl-cap: Registros de Población y Escolaridad por Comuna
+#| tbl-cap: Población de las zonas disponibles y promedio simple del indicador zonal de escolaridad
 
 tab_com  %>%
   head(10) %>% 
@@ -263,319 +257,323 @@ tab_com  %>%
                  font_size = 16,full_width = F)
 ```
 
-### Joining
+### Unión de atributos
 
-En este caso agregaremos a la tabla de resultados comunales antes creada, a la base de la comuna de Viña del Mar y Valparaíso, utilizaremos la función `left_join`.
+Agregaremos a cada zona los resúmenes correspondientes a su comuna mediante `left_join()`. La unión conserva la geometría de las zonas. Comprobamos que no haya cambiado el número de filas y que todas hayan encontrado correspondencia.
 
 ```{r}
 
-zonas <-  zonas %>% 
-  left_join(tab_com, by = "NOM_COMUNA") %>% # Ojo con las veces que se hace esta operación
-  mutate(DIF_EJH_COM = round(( ESC_JH-ESC_JH_COM), 2))
+n_zonas <- nrow(zonas)
+zonas <- zonas %>%
+  left_join(tab_com, by = c("REGION", "COMUNA", "NOM_COMUNA")) %>%
+  mutate(DIF_EJH_PROM_ZONAS = round(ESC_JH - ESC_JH_PROM_ZONAS, 2))
+stopifnot(nrow(zonas) == n_zonas, all(!is.na(zonas$POB_ZONAS)))
 ```
 
 ```{r}
 #| label: fig-zonas-dif-ejh
-#| fig-cap: Diferencias Esc. Jefe Hogar respecto comuna - Urbano
+#| fig-cap: Diferencia entre el indicador zonal y el promedio simple de zonas de su comuna
 
 
 ggplot() +
-  geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, 
+  geom_sf(data = zonas, aes(fill = DIF_EJH_PROM_ZONAS), color = NA,
           alpha=0.8,  size= 0.1)+
-  scale_fill_distiller(palette= "PRGn", direction = 1)+
-  ggtitle("Diferencias Esc. Jefe Hogar Zona/Comuna - Urbano" ) +
+  scale_fill_gradient2(low = "#762a83", mid = "white", high = "#1b7837",
+                       midpoint = 0, name = "Diferencia") +
+  ggtitle("Indicador zonal menos promedio simple de zonas" ) +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
         panel.grid.minor = element_line(colour = "gray80"))
 ```
 
-## Operaciones Espaciales con sf
+## Operaciones espaciales con `sf`
 
-Las operaciones espaciales son el conjunto de herramientas que permiten realizar cálculos y transformaciones sobre los datos espaciales vectoriales. Estas operaciones son fundamentales para análisis de proximidad, intersección, disolución de fronteras y creación de buffers, entre otras.
+Antes de elegir una función, formulemos la pregunta territorial. Una **medida** devuelve una cantidad (`st_area()`), un **predicado** responde una pregunta lógica (`st_intersects()`) y una **transformación** produce otra geometría (`st_buffer()`). Una operación puede actuar sobre una geometría o relacionar dos conjuntos de geometrías.
 
-Podemos clasificar las operaciones sobre geometrías en función de lo que toman como entrada y lo que devuelven como salida. En cuanto a la salida tenemos operaciones que devuelven:
+| Pregunta | Función | Resultado |
+|---|---|---|
+| ¿Cuánta superficie tiene cada zona? | `st_area(zonas)` | Área con unidades. |
+| ¿Son válidas las geometrías? | `st_is_valid(zonas)` | Un valor lógico por zona. |
+| ¿Qué zonas tocan un área de interés? | `st_intersects(zonas, area)` | Índices de las zonas que se intersectan. |
+| ¿Qué superficie queda dentro de otra? | `st_intersection(x, y)` | Nuevas geometrías recortadas. |
 
--   **predicates**: una lógica que afirma una determinada propiedad es `TRUE`
--   **measures**: una cantidad (un valor numérico, posiblemente con unidad de medida)
--   **transformations**: nuevas geometrías generadas
-
-y en cuanto a lo que operan, distinguimos las operaciones que son:
-
--   **unary** cuando trabajan en una única geometría
--   **binary** cuando trabajan con pares de geometrías
--   **n-ary** cuando trabajan con conjuntos de geometrías
-
-### Unary measures
-
-Las medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:
-
-| medida | devuelve |
-|---------------|---------------------------------------------------------|
-| `dimension` | 0 para puntos, 1 para líneas, 2 para polígonos, posiblemente `NA` para geometrías vacías |
-| `area` | el área de una geometría |
-| `length` | la longitud de una geometría lineal |
-
-Ejemplo cuando calculamos el área de cada polígono de zona censal.
-
-```{r eval=FALSE}
-
-# st_area(zonas)
-
-zonas <- zonas %>% 
-  mutate(AREA = as.numeric(st_area(.))) %>% # en metros cuadrados
-  mutate(AREA = AREA/10000) %>% # en hectárea cuadrada
-  mutate(DENS_PERS= round(PERS/AREA, 1))
-
-```
-
-### Unary predicates
-
-Los predicados unitarios describen una determinada propiedad de una geometría. Los predicados `is_simple`, `is_valid`, y `is_empty` devolver respectivamente si una geometría es simple, válida o vacía. Dado un sistema de referencia de coordenadas, `is_longlat` devuelve si las coordenadas son geográficas o proyectadas. es(geometría, clase)\` comprueba si una geometría pertenece a una clase determinada.
+El cálculo de densidad anterior ya utilizó `st_area()`. Comprobemos ahora la validez de las geometrías antes de efectuar uniones y buffers:
 
 ```{r}
-st_is_valid(zonas) %>% head(10)
+stopifnot(all(st_is_valid(zonas)), !any(st_is_empty(zonas)))
+table(st_is_valid(zonas))
 ```
 
-## Binary Predicates
+### Entender los predicados espaciales
 
-Una lista de predicados binarios es:
-
-| predicado | significado | inverso de |
-|--------------|---------------------------------------------|--------------|
-| `contains` | Ninguno de los puntos de A está fuera de B | `within` |
-| `contains_properly` | A contiene a B y B no tiene puntos en común con el límite de A |  |
-| `covers` | Ningún punto de B está en el exterior de A | `covered_by` |
-| `covered_by` | Inverso de `covers` |  |
-| `crosses` | A y B tienen algunos pero no todos los puntos interiores en común |  |
-| `disjoint` | A y B no tienen puntos en común | `intersects` |
-| `equals` | A y B son topológicamente iguales: el orden de los nodos o el número de nodos puede ser diferente; idéntico a A contiene B y A dentro de B |  |
-| `equals_exact` | A y B son geométricamente iguales, y tienen el mismo orden de nodos |  |
-| `intersects` | A y B no son disjuntos | `disjoint` |
-| `is_within_distance` | A está más cerca de B que una distancia dada |  |
-| `within` | Ninguno de los puntos de B está fuera de A | `contains` |
-| `touches` | A y B tienen al menos un punto en el límite en común, pero ningún punto interior |  |
-| `overlaps` | A y B tienen algunos puntos en común; la dimensión de estos es idéntica a la de A y B |  |
-| `relate` | Dado un patrón de máscara, devuelve si A y B se adhieren a este patrón |  |
-
-La [página DE-9IM de Wikipedia](https://en.wikipedia.org/wiki/DE-9IM) proporciona los patrones `relate` para cada uno de estos verbos. Es importante importante comprobarlos; por ejemplo, *covers* y *contains* (y sus (y sus inversos) no suelen ser del todo intuitivos:
-
--   si A *contiene* B, B no tiene puntos en común con el exterior *o frontera* de A
--   si A *cubre* B, B no tiene puntos en común con el exterior de A
-
-### Unary transformers
-
-Las transformaciones unarias funcionan por geometría y devuelven para cada geometría una nueva geometría.
-
-| transformador | devuelve una geometría ... |   |
-|-----------------|--------------------------------------|-----------------|
-| `centroid` | de tipo `POINT` con el centroide de la geometría |  |
-| `buffer` | que es más grande (o más pequeña) que la geometría de entrada, dependiendo del tamaño del buffer |  |
-| `jitter` | que ha sido movida en el espacio una cierta cantidad, usando una distribución uniforme bivariada |  |
-| `wrap_dateline` | cortada en piezas que ya no cruzan ni cubren la línea de cambio de fecha |  |
-| `boundary` | con el límite de la geometría de entrada |  |
-| `convex_hull` | que forma el envolvente convexo de la geometría de entrada |  |
-| `line_merge` | después de unir elementos `LINESTRING` conectados de un `MULTILINESTRING` en `LINESTRING`s más largos |  |
-| `make_valid` | que es válida |  |
-| `node` | con nodos añadidos a geometrías lineales en las intersecciones sin nodo; solo funciona en geometrías lineales individuales |  |
-| `point_on_surface` | con un (arbitrario) punto en una superficie |  |
-| `polygonize` | de tipo polígono, creada a partir de líneas que forman un anillo cerrado |  |
-| `segmentize` | una geometría (lineal) con nodos a una densidad o distancia mínima dada |  |
-| `simplify` | simplificada mediante la eliminación de vértices/nodos (líneas o polígonos) |  |
-| `split` | que ha sido dividida con una línea divisoria |  |
-| `transform` | transformada o convertida a un nuevo sistema de referencia de coordenadas |  |
-| `triangulate` | con polígonos triangulados de Delaunay |  |
-| `voronoi` | con la teselación de Voronoi de una geometría de entrada |  |
-| `zm` | con coordenadas `Z` y/o `M` eliminadas o añadidas |  |
-| `collection_extract` | con sub-geometrías de un `GEOMETRYCOLLECTION` de un tipo particular |  |
-| `cast` | que se convierte a otro tipo |  |
-| `+` | que se desplaza sobre un vector dado |  |
-| `*` | que se multiplica por un escalar o matriz |  |
-
-```{r fig-vor, echo = F}
-#| fig.cap: "Para un conjunto de puntos, izquierda: Convex Hull (rojo); centro: Polígonos de Voronoi; derecha: triangulación de Delauney"
-#| code-fold: true
-#| out.width: 60%
-par(mar = rep(0,4), mfrow = c(1, 3))
-set.seed(133331)
-mp <- st_multipoint(matrix(runif(20), 10))
-plot(mp, cex = 2)
-plot(st_convex_hull(mp), add = TRUE, col = NA, border = 'red')
-box()
-plot(mp, cex = 2)
-plot(st_voronoi(mp), add = TRUE, col = NA, border = 'red')
-box()
-plot(mp, cex = 2)
-plot(st_triangulate(mp), add = TRUE, col = NA, border = 'darkgreen')
-box()
-```
-
-#### Transformación de CRS
-
-Los sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido.
-
-Para el caso de Chile usamos dos sistemas de referencias de coordenadas:
-
-Coordenadas elipsoidales (geodésicas):
-
-:   4326 o `"+proj=longlat +datum=WGS84 +no_defs"`
-
-Coordenadas proyectadas (métricas):
-
-:   32719 o `"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs"`
-
-Las medidas unarias devuelven una medida o cantidad que describe una propiedad de la geometría:
-
-**Reproyectar Vectores**
+El orden de los argumentos importa: `st_contains(A, B)` pregunta si **A contiene B**; `st_within(A, B)` pregunta si **A está dentro de B**. `st_covers(A, B)` también admite que B esté en la frontera de A. Veámoslo con un ejemplo sencillo.
 
 ```{r}
-
-zonas_utm <- zonas %>% st_transform(32719)
-# st_crs(zonas_utm)
-# st_is_empty(zonas_utm) %>% table()
+cuadrado <- st_sfc(st_polygon(list(rbind(
+  c(0, 0), c(2, 0), c(2, 2), c(0, 2), c(0, 0)
+))))
+punto_interior <- st_sfc(st_point(c(1, 1)))
+punto_borde <- st_sfc(st_point(c(0, 1)))
 ```
 
-#### Unión de Polígonos
-
-Primeramente se creará una geometría comunal basándose en las zonas censales utilizando la función `st_union()`
+El primer bloque dibuja un cuadrado de lado 2: `(0, 0)` se repite al final para cerrarlo. Crea además un punto **interior** en `(1, 1)` y otro **sobre el borde izquierdo** en `(0, 1)`. `st_sfc()` guarda cada figura como una geometría de `sf`.
 
 ```{r}
-valpo_com <-  zonas %>% filter(NOM_COMUNA == "VALPARAÍSO") %>% 
+mapview(cuadrado)+
+  mapview(punto_interior)+
+  mapview(punto_borde)
+```
+
+El mapa muestra las tres figuras juntas. Estas coordenadas son inventadas y sirven solo para ver la diferencia entre **estar dentro** y **estar en el borde**.
+
+```{r}
+st_contains(cuadrado, punto_interior, sparse = FALSE)[1, 1]
+```
+
+Devuelve `TRUE`: el cuadrado contiene al punto interior. `sparse = FALSE` pide una matriz de respuestas y `[1, 1]` muestra la comparación entre estas dos figuras.
+
+```{r}
+st_within(punto_interior, cuadrado, sparse = FALSE)[1, 1]
+```
+
+Devuelve `TRUE`: visto desde el punto, este está dentro del cuadrado. Aquí se invirtió el orden de los argumentos.
+
+```{r}
+st_contains(cuadrado, punto_borde, sparse = FALSE)[1, 1]
+```
+
+Devuelve `FALSE`: en este ejemplo, `st_contains()` no considera contenido al punto que está exactamente sobre el borde.
+
+```{r}
+st_covers(cuadrado, punto_borde, sparse = FALSE)[1, 1]
+```
+
+Devuelve `TRUE`: `st_covers()` incluye el borde del cuadrado.
+
+Las reglas exactas de frontera pueden variar según el motor geométrico y el tipo de CRS. Para profundizar, véase la [documentación de predicados de `sf`](https://r-spatial.github.io/sf/reference/geos_binary_pred.html).
+
+### Elegir el CRS antes de medir distancias
+
+Las zonas censales están en coordenadas geográficas. Para este ejercicio local en Valparaíso las transformamos a **WGS 84 / UTM zona 19 sur (EPSG:32719)**, cuyas coordenadas se expresan en metros. `st_transform()` cambia las coordenadas; asignar un código con `st_set_crs()` sin transformar no haría lo mismo. El [anexo sobre sistemas de referencia](crs.qmd) desarrolla este tema; para otros territorios hay que elegir una proyección adecuada.
+
+```{r}
+zonas_utm <- st_transform(zonas, 32719)
+st_crs(zonas_utm)$units_gdal
+stopifnot(!st_is_longlat(zonas_utm))
+```
+
+### Unir zonas y crear un buffer
+
+La unión siguiente representa **solo las zonas urbanas seleccionadas** de Valparaíso. No debe confundirse con el límite oficial de toda la comuna. `st_union()` elimina los límites interiores de ese conjunto; `st_buffer()` crea una franja exterior o interior según el signo de `dist`.
+
+```{r}
+valpo_seleccionado <- zonas_utm %>%
+  filter(NOM_COMUNA == "VALPARAÍSO") %>%
   st_union()
 
-```
-
-```{r}
-#| label: fig-zonas-comu-vlp
-#| fig-cap: Resaltar la comuna de Valparaíso
-
-ggplot() +
-  geom_sf(data = zonas, aes(fill = DIF_EJH_COM), color =NA, 
-          alpha=0.3,  size= 0.1)+
-  scale_fill_distiller(palette= "PRGn", direction = 1)+
-  geom_sf(data = valpo_com,  color ="magenta", alpha=1,  size= 1, fill = NA)+
-  ggtitle("Resaltar la comuna de Valparaíso" ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
-
-#### Buffer
-
-Aplicación de Buffer con la función de `st_buffer`, que tiene el parámetro `dist`que dice relación a los metros que se quiere hacer el buffer (también puede ser negativo)
-
-```{r}
-#buffer exterior cuando el valor  de dist es positivo
-valpo_com_buffer <-  valpo_com %>% 
-  st_buffer(dist = 1000) # %>% st_simplify(dTolerance = 100) 
-
-#buffer interior cuando el valor de dist es negativo
-valpo_com_buffer_menos <-  valpo_com %>% 
-  st_buffer(dist = - 500) # %>% st_simplify(dTolerance = 100) 
-
+buffer_exterior <- st_buffer(valpo_seleccionado, dist = 1000)
+buffer_interior <- st_buffer(valpo_seleccionado, dist = -500)
+stopifnot(!st_is_empty(valpo_seleccionado),
+          !st_is_empty(buffer_exterior),
+          !st_is_empty(buffer_interior))
 ```
 
 ```{r}
 #| label: fig-buffer-vlp
-#| fig-cap: Buffer de la comuna de Valparaíso 1000 y 500 metros.
-
+#| fig-cap: Unión de las zonas seleccionadas de Valparaíso y buffers exterior de 1.000 m e interior de 500 m
 
 ggplot() +
-  geom_sf(data = valpo_com,  color ="magenta", alpha=0.3,  size= 1, fill = "magenta")+
-  geom_sf(data = valpo_com_buffer,  color ="orange", alpha=1,  size= 1, fill = NA)+
-  geom_sf(data = valpo_com_buffer_menos,  color ="red", alpha=1,  size= 1, fill = NA)+
-  ggtitle("Buffer de la comuna de Valparaíso - 1000 mts." ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
+  geom_sf(data = valpo_seleccionado, fill = "#d8b4d8", colour = "#7f3c8d") +
+  geom_sf(data = buffer_exterior, fill = NA, colour = "#e69f00", linewidth = 0.7) +
+  geom_sf(data = buffer_interior, fill = NA, colour = "#b2182b", linewidth = 0.7) +
+  labs(title = "Distancias desde las zonas seleccionadas de Valparaíso",
+       subtitle = "Naranja: 1.000 m exteriores; rojo: 500 m interiores") +
+  theme_bw()
 ```
 
-#### Transformaciones Binarias
+### Relacionar dos capas con un predicado
 
-Los transformadores binarios son funciones que devuelven una geometría basada en operar sobre un par de geometrías. Incluyen:
+¿Qué zonas seleccionadas de Viña del Mar se intersectan con el buffer exterior? `st_intersects()` devuelve las coincidencias espaciales. El buffer incluye también la superficie original; por eso filtramos primero las zonas de Viña del Mar y contamos únicamente esas coincidencias.
 
-| función | devuelve | operador infijo |
-|----------------|-----------------------------------------|:--------------:|
-| `intersection` | las geometrías superpuestas para un par de geometrías | `&` |
-| `union` | la combinación de las geometrías; elimina límites internos y puntos, nodos o segmentos de línea duplicados | `|` |
-| `difference` | las geometrías de la primera después de eliminar la superposición con la segunda geometría | `/` |
-| `sym_difference` | las combinaciones de las geometrías después de eliminar donde se intersectan; la negación (opuesto) de `intersection` | `%/%` |
+```{r}
+zonas_vina <- zonas_utm %>% filter(NOM_COMUNA == "VIÑA DEL MAR")
+coincidencias <- st_intersects(zonas_vina, buffer_exterior)
+zonas_vina_cerca <- zonas_vina[lengths(coincidencias) > 0, ]
 
-## Ejemplo de Delitos {#sec-dataframes}
+nrow(zonas_vina_cerca)
+stopifnot(nrow(zonas_vina_cerca) <= nrow(zonas_vina))
+```
 
-En esta sessión se realizará un flujo de trabajo para el análisis de delitos a nivel comunal utilizando R. Que contempla desde la lectura de la base de información (excel de delitos), agregar información de categorías, hacer filtros, resúmenes estadísticos (tablas dinámicas) y finalmente visualizaciones gráficas y espaciales.
+```{r}
+#| label: fig-zonas-vina-buffer
+#| fig-cap: Zonas seleccionadas de Viña del Mar que se intersectan con el buffer de 1.000 m
+
+ggplot() +
+  geom_sf(data = zonas_vina, fill = "#e6e6e6", colour = NA) +
+  geom_sf(data = zonas_vina_cerca, fill = "#2b8cbe", colour = "white", linewidth = 0.1) +
+  geom_sf(data = valpo_seleccionado, fill = NA, colour = "#7f3c8d") +
+  geom_sf(data = buffer_exterior, fill = NA, colour = "#e69f00") +
+  labs(title = "Zonas de Viña del Mar intersectadas por el buffer") +
+  theme_bw()
+```
+
+Una zona completa se marca como seleccionada aunque solo una pequeña parte cruce el buffer. La intersección tampoco demuestra accesibilidad por la red vial ni identifica población expuesta: solo indica coincidencia geométrica con la distancia elegida. Si necesitamos **recortar** las zonas al buffer, usaríamos `st_intersection(zonas_vina_cerca, buffer_exterior)`, que produciría nuevas geometrías.
+
+> **Practica:** cambia el buffer a 500 m y vuelve a contar las zonas de Viña del Mar. Explica por qué cambia el resultado. Comprueba también qué ocurre si intentas calcular el buffer interior sobre las coordenadas geográficas originales.
+
+### Otras operaciones geométricas: tablas de consulta
+
+Los ejemplos anteriores muestran una ruta de trabajo completa. Las tablas siguientes recuperan las demás operaciones como **referencia para elegir una función**, con sus nombres reales en `sf`. No todas son necesarias para el ejercicio de Valparaíso. Antes de aplicarlas, comprueba el tipo de geometría, el CRS y las unidades de sus parámetros.
+
+#### Medidas y comprobaciones por geometría
+
+| Función | ¿Qué devuelve o comprueba? |
+|---|---|
+| `st_dimension(x)` | Dimensión topológica: 0 en puntos, 1 en líneas y 2 en superficies; puede devolver `NA` para geometrías vacías. |
+| `st_area(x)` | Superficie de cada geometría, con unidades cuando el CRS está definido. |
+| `st_length(x)` | Longitud de cada línea; para el contorno de un polígono usa `st_perimeter(x)`. |
+| `st_is_simple(x)` | Si una geometría es simple, por ejemplo, sin autointersección en una línea. |
+| `st_is_valid(x)` | Si cumple las reglas de validez de su tipo geométrico. |
+| `st_is_empty(x)` | Si carece de coordenadas o superficie. |
+| `st_is_longlat(x)` | Si el CRS contiene coordenadas geográficas. |
+| `st_geometry_type(x)` | Tipo de geometría (`POINT`, `POLYGON`, etc.). |
+
+Consulta: [mediciones](https://r-spatial.github.io/sf/reference/geos_measures.html), [dimensión, simplicidad y geometrías vacías](https://r-spatial.github.io/sf/reference/geos_query.html) y [validez](https://r-spatial.github.io/sf/reference/valid.html).
+
+#### Predicados entre dos conjuntos de geometrías
+
+En esta tabla, **A es el primer argumento** y **B el segundo**. Estas funciones devuelven coincidencias lógicas o sus índices; no recortan geometrías.
+
+| Función | Pregunta que responde sobre A y B |
+|---|---|
+| `st_intersects(A, B)` | ¿Comparten al menos un punto? |
+| `st_disjoint(A, B)` | ¿No comparten ningún punto? |
+| `st_contains(A, B)` | ¿A contiene B? El tratamiento de la frontera depende del modelo geométrico. |
+| `st_within(A, B)` | ¿A está dentro de B? Es la relación inversa de `st_contains(B, A)`. |
+| `st_covers(A, B)` | ¿Ningún punto de B queda fuera de A? Incluye su frontera en el modelo cerrado. |
+| `st_covered_by(A, B)` | ¿A está cubierto por B? Es la relación inversa de `st_covers(B, A)`. |
+| `st_contains_properly(A, B)` | ¿A contiene B sin que B toque la frontera de A? |
+| `st_touches(A, B)` | ¿Se tocan sus fronteras sin compartir interiores? |
+| `st_crosses(A, B)` | ¿Se cruzan de modo que la intersección tiene menor dimensión que alguna entrada? |
+| `st_overlaps(A, B)` | ¿Se superponen parcialmente siendo geometrías de la misma dimensión? |
+| `st_equals(A, B)` | ¿Representan la misma geometría de forma topológica? |
+| `st_equals_exact(A, B, par = 0)` | ¿Coinciden los vértices en el mismo orden dentro de la tolerancia `par`? |
+| `st_is_within_distance(A, B, dist = ...)` | ¿Están a una distancia menor o igual que `dist`? |
+| `st_relate(A, B, pattern = ...)` | ¿Cumplen un patrón topológico DE-9IM específico? |
+
+Para comparar `contains`, `covers` y `within`, usa primero el ejemplo del punto interior y el punto en el borde. Los detalles y argumentos están en la [referencia de predicados de `sf`](https://r-spatial.github.io/sf/reference/geos_binary_pred.html).
+
+#### Transformaciones de una geometría o de una entidad
+
+| Función | Resultado o uso habitual |
+|---|---|
+| `st_centroid(x)` | Centroide; en un polígono cóncavo puede quedar fuera de él. |
+| `st_point_on_surface(x)` | Punto situado sobre la superficie del polígono. |
+| `st_buffer(x, dist = ...)` | Área a una distancia dada; revisa las unidades del CRS. |
+| `st_boundary(x)` | Frontera de la geometría. |
+| `st_convex_hull(x)` | Envolvente convexa. |
+| `st_voronoi(x)` | Celdas de Voronoi a partir de puntos. |
+| `st_triangulate(x)` | Triangulación de Delaunay. |
+| `st_simplify(x, dTolerance = ...)` | Geometría con menos vértices, según una tolerancia. |
+| `st_segmentize(x, dfMaxLength = ...)` | Añade vértices para limitar la longitud de los segmentos. |
+| `st_line_merge(x)` | Une tramos conectados de una geometría `MULTILINESTRING`. |
+| `st_node(x)` | Añade nodos en intersecciones de líneas. |
+| `st_polygonize(x)` | Construye polígonos a partir de líneas que forman anillos. |
+| `st_make_valid(x)` | Repara geometrías inválidas cuando es posible. |
+| `st_transform(x, crs = ...)` | Convierte las coordenadas a otro CRS. |
+| `st_cast(x, to = ...)` | Convierte entre tipos geométricos compatibles. |
+| `st_collection_extract(x, type = ...)` | Extrae un tipo de geometría de una colección. |
+| `st_zm(x)` | Elimina o ajusta dimensiones Z y M. |
+
+Algunas funciones requieren una geometría de entrada particular o una versión compatible de GEOS. Véanse las [transformaciones unarias](https://r-spatial.github.io/sf/reference/geos_unary.html), la [reparación de geometrías](https://r-spatial.github.io/sf/reference/valid.html) y el [índice de funciones de `sf`](https://r-spatial.github.io/sf/reference/index.html).
+
+```{r}
+#| label: fig-envolventes-vectoriales
+#| fig-cap: "Sobre los mismos puntos: envolvente convexa, celdas de Voronoi y triangulación de Delaunay"
+#| echo: false
+#| out-width: 80%
+
+op <- par(mar = rep(0, 4), mfrow = c(1, 3))
+set.seed(133331)
+puntos_ejemplo <- st_multipoint(matrix(runif(20), ncol = 2))
+plot(puntos_ejemplo, cex = 2)
+plot(st_convex_hull(puntos_ejemplo), add = TRUE, col = NA, border = "red")
+box()
+plot(puntos_ejemplo, cex = 2)
+plot(st_voronoi(puntos_ejemplo), add = TRUE, col = NA, border = "red")
+box()
+plot(puntos_ejemplo, cex = 2)
+plot(st_triangulate(puntos_ejemplo), add = TRUE, col = NA, border = "darkgreen")
+box()
+par(op)
+```
+
+#### Operaciones entre dos geometrías o capas
+
+| Función | Resultado |
+|---|---|
+| `st_intersection(A, B)` | Parte común de A y B; genera geometrías recortadas. |
+| `st_union(A, B)` | Unión geométrica de A y B; `st_union(A)` disuelve un conjunto de geometrías. |
+| `st_difference(A, B)` | Parte de A que queda después de quitar B; el orden importa. |
+| `st_sym_difference(A, B)` | Partes exclusivas de A y B, sin la intersección. |
+
+En objetos de geometría `sfg` o `sfc`, los operadores abreviados `&`, `|`, `/` y `%/%` corresponden, respectivamente, a intersección, unión, diferencia y diferencia simétrica. Para aprender, suele ser más claro escribir los nombres completos de las funciones. Consulta las [operaciones binarias](https://r-spatial.github.io/sf/reference/geos_binary_ops.html), la [unión](https://r-spatial.github.io/sf/reference/geos_combine.html) y los [operadores geométricos](https://r-spatial.github.io/sf/reference/Ops.html).
+
+## Caso aplicado: tabla de delitos y mapa comunal {#sec-delitos-vectoriales}
+
+Aplicaremos la unión de atributos para representar un indicador comunal. El archivo de ejemplo no documenta en sus columnas el período de los delitos, el año de la población ni la fuente original. Por ello, los resultados sirven para practicar el procedimiento, pero no para comparar períodos ni fundamentar decisiones públicas sin verificar esos metadatos y la compatibilidad de las fuentes.
 
 ### Lectura de una tabla
 
-Se leerá el archivo excel que se vio la semana pasada de delitos comunales.
+Leemos la tabla comunal. A diferencia de las capas anteriores, este archivo no contiene geometría.
 
 ```{r}
-library(openxlsx) # trabajar con archivos Excel
-library(plotly) # gráficos dinámicos
 delitos_tbl <- read.xlsx("data/excel/delitos_comunales.xlsx")
-
-# str(delitos_tbl)
+stopifnot(all(c("NOM_REGION", "NOM_COMUNA", "PERSONAS", "Tipo.Participante",
+                "Subgrupo", "TOTAL_delitos") %in% names(delitos_tbl)))
 ```
 
-ver los primeros 6 registros
+Veamos los primeros seis registros.
 
 ```{r}
 head(delitos_tbl)
 ```
 
-## Agregar Categoría
+### Selección de subgrupos
 
-**Categorizar los Delitos**:
+Primero revisamos los valores de `Subgrupo`:
 
-Primeros veremos los tipos de delitos que existen, contenidos en la columna `Subgrupo`:
-
-```{r eval = F}
-unique(delitos_tbl$Subgrupo)
+```{r}
+head(sort(unique(delitos_tbl$Subgrupo)))
 ```
 
-```{r echo=FALSE}
-unique(delitos_tbl$Subgrupo) %>% head()
-```
-
--   Se muestran los primeros 6 solo para buena visualización en el libro digital, en la práctica deben existir 50 categorias de delitos.
+La lista es ilustrativa y mezcla lesiones, homicidios, robos y delitos de drogas. **No es una clasificación oficial de «delitos violentos»**; la llamaremos «subgrupos seleccionados». Antes de usarla como indicador sustantivo habría que definir y justificar un criterio de inclusión.
 
 **Crear una categoría de delitos**
 
-Se debe crear un grupo de delitos de su interés (Puede elegir los que usted quiera). Para este ejemplo se seleccionarán los delitos de violentos.
+Puede cambiar esta selección para responder otra pregunta.
 
 ```{r}
-#guardo los delitos violentos en un vector
-d_agrupados <- c( "Lesiones graves o gravísimas", "Lesiones menos graves",
+subgrupos_seleccionados <- c("Lesiones graves o gravísimas", "Lesiones menos graves",
                   "Microtráfico de sustancias", "Otros homicidios",
                   "Robo con homicidio", "Robo violento de vehículo motorizado",
                   "Robos con violencia o intimidación", "Tráfico de sustancias")
-
-# leves o incivilidades
-# d_agrupados <- c( "Amenazas con armas", "Amenazas o riña", 
-#                   "Desórdenes públicos", "Comercio ilegal" , 
-#                   "Consumo de alcohol y drogas en la vía pública", 
-#                   "Daños", "Lesiones leves" , "Desórdenes públicos",
-#                   "Desórdenes públicos", "Ofensas al pudor",
-#                   "Porte de arma cortante o punzante","Receptación",
-#                   "Robo de objetos de o desde vehículo",
-#                   "Robo por sorpresa" )
+stopifnot(all(subgrupos_seleccionados %in% delitos_tbl$Subgrupo))
 ```
 
-**Agregar Categoría de delitos**
+**Marcar los subgrupos seleccionados**
 
 Para esto crearemos una nueva columna con la función `mutate()`
 
 ```{r}
-delitos_tbl <- delitos_tbl %>% 
-  mutate(grupo = ifelse(Subgrupo %in% d_agrupados, TRUE, FALSE))
-
-
-# head(delitos_tbl)
+delitos_tbl <- delitos_tbl %>%
+  mutate(grupo = Subgrupo %in% subgrupos_seleccionados)
 
 count(delitos_tbl, grupo)
 dim(delitos_tbl)
 ```
 
-## Filtros
+### Filtros
 
 **Filtrar por Tipo de Participante**
 
@@ -595,14 +593,14 @@ delitos_filtered <- delitos_filtered %>%
 
 ```
 
-**Filtrar por Categortía**
+**Filtrar por selección de subgrupos**
 
 ```{r}
 delitos_filtered <- delitos_filtered %>% 
-  filter(grupo == T)
+  filter(grupo)
 ```
 
-## Generar Resúmenes (similar a tablas dinámicas)
+### Resumen comunal y tasa por población
 
 ![Se buscará replicar desde R las operaciones correspondientes a esta tabla dinámica](images/t_dinamica_excel.png){fig-align="center" width="300"}
 
@@ -610,34 +608,38 @@ delitos_filtered <- delitos_filtered %>%
 
 ```{r}
 
-tabla_resumen <- delitos_filtered %>% 
-  group_by(NOM_COMUNA) %>% 
-  summarise(total_delitos = sum(TOTAL_delitos),
-            pob = min(PERSONAS))
+consistencia_poblacion <- delitos_filtered %>%
+  group_by(NOM_REGION, NOM_COMUNA) %>%
+  summarise(n_poblaciones = n_distinct(PERSONAS), .groups = "drop")
+stopifnot(all(consistencia_poblacion$n_poblaciones == 1))
+
+tabla_resumen <- delitos_filtered %>%
+  group_by(NOM_REGION, NOM_COMUNA) %>%
+  summarise(total_delitos = sum(TOTAL_delitos, na.rm = TRUE),
+            pob = first(PERSONAS), .groups = "drop")
+stopifnot(all(!is.na(tabla_resumen$pob) & tabla_resumen$pob > 0))
   
 tabla_resumen
 ```
 
-**Ponderar por población**
+Calculamos el número de delitos registrados por cada 10.000 habitantes. La comprobación anterior asegura que la población sea única por comuna en esta tabla; aun así, falta verificar externamente el año y la procedencia de ese denominador.
 
 ```{r}
 tabla_resumen <- tabla_resumen %>% 
-  mutate(pond_poblacion = total_delitos / pob) %>% 
-  mutate(del_10000_hab = pond_poblacion * 10000) %>% 
-  mutate(del_10000_hab = round(del_10000_hab,2))  # redondear con 2 decimales
+  mutate(del_10000_hab = round(total_delitos / pob * 10000, 2))
 
 head(tabla_resumen)
 ```
 
-## Visualización gráfica
+### Visualización gráfica
 
 ```{r}
 g_barra <- ggplot(tabla_resumen, aes(x = NOM_COMUNA, y = del_10000_hab)) +
   geom_bar(fill = "#6a51a3", color =  "gray90", stat = "identity", width = 0.7)+
   coord_flip()+
   theme_bw()+
-  labs(title="Delitos Violentos en la Región de la Araucanía", 
-       y ="Delitos Violentos / 10000 hebitantes", x = "Nombre de Comuna")+
+  labs(title="Subgrupos seleccionados en La Araucanía",
+       y ="Registros por 10.000 habitantes", x = "Comuna")+
   theme(plot.title = element_text(face = "bold",colour= "gray20", size=12)) 
   
 g_barra
@@ -648,7 +650,7 @@ g_barra
 Guardar el gráfico de barras como imagen
 
 ```{r eval=FALSE}
-ggsave(plot = g_barra, filename = "images/del_violentos_R09.png", width = 8, height = 7)
+ggsave(plot = g_barra, filename = "images/subgrupos_seleccionados_R09.png", width = 8, height = 7)
 ```
 
 Generar gráfico dinámico
@@ -658,39 +660,43 @@ ggplotly(g_barra)
 
 ```
 
-## Visualización Espacial
+### Visualización espacial
 
-Primero se debe unir la tabla resumen delitos con Shapefile de comunas del INE.
+Unimos el resumen con la capa comunal del proyecto. Esta es una **unión por atributos** (`left_join()`), distinta de una unión espacial (`st_join()`). Comprobamos que haya un solo polígono por comuna y que todas las filas encuentren su indicador.
 
 **Leer Shapefile de comunas**
 
 ```{r}
-comunas_r09 <- st_read("data/shape/Comunas_Chile.shp") %>% 
+comunas_r09 <- comunas_ejemplo %>%
   filter(NOM_REGION == "REGIÓN DE LA ARAUCANÍA")
 
 head(comunas_r09)
 ```
 
-**Unir shafile con tabla resumen**
+**Unir la capa con la tabla resumen**
 
-Se utilizará la función `left_join`
+Usamos región y comuna como clave compuesta.
 
 ![](images/dplyr_joins.png){fig-align="center" width="200"}
 
 ```{r}
 
-comunas_r09 <- comunas_r09 %>% 
-  left_join(tabla_resumen, by = "NOM_COMUNA")
+n_comunas <- nrow(comunas_r09)
+stopifnot(n_distinct(comunas_r09$NOM_COMUNA) == n_comunas)
+comunas_r09 <- comunas_r09 %>%
+  left_join(tabla_resumen, by = c("NOM_REGION", "NOM_COMUNA"))
+stopifnot(nrow(comunas_r09) == n_comunas,
+          all(!is.na(comunas_r09$del_10000_hab)))
 
 head(comunas_r09)
 ```
 
 ```{r}
-library(viridis)
 del_r09_m <- ggplot() +
   geom_sf(data = comunas_r09, aes(fill = del_10000_hab), alpha=0.8,  size= 0.5)+
   scale_fill_viridis_c()+
-  ggtitle("Delitos Violentos en la Región de la Araucanía" ) +
+  labs(title = "Subgrupos seleccionados en La Araucanía",
+       fill = "Registros por\n10.000 hab.") +
   theme_bw() +
   # theme(legend.position="none")+
   theme(panel.grid.major = element_line(colour = "gray80"), 
@@ -702,34 +708,51 @@ del_r09_m
 Guardar el Mapa como imagen
 
 ```{r eval=FALSE}
-ggsave(plot = del_r09_m, filename = "images/map_del_violentos_R09.png", width = 8, height = 7)
+ggsave(plot = del_r09_m, filename = "images/map_subgrupos_seleccionados_R09.png", width = 8, height = 7)
 ```
 
 **Mapa Dinámico**
 
 ```{r}
-library(mapview)
-
 mapview(comunas_r09, zcol = "del_10000_hab", alpha.regions = 0.9)
 ```
 
-## Guardar Resultados
+### Pregunta espacial: comunas vecinas
+
+Identifiquemos la comuna con la tasa más alta de este ejemplo y las comunas que se tocan con ella en su frontera, aunque sea en un punto. Esta pregunta requiere un predicado espacial: `st_touches()`. La contigüidad no demuestra que exista relación causal entre los valores de las comunas.
+
+```{r}
+comuna_max <- comunas_r09 %>% slice_max(del_10000_hab, n = 1, with_ties = FALSE)
+vecinas <- comunas_r09[lengths(st_touches(comunas_r09, comuna_max)) > 0, ]
+
+data.frame(comuna_referencia = comuna_max$NOM_COMUNA,
+           cantidad_vecinas = nrow(vecinas))
+stopifnot(!comuna_max$NOM_COMUNA %in% vecinas$NOM_COMUNA)
+```
+
+> **Practica:** compara la tasa de la comuna de referencia con las de sus vecinas. Indica qué información adicional necesitarías para interpretar una diferencia entre ellas y qué limitación impone el período desconocido del archivo.
+
+### Guardar resultados
 
 ```{r eval=FALSE}
 
 # Excel
-write.xlsx(tabla_resumen, file = "data/excel/R09_del_violentos.xlsx")
+write.xlsx(tabla_resumen, file = "data/excel/R09_subgrupos_seleccionados.xlsx")
 
-# Shapefile 
-st_write(comunas_r09, "data/shape/R09_del_violentos.shp", delete_dsn = T)
+# GeoPackage: conserva nombres de campos y es más apropiado para nuevos archivos
+st_write(comunas_r09, "data/shape/R09_subgrupos_seleccionados.gpkg", delete_dsn = TRUE)
 
 # rds
-saveRDS(object = comunas_r09,file = "data/rds/R09_del_violentos.rds")
+saveRDS(object = comunas_r09, file = "data/rds/R09_subgrupos_seleccionados.rds")
 
 ```
 
 ## Referencias
 
 -   [Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)
+-   [Predicados geométricos de `sf`](https://r-spatial.github.io/sf/reference/geos_binary_pred.html)
+-   [Operaciones geométricas unarias y unidades de `st_buffer()`](https://r-spatial.github.io/sf/reference/geos_unary.html)
+-   [Manipulación de geometrías con `sf`: ejemplos de operaciones](https://r-spatial.github.io/sf/articles/sf3.html)
+-   [Operaciones geométricas binarias de `sf`](https://r-spatial.github.io/sf/reference/geos_binary_ops.html)
 -   [Geographic Data Science with R: Chapter 5 Vector Geospatial Data](https://bookdown.org/mcwimberly/gdswr-book/vector-geospatial-data.html#importing-geospatial-data)
 -   [Colores en Ggplot2](https://ggplot2-book.org/scale-colour.html)

@@ -15,7 +15,7 @@ book:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
-    # - datos_vectoriales.qmd
+    - datos_vectoriales.qmd
     # - raster.qmd
     # - indicadores_territoriales.qmd
     # - inferencia.qmd
