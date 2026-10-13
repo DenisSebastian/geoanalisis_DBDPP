@@ -1,5 +1,5 @@
 ---
-title: "Datos vectoriales"
+title: "Datos Vectoriales"
 subtitle: "Manejo y representación de datos vectoriales"
 number-depth: 3
 editor_options: 
