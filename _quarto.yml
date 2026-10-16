@@ -17,7 +17,7 @@ book:
     - datos_espaciales.qmd
     - datos_vectoriales.qmd
     - raster.qmd
-    # - indicadores_territoriales.qmd
+    - indicadores_territoriales.qmd
     # - inferencia.qmd
     # - autocorrelacion.qmd
     # - clustering.qmd
