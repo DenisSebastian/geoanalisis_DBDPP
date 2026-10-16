@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tarea_2.html" rel="next">
-<link href="./clustering.html" rel="prev">
+<link href="./crs.html" rel="next">
+<link href="./indicadores_territoriales.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -135,31 +135,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos Raster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./indicadores_territoriales.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./inferencia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering Espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -177,12 +159,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Tarea 1</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tarea 2</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -196,20 +172,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Project</span></a>
+  <a href="./crs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CRS en R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./geocoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Geocoding</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./john_snow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mapa de Cólera</span></a>
+  <a href="./quiebres.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapas y Quiebres</span></a>
   </div>
 </li>
       </ul>
@@ -231,11 +201,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
-  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones">Instrucciones</a>
-  <ul class="collapse">
-  <li><a href="#parte-1-indicadores-ambientales" id="toc-parte-1-indicadores-ambientales" class="nav-link" data-scroll-target="#parte-1-indicadores-ambientales">Parte 1: Indicadores Ambientales</a></li>
-  <li><a href="#parte-2-indicadores-socioeconómicos" id="toc-parte-2-indicadores-socioeconómicos" class="nav-link" data-scroll-target="#parte-2-indicadores-socioeconómicos">Parte 2: Indicadores Socioeconómicos</a></li>
-  </ul></li>
+  <li><a href="#parte-1-vegetación-urbana-3-puntos" id="toc-parte-1-vegetación-urbana-3-puntos" class="nav-link" data-scroll-target="#parte-1-vegetación-urbana-3-puntos">Parte 1: vegetación urbana (3 puntos)</a></li>
+  <li><a href="#parte-2-indicadores-socioeconómicos-3-puntos" id="toc-parte-2-indicadores-socioeconómicos-3-puntos" class="nav-link" data-scroll-target="#parte-2-indicadores-socioeconómicos-3-puntos">Parte 2: indicadores socioeconómicos (3 puntos)</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_1.html">Tarea 1</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Tarea 1</h1>
-<p class="subtitle lead">Datos Vectoriales y Raster</p>
+<p class="subtitle lead">Datos vectoriales y ráster</p>
 </div>
 
 
@@ -265,44 +232,39 @@ ul.task-list li input[type="checkbox"] {
 <section id="antecedentes" class="level2">
 <h2 class="anchored" data-anchor-id="antecedentes">Antecedentes</h2>
 <ul>
-<li>Fecha de entrega: <strong>08 de Noviembre 2024</strong></li>
-<li>Formato: Informe (pdf o html) + Código</li>
-<li>Integrantes: 1 o 2 Integrates</li>
-<li>Ponderación de tarea sobre Nota Final: 40%</li>
+<li>Publicación: <strong>17 de octubre de 2026</strong>.</li>
+<li>Entrega: <strong>27 de octubre de 2026</strong>.</li>
+<li>Modalidad: <strong>individual</strong>.</li>
+<li>Ponderación: <strong>40 % de la nota final</strong>.</li>
+<li>Formato: <strong>informe</strong> (PDF, PPTX, Markdown o HTML) <strong>y código</strong>. Incluye los mapas, la tabla, una breve explicación de tus decisiones y la interpretación de los resultados.</li>
 </ul>
 </section>
-<section id="instrucciones" class="level2">
-<h2 class="anchored" data-anchor-id="instrucciones">Instrucciones</h2>
-<section id="parte-1-indicadores-ambientales" class="level3">
-<h3 class="anchored" data-anchor-id="parte-1-indicadores-ambientales">Parte 1: Indicadores Ambientales</h3>
+<section id="parte-1-vegetación-urbana-3-puntos" class="level2">
+<h2 class="anchored" data-anchor-id="parte-1-vegetación-urbana-3-puntos">Parte 1: vegetación urbana (3 puntos)</h2>
+<p>Elige una comuna de la Región Metropolitana <strong>distinta de Las Condes</strong>. Usa una imagen que cubra la comuna.</p>
 <ol type="1">
-<li><p><em>(1pt)</em> Selecciona una comuna de la Región Metropolitana (excepto Las Condes) (<a href="raster.html#sec-cortaraster" class="quarto-xref"><span>Cortar Imagen Raster desde archivo Shapefile</span></a>) y calcular NDVI usando la función vista en clases (<a href="raster.html#sec-calcndvi" class="quarto-xref"><span>Calcular NDVI</span></a>).</p></li>
-<li><p><em>(1pt)</em> Calcula la cantidad de vegetación en la comuna seleccionada, filtrando los píxeles por un umbral que tú determines (<a href="raster.html#sec-umbralicv" class="quarto-xref"><span>Definición de Umbral</span></a>)</p></li>
-<li><p><em>(1 pt)</em> Calcula el indicador de cobertura vegetal para las manzanas urbanas de la comuna seleccionada (<a href="raster.html#sec-calcicv" class="quarto-xref"><span>Construcción del Indicador de Cobertura Vegetacional</span></a>). <strong>Describa los resultados</strong>.</p></li>
+<li><p><strong>NDVI (1 punto).</strong> Recorta la imagen al límite comunal (<a href="raster.html#sec-cortaraster" class="quarto-xref"><span>Recortar la imagen con un polígono</span></a>) y calcula el NDVI (<a href="raster.html#sec-calcndvi" class="quarto-xref"><span>Calcular el NDVI</span></a>). Presenta un mapa.</p></li>
+<li><p><strong>Vegetación (1 punto).</strong> Elige y justifica un umbral de NDVI para clasificar la vegetación (<a href="raster.html#sec-umbralicv" class="quarto-xref"><span>Definir una regla de clasificación</span></a>). Informa la superficie clasificada como vegetación dentro de la comuna y presenta un mapa.</p></li>
+<li><p><strong>Cobertura por manzana (1 punto).</strong> Calcula el porcentaje de superficie clasificada como vegetación en cada manzana urbana de la comuna (<a href="raster.html#sec-calcicv" class="quarto-xref"><span>Resumir por manzana</span></a>). Presenta un mapa y describe dónde hay valores altos y bajos.</p></li>
 </ol>
+<p>Indica la fuente y fecha de la imagen, si se conocen, y las limitaciones del resultado. Si utilizas la imagen de clase del libro, presenta los cálculos como <strong>exploratorios</strong>, según se explica en <a href="raster.html#sec-calcndvi" class="quarto-xref"><span>Calcular el NDVI</span></a>.</p>
 </section>
-<section id="parte-2-indicadores-socioeconómicos" class="level3">
-<h3 class="anchored" data-anchor-id="parte-2-indicadores-socioeconómicos">Parte 2: Indicadores Socioeconómicos</h3>
+<section id="parte-2-indicadores-socioeconómicos-3-puntos" class="level2">
+<h2 class="anchored" data-anchor-id="parte-2-indicadores-socioeconómicos-3-puntos">Parte 2: indicadores socioeconómicos (3 puntos)</h2>
+<p>Elige una región y usa sus manzanas urbanas. El procedimiento y las definiciones están en <a href="indicadores_territoriales.html#sec-indsoc" class="quarto-xref"><span>Caso aplicado: dimensión socioeconómica 2024</span></a>.</p>
 <ol type="1">
-<li><p><em>(1pt)</em> Calcula seis indicadores socioeconómicos en una región de tu área de estudio (<a href="indicadores_territoriales.html#sec-indsoc" class="quarto-xref"><span>Construcción de Indicadores Socioconómicos</span></a>).</p></li>
-<li><p><em>(1 pt)</em> Selecciona una provincia y elige un indicador socioeconómico que consideres que evidencia una necesidad prioritaria en esa provincia. <strong>Define y justifique</strong> un umbral crítico para el indicador seleccionado (por ejemplo: menor a 0.25) y genera una tabla resumen usando la función <code>group_by()</code> (<a href="datos_vectoriales.html#sec-groupby" class="quarto-xref"><span>Resumen Estadísticos</span></a>). En la tabla, debes mostrar:</p></li>
-</ol>
+<li><p><strong>Indicadores (1 punto).</strong> Calcula <strong>IEM, IVI, ISV, IEA e IRH</strong> para las manzanas urbanas de la región. Presenta los resultados en una tabla o un mapa.</p></li>
+<li><p><strong>Resumen provincial (1 punto).</strong> Elige una provincia y uno de estos indicadores para analizar una necesidad: <strong>IEM, IVI, ISV o IEA</strong>. Define y justifica un umbral crítico. Para cada comuna de la provincia, usa <code>group_by()</code> (<a href="datos_vectoriales.html#sec-groupby" class="quarto-xref"><span>Resúmenes estadísticos</span></a>) y muestra:</p>
 <ul>
-<li>La cantidad de personas que están por debajo del umbral crítico.</li>
-<li>El promedio del indicador por comuna dentro de la provincia seleccionada.</li>
+<li>el número de habitantes de las <strong>manzanas</strong> cuyo indicador está bajo el umbral;</li>
+<li>el promedio del indicador entre las manzanas urbanas de la comuna.</li>
 </ul>
-<ol start="3" type="1">
-<li><em>(1 pt)</em> De la tabla anterior, elige una comuna basada en uno de estos criterios (justifica tu elección):</li>
+<p>El conteo se refiere a habitantes de esas manzanas; no significa que cada persona tenga la condición medida por el indicador.</p></li>
+<li><p><strong>Mapa comunal (1 punto).</strong> Elige la comuna con más habitantes en manzanas bajo el umbral <strong>o</strong> con el menor promedio del indicador. Justifica tu elección, haz un mapa del indicador por manzana y describe dónde se concentran sus valores altos y bajos.</p></li>
 </ol>
-<ul>
-<li>Mayor cantidad de personas por debajo del umbral crítico.</li>
-<li>Valor promedio más bajo del indicador.</li>
-<li>Realiza una representación cartográfica del valor del indicador a nivel de manzana censal. <strong>Identifica y describe</strong> si existen concentraciones de valores altos o bajos del indicador y describe la situación del sector basándote en tu conocimiento, experiencia o los valores de los indicadores.</li>
-</ul>
 <p><img src="images/Tarea_1.1.png" class="img-fluid"></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -707,13 +669,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./clustering.html" class="pagination-link" aria-label="Clustering Espacial">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering Espacial</span></span>
+      <a href="./indicadores_territoriales.html" class="pagination-link" aria-label="Indicadores Territoriales">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./tarea_2.html" class="pagination-link" aria-label="Tarea 2">
-        <span class="nav-page-text">Tarea 2</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./crs.html" class="pagination-link" aria-label="CRS en R">
+        <span class="nav-page-text">CRS en R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
