@@ -33,7 +33,7 @@ book:
         # - espacial_r.qmd
             # - luces_nocturnas.qmd
         # - john_snow.qmd
-        # - quiebres.qmd
+        - quiebres.qmd
     - references.qmd
 
 bibliography: references.bib

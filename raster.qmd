@@ -279,7 +279,7 @@ plotRGB(oli, r = "red", g = "green", b = "blue", stretch = "lin")
 
 La imagen cubre una zona mucho mayor que nuestra pregunta. Trabajaremos con Las Condes para reducir el área de análisis y conectar el ráster con los polígonos vistos en el capítulo anterior.
 
-### Recortar la imagen con un polígono
+### Recortar la imagen con un polígono {#sec-cortaraster}
 
 Leemos las comunas, elegimos Las Condes y llevamos su geometría al CRS de la imagen. `crop()` limita el rectángulo de trabajo; `mask()` deja sin valor las celdas fuera de la comuna. Son dos pasos distintos: **recortar la extensión** y **respetar el límite**.
 
@@ -382,7 +382,7 @@ En esta práctica las posiciones 1 a 7 corresponden a las bandas B1 a B7 del mat
 
 Pasaremos por tres niveles: **bandas satelitales → índice por celda → superficie por manzana**. El resultado será el porcentaje de la superficie de cada manzana que el ejercicio clasifica como vegetada.
 
-### Calcular el NDVI
+### Calcular el NDVI {#sec-calcndvi}
 
 El **Índice de Vegetación de Diferencia Normalizada (NDVI)** compara la banda del infrarrojo cercano (NIR) con la roja. La vegetación fotosintéticamente activa suele reflejar más en NIR que en rojo. El índice se calcula en cada celda:
 
@@ -419,7 +419,7 @@ ggplot(ndvi_valores, aes(x = NDVI)) +
 El catálogo citado describe un producto Landsat 8 de reflectancia TOA, pero este TIFF de clase no conserva información suficiente para confirmar que provenga de ese producto, cuándo se capturó ni cómo se trataron las nubes y sombras. Tampoco podemos saber aquí si sus valores ya fueron convertidos a reflectancia. Por eso, el cálculo siguiente **demuestra el método**, pero sus cifras no deben presentarse como una estimación validada de cobertura vegetal. Para un uso real, revisa primero la metadata de la escena de origen y aplica solo las conversiones que correspondan a ese producto.
 :::
 
-### Definir una regla de clasificación
+### Definir una regla de clasificación {#sec-umbralicv}
 
 Para practicar, marcaremos con `1` las celdas cuyo índice sea al menos `0.20` y con `0` las demás. El umbral es **exploratorio**: no es una definición universal de vegetación. Las celdas sin dato seguirán como `NA`, para no confundir ausencia de información con ausencia de vegetación.
 
@@ -431,7 +431,7 @@ names(vegetacion) <- "sobre_umbral"
 plot(vegetacion, main = "Celdas sobre el umbral de NDVI")
 ```
 
-### Resumir por manzana
+### Resumir por manzana {#sec-calcicv}
 
 La unidad de análisis ahora es una manzana censal. Queremos saber **qué porcentaje de su superficie quedó clasificado como vegetación**. Para ello, primero estimamos el área vegetada y luego la dividimos por el área total de la manzana.
 

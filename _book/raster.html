@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./crs.html" rel="next">
+<link href="./indicadores_territoriales.html" rel="next">
 <link href="./datos_vectoriales.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -216,10 +216,16 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos Raster</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./indicadores_territoriales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Anexos</span></a>
+ <span class="menu-text">Tareas</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +233,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./tarea_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tarea 1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Anexos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./crs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">CRS en R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quiebres.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapas y Quiebres</span></a>
   </div>
 </li>
       </ul>
@@ -269,14 +298,14 @@ window.Quarto = {
   <li><a href="#cuatro-resoluciones-que-conviene-distinguir" id="toc-cuatro-resoluciones-que-conviene-distinguir" class="nav-link" data-scroll-target="#cuatro-resoluciones-que-conviene-distinguir"><span class="header-section-number">4.4.2</span> Cuatro resoluciones que conviene distinguir</a></li>
   <li><a href="#de-la-observación-a-una-pregunta-pública" id="toc-de-la-observación-a-una-pregunta-pública" class="nav-link" data-scroll-target="#de-la-observación-a-una-pregunta-pública"><span class="header-section-number">4.4.3</span> De la observación a una pregunta pública</a></li>
   <li><a href="#leer-una-imagen-satelital" id="toc-leer-una-imagen-satelital" class="nav-link" data-scroll-target="#leer-una-imagen-satelital"><span class="header-section-number">4.4.4</span> Leer una imagen satelital</a></li>
-  <li><a href="#recortar-la-imagen-con-un-polígono" id="toc-recortar-la-imagen-con-un-polígono" class="nav-link" data-scroll-target="#recortar-la-imagen-con-un-polígono"><span class="header-section-number">4.4.5</span> Recortar la imagen con un polígono</a></li>
+  <li><a href="#sec-cortaraster" id="toc-sec-cortaraster" class="nav-link" data-scroll-target="#sec-cortaraster"><span class="header-section-number">4.4.5</span> Recortar la imagen con un polígono</a></li>
   <li><a href="#explorar-combinaciones-de-bandas" id="toc-explorar-combinaciones-de-bandas" class="nav-link" data-scroll-target="#explorar-combinaciones-de-bandas"><span class="header-section-number">4.4.6</span> Explorar combinaciones de bandas</a></li>
   </ul></li>
   <li><a href="#caso-aplicado-vegetación-por-manzana" id="toc-caso-aplicado-vegetación-por-manzana" class="nav-link" data-scroll-target="#caso-aplicado-vegetación-por-manzana"><span class="header-section-number">4.5</span> Caso aplicado: vegetación por manzana</a>
   <ul class="collapse">
-  <li><a href="#calcular-el-ndvi" id="toc-calcular-el-ndvi" class="nav-link" data-scroll-target="#calcular-el-ndvi"><span class="header-section-number">4.5.1</span> Calcular el NDVI</a></li>
-  <li><a href="#definir-una-regla-de-clasificación" id="toc-definir-una-regla-de-clasificación" class="nav-link" data-scroll-target="#definir-una-regla-de-clasificación"><span class="header-section-number">4.5.2</span> Definir una regla de clasificación</a></li>
-  <li><a href="#resumir-por-manzana" id="toc-resumir-por-manzana" class="nav-link" data-scroll-target="#resumir-por-manzana"><span class="header-section-number">4.5.3</span> Resumir por manzana</a></li>
+  <li><a href="#sec-calcndvi" id="toc-sec-calcndvi" class="nav-link" data-scroll-target="#sec-calcndvi"><span class="header-section-number">4.5.1</span> Calcular el NDVI</a></li>
+  <li><a href="#sec-umbralicv" id="toc-sec-umbralicv" class="nav-link" data-scroll-target="#sec-umbralicv"><span class="header-section-number">4.5.2</span> Definir una regla de clasificación</a></li>
+  <li><a href="#sec-calcicv" id="toc-sec-calcicv" class="nav-link" data-scroll-target="#sec-calcicv"><span class="header-section-number">4.5.3</span> Resumir por manzana</a></li>
   <li><a href="#leer-el-resultado-como-indicador-territorial" id="toc-leer-el-resultado-como-indicador-territorial" class="nav-link" data-scroll-target="#leer-el-resultado-como-indicador-territorial"><span class="header-section-number">4.5.4</span> Leer el resultado como indicador territorial</a></li>
   </ul></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">4.6</span> Referencias</a></li>
@@ -812,8 +841,8 @@ max values  :       49865,       52771, 59274.996094, 56141.996094, 59311.996094
 </div>
 <p>La imagen cubre una zona mucho mayor que nuestra pregunta. Trabajaremos con Las Condes para reducir el área de análisis y conectar el ráster con los polígonos vistos en el capítulo anterior.</p>
 </section>
-<section id="recortar-la-imagen-con-un-polígono" class="level3" data-number="4.4.5">
-<h3 data-number="4.4.5" class="anchored" data-anchor-id="recortar-la-imagen-con-un-polígono"><span class="header-section-number">4.4.5</span> Recortar la imagen con un polígono</h3>
+<section id="sec-cortaraster" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="sec-cortaraster"><span class="header-section-number">4.4.5</span> Recortar la imagen con un polígono</h3>
 <p>Leemos las comunas, elegimos Las Condes y llevamos su geometría al CRS de la imagen. <code>crop()</code> limita el rectángulo de trabajo; <code>mask()</code> deja sin valor las celdas fuera de la comuna. Son dos pasos distintos: <strong>recortar la extensión</strong> y <strong>respetar el límite</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>comuna <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/shape/Comunas_Chile.shp"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
@@ -1010,8 +1039,8 @@ max values  :       49865,       52771, 59274.996094, 56141.996094, 59311.996094
 <section id="caso-aplicado-vegetación-por-manzana" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="caso-aplicado-vegetación-por-manzana"><span class="header-section-number">4.5</span> Caso aplicado: vegetación por manzana</h2>
 <p>Pasaremos por tres niveles: <strong>bandas satelitales → índice por celda → superficie por manzana</strong>. El resultado será el porcentaje de la superficie de cada manzana que el ejercicio clasifica como vegetada.</p>
-<section id="calcular-el-ndvi" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="calcular-el-ndvi"><span class="header-section-number">4.5.1</span> Calcular el NDVI</h3>
+<section id="sec-calcndvi" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-calcndvi"><span class="header-section-number">4.5.1</span> Calcular el NDVI</h3>
 <p>El <strong>Índice de Vegetación de Diferencia Normalizada (NDVI)</strong> compara la banda del infrarrojo cercano (NIR) con la roja. La vegetación fotosintéticamente activa suele reflejar más en NIR que en rojo. El índice se calcula en cada celda:</p>
 <p><span class="math display">
 NDVI = \frac{NIR - Rojo}{NIR + Rojo}
@@ -1063,8 +1092,8 @@ Antes de interpretar el índice
 </div>
 </div>
 </section>
-<section id="definir-una-regla-de-clasificación" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="definir-una-regla-de-clasificación"><span class="header-section-number">4.5.2</span> Definir una regla de clasificación</h3>
+<section id="sec-umbralicv" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-umbralicv"><span class="header-section-number">4.5.2</span> Definir una regla de clasificación</h3>
 <p>Para practicar, marcaremos con <code>1</code> las celdas cuyo índice sea al menos <code>0.20</code> y con <code>0</code> las demás. El umbral es <strong>exploratorio</strong>: no es una definición universal de vegetación. Las celdas sin dato seguirán como <code>NA</code>, para no confundir ausencia de información con ausencia de vegetación.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>umbral <span class="ot">&lt;-</span> <span class="fl">0.20</span></span>
@@ -1081,8 +1110,8 @@ Antes de interpretar el índice
 </div>
 </div>
 </section>
-<section id="resumir-por-manzana" class="level3" data-number="4.5.3">
-<h3 data-number="4.5.3" class="anchored" data-anchor-id="resumir-por-manzana"><span class="header-section-number">4.5.3</span> Resumir por manzana</h3>
+<section id="sec-calcicv" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="sec-calcicv"><span class="header-section-number">4.5.3</span> Resumir por manzana</h3>
 <p>La unidad de análisis ahora es una manzana censal. Queremos saber <strong>qué porcentaje de su superficie quedó clasificado como vegetación</strong>. Para ello, primero estimamos el área vegetada y luego la dividimos por el área total de la manzana.</p>
 <p>El ráster <code>vegetacion</code> vale <code>1</code> en las celdas sobre el umbral de NDVI y <code>0</code> en las demás. Al usar <code>exact_extract(vegetacion, ..., "sum")</code>, una celda con valor <code>1</code> aporta según la parte que cae dentro de la manzana: si entra completa, aporta <code>1</code>; si entra solo la mitad, aporta <code>0,5</code>. Una celda con valor <code>0</code> no aporta al área vegetada. Por eso <code>pix_veg</code> puede tener decimales: representa una cantidad de <strong>celdas completas equivalentes</strong>, considerando también las celdas del borde.</p>
 <p>En este ejercicio, las celdas miden 30 × 30 metros en un CRS cuyas unidades son metros. Cada celda completa ocupa, entonces, <strong>900 m²</strong>. Multiplicamos <code>pix_veg</code> por esa superficie para obtener <code>area_veg</code>: media celda clasificada como vegetación, por ejemplo, representa 450 m² dentro de la manzana. La fórmula del indicador es:</p>
@@ -1572,8 +1601,8 @@ ICV = \frac{\text{pix\_veg} \times 30 \times 30}{\text{AREA}} \times 100
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./crs.html" class="pagination-link" aria-label="CRS en R">
-        <span class="nav-page-text">CRS en R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./indicadores_territoriales.html" class="pagination-link" aria-label="Indicadores Territoriales">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Indicadores Territoriales</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
