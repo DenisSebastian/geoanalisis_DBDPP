@@ -21,9 +21,9 @@ book:
     # - inferencia.qmd
     # - autocorrelacion.qmd
     # - clustering.qmd
-    # - part: "Tareas"
-      # chapters:
-        # - tarea_1.qmd
+    - part: "Tareas"
+      chapters:
+        - tarea_1.qmd
         # - tarea_2.qmd
     - part: "Anexos"
       chapters:

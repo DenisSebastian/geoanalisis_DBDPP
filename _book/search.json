@@ -310,49 +310,6 @@
     ]
   },
   {
-    "objectID": "crs.html",
-    "href": "crs.html",
-    "title": "CRS en R",
-    "section": "",
-    "text": "Sistema de Referencias de Coordenadas\nLos sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido. Los tipos de sistemas de coordenadas principales que existen son:\nPara hacer reproyecciones en R, se le tiene que asignar el Sistema de Referencia de Coordenadas de dos formas, uno como cadena de texto (\"+proj=longlat +datum=WGS84 +no_defs\") o como número que corresponde a EPSG (EPSG es el acrónimo de European Petroleum Survey Group) que representan sistema de referencia de coordenadas también.\nPara el caso de Chile usamos dos sistemas de referencias de coordenadas:",
-    "crumbs": [
-      "Anexos",
-      "CRS en R"
-    ]
-  },
-  {
-    "objectID": "crs.html#sistema-de-referencias-de-coordenadas",
-    "href": "crs.html#sistema-de-referencias-de-coordenadas",
-    "title": "CRS en R",
-    "section": "",
-    "text": "Sistema de Referencias de Coordenadas\n\n\n\n\nCoordenadas elipsoidales\n\nson la representación de las coordenadas sobre la superficie de un elipsoide determinado, se representan por [φ, λ, h] siendo respectivamente, la latitud, longitud y altura elipsoidal.\n\n\n\n\n\nCoordenadas Geodésicas. Fuente: (Drewes & Sánchez, 2011)\n\n\n\nCoordenadas proyectadas o cartográficas\n\nSegún la proyección empleada las coordenadas elipsoidales pueden representarse en un plano, en el caso de Chile continental, se emplea la proyección Universal Transversal de Mercator (UTM), huso 19 y huso 18.\n\n\n\n\n\nproyección Universal Transversal Mercator (UTM) Fuente: (Drewes & Sánchez, 2011)\n\n\n\n\n\nCoordenadas elipsoidales (geodésicas):\n\n4326 o \"+proj=longlat +datum=WGS84 +no_defs\"\n\nCoordenadas proyectadas (métricas):\n\n32719 o \"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs\"\n\n\n\nReproyectar Vectores\n\nlibrary(sf) # manipulación de datos vectoriales\nlibrary(mapview) # visualización de mapas dinámicos\nlibrary(dplyr)\nlibrary(ggplot2) # gráficos\nlibrary(RColorBrewer) #paleta de colores\n\nLectura de Vectores\n\nlas_condes_mz &lt;- st_read(\"data/shape/icv_las_condes.shp\", quiet=T) \n\n\nLC_mz_32719 &lt;- las_condes_mz %&gt;% st_transform(32719)\nst_crs(LC_mz_32719)\n\nCoordinate Reference System:\n  User input: EPSG:32719 \n  wkt:\nPROJCRS[\"WGS 84 / UTM zone 19S\",\n    BASEGEOGCRS[\"WGS 84\",\n        ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n            MEMBER[\"World Geodetic System 1984 (Transit)\"],\n            MEMBER[\"World Geodetic System 1984 (G730)\"],\n            MEMBER[\"World Geodetic System 1984 (G873)\"],\n            MEMBER[\"World Geodetic System 1984 (G1150)\"],\n            MEMBER[\"World Geodetic System 1984 (G1674)\"],\n            MEMBER[\"World Geodetic System 1984 (G1762)\"],\n            MEMBER[\"World Geodetic System 1984 (G2139)\"],\n            MEMBER[\"World Geodetic System 1984 (G2296)\"],\n            ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1]],\n            ENSEMBLEACCURACY[2.0]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4326]],\n    CONVERSION[\"UTM zone 19S\",\n        METHOD[\"Transverse Mercator\",\n            ID[\"EPSG\",9807]],\n        PARAMETER[\"Latitude of natural origin\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",-69,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9996,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",500000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",10000000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],\n        AREA[\"Between 72°W and 66°W, southern hemisphere between 80°S and equator, onshore and offshore. Argentina. Bolivia. Brazil. Chile. Colombia. Peru.\"],\n        BBOX[-80,-72,0,-66]],\n    ID[\"EPSG\",32719]]\n\n\n\n\nReproyectar Raster\nEl archivo ráster ya tiene definido su sistema de referencia de origen (UTM 19S, EPSG:32719). Con terra::project() lo transformamos a coordenadas geográficas WGS 84 (EPSG:4326), conservando sus ocho bandas.\n\nlibrary(terra)\n\nlas_condes_raster &lt;- rast(\"data/raster/OLI_LC.tif\")\nnames(las_condes_raster) &lt;- c(\"aerosol\", \"blue\", \"green\", \"red\" , \"nir\", \"swir1\", \"swir2\", \"tirs1\")\n\nlas_condes_raster\n\nclass       : SpatRaster\nsize        : 449, 562, 8  (nrow, ncol, nlyr)\nresolution  : 30, 30  (x, y)\nextent      : 350505, 367365, 6293905, 6307375  (xmin, xmax, ymin, ymax)\ncoord. ref. : WGS 84 / UTM zone 19S (EPSG:32719)\nsource      : OLI_LC.tif\nnames       : aerosol,  blue, green,   red,   nir, swir1, ...\nmin values  :    8465,  7604,  6500,  5924,  5520,  5191, ...\nmax values  :   19119, 20517, 21248, 23237, 29344, 30012, ...\n\n\n\ncrs_latlon &lt;- \"EPSG:4326\" # coordenadas geográficas o elipsoidales\nlas_condes_raster2 &lt;- terra::project(las_condes_raster, crs_latlon)\nlas_condes_raster2\n\nclass       : SpatRaster\nsize        : 409, 606, 8  (nrow, ncol, nlyr)\nresolution  : 0.000302661, 0.000302661  (x, y)\nextent      : -70.60908, -70.42566, -33.48626, -33.36247  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326)\nsource(s)   : memory\nnames       :      aerosol,         blue,        green,          red,          nir,        swir1, ...\nmin values  :  8525.768555,  7688.330566,  6616.679199,  6117.143066,  6129.486816,  5666.844238, ...\nmax values  : 18629.787109, 19889.853516, 20757.240234, 22576.816406, 28876.076172, 25861.087891, ...",
-    "crumbs": [
-      "Anexos",
-      "CRS en R"
-    ]
-  },
-  {
-    "objectID": "crs.html#referencias",
-    "href": "crs.html#referencias",
-    "title": "CRS en R",
-    "section": "Referencias:",
-    "text": "Referencias:\nGeodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018",
-    "crumbs": [
-      "Anexos",
-      "CRS en R"
-    ]
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Lefebvre, Henri. 1974. “La Production de\nlespace.” L Homme Et La\nSociété 31 (1): 15–32. https://doi.org/10.3406/homso.1974.1855.\n\n\nTobler, W. R. 1970. “A Computer Movie Simulating Urban Growth in\nthe Detroit Region.” Economic Geography 46 (June): 234.\nhttps://doi.org/10.2307/143141.",
-    "crumbs": [
-      "References"
-    ]
-  },
-  {
     "objectID": "indicadores_territoriales.html",
     "href": "indicadores_territoriales.html",
     "title": "5  Indicadores Territoriales",
@@ -473,6 +430,39 @@
     ]
   },
   {
+    "objectID": "crs.html",
+    "href": "crs.html",
+    "title": "CRS en R",
+    "section": "",
+    "text": "Sistema de Referencias de Coordenadas\nLos sistemas de coordenadas forman la base de cálculo para describir la posición de un punto a partir de mediciones geodésicas: distancias, proporciones de distancias (sin escala) y ángulos. Las coordenadas nunca pueden medirse, solamente se calculan con referencia un sistema de coordenadas bien definido. Los tipos de sistemas de coordenadas principales que existen son:\nPara hacer reproyecciones en R, se le tiene que asignar el Sistema de Referencia de Coordenadas de dos formas, uno como cadena de texto (\"+proj=longlat +datum=WGS84 +no_defs\") o como número que corresponde a EPSG (EPSG es el acrónimo de European Petroleum Survey Group) que representan sistema de referencia de coordenadas también.\nPara el caso de Chile usamos dos sistemas de referencias de coordenadas:",
+    "crumbs": [
+      "Anexos",
+      "CRS en R"
+    ]
+  },
+  {
+    "objectID": "crs.html#sistema-de-referencias-de-coordenadas",
+    "href": "crs.html#sistema-de-referencias-de-coordenadas",
+    "title": "CRS en R",
+    "section": "",
+    "text": "Sistema de Referencias de Coordenadas\n\n\n\n\nCoordenadas elipsoidales\n\nson la representación de las coordenadas sobre la superficie de un elipsoide determinado, se representan por [φ, λ, h] siendo respectivamente, la latitud, longitud y altura elipsoidal.\n\n\n\n\n\nCoordenadas Geodésicas. Fuente: (Drewes & Sánchez, 2011)\n\n\n\nCoordenadas proyectadas o cartográficas\n\nSegún la proyección empleada las coordenadas elipsoidales pueden representarse en un plano, en el caso de Chile continental, se emplea la proyección Universal Transversal de Mercator (UTM), huso 19 y huso 18.\n\n\n\n\n\nproyección Universal Transversal Mercator (UTM) Fuente: (Drewes & Sánchez, 2011)\n\n\n\n\n\nCoordenadas elipsoidales (geodésicas):\n\n4326 o \"+proj=longlat +datum=WGS84 +no_defs\"\n\nCoordenadas proyectadas (métricas):\n\n32719 o \"+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs\"\n\n\n\nReproyectar Vectores\n\nlibrary(sf) # manipulación de datos vectoriales\nlibrary(mapview) # visualización de mapas dinámicos\nlibrary(dplyr)\nlibrary(ggplot2) # gráficos\nlibrary(RColorBrewer) #paleta de colores\n\nLectura de Vectores\n\nlas_condes_mz &lt;- st_read(\"data/shape/icv_las_condes.shp\", quiet=T) \n\n\nLC_mz_32719 &lt;- las_condes_mz %&gt;% st_transform(32719)\nst_crs(LC_mz_32719)\n\nCoordinate Reference System:\n  User input: EPSG:32719 \n  wkt:\nPROJCRS[\"WGS 84 / UTM zone 19S\",\n    BASEGEOGCRS[\"WGS 84\",\n        ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n            MEMBER[\"World Geodetic System 1984 (Transit)\"],\n            MEMBER[\"World Geodetic System 1984 (G730)\"],\n            MEMBER[\"World Geodetic System 1984 (G873)\"],\n            MEMBER[\"World Geodetic System 1984 (G1150)\"],\n            MEMBER[\"World Geodetic System 1984 (G1674)\"],\n            MEMBER[\"World Geodetic System 1984 (G1762)\"],\n            MEMBER[\"World Geodetic System 1984 (G2139)\"],\n            MEMBER[\"World Geodetic System 1984 (G2296)\"],\n            ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1]],\n            ENSEMBLEACCURACY[2.0]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4326]],\n    CONVERSION[\"UTM zone 19S\",\n        METHOD[\"Transverse Mercator\",\n            ID[\"EPSG\",9807]],\n        PARAMETER[\"Latitude of natural origin\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",-69,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",0.9996,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",500000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",10000000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Navigation and medium accuracy spatial referencing.\"],\n        AREA[\"Between 72°W and 66°W, southern hemisphere between 80°S and equator, onshore and offshore. Argentina. Bolivia. Brazil. Chile. Colombia. Peru.\"],\n        BBOX[-80,-72,0,-66]],\n    ID[\"EPSG\",32719]]\n\n\n\n\nReproyectar Raster\nEl archivo ráster ya tiene definido su sistema de referencia de origen (UTM 19S, EPSG:32719). Con terra::project() lo transformamos a coordenadas geográficas WGS 84 (EPSG:4326), conservando sus ocho bandas.\n\nlibrary(terra)\n\nlas_condes_raster &lt;- rast(\"data/raster/OLI_LC.tif\")\nnames(las_condes_raster) &lt;- c(\"aerosol\", \"blue\", \"green\", \"red\" , \"nir\", \"swir1\", \"swir2\", \"tirs1\")\n\nlas_condes_raster\n\nclass       : SpatRaster\nsize        : 449, 562, 8  (nrow, ncol, nlyr)\nresolution  : 30, 30  (x, y)\nextent      : 350505, 367365, 6293905, 6307375  (xmin, xmax, ymin, ymax)\ncoord. ref. : WGS 84 / UTM zone 19S (EPSG:32719)\nsource      : OLI_LC.tif\nnames       : aerosol,  blue, green,   red,   nir, swir1, ...\nmin values  :    8465,  7604,  6500,  5924,  5520,  5191, ...\nmax values  :   19119, 20517, 21248, 23237, 29344, 30012, ...\n\n\n\ncrs_latlon &lt;- \"EPSG:4326\" # coordenadas geográficas o elipsoidales\nlas_condes_raster2 &lt;- terra::project(las_condes_raster, crs_latlon)\nlas_condes_raster2\n\nclass       : SpatRaster\nsize        : 409, 606, 8  (nrow, ncol, nlyr)\nresolution  : 0.000302661, 0.000302661  (x, y)\nextent      : -70.60908, -70.42566, -33.48626, -33.36247  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326)\nsource(s)   : memory\nnames       :      aerosol,         blue,        green,          red,          nir,        swir1, ...\nmin values  :  8525.768555,  7688.330566,  6616.679199,  6117.143066,  6129.486816,  5666.844238, ...\nmax values  : 18629.787109, 19889.853516, 20757.240234, 22576.816406, 28876.076172, 25861.087891, ...",
+    "crumbs": [
+      "Anexos",
+      "CRS en R"
+    ]
+  },
+  {
+    "objectID": "crs.html#referencias",
+    "href": "crs.html#referencias",
+    "title": "CRS en R",
+    "section": "Referencias:",
+    "text": "Referencias:\nGeodesia en Chile, teoría y aplicación del Sistema de Referencia Geocéntrico para las Américas (SIRGAS) - 2018",
+    "crumbs": [
+      "Anexos",
+      "CRS en R"
+    ]
+  },
+  {
     "objectID": "quiebres.html",
     "href": "quiebres.html",
     "title": "Mapas y Quiebres",
@@ -561,80 +551,13 @@
     ]
   },
   {
-    "objectID": "tarea_1.html",
-    "href": "tarea_1.html",
-    "title": "Tarea 1",
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
     "section": "",
-    "text": "Antecedentes",
+    "text": "Lefebvre, Henri. 1974. “La Production de\nlespace.” L Homme Et La\nSociété 31 (1): 15–32. https://doi.org/10.3406/homso.1974.1855.\n\n\nTobler, W. R. 1970. “A Computer Movie Simulating Urban Growth in\nthe Detroit Region.” Economic Geography 46 (June): 234.\nhttps://doi.org/10.2307/143141.",
     "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#antecedentes",
-    "href": "tarea_1.html#antecedentes",
-    "title": "Tarea 1",
-    "section": "",
-    "text": "Publicación: 17 de octubre de 2026.\nEntrega: 27 de octubre de 2026.\nModalidad: individual.\nPonderación: 40 % de la nota final.\nFormato: informe (PDF, PPTX, Markdown o HTML) y código. Incluye los mapas, la tabla, una breve explicación de tus decisiones y la interpretación de los resultados.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#instrucciones",
-    "href": "tarea_1.html#instrucciones",
-    "title": "Tarea 1",
-    "section": "Instrucciones",
-    "text": "Instrucciones\n\nParte 1: Indicadores Ambientales\n\n(1pt) Selecciona una comuna de la Región Metropolitana (excepto Las Condes) (?sec-cortaraster) y calcular NDVI usando la función vista en clases (?sec-calcndvi).\n(1pt) Calcula la cantidad de vegetación en la comuna seleccionada, filtrando los píxeles por un umbral que tú determines (?sec-umbralicv)\n(1 pt) Calcula el indicador de cobertura vegetal para las manzanas urbanas de la comuna seleccionada (?sec-calcicv). Describa los resultados.\n\n\n\nParte 2: Indicadores Socioeconómicos\n\n(1pt) Calcula seis indicadores socioeconómicos en una región de tu área de estudio (Caso aplicado: dimensión socioeconómica 2024).\n(1 pt) Selecciona una provincia y elige un indicador socioeconómico que consideres que evidencia una necesidad prioritaria en esa provincia. Define y justifique un umbral crítico para el indicador seleccionado (por ejemplo: menor a 0.25) y genera una tabla resumen usando la función group_by() (Resúmenes estadísticos). En la tabla, debes mostrar:\n\n\nLa cantidad de personas que están por debajo del umbral crítico.\nEl promedio del indicador por comuna dentro de la provincia seleccionada.\n\n\n(1 pt) De la tabla anterior, elige una comuna basada en uno de estos criterios (justifica tu elección):\n\n\nMayor cantidad de personas por debajo del umbral crítico.\nValor promedio más bajo del indicador.\nRealiza una representación cartográfica del valor del indicador a nivel de manzana censal. Identifica y describe si existen concentraciones de valores altos o bajos del indicador y describe la situación del sector basándote en tu conocimiento, experiencia o los valores de los indicadores.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#indicaciones-generales",
-    "href": "tarea_1.html#indicaciones-generales",
-    "title": "Tarea 1",
-    "section": "Indicaciones generales",
-    "text": "Indicaciones generales\nUsa los procedimientos de los capítulos del libro como guía y adapta las rutas, los filtros territoriales y los nombres de las variables a tus datos. Indica en el informe el territorio elegido, las fuentes, la unidad de análisis, las fórmulas y los criterios usados para tratar valores faltantes. Distingue los resultados exploratorios de una medición validada para tomar decisiones públicas.\nLas dos partes pueden estudiar territorios diferentes. En la parte ambiental se trabaja con una comuna de la Región Metropolitana; en la socioeconómica, con una región y una provincia elegidas por ti.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#parte-1-indicadores-ambientales-3-puntos",
-    "href": "tarea_1.html#parte-1-indicadores-ambientales-3-puntos",
-    "title": "Tarea 1",
-    "section": "Parte 1: indicadores ambientales (3 puntos)",
-    "text": "Parte 1: indicadores ambientales (3 puntos)\n\nSeleccionar la comuna y calcular el NDVI (1 punto). Elige una comuna de la Región Metropolitana distinta de Las Condes y comprueba que la imagen utilizada cubre su superficie. Recorta y enmascara la imagen con su límite comunal siguiendo Recortar la imagen con un polígono. Identifica las bandas roja e infrarroja cercana y calcula el NDVI por celda como en Calcular el NDVI. Presenta un mapa del NDVI e informa la fuente y las limitaciones conocidas de la imagen.\nClasificar y cuantificar la vegetación (1 punto). Elige un umbral de NDVI y justifica su valor. Clasifica como vegetadas las celdas que alcanzan o superan ese umbral, conservando las celdas sin datos como ausentes; consulta Definir una regla de clasificación. Informa la cantidad de celdas clasificadas y estima la superficie que representan dentro del límite comunal, considerando la fracción de las celdas del borde e indicando la resolución espacial usada en la conversión. Presenta un mapa de la clasificación.\nCalcular el indicador por manzana (1 punto). Selecciona las manzanas urbanas de la misma comuna, comprueba que estén en el sistema de referencia de la imagen y calcula para cada una el indicador de cobertura vegetal (ICV): superficie clasificada como vegetación dividida por la superficie total de la manzana, multiplicada por 100; sigue Resumir por manzana. Presenta un mapa del ICV y describe su distribución, las manzanas con valores altos o bajos y las limitaciones derivadas del tamaño de celda o de áreas sin datos.\n\n\n\n\n\n\n\nAlcance del ejercicio ambiental\n\n\n\nEl ráster de clase utilizado en Calcular el NDVI no permite confirmar por sí solo la fecha de captura, el tratamiento de nubes ni la conversión a reflectancia. Si usas ese archivo, presenta el NDVI y el ICV como resultados exploratorios y registra esas limitaciones. Si usas otra imagen, documenta su producto, fecha, bandas, resolución y tratamiento de valores faltantes.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#parte-2-indicadores-socioeconómicos-3-puntos",
-    "href": "tarea_1.html#parte-2-indicadores-socioeconómicos-3-puntos",
-    "title": "Tarea 1",
-    "section": "Parte 2: indicadores socioeconómicos (3 puntos)",
-    "text": "Parte 2: indicadores socioeconómicos (3 puntos)\nElige una región y usa sus manzanas urbanas. El procedimiento y las definiciones están en Caso aplicado: dimensión socioeconómica 2024.\n\nIndicadores (1 punto). Calcula IEM, IVI, ISV, IEA e IRH para las manzanas urbanas de la región. Presenta los resultados en una tabla o un mapa.\nResumen provincial (1 punto). Elige una provincia y uno de estos indicadores para analizar una necesidad: IEM, IVI, ISV o IEA. Define y justifica un umbral crítico. Para cada comuna de la provincia, usa group_by() (Resúmenes estadísticos) y muestra:\n\nel número de habitantes de las manzanas cuyo indicador está bajo el umbral;\nel promedio del indicador entre las manzanas urbanas de la comuna.\n\nEl conteo se refiere a habitantes de esas manzanas; no significa que cada persona tenga la condición medida por el indicador.\nMapa comunal (1 punto). Elige la comuna con más habitantes en manzanas bajo el umbral o con el menor promedio del indicador. Justifica tu elección, haz un mapa del indicador por manzana y describe dónde se concentran sus valores altos y bajos.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
-    ]
-  },
-  {
-    "objectID": "tarea_1.html#parte-1-vegetación-urbana-3-puntos",
-    "href": "tarea_1.html#parte-1-vegetación-urbana-3-puntos",
-    "title": "Tarea 1",
-    "section": "Parte 1: vegetación urbana (3 puntos)",
-    "text": "Parte 1: vegetación urbana (3 puntos)\nElige una comuna de la Región Metropolitana distinta de Las Condes. Usa una imagen que cubra la comuna.\n\nNDVI (1 punto). Recorta la imagen al límite comunal (Recortar la imagen con un polígono) y calcula el NDVI (Calcular el NDVI). Presenta un mapa.\nVegetación (1 punto). Elige y justifica un umbral de NDVI para clasificar la vegetación (Definir una regla de clasificación). Informa la superficie clasificada como vegetación dentro de la comuna y presenta un mapa.\nCobertura por manzana (1 punto). Calcula el porcentaje de superficie clasificada como vegetación en cada manzana urbana de la comuna (Resumir por manzana). Presenta un mapa y describe dónde hay valores altos y bajos.\n\nIndica la fuente y fecha de la imagen, si se conocen, y las limitaciones del resultado. Si utilizas la imagen de clase del libro, presenta los cálculos como exploratorios, según se explica en Calcular el NDVI.",
-    "crumbs": [
-      "Tareas",
-      "Tarea 1"
+      "References"
     ]
   }
 ]

@@ -1,2 +1,0 @@
-var data = data || {}; data["personas_bajo_30_arit - 1"] = 
-[[0,0,0,0,0,null],[12,15,10,8,5,null],[18,22,25,20,12,null],[24,30,28,26,0,null],[20,0,0,0,0,null],[0,0,0,0,0,null],[0,0,0,0,0,null],[null,null,null,null,null,null]];
