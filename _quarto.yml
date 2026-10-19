@@ -18,7 +18,7 @@ book:
     - datos_vectoriales.qmd
     - raster.qmd
     - indicadores_territoriales.qmd
-    # - inferencia.qmd
+    - inferencia.qmd
     # - autocorrelacion.qmd
     # - clustering.qmd
     - part: "Tareas"
@@ -27,13 +27,10 @@ book:
         # - tarea_2.qmd
     - part: "Anexos"
       chapters:
-        # - r_project.qmd
         - crs.qmd
         # - geocode.qmd
-        # - espacial_r.qmd
-            # - luces_nocturnas.qmd
-        # - john_snow.qmd
         - quiebres.qmd
+        - john_snow.qmd
     - references.qmd
 
 bibliography: references.bib

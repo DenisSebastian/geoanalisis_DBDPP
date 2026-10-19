@@ -30,7 +30,7 @@ Indica la fuente y fecha de la imagen, si se conocen, y las limitaciones del res
 
 Elige una región y usa sus manzanas urbanas. El procedimiento y las definiciones están en @sec-indsoc.
 
-1. **Indicadores (1 punto).** Calcula **IEM, IVI, ISV, IEA e IRH** para las manzanas urbanas de la región. Presenta los resultados en una tabla o un mapa.
+1. **Indicadores (1 punto).** Calcula **IEM, IVI, ISV, IEA e IRH** para las manzanas urbanas de la región. Presenta los resultados en una tabla y un mapa.
 
 2. **Resumen provincial (1 punto).** Elige una provincia y uno de estos indicadores para analizar una necesidad: **IEM, IVI, ISV o IEA**. Define y justifica un umbral crítico. Para cada comuna de la provincia, usa `group_by()` (@sec-groupby) y muestra:
 
