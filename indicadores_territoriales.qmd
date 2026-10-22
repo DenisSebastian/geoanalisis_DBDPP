@@ -53,7 +53,7 @@ Un patrón observado por región puede cambiar al calcularse por comuna o manzan
 Los indicadores pueden organizarse según la dimensión territorial que representan. En este curso trabajaremos principalmente con cuatro familias:
 
 | Dimensión | Pregunta orientadora | Ejemplos |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | Accesibilidad | ¿Con qué facilidad se llega a servicios y oportunidades? | tiempo de viaje, distancia, cobertura |
 | Socioeconómica | ¿Qué condiciones sociales y materiales caracterizan el área? | escolaridad, empleo, vivienda |
 | Seguridad | ¿Cómo se distribuyen los riesgos y hechos delictuales? | tasas, concentración, exposición |
@@ -67,16 +67,16 @@ En la práctica, estas medidas apoyan cuatro tareas: **diagnosticar** brechas ac
 
 La construcción no comienza con una fórmula. Sigue una cadena de decisiones conectadas:
 
-1. **Delimitar el problema.** Precisar el fenómeno, la población afectada, el territorio y el periodo de interés.
-2. **Establecer un marco de referencia.** Revisar conceptos, evidencia y criterios que justifiquen qué aspecto del problema se medirá.
-3. **Formular el objetivo.** Expresar para qué se utilizará el indicador. Un objetivo claro debe ser específico, medible, alcanzable, relevante y acotado en el tiempo.
-4. **Seleccionar los datos.** Verificar pertinencia, cobertura, escala, actualidad, consistencia y posibilidad de acceso. La disponibilidad de una variable no basta para justificar su uso.
-5. **Definir y calcular la medida.** Documentar variables, fórmula, unidad, denominadores, valores faltantes, normalización y dirección del indicador.
-6. **Representar el patrón espacial.** Elegir una clasificación y una simbología coherentes con la distribución de los datos y con el mensaje que se desea comunicar.
-7. **Analizar y validar.** Contrastar el resultado con el problema inicial, revisar valores extremos y sensibilidad a las decisiones metodológicas, e identificar límites de interpretación.
+1.  **Delimitar el problema.** Precisar el fenómeno, la población afectada, el territorio y el periodo de interés.
+2.  **Establecer un marco de referencia.** Revisar conceptos, evidencia y criterios que justifiquen qué aspecto del problema se medirá.
+3.  **Formular el objetivo.** Expresar para qué se utilizará el indicador. Un objetivo claro debe ser específico, medible, alcanzable, relevante y acotado en el tiempo.
+4.  **Seleccionar los datos.** Verificar pertinencia, cobertura, escala, actualidad, consistencia y posibilidad de acceso. La disponibilidad de una variable no basta para justificar su uso.
+5.  **Definir y calcular la medida.** Documentar variables, fórmula, unidad, denominadores, valores faltantes, normalización y dirección del indicador.
+6.  **Representar el patrón espacial.** Elegir una clasificación y una simbología coherentes con la distribución de los datos y con el mensaje que se desea comunicar.
+7.  **Analizar y validar.** Contrastar el resultado con el problema inicial, revisar valores extremos y sensibilidad a las decisiones metodológicas, e identificar límites de interpretación.
 
 ::: {.callout-tip title="Una ficha mínima antes de programar"}
-Antes de escribir código, completa una frase como esta: *Este indicador mide ___, para ___, en ___, durante ___; se calcula mediante ___ y un valor alto significa ___.* Si quedan espacios ambiguos, la medida todavía no está suficientemente definida.
+Antes de escribir código, completa una frase como esta: \*Este indicador mide ***, para*** , en ***, durante*** ; se calcula mediante \_\_\_ y un valor alto significa \_\_\_.\* Si quedan espacios ambiguos, la medida todavía no está suficientemente definida.
 :::
 
 ### Fuentes nacionales frecuentes
@@ -84,7 +84,7 @@ Antes de escribir código, completa una frase como esta: *Este indicador mide __
 La fuente adecuada depende de la pregunta y de la escala. Entre los recursos más utilizados en Chile se encuentran:
 
 | Fuente | Aporte principal |
-|---|---|
+|------------------------------------|------------------------------------|
 | [Censos de población y vivienda](https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/censo-de-poblacion-y-vivienda) | población, hogares y viviendas con alta desagregación territorial |
 | [Encuesta CASEN](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen) | ingresos y condiciones socioeconómicas de los hogares |
 | [Encuesta Nacional de Empleo](https://www.ine.gob.cl/estadisticas-por-tema/mercado-laboral/ocupacion-y-desocupacion) | empleo, desempleo y fuerza de trabajo |
@@ -108,7 +108,7 @@ Dimensiones de la Matriz de Bienestar Humano Territorial
 Calcularemos cinco indicadores: empleo, materialidad de la vivienda, suficiencia de la vivienda, escolaridad adulta y estructura de los hogares. Todos se orientarán en la misma dirección: **un valor más alto representará una situación relativamente más favorable**.
 
 | Indicador | Estado con los tabulados 2024 | Qué representa |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | `IEM` | medición directa | participación de la población activa en el empleo |
 | `IVI` | medición directa | calidad material de la vivienda |
 | `ISV` | proxy | suficiencia de la vivienda a partir de señales de hacinamiento |
@@ -181,16 +181,13 @@ data_reg %>%
 
 En el insumo censal se identificaron casos en los que un mismo ID estaba asociado a más de un polígono. Algunas geometrías multipartes representan una unidad espacial coherente; otras contienen partes físicamente separadas que necesitan tratarse como polígonos independientes para evitar errores de visualización, agregación e interpretación.
 
-::: {#fig-w layout-ncol=2}
-
-![](images/id_separado.png) 
+::: {#fig-w layout-ncol="2"}
+![](images/id_separado.png)
 
 ![](images/id_separado_sat.png)
 
 Manzanas que comparten el mismo número de identificación.
 :::
-
-
 
 Cuando una unidad se separa, sus atributos no pueden copiarse íntegramente a cada nueva parte, porque eso duplicaría personas, hogares y viviendas. La corrección geométrica asigna un identificador derivado a cada parte y calcula un peso de redistribución `w`.
 
@@ -202,25 +199,19 @@ La huella construida se utiliza como evidencia de ocupación. Para cada parte ge
 
 <br>
 
-$$
-w_i =
+$$w_i =
 \frac{\text{medida de edificaciones en la parte } i}
-{\sum_j \text{medida de edificaciones de las partes del mismo ID}}
-$$
+{\sum_j \text{medida de edificaciones de las partes del mismo ID}}$$
 
 La medida principal puede ser el área construida o el conteo de edificaciones, según la configuración del proceso. Si no existe evidencia construida suficiente, se utiliza un método de respaldo basado en el área del terreno o en una distribución uniforme.
 
 Para los IDs efectivamente redistribuidos se debe cumplir:
 
-$$
-\sum_i w_i = 1
-$$
+$$\sum_i w_i = 1$$
 
 De esta forma, una variable absoluta $x$ se asigna a cada parte mediante:
 
-$$
-x_i = x \times w_i
-$$
+$$x_i = x \times w_i$$
 
 ### ¿A qué variables se aplica?
 
@@ -232,9 +223,7 @@ El peso se aplica a **conteos absolutos**, como número de personas, hogares o v
 
 Cuando un indicador es una razón y el mismo `w` se aplica al numerador y al denominador, el peso se cancela algebraicamente:
 
-$$
-\frac{a \times w}{b \times w} = \frac{a}{b}, \qquad w > 0
-$$
+$$\frac{a \times w}{b \times w} = \frac{a}{b}, \qquad w > 0$$
 
 Esto significa que `w` preserva la consistencia de los **conteos**, pero no crea por sí solo variación interna en las proporciones de las partes derivadas de una misma unidad.
 
@@ -415,13 +404,9 @@ El IEM mide la condición de empleo como el complemento de la proporción de per
 - `n_desocupado`: personas desocupadas.
 - `n_ocupado`: personas ocupadas.
 
-$$
-CESA = \frac{n_{desocupado}}{n_{desocupado} + n_{ocupado}}
-$$
+$$CESA = \frac{n_{desocupado}}{n_{desocupado} + n_{ocupado}}$$
 
-$$
-IEM = 1 - CESA
-$$
+$$IEM = 1 - CESA$$
 
 Si la población activa es cero, el indicador no está definido y se registra como `NA`.
 
@@ -474,14 +459,12 @@ El IVI sintetiza carencias de materialidad en paredes, techo y piso. Cada compon
 - Piso: `n_mat_piso_capa_cemento` y `n_mat_piso_tierra`.
 - Denominador: `n_vp`, total de viviendas particulares.
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 paredes &= \frac{tabique\_sin\_forro + artesanal + precarios}{n_{vp}} \\
 techo &= \frac{fonolita + techo\_precario + sin\_cubierta}{n_{vp}} \\
 suelo &= \frac{capa\_cemento + tierra}{n_{vp}} \\
 IVI &= 1 - \frac{paredes + techo + suelo}{3}
-\end{aligned}
-$$
+\end{aligned}$$
 
 Cada componente se acota al intervalo $[0,1]$ para controlar inconsistencias puntuales derivadas de la agregación.
 
@@ -542,17 +525,13 @@ El ISV aproxima la suficiencia habitacional mediante dos señales de hacinamient
 - `n_nucleos_hacinados_allegados`: núcleos hacinados o allegados.
 - `n_hog`: total de hogares.
 
-$$
-score_{ISV} =
+$$score_{ISV} =
 \frac{n_{viv\_hacinadas}}{n_{vp\_ocupada}} +
-w_{hac}\frac{n_{nucleos\_hacinados\_allegados}}{n_{hog}}
-$$
+w_{hac}\frac{n_{nucleos\_hacinados\_allegados}}{n_{hog}}$$
 
 Utilizamos $w_{hac}=2$ para representar una mayor criticidad del segundo componente. Luego normalizamos el puntaje dentro de la localidad LA SERENA - COQUIMBO y cambiamos su dirección:
 
-$$
-ISV = 1 - minmax(score_{ISV})
-$$
+$$ISV = 1 - minmax(score_{ISV})$$
 
 ```{r calc-isv}
 # Este peso da mayor importancia al componente de núcleos hacinados o allegados.
@@ -610,9 +589,7 @@ En versiones anteriores del Censo (2017) se utilizaba la sigla `IEJ`, correspond
 - `prom_escolaridad18`: promedio de años de escolaridad de la población de 18 años o más.
 - `n_per`: población total, utilizada para identificar entidades sin población.
 
-$$
-IEA = prom_{escolaridad18}, \qquad n_{per} > 0
-$$
+$$IEA = prom_{escolaridad18}, \qquad n_{per} > 0$$
 
 ```{r calc-iea}
 # Conservamos el promedio de escolaridad solo en unidades con población.
@@ -655,15 +632,11 @@ El IRH combina la proporción de hogares con jefatura femenina y la proporción 
 - `n_hog_menores`: hogares con menores.
 - `n_hog`: total de hogares.
 
-$$
-V_{fam} =
+$$V_{fam} =
 \left(\frac{n_{jefatura\_mujer}}{n_{hog}}\right)
-\left(\frac{n_{hog\_menores}}{n_{hog}}\right)
-$$
+\left(\frac{n_{hog\_menores}}{n_{hog}}\right)$$
 
-$$
-IRH = 1 - V_{fam}
-$$
+$$IRH = 1 - V_{fam}$$
 
 ```{r calc-irh}
 # Calculamos ambas proporciones sobre el mismo universo: el total de hogares.
@@ -812,7 +785,7 @@ ggplot(sf24) +
 
 ```
 
-## Resultados para la localidad LA SERENA - COQUIMBO
+## Resultados para la localidad LA SERENA - COQUIMBO {#sec-resSoc}
 
 ### Cobertura y distribución
 
