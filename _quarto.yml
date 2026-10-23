@@ -19,7 +19,7 @@ book:
     - raster.qmd
     - indicadores_territoriales.qmd
     - inferencia.qmd
-    # - autocorrelacion.qmd
+    - autocorrelacion.qmd
     # - clustering.qmd
     - part: "Tareas"
       chapters:
