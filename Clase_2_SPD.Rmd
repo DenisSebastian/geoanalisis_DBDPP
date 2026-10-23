@@ -1,0 +1,675 @@
+---
+title: "Clase 2: Manipulación de datos Vectoriales y Raster"
+subtitle: "Curso Superintendencia de Prevención del Delito"
+author: "Centro de Inteligencia Territorial"
+date: "13-08-2020"
+output:
+  html_document:
+    theme: paper
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+    includes:
+      in_header: tex/header.tex
+      before_body: tex/doc_prefix.tex
+      after_body: tex/doc_suffix.tex
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval =TRUE)
+options(warn = -1)
+```
+
+<center>![](../imagenes/cit.png){width=25%}</center>
+
+### Agenda
+
+1. Objetivos
+2. Introducción a Objetos Vectoriales  
+    - Definición de Objetos Vectoriales   
+    - Lecturas de Objetos Vectoriales   
+    - Caso Práctico con Delitos  
+    - Guardar de Objetos Vectoriales   
+3. Introducción a Objetos Raster  
+    - Definición de Objetos Raster  
+    - Lecturas de Objetos Raster   
+    - Manipulación de Objetos Raster   
+    - Visualización de Objetos Raster   
+    - Caso Práctico con Delitos 
+    - Guardar de Objetos Raster   
+4. Tarea 2  
+5. Referencias   
+6. Contactos  
+
+
+<br>
+
+### Objetivos:
+
+La presente Sesion tiene como objetivo principal introducir conceptos generales y manipulación de datos de tipo vectorial (punto, lineas, polígonos) y Raster, ambos con casos prácticos.
+
+
+##### Definición de Variables Generales
+
+```{r}
+### latlon Utilizado a escala mundial
+crs_latlon <- "+proj=longlat +datum=WGS84 +no_defs"
+
+### utm utilizado a nivel regional (depende de la zona y hemisferio)
+crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+suppressMessages(library(dplyr))
+suppressMessages(library(raster))
+suppressMessages(library(viridis))
+suppressMessages(library(ggplot2))
+```
+
+<br>
+
+### Introducción a Objetos Vectoriales 
+
+
+#### Definición de Objetos Vectoriales 
+
+
+
+<center>![](../imagenes/tipos_vect.png){width=80%}</center> 
+
+
+<br>
+
+**TIPOS DE OBJETOS VECTORIALES**
+
+**Puntos**: entidades que son demasiado pequeñas para representarse como líneas o polígonos así como también como ubicaciones de puntos (tales como las observaciones del GPS).
+
+**Líneas**: representan la forma y la ubicación de objetos geográficos, tales como centros de línea de calle y arroyos, también, demasiado angostos para mostrarlos como áreas. Las líneas también se utilizan para representar las entidades que tienen longitud pero no área, tales como las líneas de curvas de nivel y los límites.
+
+
+**Polígonos**: un conjunto de entidades de área de muchos lados que representa la forma y la ubicación de los tipos de entidades homogéneas tales como estados, condados, parcelas, tipos de suelo y zonas de uso del suelo.
+ 
+ 
+ 
+| type | description |
+|-|-|
+| POINT | zero-dimensional geometry containing a single point |
+| LINESTRING | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry |
+| POLYGON | geometry with a positive area (two-dimensional); sequence of points form a closed, non-self intersecting ring; the first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring |
+| MULTIPOINT | set of points; a MULTIPOINT is simple if no two Points in the MULTIPOINT are equal |
+| MULTILINESTRING | set of linestrings |
+| MULTIPOLYGON | set of polygons |
+| GEOMETRYCOLLECTION | set of geometries of any type except GEOMETRYCOLLECTION |
+
+###### Fuente: [https://r-spatial.github.io/sf/articles/sf1.html](https://r-spatial.github.io/sf/articles/sf1.html)
+
+   
+<br>
+
+#### Lecturas de Objetos Vectoriales 
+
+Las aplicaciones SIG pueden almacenar sus datos en archivos en el disco duro de la computadora. Hay un número de diferentes formatos de archivo para los datos de SIG, pero el más común es probablemente el ‘shapefile’. El nombre es un poco extraño en el que a pesar de que lo llamamos un shape file (singular), en realidad se compone de al menos tres archivos diferentes que trabajan juntos para almacenar sus datos vectoriales digitales, como se muestra en tabla_shapefile. 
+
+| Extensión  | Descripción  |
+|-|-|
+| archivo:`.shp`  | La geometría de un elemento vectorial se almacena en este archivo  |
+| archivo:`.dbf`  | Los atributos de un elemento vectorial se almacenan en este archivo  |
+| archivo:`.shx`  | Este archivo es un índice que le ayuda a la aplicación SIG a encontrar elementos de una manera más rápida  |
+| archivo:`.prj`  | Archivo que contiene sistema de proyección, Sistema de Referencia de Coordenadas CRS |
+
+
+(Fuente: [https://docs.qgis.org/2.8/es/docs/gentle_gis_introduction/data_capture.html](https://docs.qgis.org/2.8/es/docs/gentle_gis_introduction/data_capture.html))
+
+
+
+Lectura de ShapeFile SF (Simple Features)
+```{r}
+# library(sf)
+suppressMessages(library(sf))
+comunas_RM_sf <- read_sf("../data/shapes/ComunasRM/ComunasRM.shp")
+
+#Transformar Sistema de Referencia de Coordenas de UTM a Geográficas
+comunas_RM_sf <- st_transform(comunas_RM_sf,crs_latlon)
+comunas_RM_sf
+plot(st_geometry(comunas_RM_sf), col = sf.colors(12, categorical = TRUE),
+     border = 'grey', axes = TRUE, main="Shapefile Comunas SF")
+```
+
+
+Filtrar una Comuna
+
+```{r}
+comuna_sel <- "LAS CONDES"
+comuna <- comunas_RM_sf%>%
+  filter(DESC_COMUN == comuna_sel)%>%
+  st_union()%>%
+  st_transform(crs_utm) #
+
+plot(st_geometry(comuna), col = "skyblue",
+     border = 'grey', axes = TRUE, main = comuna_sel)
+```
+
+
+Leer delitos
+
+```{r}
+delitos_df <- readRDS("../data/rds/delitos/delitos_2017_R13.rds")
+head(delitos_df)
+dim(delitos_df)
+```
+
+Recategorización de Delitos
+
+```{r}
+library(openxlsx)
+
+grupos <- read.xlsx("../data/excel/grupos_tipos_delitos.xlsx")
+
+head(grupos)
+delitos_df <- left_join(delitos_df, grupos, by = "DELITO")
+head(delitos_df)
+
+# identificar DELITOS que no tuvieron tipo asignado
+faltantes <- delitos_df%>%
+  filter(is.na(TIPO))%>%
+  dplyr::select(DELITO)%>%
+  pull() %>%
+  unique()# convertir un vector
+
+length(faltantes)
+
+#Descartar los NA
+delitos_df <- delitos_df%>%
+  filter(!is.na(GRUPO))
+
+```
+
+
+Filtrar Comuna 
+```{r}
+df_delitos <- delitos_df%>%
+  filter(COM_GEO == comuna_sel)
+dim(df_delitos)
+
+```
+
+DataFrame Delitos a Puntos SF
+```{r}
+delitos_puntos <- st_as_sf(df_delitos, coords =c("longitud","latitud"), crs = crs_latlon)
+delitos_puntos <- st_transform(delitos_puntos, crs_utm) # Reproyectar a UTM (metros)
+
+```
+
+
+```{r eval=TRUE}
+library(ggplot2)
+
+# Visualización ggplot y sf
+ggplot() +
+  geom_sf(data = comuna, fill= "gray90", alpha = 0.8)+
+  geom_sf(data = delitos_puntos, col = "orange", alpha=0.2,  size= 0.5)+
+  ggtitle(paste0("DELITOS COMUNA DE ", comuna_sel), ) +
+  theme_bw() +
+  theme(legend.position="none")+
+  theme(panel.grid.major = element_line(colour = "gray80"), 
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+##### Caso Práctico
+
+Cargar Red Vial Regional (LINESTRING) 
+Cargar Zonas Censales Chile (MULTIPOLYGON), Filtrar  Comuna
+Cortar Red Vial Regional (LINESTRING)  por la comuna Seleccionada
+Seleccionar los delitos que estén a menos de 100 metros de una calle o avenida
+Visualizar las diferentes coberturas en una Comuna
+
+Cargar Red Vial Regional (LINESTRING) 
+```{r}
+nombre_comuna <- "LAS CONDES"
+
+red <- readRDS("../data/rds/redes/RED_REG_13.rds")%>%
+  st_transform(crs_utm)
+
+head(red)
+```
+
+Cortar Red Vial Regional (LINESTRING)  por la comuna Seleccionada
+```{r warning=FALSE}
+bbox_comuna <- st_bbox(comuna)
+red_mod <- st_crop(red, bbox_comuna)
+
+ggplot() +
+  geom_sf(data = comuna, color = "red", lwd= 2)+
+  geom_sf(data = red_mod, fill= "gray90", alpha = 0.8)+ #buffer
+  ggtitle(paste0("COMUNA DE ", nombre_comuna), ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray70"), 
+        panel.grid.minor = element_line(colour = "gray70"))
+```
+
+Seleccionar los delitos que estén a menos de 100 metros de una Avenida principal
+
+```{r}
+nombre_via <-"APOQUINDO"
+grep(nombre_via, x = unique(red_mod$NOMBRE_VIA), value = T)
+
+via <- red_mod%>%
+  filter(NOMBRE_VIA == nombre_via)
+
+ggplot() +
+  geom_sf(data = comuna, color = "gray50", lwd= 1, fill = NA,alpha = 0.4)+
+  geom_sf(data = via, color= "#2b8cbe", alpha = 0.8)+ #buffer
+  ggtitle(paste0("Avenida ", nombre_via)) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+#buffer
+red_mod_b <- via%>%
+  st_cast("LINESTRING")%>%
+  st_buffer(dist = 100, endCapStyle="ROUND")%>%
+  st_cast("POLYGON")%>%
+  st_union()
+
+ggplot() +
+  geom_sf(data = comuna, color = "gray50", lwd= 1, fill = NA,alpha = 0.4)+
+  geom_sf(data = red_mod_b, color = "#253494", fill= "#41b6c4", alpha = 0.8)+ 
+  geom_sf(data = via, color= "#081d58", alpha = 0.8)+ #buffer
+  ggtitle(paste0("Avenida ", nombre_via)) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+```
+
+
+Extraer los Delitos de la comuna Seleccionada
+```{r}
+
+ggplot() +
+  geom_sf(data = comuna, color = "gray50", lwd= 1, fill = NA,alpha = 0.4)+
+  geom_sf(data = red_mod_b, color = "#253494", fill= "#41b6c4", alpha = 0.8)+ 
+  geom_sf(data = delitos_puntos, col = "orange", alpha=0.2,  size= 0.5)+
+  ggtitle(paste0("Avenida ", nombre_via, " +  Delitos")) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+```
+
+Interseción delitos con Buffer de Avenidas Principales
+```{r}
+# versión eficiente de intersects
+id_via <- sapply(st_intersects(delitos_puntos, red_mod_b), 
+                 function(z) if (length(z)==0) NA_integer_ else z[1])
+
+delitos_vp <- delitos_puntos%>%
+  mutate(id_via = id_via)%>%
+  filter(!is.na(id_via))
+
+```
+
+Visualizar los resultados
+```{r}
+ggplot() +
+  # geom_sf(data = comuna_sel, fill= "gray90", alpha = 0.2)+
+   geom_sf(data = red_mod_b, color = "#253494", fill= "#41b6c4", alpha = 0.2)+ 
+  geom_sf(data = delitos_vp,  col = "#fc4e2a", alpha=0.2,  size= 0.1)+ #Delitos vía publica
+  ggtitle(paste0("Delitos alrededores de Av. ", nombre_via), ) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+```
+
+Resumen Tabla
+```{r}
+head(delitos_vp)
+
+resumen <- delitos_vp%>%
+  st_drop_geometry()%>%
+  group_by(GRUPO)%>%
+  summarise(Cantidad = n(), .groups = "keep")%>%
+  arrange(desc(Cantidad))
+
+# Solo para visualizar resultados en markdown
+library(kableExtra)
+kableExtra::kable(resumen) %>%
+  kable_styling(bootstrap_options = "striped", full_width = T, font_size =12)
+
+p <-ggplot(data=resumen, aes(x=GRUPO, y=Cantidad), ) +
+  geom_bar(stat="identity", width=0.4, fill = "darkgreen")+
+  coord_flip()+
+  theme_minimal()
+
+p
+```
+
+
+##### Bonus: Alteración de Coordenadas para anonimizar Delitos
+
+```{r}
+# Función anonimizar coordenadas
+anonimizar <- function(coord, metros = 100){
+  round(coord / metros, 0) * metros
+}
+
+head(df_delitos)
+
+# DataFrame to sf
+del <- st_as_sf(df_delitos, coords = c("longitud","latitud"), 
+                crs = crs_latlon)
+
+# Cambiar Coordendas Métricas UTM
+del_utm <- st_transform(del, crs_utm)
+
+ggplot() +
+  geom_sf(data = comuna, color = "gray50", lwd= 1, fill = NA,alpha = 0.4)+
+  geom_sf(data = del_utm, col = "orange", alpha=0.2,  size= 0.5)+
+  ggtitle(paste0("Delitos Base")) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+
+# Extraer Coodenadas
+coordenadas_utm <- st_coordinates(del_utm)
+class(coordenadas_utm)
+head(coordenadas_utm)
+
+# Modificar Coordenadas con la función 
+coordenadas_utm[,1] <- anonimizar(coordenadas_utm[,1])
+coordenadas_utm[,2] <- anonimizar(coordenadas_utm[,2])
+# Otra forma de hacer lo mismo
+# coordenadas_utm[] <- sapply(X = coordenadas_utm, anonimizar)
+head(coordenadas_utm, 10)
+
+# Se agregan coordenadas modificadas al df
+del_utm <- cbind(del_utm, coordenadas_utm) # unir por columna
+
+# asigno geometry con las coordenadas nuevas
+del_mod <- del_utm%>%
+  st_drop_geometry()%>% # elimino coordendas antiguas
+  st_as_sf(coords =c("X","Y"), crs = crs_utm) 
+
+ggplot() +
+  geom_sf(data = comuna, color = "gray50", lwd= 1, fill = NA,alpha = 0.4)+
+  geom_sf(data = del_mod, col = "purple", alpha=0.2,  size= 0.5)+
+  ggtitle(paste0("Delitos Anonimizados")) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+```
+
+<br>
+
+
+
+#### Guardar Objetos Vectoriales 
+
+Formato rds
+
+```{r eval=FALSE}
+saveRDS(delitos_vp, "../data/rds/delits_vp_ejercicio.rds")
+saveRDS(red_mod, "../data/rds/red_LC.rds")
+```
+
+Formato ShapesFiles
+
+```{r eval=FALSE}
+# formato sf
+st_write(delitos_vp, "../data/shapes/delitos_apoquindo.shp", driver = "ESRI Shapefile")
+
+# formato sp
+writeOGR(red_mod, "../data/shapes/", "red_LC", driver="ESRI Shapefile")
+
+```
+
+
+<br>
+
+
+### Introducción a Objetos Raster
+
+#### Definición de Objetos Raster
+
+
+Los objetos raster representan entidades geográficas dividiendo el espacio físico en celdas discretas cuadradas o rectangulares dispuestas en una cuadrícula.  
+
+
+Un raster consta de una matriz de celdas (o pixeles) organizadas en filas y columnas (o una cuadrícula) en la que cada celda contiene un valor que representa información.
+
+
+
+<center>![](../imagenes/raster_concept.png){width=50%}</center>
+
+
+<br>
+
+**RESOLUCIÓN ESPACIAL DE UN RASTER**
+
+Cuanto más pequeño sea el tamaño de celda, más suave o más detallado será el raster. Sin embargo, cuanto mayor sea el número de celdas, más tiempo tardará en procesar, aumentándose a su vez la demanda de espacio de almacenamiento.
+
+
+<center>![](../imagenes/raster_min.png){width=50%}</center><center>![](../imagenes/raster_max.png){width=50%}</center>
+
+
+
+<br>
+
+**REFERENCIA ESPACIAL DE UN RASTER**
+
+La matriz queda representada por un Sistema de coordenadas cartesianas, en las que las filas de la matriz son paralelas al eje x y las columnas al eje y del plano cartesiano
+
+<center>![](../imagenes/raster_repre.gif){width=50%}</center>
+
+
+###### Fuente: [https://desktop.arcgis.com/es/arcmap/10.3/manage-data/geodatabases/raster-basics.htm](https://desktop.arcgis.com/es/arcmap/10.3/manage-data/geodatabases/raster-basics.htm)
+
+
+#### Creación de Objetos Raster 
+
+```{r}
+suppressMessages(library(raster))
+r <- raster(ncol=10, nrow=10)
+values(r) <- 1:ncell(r)
+r
+plot(r)
+```
+
+#### Manipulación de Objetos Raster 
+
+**OPERACIONES BÁSICAS SOBRE UN RASTER**
+
+* Operaciones Básicas : +, -, *, /
+* Operadores Lógicos >, >=, <, ==, !
+* Otras Funciones: abs, round, ceiling, floor, trunc, sqrt, log, log10, exp, cos, sin, atan, tan, max, min, range, prod, sum, any, all.
+
+```{r}
+s <- r + 10
+s <- sqrt(s)
+s <- s * r + 5
+r[] <- runif(ncell(r))
+r <- round(r)
+
+```
+
+**APILAR LAYERS EN UN RASTER**
+
+```{r}
+r <- raster(ncol=5, nrow=5)
+r[] <- 1
+s <- stack(r, r+1)
+q <- stack(r, r+2, r+4, r+6)
+x <- r + s + q
+x
+```
+
+
+**FUNCIONES BÁSICAS SOBRE UN RASTER**
+
+```{r}
+r <- raster(ncol=3, nrow=2)
+ # ncell(r)
+r[] <- ncell(r)
+getValues(r)
+
+
+# cambiar los valores menores de 4 a NA
+s <- calc(r, fun=function(x){ x[x < 4] <- NA; return(x)} )
+as.matrix(s)
+
+f_menor4 <- function(x){
+  x[x < 4] <- NA
+  return(x)
+}
+s <- calc(r, fun = f_menor4 )
+as.matrix(s)
+
+```
+
+
+
+#### Visualización de Objetos Raster 
+
+```{r}
+r <- raster(ncol=100, nrow=100)
+values(r) <- runif(ncell(r), min=1, max=100)
+plot(r)
+```
+
+#### Caso Práctico
+
+Cargar Grilla Región Metropolitana
+
+```{r}
+grilla <- readRDS("../data/rds/grillas/grilla13.rds")
+grilla_sf <- st_as_sf(grilla, crs = crs_utm) # Ver Disminución de pesos
+```
+
+Intersectar Las Condes
+```{r}
+
+# se elimina ya que estaba creada cuando se utilizó 
+# las bases originales
+delitos_puntos$id <- NULL 
+
+
+# grilla Las Condes vacía
+grilla_comuna <- st_intersection(grilla_sf, comuna)
+grilla_comuna$id <- NULL
+grilla_comuna$id_grilla <- 1:nrow(grilla_comuna)
+plot(grilla_comuna$geometry)
+
+id_grilla<- sapply(st_intersects(delitos_puntos, grilla_comuna), 
+                 function(z) if (length(z)==0) NA_integer_ else z[1])
+
+
+delitos_puntos <- delitos_puntos%>%
+  mutate(id_grilla = id_grilla)
+
+
+cantidad_del_grilla <- delitos_puntos%>%
+  st_drop_geometry()%>%
+  group_by(id_grilla)%>%
+  summarise(N_DELITOS = n(), .groups ="keep")
+
+
+grilla_comuna <- left_join(grilla_comuna, cantidad_del_grilla,
+                           by = "id_grilla")
+
+
+```
+
+```{r}
+library(viridis)
+
+base_plot <- grilla_comuna%>%
+  filter(!is.na(N_DELITOS))%>%
+  filter(N_DELITOS<100)
+
+p2 <- ggplot(data = base_plot) +
+  geom_sf(aes(fill= N_DELITOS), alpha = 0.8)+ 
+  scale_fill_gradientn(colors = rev(viridis::viridis(256)))+
+  # scale_color_viridis()+
+  ggtitle(paste0("Delitos por Grilla ")) +
+  theme_bw() +
+  theme(panel.grid.major = element_line(colour = "gray90"), 
+        panel.grid.minor = element_line(colour = "gray90"))
+
+p2
+```
+
+
+Sf to Raster
+```{r}
+
+r <- raster(as(base_plot, "Spatial"), ncols =100, nrows = 100)
+rr <- rasterize(as(base_plot, "Spatial"), r, field = "N_DELITOS", 
+                # fun=function(x,...)length(x),
+                getCover = FALSE, progress = "text")
+plot(rr, col=rev(viridis(256)))
+
+```
+
+#### Guardar Objetos Raster 
+
+
+rds
+```{r eval=FALSE}
+saveRDS(r, "../data/rds/sample_raster.rds")
+saveRDS(grilla_comuna, "../data/rds/grilla_delitos_sf.rds")
+```
+
+
+writeRaster
+```{r eval=FALSE}
+writeRaster(r, '../data/raster/sample.tif', overwrite=TRUE)
+writeRaster(rr, '../data/raster/del_LC_men100.tif', overwrite=TRUE)
+
+```
+
+
+
+<br>
+
+### Tarea 2:
+
+#### Enunciado Tarea
+
+1. Leer casos policiales en vector puntos para una ciudad de Chile (1 Punto)
+2. En su ciudad, transformar a .rds y sf (1 Punto)
+3. Clasificar delitos en 7 grupos (2 Puntos)
+4. Mapa de 3 tipos (muy frecuentes vs poco frecuentes) en su ciudad (2 Puntos)
+
+
+
+<br>
+
+### Referencias  
+
+RSpatial Documentación [https://rspatial.org/intr/index.html](https://rspatial.org/intr/index.html)  
+Spatial Data Análisis [https://rspatial.org/raster/analysis/index.html](https://rspatial.org/raster/analysis/index.html)
+
+Simple Features [https://r-spatial.github.io/sf/articles/sf1.html](https://r-spatial.github.io/sf/articles/sf1.html)  
+
+Operaciones Geométricas sf [https://geocompr.robinlovelace.net/geometric-operations.html](https://geocompr.robinlovelace.net/geometric-operations.html)  
+Maps ggplot2 [https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html)   
+Mapas tmap [https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)  
+
+
+Conceptos Raster[https://desktop.arcgis.com/es/arcmap/10.3/manage-data/geodatabases/raster-basics.htm](https://desktop.arcgis.com/es/arcmap/10.3/manage-data/geodatabases/raster-basics.htm)
+<br>
+
+### Contactos
+
+**DENIS BERROETA GONZÁLEZ**  
+Ingeniero Desarrollador, Centro Inteligencia Territorial, Design Lab UAI  
+denis.berroeta@uai.cl  
+[+56 2] 2331 1240  
+Av. Presidente Errázuriz 3485, Las Condes
+
+

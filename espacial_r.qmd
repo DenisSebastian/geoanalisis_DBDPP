@@ -1,0 +1,94 @@
+---
+subtitle: "Objetos Espaciales en R"
+---
+
+
+# Objetos Espaciales en R {.unnumbered}
+
+## Introducción
+
+
+Los objetos espaciales en R representan datos georreferenciados, lo que significa que están vinculados a una ubicación en el mundo real. Los objetos espaciales se pueden representar en mapas y gráficos, y se pueden analizar para identificar patrones y tendencias en los datos.
+
+El análisis espacial se utiliza en diversas áreas, como la geografía, la ecología, la planificación urbana y el análisis de datos de negocios, entre otros. La visualización y análisis de objetos espaciales puede proporcionar información valiosa para la toma de decisiones basada en datos.
+
+
+## Lectura de Insumos Espaciales
+
+```{r}
+# install.packages("sf")
+library(sf)
+crs_ll <- "+proj=longlat +datum=WGS84 +no_defs"
+crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"
+censo <-  readRDS("data/censo/zonas_urb_consolidadas.rds")
+
+```
+
+## Transformar a objeto sf (simple features)
+
+```{r}
+# transformar a objeto sf (simple features)
+censo_sf <- st_as_sf(censo)
+# head(censo_sf)
+names(censo_sf)
+```
+
+## Filtros espaciales por data
+
+```{r}
+library(dplyr)
+mi_communa <-  "LAS CONDES"
+
+zonas_com <-  censo_sf %>% 
+  filter(NOM_COMUNA == mi_communa)
+
+zonas_com %>% head()
+```
+
+## Visualización Cartográficas
+
+### Visualización estática Simple
+
+```{r fig.width=12, fig.align='center', fig.height=6}
+## Visualizar
+# Consideración el plot se realiza sobre la columna geometry
+
+nombre_plot <-  paste0("COMUNA DE ", mi_communa)
+plot(zonas_com$geometry, main = nombre_plot,col ="orange")
+
+```
+
+### Visualización estática con `ggplot2`
+
+```{r eval=TRUE, fig.width=12, fig.align='center'}
+library(ggplot2)
+
+# Visualización ggplot y sf
+ggplot() +
+  geom_sf(data = zonas_com, fill = "orange", alpha=0.5)+
+  ggtitle(nombre_plot) +
+  theme_bw() +
+  theme(legend.position="none")+
+  theme(panel.grid.major = element_line(colour = "gray80"),
+        panel.grid.minor = element_line(colour = "gray80"))
+```
+
+### Visualización Dinámica con `mapview`
+
+```{r fig.align="center", echo=TRUE, fig.width=12, fig.height=6,eval=FALSE}
+# install.packages("mapview")
+library(mapview)
+m <- mapview(zonas_com, alpha = 0.5,
+        col.regions = "orange", color="gray80",
+        legend =FALSE, cex = 3)
+m 
+```
+
+
+
+![](images/mapa_mapview.png){fig-aling=center}
+
+
+## Referencias:
+
+- [Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)

@@ -2,3 +2,7 @@
 .Rproj.user
 .DS_Store
 data
+
+data
+data/
+data/*

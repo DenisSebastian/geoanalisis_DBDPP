@@ -1,0 +1,43 @@
+---
+subtitle: "Inferencia y Autocorrelación Espacial"
+editor_options: 
+  chunk_output_type: console
+---
+
+# Tarea 2 {.unnumbered}
+
+
+## Antecedentes
+
+- Fecha de entrega: **24 de Noviembre 2024**
+- Formato: Informe (pdf o html) + Código (.r o .rmd)
+- Integrantes: Individual o Grupal (máximo 4)
+
+
+## Instrucciones
+
+
+### Parte 1: Interpolación de Inverso a la Distancia Ponderada.
+
+![Descripción gráfica de los resultados de interpolación de inverso a la distancia ponderada](images/exp_idw.png)
+
+
+1. Defina un área de estudio Urbana (Excepto Las Condes).
+2. Realice 3 calculos de interpolación de Inverso a al Distancia (IDW) (@sec-IDW) con los datos del SII correspodiente a _comercio_, _oficina_ y _atractor_ que se encuentra disponible en la siguiente ruta `data/sii/urbes.shp`. _(1.5 pt)_
+3. Calcule un indicador de territorial por cada uno de los resultados de las IDW  del punto anterior, visualice y describa los los resultados. _(1.5 pt)_
+
+### Parte 2: Autocorrelación espacial.
+
+
+
+1. Defina un área de estudio Urbana (Excepto Las Condes) y visualice una variable que usted decida evaluar su autocorrelación espacial (Ej: Nivel Educacional). Justifique la selección de variable a modo de hipótesis breve.  _(1 pt)_
+
+2. Genere una Matriz de Vecidad (@sec-matrizVec) ponderada por Población 
+
+3. Cálculo de índice de Moran global  (@sec-globalMoran) y visualice sus resultados en gráfico de cuadrantes. Interprete los resultados de forma general. _(1 pt)_
+
+4. Cálculo de índice de local Moran (@sec-localMoran) e identifique los grupos o cluster haciendo uso de los resultados significancia estadística, visualice los resultados en un Mapa e  Interprete los resultados de forma general. _(1 pt)_
+
+
+
+![Autocorrelación Espacial](images/cluster_LC.png){width=60%}

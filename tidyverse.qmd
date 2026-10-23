@@ -1,0 +1,172 @@
+---
+subtitle: "Universo Tidyverse"
+---
+
+# Tidyverse en R
+
+## Introducción a Tidyverse
+
+[Tidyverse](https://www.tidyverse.org) es una colección de paquetes diseñados para Ciencia de Datos.
+
+![](images/tidyverse.png){fig-aling="center" width="300"}
+
+```{r eval=FALSE}
+# instalación
+install.packages("tidyverse")
+```
+
+Todos los paquetes comparten una filosofía de diseño, una gramática y estructuras de datos.
+
+*Esta filosofía promueve*
+
+-   En Pipes, navegarás dentro del pipe, `%>%`, para anidar instrucciones
+-   Si bien copiar-y-pegar (copy-and-paste) es una herramienta poderosa, deberías evitar utilizarla más de dos veces. Repetir el código es peligroso porque puede llevar a errores e inconsistencias.
+-   A medida que comiences a escribir funciones más potentes, necesitarás una base sólida acerca de las estructuras de datos.
+-   Las funciones nos permiten evitar la repetición de código; sin embargo, muchas veces necesitas repertir las mismas acciones con diferentes inputs. Puedes hacer esto con herramientas de iteración.
+
+
+## Estructura de un dataframe
+
+<center>![](images/tidy_frame.svg){width="80%"}</center>
+
+**Lectura de Base de SII**
+
+
+```{r}
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(sf))
+tbl_sii  <- readRDS("data/sii/mz_constru_SII.rds") %>% 
+  st_drop_geometry() # descartar geometrias solo usar la tabla de datos
+
+head(tbl_sii)
+```
+
+
+## Funciones básicas `dplyr`
+
+<center>![](images/dplyr_variables.png){width="70%"}</center>
+
+### Select
+
+`select` Seleccionar variables relevantes
+
+```{r}
+# seleccionar nomnres de columnas que deseo conservar
+tbl_sii %>%
+  select(n_com, oficinas, comercio, vivienda)
+
+# seleccionar nomnres de columnas que deseo eliminar anteponiendo un "-"
+tbl_sii %>%
+  select(-cod_com)
+```
+
+### Filter
+
+```{r}
+mi_comuna <- "LAS CONDES" 
+
+sii_com <- tbl_sii %>%
+  filter(n_com == mi_comuna) 
+ 
+head(sii_com, 5)
+```
+
+
+
+`filter`: Operadores Lógicos
+
+```{r echo = FALSE}
+op_logicos <- tibble::tribble(
+    ~Operador,                   ~Comparación,       ~Ejemplo, ~Resultado,
+      "x | y",           "x Ó y es verdadero", "TRUE | FALSE",     "TRUE",
+      "x & y",         "x Y y son verdaderos", "TRUE & FALSE",    "FALSE",
+         "!x", "x no es verdadero (negación)",        "!TRUE",    "FALSE",
+  "isTRUE(x)",  "x es verdadero (afirmación)", "isTRUE(TRUE)",     "TRUE"
+  )
+
+require(knitr)
+kable(op_logicos, digits = 3, row.names = FALSE, align = "c",
+              caption = NULL)
+
+```
+
+
+Filtrar las manzanas que tengan valores de oficina y comercio mayores a 0
+
+```{r eval=TRUE}
+sii_com %>%
+  filter(oficinas > 0 & comercio > 0) 
+
+```
+
+
+
+
+## Resúmenes Estadísticos con `dplyr`
+
+<center>![](images/dplyr_group_by.png){width="70%"}</center>
+
+Contabilizar cuantos metros cuadrados de oficina por cada comuna.
+
+```{r}
+tbl_resumen <-  tbl_sii %>%
+  group_by(n_com) %>%
+  summarise(Cantidad_mz = n(),
+            Total_of = sum(oficinas)) %>%
+  arrange(desc(Total_of)) # Ordenar
+
+tbl_resumen
+```
+
+**Actividad**
+
+-   Contabilizar cuantos metros cuadrados de Comercio hay por cada comuna
+rdenar de mayor a menor.
+-   Crear tabla con las 10 comunas que tienen mayor densisdad de Comercio
+
+::: {.callout-tip appearance="simple"}
+## Densidad de comercio
+
+Se puede entender como la división de la cantidad de metros cuadrados de comercio dividido por el total de metros cuadrados.
+:::
+
+
+## Visualización de Variables
+
+### Función Plot
+
+```{r}
+options(scipen = 999) # evitas notación cientiífica
+hist(sii_com$vivienda, breaks = 50,
+     main = "Histograma mt2 de Viviendas", col = "#225ea8")
+# colores:https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+```
+
+
+
+### Package [ggplot2](https://ggplot2.tidyverse.org)
+
+```{r  fig.align='center', fig.height=3.5}
+library(ggplot2)
+ggplot(sii_com, aes(x = vivienda)) + 
+  geom_histogram(bins = 50, fill = "#225ea8", color ="black")
+
+```
+
+[ggplot2](https://ggplot2.tidyverse.org) con estilos y características
+
+```{r  fig.align='center', fig.height=3.5}
+
+ggplot(sii_com, aes(x = vivienda)) +
+  geom_histogram(bins = 50, color = "#c7e9b4", fill = "#1d91c0")+
+  theme_bw()+
+  labs(title="Histograma mt2 de Viviendas", x ="Mt2. Viviendas", y = "Frecuencias")+
+  theme(plot.title = element_text(face = "bold",colour= "gray60", size=10)) 
+```
+
+## Referencias:
+
+- [Tidyverse](https://www.tidyverse.org)
+
+- [Paletas de colores](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+

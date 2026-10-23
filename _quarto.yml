@@ -3,28 +3,34 @@ project:
 
 book:
   title: "Curso: Geoanálisis"
-  subtitle: "Diplomado en Ciencia de Datos para Políticas Públicas 2022"
-  affiliation-title: "Universidad Adolfo Ibáñez - Chile"
+  subtitle: "Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas 2026"
+  # affiliation-title: "Universidad Adolfo Ibáñez - Chile"
   author: "Denis Berroeta González (denis.berroeta@uai.cl)"
-  date: "2022-08-12"
-  number-sections: 3
-  bibliography: references.bib
+  date: "2026-10-06"
+  language: "es"
+  # number-sections: 3
   page-footer: 
-    left: "Copyright 2022, Denis Berroeta" 
+    left: "Copyright 2026, Denis Berroeta" 
   chapters:
     - index.qmd
     - intro_estad_esp.qmd
     - datos_espaciales.qmd
     - datos_vectoriales.qmd
     - raster.qmd
+    - indicadores_territoriales.qmd
     - inferencia.qmd
     - autocorrelacion.qmd
+    # - clustering.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd
+        # - tarea_2.qmd
     - part: "Anexos"
       chapters:
-      - luces_nocturnas.qmd
+        - crs.qmd
+        # - geocode.qmd
+        - quiebres.qmd
+        - john_snow.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -38,6 +44,8 @@ format:
     fig-cap-location: "margin"
     tab-cap-location: "left"
     mailto: "denis.berroeta@uai.cl"
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
   
 execute:
   warning: false

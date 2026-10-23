@@ -12,7 +12,7 @@ Construir un indicador territorial que represente la luminosidad nocturna, cuya 
 
 ## Metodología
 
-De forma general se utilizará como base producto satelital llamado **VIIRS Stray Light Corrected Nighttime Day/Night Band Composites Version 1**, que entrega valores de radiancia media mensual del infrarojo visible, utilizando la plataflorma de GEE para su adquisisción y procesamiento.
+De forma general se utilizará como base producto satelital llamado **VIIRS Stray Light Corrected Nighttime Day/Night Band Composites Version 1**, que entrega valores de radiancia media mensual del infrarojo visible, utilizando la plataflorma de GEE para su adquisición y procesamiento.
 
 Se definirá una región de estudio, paral el caso práctico de cálculo es la área urbana de las comunas de Valparaíso y Viña del Mar en la V Región, se le aplicará un buffer de 1000 metros y se cortará imagen tipo raster obtendida del producto satelital antes mecionado.
 

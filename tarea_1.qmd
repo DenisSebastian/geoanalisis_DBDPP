@@ -1,36 +1,44 @@
 ---
-subtitle: "Datos Vectoriales y Raster"
-editor_options: 
+subtitle: "Datos vectoriales y ráster"
+editor_options:
   chunk_output_type: console
 ---
 
 # Tarea 1 {.unnumbered}
 
-
 ## Antecedentes
 
-- Fecha de entrega: **30 de Octubre 2022**
-- Formato: Informe (pdf, html) + Código
-- Integrantes: 3 o 4 
+- Publicación: **17 de octubre de 2026**.
+- Entrega: **27 de octubre de 2026**.
+- Modalidad: **individual**.
+- Ponderación: **40 % de la nota final**.
+- Formato: **informe** (PDF, PPTX, Markdown o HTML) **y código**. Incluye los mapas, la tabla, una breve explicación de tus decisiones y la interpretación de los resultados.
 
+## Parte 1: vegetación urbana (3 puntos)
 
-## Instrucciones
+Elige una comuna de la Región Metropolitana **distinta de Las Condes**. Usa una imagen que cubra la comuna.
 
+1. **NDVI (1 punto).** Recorta la imagen al límite comunal (@sec-cortaraster) y calcula el NDVI (@sec-calcndvi). Presenta un mapa.
 
-### Parte 1: Indicadores Socioeconómicos
+2. **Vegetación (1 punto).** Elige y justifica un umbral de NDVI para clasificar la vegetación (@sec-umbralicv). Informa la superficie clasificada como vegetación dentro de la comuna y presenta un mapa.
 
-1. Calcular los 6 Indicadores Socioenómicos en una Región de su área de estudio _(1 pt)_ @sec-indsoc
+3. **Cobertura por manzana (1 punto).** Calcula el porcentaje de superficie clasificada como vegetación en cada manzana urbana de la comuna (@sec-calcicv). Presenta un mapa y describe dónde hay valores altos y bajos.
 
-2. Seleccione una Provincia y **un indicador socioeconómico** que consideren que evidencia una nencesidad prioritaria en la provincia. Defina un valor de indicador como umbral crítico (ej: menor a 0.25) y genere una tabla resumen (usar función `group_by()`) donde se contabilice la **cantidad de personas** que están bajo el umbral crítico y **promedio del indicador** por comuna en la provincia seleccionada. _(1 pt)_
+Indica la fuente y fecha de la imagen, si se conocen, y las limitaciones del resultado. Si utilizas la imagen de clase del libro, presenta los cálculos como **exploratorios**, según se explica en @sec-calcndvi.
 
-3. De la tabla anterior, **seleccione una comuna**, ya sea por la mayor cantidad de personas (bajo el umbral) o por valor promedio del indicador más bajo (justifique la selección de comuna). Realicé representación cartográfica del valor del indicador  a nivel de manzana censal e identifique visualmente si existen concentraciones de valores de indicadores altos y/o bajos y haga una descripción del sector basándose en su conocimiento en terreno, experiencia general o valores de indicadores. _(1 pt)_
+## Parte 2: indicadores socioeconómicos (3 puntos)
 
-### Parte 2: Indicadores Ambientales
+Elige una región y usa sus manzanas urbanas. El procedimiento y las definiciones están en @sec-indsoc.
 
-1. Seleccionar una Comuna de la Región metropolitana (no Las Condes) @sec-cortaraster y calcular NDVI usando la función vista en clases @sec-calcndvi . _(1pt)_
+1. **Indicadores (1 punto).** Calcula **IEM, IVI, ISV, IEA e IRH** y la Dimensión Socioeconómica para las manzanas urbanas de la región escogida. Presenta los resultados en una tabla como se hizo en @sec-resSoc.
 
-2. Calcular Vegentación que existe en la comuna seleccionada, filtrando y dejando solo los pixeles sobre un valor de umbral que ustedes determinen. @sec-calcicv _(1pt)_
+2. **Resumen provincial (1 punto).** Elige una provincia y uno de estos indicadores para analizar una necesidad: **IEM, IVI, ISV o IEA**. Define y justifica un umbral crítico. Para cada comuna de la provincia, usa `group_by()` (@sec-groupby) y muestra:
 
-3. Calcule el indicador de cobertura vegetal para la manzanas urbanas de la comuna seleccionada. @sec-calcicv _(1 pt)_
+   - el número de habitantes de las **manzanas** cuyo indicador está bajo el umbral;
+   - el promedio del indicador entre las manzanas urbanas de la comuna.
 
+   El conteo se refiere a habitantes de esas manzanas; no significa que cada persona tenga la condición medida por el indicador.
 
+3. **Mapa comunal (1 punto).** Elige la comuna con más habitantes en manzanas bajo el umbral **o** con el menor promedio del indicador. Justifica tu elección, haz un mapa del indicador por manzana y describe dónde se concentran sus valores altos y bajos.
+
+![](images/Tarea_1.1.png)
