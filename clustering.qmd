@@ -1,5 +1,5 @@
 ---
-title: "Clustering Espacial"
+title: "Clustering espacial"
 editor_options: 
   chunk_output_type: console
 ---
@@ -8,63 +8,60 @@ editor_options:
 
 ![Objetivos](images/m7_geoanalisis.png)
 
-- Conocer teóricos fundamentales de la Clustering Espacial
-- Experimentar con métodos de Clustering Espacial aplicado a problemas reales
+- Distinguir similitud de atributos, proximidad espacial y continuidad geográfica.
+- Preparar datos ráster, manzanas y puntos para tres métodos de agrupamiento.
+- Explicar los parámetros y límites de cada método antes de usarlo en políticas públicas.
 
-## Introducción y Fundamentos de Clustering Espacial
+## Introducción y fundamentos
 
-El clustering espacial en el contexto de la estadística espacial es una técnica que agrupa datos geográficamente para identificar patrones espaciales en conjuntos de datos. A diferencia de los métodos tradicionales de clustering, el clustering espacial considera tanto las características de los datos como la ubicación geográfica, integrando la dimensión espacial como un componente clave en el proceso de agrupamiento.
+Un clúster es un grupo formado según una regla de similitud. Imagina ordenar fichas: podemos juntarlas por color, por su posición sobre una mesa o por ambas cosas. Con datos geográficos ocurre lo mismo. Tener coordenadas o dibujar el resultado en un mapa **no convierte automáticamente al método en espacial**: la ubicación debe entrar en la distancia o el algoritmo debe imponer una regla espacial.
 
-### Definción de Clustering Espacial
+| Ejemplo | Unidad | Variables que entran al método | Pregunta |
+|---|---|---|---|
+| Imagen satelital de Las Condes | Celda de 30 × 30 m | Bandas espectrales | ¿Qué celdas tienen respuestas parecidas? |
+| Manzanas censales 2024 | Manzana | Densidad, escolaridad adulta, suficiencia de vivienda y ubicación | ¿Qué manzanas se parecen y están relativamente próximas? |
+| Delitos violentos | Punto registrado | Coordenadas UTM | ¿Dónde se agrupan o concentran los casos registrados? |
 
-El clustering espacial busca identificar subconjuntos homogéneos de datos geográficamente cercanos. Los clústeres resultantes no solo agrupan puntos basados en similitudes en los atributos, sino también en la proximidad espacial. Esta integración permite encontrar patrones como zonas de alta vulnerabilidad social, áreas comerciales densas, o regiones con alta concentración de delitos.
+Los números de clúster son **etiquetas**, no niveles ordenados de gravedad. Una agrupación puede orientar un diagnóstico, pero no demuestra por sí sola la necesidad de un hogar, el tipo de cobertura de una celda ni el riesgo de delito de un barrio.
 
-### Importancia de Clustering Espacial
+En los mapas usamos una **paleta cualitativa** de colores contrastantes: el color distingue categorías, sin sugerir que el grupo 2 esté «entre» el 1 y el 3. Una paleta divergente propiamente tal se reserva para una variable ordenada con un punto medio significativo; aquí crearía una relación que los identificadores no tienen.
 
-En la estadística espacial, el clustering permite analizar cómo los datos están distribuidos en el espacio y entender si existen agrupamientos naturales que puedan ser relevantes para la planificación y la toma de decisiones. También ayuda a revelar procesos subyacentes en fenómenos espaciales, como la propagación de enfermedades, la distribución de recursos económicos, y los patrones de desarrollo urbano.
+### Definición de clustering espacial
 
-### Aplicaciones del Clustering Espacial
+En sentido estricto, un agrupamiento espacial usa la ubicación en su regla de similitud o exige relaciones espaciales entre observaciones. Los tres ejercicios distinguen estas opciones: similitud espectral **sin coordenadas** en el ráster, atributos **más coordenadas ponderadas** en las manzanas y **solo coordenadas** en los registros de delitos. K-means y el método jerárquico usados aquí no obligan a que cada grupo forme una zona continua.
 
-**Políticas Públicas**
+### Para qué sirve y qué no demuestra
 
--   **Segmentación Territorial**: Agrupa regiones en áreas homogéneas para asignar recursos de forma más equitativa, identificando comunidades con mayores necesidades para programas sociales o de salud.
--   **Planificación de Infraestructura**: Prioriza proyectos como hospitales y escuelas según las características de las áreas.
--   **Diseño de Programas Sociales**: Facilita la creación de programas específicos, como empleo juvenil y apoyo a hogares vulnerables.
+El clustering ayuda a **describir patrones y formular preguntas**. Los grupos dependen de las variables, las escalas y los parámetros elegidos; no son necesariamente categorías naturales ni explican el proceso que produjo los datos. En política pública sirven para orientar la investigación y la planificación cuando se contrastan con otras fuentes.
 
-**Urbanismo y Planificación**
+### Aplicaciones con los datos de este capítulo
 
--   **Zonas de Desarrollo Prioritario**: Identifica áreas que necesitan inversión o intervención urbana, como barrios con deficiencias en vivienda y servicios.
--   **Espacios Públicos y Verdes**: Detecta comunidades densamente pobladas sin acceso a espacios recreativos para planificar parques y áreas comunitarias.
--   **Infraestructura Comercial**: Ayuda a localizar áreas con potencial para expansión comercial y de oficinas.
-
-**Seguridad Pública**
-
--   **Detección de “Focos” Delictivos**: Identifica zonas con alta incidencia de delitos para planificar patrullajes y despliegue de recursos.
--   **Estrategias Preventivas**: Combina datos de criminalidad y variables socioeconómicas para diseñar políticas de prevención.
--   **Evaluación de Políticas**: Monitorea el impacto de las intervenciones de seguridad y ajusta estrategias basándose en cambios detectados en los clústeres.
-
-Este resumen destaca cómo el clustering espacial es crucial para planificar y optimizar recursos en múltiples sectores de políticas públicas.
+| Datos | Uso posible en políticas públicas | Verificación necesaria |
+|---|---|---|
+| Bandas de la imagen satelital | Seleccionar sectores para inspeccionar vegetación o superficies urbanizadas antes de planificar áreas verdes. | Comparar grupos con imágenes de referencia y trabajo de terreno; una firma espectral no identifica por sí sola una cobertura. |
+| Indicadores de manzanas 2024 | Explorar perfiles para focalizar un diagnóstico de vivienda, salud o servicios. | Revisar definiciones, datos faltantes y diferencias dentro de cada manzana; los grupos no son un ranking de necesidad. |
+| Puntos de delitos registrados | Localizar concentraciones para estudiar horarios, contexto y despliegue de servicios. | Considerar población expuesta y sesgos de registro; concentración de casos no equivale a tasa ni a efecto de una intervención. |
 
 ### Métodos Principales
 
-1.  **K-means**: Este método particiona los datos en un número predefinido de clústeres (k) en función de la proximidad a los centroides. K-means es rápido y eficaz para datos con clústeres de forma esférica y bien separados. En un contexto de políticas públicas, es útil para segmentar áreas con características demográficas o socioeconómicas similares, permitiendo la distribución equitativa de recursos y priorización de infraestructuras.
-2.  **Clustering Jerárquico**: Este enfoque construye una estructura de árbol o dendrograma que muestra las relaciones entre los datos en distintos niveles de agrupación, sin necesidad de predefinir el número de clústeres. Es ideal para analizar estructuras jerárquicas en los datos y ofrece flexibilidad en el corte del dendrograma. Su uso en políticas públicas puede apoyar la identificación de zonas prioritarias para intervenciones escalonadas o el análisis multiescala en la planificación urbana.
-3.  **DBSCAN**: Este método basado en densidad detecta clústeres de forma arbitraria y clasifica puntos dispersos como ruido, lo cual es valioso en datos con densidades variables. DBSCAN es particularmente útil para identificar puntos calientes de delitos o zonas con alta concentración de actividad en áreas urbanas. Su capacidad para manejar el ruido lo hace ideal en la evaluación de patrones de riesgo, como en la gestión de la seguridad pública o la detección de zonas de emergencia.
+1.  **K-means**: Particiona los datos en `k` grupos según la distancia a sus centros. Funciona mejor con grupos relativamente compactos en el espacio de variables. Aquí permite comparar firmas espectrales de celdas y perfiles de manzanas; no asigna prioridad por sí solo.
+2.  **Clustering jerárquico**: Construye un árbol de distancias y deja elegir el número de grupos después de calcularlo. Aquí muestra cómo se relacionan ubicaciones de delitos registrados a distintos niveles de proximidad.
+3.  **DBSCAN**: Este método basado en densidad detecta grupos de forma irregular y clasifica puntos dispersos como ruido. Funciona mejor cuando una sola escala de densidad describe razonablemente los grupos; las densidades muy diferentes pueden exigir otros parámetros o métodos. En seguridad pública permite explorar concentraciones de **casos registrados**, pero no mide riesgo sin un denominador de exposición.
 
 ::: {.callout-tip collapse="false"}
 ## Objetivos de los métodos de clustering
 
-En términos generales lo que se busca encontral algorítmicamente grupos de entidades tales que:
+En términos generales se buscan grupos de entidades tales que:
 
 1.  La similitud intragrupo es alta.
 2.  La similitud entre grupos es baja.
 
-Las medidas de **distancia** y **similitud** son cruciales en este proceso
+La elección de **variables, escala y distancia** define qué significa «similar».
 :::
 
-## K-means Espacial
+## K-means: agrupar por distancia a un centro
 
-**Introducción a K-means**\
+**Introducción a K-means.**
 K-means es un método de clustering ampliamente utilizado en análisis de datos. Su objetivo es agrupar puntos en `k` clústeres, donde cada punto pertenece al clúster cuyo centroide (centro del clúster) es el más cercano. Este enfoque permite segmentar un conjunto de datos en grupos homogéneos según su proximidad en el espacio de características, haciendo que los puntos en un mismo clúster sean similares entre sí y diferentes de los puntos en otros clústeres.
 
 **Importancia de K-means**
@@ -80,7 +77,7 @@ El algoritmo K-means sigue los siguientes pasos básicos:
 3.  Recalcular centroides: Una vez asignados los puntos, se recalcula el centroide de cada clúster, es decir, el punto medio de todos los puntos en el clúster.
 4.  Repetición: Los pasos de asignación y recalculación de centroides se repiten hasta que los centroides no cambien significativamente o se alcance un número máximo de iteraciones.
 
-Este proceso de ajuste iterativo permite que el algoritmo K-means encuentre la configuración óptima de los clústeres para los datos dados.
+Este proceso reduce la variación dentro de los grupos, pero puede converger a un **óptimo local**. Varios inicios aleatorios ayudan a encontrar una solución mejor.
 
 $$
 J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
@@ -92,186 +89,181 @@ $$ Donde:
 -   $\mu_i$ es el centroide (o promedio) del clúster $C_i$ .
 -   $\| x - \mu_i \|^2$ es la distancia al cuadrado entre el punto $x$ y el centroide $\mu_i$ .
 
-En resumen, K-means es un método de clustering rápido y efectivo para encontrar estructuras en datos, especialmente útil cuando se conocen o se pueden estimar de antemano el número de grupos (k) en los datos.
+`centers` fija `k` (el método no lo descubre); `nstart` indica cuántos inicios aleatorios se prueban y `iter.max` limita las iteraciones de cada inicio. `set.seed()` hace reproducible la secuencia aleatoria. Una `k` mayor suele reducir la suma de cuadrados incluso si crea grupos poco útiles: conviene comparar tamaños, perfiles y estabilidad, no elegir solo por el error. La [documentación de K-means en R](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html) detalla estos argumentos.
 
-### K-means para Raster (clasificación no supervisada)
+### K-means para ráster (clasificación no supervisada)
 
-**Librerías**
+**Lectura y recorte.** El TIFF tiene ocho capas. Sus nombres siguen el orden documentado en el [capítulo de ráster](raster.qmd), no se infieren del archivo. `rast()` crea un `SpatRaster`. Usamos el **límite comunal** del mismo shapefile de ese capítulo; lo transformamos al CRS de la imagen (UTM 19S, metros), lo convertimos a `SpatVector`, recortamos el rectángulo de trabajo con `crop()` y dejamos `NA` fuera del límite con `mask()`.
 
 ```{r}
-library(raster)
+library(terra)
 library(dplyr)
 library(sf)
-library(mapview)
-library(dplyr)
 library(ggplot2)
-library(colormap)
 ```
 
-**Lectura de Insumos Satelital**
-
-A continuación se procede a la lectura de una imagen satelital en formato raster de la comuna de Las Condes y asigna nombres a cada una de sus bandas espectrales.
 
 ```{r}
-r_lc <- brick("data/raster/OLI_LC.tif")
-names(r_lc) <- c("aerosol", "blue", "green", "red", "nir", 
+# Los identificadores de grupo son categorías sin orden: usamos colores
+# cualitativos reordenados para separar visualmente tonalidades parecidas.
+colores_grupos <- RColorBrewer::brewer.pal(12, "Paired")[
+  c(2, 5, 8, 11, 4, 7, 10, 1, 6, 9, 12, 3)
+]
+paleta_grupos <- function(niveles) {
+  niveles <- setdiff(as.character(niveles), "0")
+  stopifnot(length(niveles) <= length(colores_grupos))
+  stats::setNames(colores_grupos[seq_along(niveles)], niveles)
+}
+```
+
+
+```{r}
+r_lc <- terra::rast("data/raster/OLI_LC.tif")
+
+names(r_lc) <- c("aerosol", "blue", "green", "red", "nir",
                  "swir1", "swir2", "thermal")
 ```
 
-**Definición de Región de Estudio**
-
-Se leerá espacial archivo que contiene geometrías de zonas urbanas y filtra los datos para la comuna especificada (“LAS CONDES”), con el cual se genera el contorno de la comuna como un único polígono, transforma la proyección a `EPSG:32719` y convierte el objeto a formato Spatial.
 
 ```{r}
-mi_comuna <-  "LAS CONDES"
-zonas <-  readRDS("data/censo/zonas_urb_consolidadas.rds")
-comuna <-  zonas %>% filter(NOM_COMUNA == mi_comuna) 
-  
-comuna_border <- comuna %>% st_union() %>% 
-  st_transform(32719) 
-  
-comuna_border_sp <- comuna_border %>%   
-  as("Spatial")
+mi_comuna <- "LAS CONDES"
+comuna_border <- st_read("data/shape/Comunas_Chile.shp", quiet = TRUE) %>%
+  filter(REGION == "13", NOM_COMUNA == mi_comuna) %>%
+  st_transform(terra::crs(r_lc))
+
+comuna_vect <- terra::vect(comuna_border)
+r_lc_masked <- terra::crop(r_lc, comuna_vect, snap = "out") %>%
+  terra::mask(comuna_vect)
 ```
 
-Con la región de estudio se enmascara y recorta el raster a los límites de la comuna, de modo que solo queden los píxeles dentro de “LAS CONDES”.
+**Variables y celdas válidas.** Seleccionamos seis bandas reflectivas (`blue` a `swir2`). Excluimos `aerosol`, que no necesitamos en esta pregunta, y `thermal`, que representa otra magnitud. **No incluimos `x` ni `y`**: aquí el algoritmo agrupa firmas espectrales; celdas lejanas pueden compartir etiqueta. Para exigir cercanía espacial haría falta incorporarla explícitamente o usar otro método.
+
+`terra::values(..., mat = TRUE)` devuelve una fila por celda en el orden del ráster. Guardamos los índices de celdas que tienen datos en todas las bandas. `scale()` resta la media de cada banda y divide por su desviación estándar, de modo que ninguna domine solo por su rango numérico. Esto no convierte los valores en reflectancia física.
 
 ```{r}
-r_lc_masked <- crop(mask(r_lc, comuna_border_sp), y = comuna_border_sp)
-```
+bandas <- c("blue", "green", "red", "nir", "swir1", "swir2")
+valores <- terra::values(r_lc_masked[[bandas]], mat = TRUE)
+celdas_validas <- which(stats::complete.cases(valores))
+entradas <- scale(valores[celdas_validas, , drop = FALSE])
 
-**Convertir Raster a Data frame**
-
-Se traen los valores del Raster y se convierten en un DataFrame al cual se elimina la banda `aerosol` para luego escalar todos los valores numéricos de este dataframe
-
-```{r}
+centros <- 4
 set.seed(42)
-nr <- as.data.frame(r_lc_masked, xy = TRUE, na.rm = TRUE) %>% 
-  dplyr::select(-aerosol)
-nr <- scale(nr)
+kmncluster <- stats::kmeans(entradas, centers = centros,
+                            nstart = 20, iter.max = 500,
+                            algorithm = "Lloyd")
+table(kmncluster$cluster)
 ```
 
-**Cálculo de K-means** Aquí se define el número de clústeres (centros = 12) y se ejecuta el algoritmo K-means, especificando un número máximo de iteraciones (iter.max = 500) y múltiples inicios (nstart = 100) para mejorar la estabilidad de los resultados.
+`centers = 4` fija una resolución exploratoria, **no cuatro tipos reales de cobertura**. `nstart = 20` conserva la mejor solución de veinte inicios aleatorios; `iter.max = 500` limita cada uno y `algorithm = "Lloyd"` elige la variante de actualización de centros. Para interpretar un grupo habría que revisar su firma espectral y contrastar con imágenes o datos de terreno. En una imagen mucho mayor podría entrenarse con una muestra representativa y luego asignar todas las celdas al centro más próximo, documentando ese muestreo.
 
-```{r eval=FALSE}
-centros <- 12
-kmncluster <- kmeans(na.omit(nr), centers = centros, iter.max = 500,
-                      nstart = 100, algorithm = "Lloyd")
-```
-
-```{r echo=FALSE}
-# saveRDS(kmncluster, file = "data/models/LC_kmenans_12.rds")
-centros <- 12
-kmncluster <- readRDS("data/models/LC_kmenans_12.rds") 
-```
-
-**Resultados al Raster**
-
-Ahora se asigna los resultados del clustering K-means al raster original. Crea un nuevo raster (kmeans_raster) donde cada píxel toma el valor del clúster asignado.
+**Devolver las etiquetas al mapa.** El vector de resultados tiene una etiqueta por celda válida; las demás siguen como `NA`. Al usar los índices conservamos la correspondencia entre filas del modelo y celdas del `SpatRaster`.
 
 ```{r}
-# Aplicar los resultados del clustering al raster
-v <- getValues(r_lc_masked)
-i <- which(!is.na(v))
-kmeans_raster <- raster(r_lc_masked) #creamos una copia
-kmeans_raster[i] <- kmncluster$cluster
+clases <- rep(NA_integer_, terra::ncell(r_lc_masked))
+clases[celdas_validas] <- kmncluster$cluster
+kmeans_raster <- r_lc_masked[[1]]
+terra::values(kmeans_raster) <- clases
+names(kmeans_raster) <- "cluster"
+
+kmeans_raster_df <- terra::as.data.frame(kmeans_raster,
+                                        xy = TRUE, na.rm = TRUE)
+kmeans_raster_df$cluster <- factor(kmeans_raster_df$cluster)
+ggplot(kmeans_raster_df, aes(x = x, y = y, fill = cluster)) +
+  geom_raster() +
+  coord_equal() +
+  scale_fill_manual(values = paleta_grupos(levels(kmeans_raster_df$cluster)),
+                    name = "Grupo espectral") +
+  labs(title = "Perfiles espectrales de Las Condes",
+       subtitle = "Cada color identifica un grupo, no una cobertura validada",
+       x = "Este (m)", y = "Norte (m)") +
+  theme_minimal()
 ```
 
-**Visualización de Resultados**
+**Mapa interactivo.** `kmeans_raster` contiene enteros, pero `mapview()` los interpreta como valores continuos. Convertimos el ráster a factor y asociamos una etiqueta a cada identificador. Así, la leyenda muestra cuatro categorías con los mismos colores del mapa anterior; el número del grupo no expresa una escala.
 
 ```{r}
+kmeans_raster_categorico <- terra::as.factor(kmeans_raster)
+levels(kmeans_raster_categorico) <- data.frame(
+  value = seq_len(centros),
+  grupo = paste("Grupo", seq_len(centros))
+)
 
-colores <- colormap(colormap = colormaps$viridis, 
-                    nshades = centros, format = "hex",
-                    alpha = 1, reverse = FALSE)
-
-colores_2 <- c("#1ABC9C", "#003f5c", "#3498DB", "#9B59B6", "#2f4b7c", 
-                      "#F1C40F", "#E67E22", "#E74C3C", "#ECF0F1", "#95A5A6", 
-                      "#f95d6a", "#27AE60")
-
-colores_3 <-  RColorBrewer::brewer.pal(centros, "Set3")
+mapview::mapview(
+  kmeans_raster_categorico,
+  na.color = NA,
+  col.regions = unname(paleta_grupos(as.character(seq_len(centros)))),
+  legend = TRUE,
+  layer.name = "Grupo espectral"
+)
 ```
 
-```{r}
-kmeans_raster_df <- raster::as.data.frame(kmeans_raster, xy = TRUE) %>% na.omit()
-kmeans_raster_df$layer <- factor(kmeans_raster_df$layer)
-ggplot() +
-  geom_raster(data = kmeans_raster_df , 
-             aes(x = x, y = y, 
-                  fill = layer)) + 
-  coord_equal()+
-  scale_fill_brewer(palette= "Paired", direction = 1)+
-  ggtitle(paste0("Clusters de ", mi_comuna) ) +
-  theme_bw() +
-  theme(panel.grid.major = element_line(colour = "gray80"), 
-        panel.grid.minor = element_line(colour = "gray80"))
-```
+Una aplicación en políticas públicas sería **seleccionar lugares para verificar cobertura vegetal o superficies urbanizadas** antes de planificar áreas verdes. No se deben estimar hectáreas de parque directamente a partir de etiquetas sin validación temática. La [documentación de `terra::crop()`](https://search.r-project.org/CRAN/refmans/terra/help/crop.html) explica por qué recorte y máscara cumplen funciones distintas.
 
-```{r}
+### K-means de manzanas 2024: atributos y ubicación
 
-# viewRGB(r_lc_masked, r = 4, g = 3, b = 2)+
-#   mapview(kmeans_raster, at =1:centros, 
-#           col.regions = colores_2)
-```
-
-### K-Means espacial Socioeconómico
-
-En este caso se utilizarán datos sociodemográficos de la comuna de Las Condes específicamente la densidad de poblaciói, nivel socio económico y hacinamiento sumado a las coordenadas XY para realizar el análisis de Clusterización espacial.
+La unidad ahora es la **manzana urbana del Censo 2024**. Usaremos `n_per` (población total; el archivo no contiene una columna llamada `n_pers`), `IEA` (promedio de escolaridad de la población de 18 años o más) e `ISV` (proxy de suficiencia de vivienda construido con señales de hacinamiento), además de la ubicación. **Un `ISV` alto indica mayor suficiencia, no más hacinamiento.** Son indicadores derivados para el curso, explicados en [indicadores territoriales](indicadores_territoriales.qmd); la escolaridad no mide por sí sola ingresos o nivel socioeconómico.
 
 **Selección del área de estudio**
 
-Selección de área estudio, en este caso utilizaremos la comuna de Las Condes como ejemplo:
+Seleccionamos las manzanas urbanas de Las Condes. El archivo ya está en UTM 19S (`EPSG:32719`); dejamos la transformación explícita para asegurar que las distancias y áreas se expresen en metros y metros cuadrados.
 
 ```{r}
-mi_comuna <-  "LAS CONDES"
-mz_comuna <- readRDS("data/censo/manzanas.rds") %>% 
-  filter(NOM_COM == mi_comuna) %>% 
+mi_comuna <- "LAS CONDES"
+mz_comuna <- readRDS(
+  "data/results/R13_Santiago_urbano_ind_socioeconomicos_2024.rds"
+) %>%
+  filter(COMUNA == mi_comuna) %>%
   st_transform(32719)
+
+n_original <- nrow(mz_comuna)
 ```
 
 **Preparación de datos**
 
-Primero, normaliza (escala) tres variables clave (`POBLACION/SUPERFICIE`, `JH_ESC_P` y `H_HACI_T`) que representan la densidad de población, nivel socioeconómico y el nivel de hacinamiento, respectivamente. La normalización con scale es importante para evitar que las diferencias de escala en las variables afecten el clustering. Después, se filtran filas con valores faltantes en nivel_socioeconomico y se seleccionan las columnas relevantes para el análisis.
+Calculamos el área de cada polígono con `st_area()`; en UTM 19S el resultado está en m². La densidad es `n_per / área_m2 * 10000`, en habitantes por hectárea. Conservamos manzanas con población positiva, área positiva e indicadores finitos. Hacemos el filtro **antes** de estandarizar, para que las medias y desviaciones correspondan a las unidades que entran al modelo. `ISV` suele concentrarse cerca de 1 en esta comuna; revisaremos los perfiles porque esa distribución puede influir en los grupos.
+
+`n_per` procede de una base derivada con redistribución espacial de tabulados; algunas cifras pueden ser fraccionarias. La densidad se interpreta como una **estimación para la geometría utilizada**, no como un conteo exacto de residentes por manzana.
 
 ```{r}
-# Normalizar las variables (opcional, pero recomendado para K-means)
 datos_sf <- mz_comuna %>%
-  mutate(
-    densidad_personas = scale(POBLACION/SUPERFICIE),
-    nivel_socioeconomico = scale(JH_ESC_P),
-    nivel_hacinamiento = scale(H_HACI_T)
-  ) %>% 
-  filter(!is.na(nivel_socioeconomico)) %>% 
-  dplyr::select(COD_INE_ID, densidad_personas, 
-                nivel_socioeconomico,  nivel_hacinamiento)
+  mutate(area_m2 = as.numeric(st_area(.))) %>%
+  mutate(densidad_ha = n_per / area_m2 * 10000) %>%
+  filter(is.finite(n_per), n_per > 0,
+         is.finite(area_m2), area_m2 > 0,
+         if_all(c(densidad_ha, IEA, ISV), is.finite)) %>%
+  dplyr::select(ID_MANZ, n_per, area_m2, densidad_ha, IEA, ISV)
+
+tibble(unidades_originales = n_original,
+       unidades_analizadas = nrow(datos_sf),
+       unidades_excluidas = n_original - nrow(datos_sf))
 ```
 
-**Extracción de Coordendas**
+**Extracción de coordenadas y ponderación**
 
-A continuación se extrae las coordenadas `X` e `Y` de cada punto. Las coordenadas y los valores de las variables (`densidad_personas`, `nivel_socioeconomico` y `nivel_hacinamiento`) se combinan en un nuevo DataFrame datos_clustering, que servirá como entrada para el clustering. `st_drop_geometry` elimina la geometría original, dejando solo los datos numéricos necesarios.
+`st_point_on_surface()` elige un punto representativo dentro de cada polígono. Las coordenadas UTM están en metros, pero se estandarizan antes de mezclarlas con los atributos. `peso_espacial = 1.5` multiplica las dos coordenadas estandarizadas: con 0 se agruparía solo por atributos; con un valor mayor, la posición pesaría más. Es una **decisión analítica**, no un valor universal. No garantiza que los grupos sean contiguos.
 
 ```{r}
-# Extraer las coordenadas y variables para clustering
-datos_clustering <- datos_sf %>%
-   st_centroid() %>% 
-  st_coordinates() %>%
-  as.data.frame() %>%
-  mutate(X = scale(X), Y = scale(Y)) %>% 
-  bind_cols(datos_sf %>% st_drop_geometry())
+xy_manzanas <- st_geometry(datos_sf) %>%
+  st_point_on_surface() %>% st_coordinates()
+peso_espacial <- 1.5
+datos_clustering <- cbind(
+  scale(st_drop_geometry(datos_sf)[,
+    c("densidad_ha", "IEA", "ISV")]),
+  peso_espacial * scale(xy_manzanas)
+)
+colnames(datos_clustering) <- c("densidad_ha", "IEA", "ISV",
+                                "X", "Y")
 ```
 
 **Ejecución de K-means**
 
-Aquí se ejecuta el algoritmo K-means en los datos preparados. Las columnas seleccionadas para el clustering son `X`, `Y`, `densidad_poblacion`, nivel_socioeconomico y `nivel_hacinamiento.` El argumento `centers = 12` indica que el clustering debe generar 12 clústeres. `set.seed(42)` asegura que los resultados del clustering sean reproducibles.
+Entran las **cinco** columnas mostradas arriba. `k = 7` fija siete grupos y `nstart = 20` reduce la dependencia del inicio. Como K-means usa distancias cuadradas, cada eje espacial queda ponderado por $1.5^2 = 2.25$ frente a cada atributo estandarizado: en esta configuración la ubicación tiene bastante influencia. Conviene repetir con otros pesos y valores de `k` para ver si las conclusiones cambian.
 
 ```{r}
-set.seed(42)  # Para reproducibilidad
-k = 10
-kmeans_result <- kmeans(
-  datos_clustering[, c("X", "Y", "densidad_personas", 
-                       "nivel_socioeconomico")],
-  centers = k
-)
+set.seed(42)
+k <- 7
+kmeans_result <- stats::kmeans(datos_clustering, centers = k,
+                               nstart = 20, iter.max = 100)
 ```
 
 **Post procesamiento**
@@ -285,27 +277,35 @@ datos_sf$cluster <- factor(kmeans_result$cluster)
 
 **Visualización de resultados**
 
-Cada manzana se colorea según su clúster, usando una paleta de colores definida por scale_fill_brewer. El mapa muestra los clústeres de las áreas de la comuna de “LAS CONDES”, permitiendo observar la distribución espacial de los grupos.
+Cada manzana se colorea según su grupo. El color identifica el perfil y no representa una escala de necesidad o prioridad.
 
 ```{r}
 ggplot() +
-  geom_sf(data = datos_sf, aes(fill = cluster), color ="gray80", 
-          alpha=1,  size= 0.1) +
-  scale_fill_brewer(palette= "Paired", direction = 1)+
-  labs(title = "Clustering K-means de Áreas de la Comuna", color = "Clúster") +
+  geom_sf(data = datos_sf, aes(fill = cluster), color = NA) +
+  scale_fill_manual(values = paleta_grupos(levels(datos_sf$cluster)),
+                    name = "Grupo") +
+  labs(title = "Perfiles de manzanas de Las Condes") +
   theme_minimal()
 
 ```
 
 ```{r}
-# mapview(datos_sf, zcol = "cluster", col.regions = colores_2)
+datos_sf %>% st_drop_geometry() %>%
+  group_by(cluster) %>%
+  summarise(n_manzanas = n(),
+            densidad_mediana = median(densidad_ha),
+            IEA_mediana = median(IEA),
+            ISV_mediana = median(ISV),
+            .groups = "drop")
 ```
+
+El mapa y la tabla pueden orientar **dónde profundizar un diagnóstico de vivienda o servicios**. `IEA` está en años promedio; `ISV` es un proxy relativo y valores mayores indican **más suficiencia habitacional**. La escala de colores identifica grupos sin orden y los promedios por manzana ocultan diferencias entre hogares.
 
 ## Clustering Jerárquico
 
 **Introducción al Clustering Jerárquico**
 
-El clustering jerárquico es un método de agrupamiento que organiza los datos en una estructura de árbol o dendrograma. A diferencia de K-means, no requiere especificar de antemano el número de clústeres y permite observar cómo los grupos se forman de manera gradual, lo que es útil para entender la estructura jerárquica de los datos.
+El clustering jerárquico organiza las observaciones en un árbol o dendrograma. Es como construir un árbol genealógico de similitudes: las ramas que se unen a menor altura son más próximas según la distancia elegida. El árbol se construye sin fijar un número de grupos, pero para dibujar un mapa de grupos sí debemos elegir **dónde cortarlo**.
 
 **Importancia del Clustering Jerárquico**
 
@@ -321,7 +321,7 @@ El clustering jerárquico puede ser de dos tipos:
 El proceso aglomerativo es el más común y sigue estos pasos básicos:
 
 1.  Calcular la matriz de distancias: Calcular las distancias entre todos los puntos en el conjunto de datos.
-2.  Combinar los clústeres más cercanos: Agrupar los dos clústeres que tienen la menor distancia entre sí.
+2.  Combinar los clústeres más cercanos según un **criterio de enlace**: no basta con decir «los más cercanos» sin definir cómo se mide la distancia entre grupos.
 3.  Actualizar la matriz de distancias: Recalcular las distancias entre los nuevos clústeres combinados y los otros clústeres.
 4.  Repetir hasta obtener un único clúster: Continuar agrupando hasta que todos los puntos se encuentren en un único clúster, formando así un dendrograma.
 
@@ -347,23 +347,19 @@ $$d(C_i, C_j) = \frac{1}{|C_i| \times |C_j|} \sum_{x \in C_i} \sum_{y \in C_j} d
 
 Calcula la distancia promedio entre todos los pares de puntos entre los clústeres.
 
-4.  Enlace de Centroide:
-
-$$d(C_i, C_j) = d(\mu_i, \mu_j)$$
-
-Aquí, la distancia es simplemente la distancia entre los centroides de los dos clústeres.
+4.  Enlace de centroide: calcula la distancia entre las medias de los grupos. Es otra definición posible y puede producir un árbol distinto.
 
 **Interpretación del Dendrograma**
 
 El dendrograma resultante muestra cómo se fusionan los clústeres en diferentes niveles de similitud. Al cortar el dendrograma a diferentes alturas, puedes obtener distintos números de clústeres, permitiendo una segmentación flexible y adaptativa de los datos.
 
-En resumen, el clustering jerárquico es un método poderoso para observar la estructura de los datos y analizar patrones de similitud en varios niveles.
+En este ejemplo `dist()` usa distancia euclidiana entre coordenadas UTM, expresada en **metros**, y `method = "complete"` usa la **mayor distancia** entre un punto de cada grupo. Esto limita la extensión interna de las agrupaciones. La matriz de distancias crece aproximadamente como $n(n-1)/2$; con muchos registros puede consumir mucha memoria.
 
-### Clustering Jerárquico a Delitos Violentos
+### Clustering jerárquico de delitos en el área urbana
 
 **Lectura y visualización de insumos**
 
-Lectura de puntos correspondientes a casos violentos en la comuna de Las Condes. Acá se convierte el DataFrame `violencia_df` a un objeto espacial sf usando las columnas de coordenadas `x` e `y`, y asigna el sistema de coordenadas `EPSG:32719`, adecuado para el área de Chile central.
+El archivo contiene puntos de casos registrados con `x` e `y` en EPSG:32719. Para evitar un mapa dominado por la parte cordillerana sin registros, aquí usamos **las zonas urbanas de Las Condes** como área de estudio. Unimos sus polígonos y conservamos solo los casos que caen dentro. Mostramos cuántos registros quedan fuera: antes de una aplicación pública conviene revisar posibles diferencias de geocodificación o delimitación. Agrupar ubicaciones de registros no mide tasas ni establece causas.
 
 ```{r}
 
@@ -371,15 +367,30 @@ Lectura de puntos correspondientes a casos violentos en la comuna de Las Condes.
 violencia_df <- readRDS(file = "data/delitos/casos_violencia.rds")
 head(violencia_df)
 
+# El límite urbano es distinto del límite comunal usado para el ráster.
+zonas_urbanas <- readRDS("data/censo/zonas_urb_consolidadas.rds") %>%
+  filter(NOM_COMUNA == mi_comuna) %>%
+  st_transform(32719)
+
+limite_urbano <- st_sf(
+  geometry = st_union(st_geometry(zonas_urbanas))
+)
+
 # Dataframe to sf object
 violencia <-  st_as_sf(x = violencia_df, 
                           coords = c("x", "y"), crs = 32719)
+fuera_area_urbana <- sum(lengths(st_intersects(violencia,
+                                               limite_urbano)) == 0)
+fuera_area_urbana
+violencia <- st_filter(violencia, limite_urbano)
 
-# Cisualizacion
+
+# Visualización inicial
 ggplot() +
+  geom_sf(data = limite_urbano, fill = NA, color = "gray50") +
   geom_sf(data = violencia,  color =  "red", 
           alpha=0.8,  size= 0.1)+
-  ggtitle("Delitos Violentos en Las Condes") +
+  ggtitle("Casos registrados en el área urbana de Las Condes") +
   theme_bw() +
   theme(panel.grid.major = element_line(colour = "gray80"), 
         panel.grid.minor = element_line(colour = "gray80"))
@@ -387,26 +398,23 @@ ggplot() +
 
 **Extracción de Coordenadas**
 
-En el siguiente código se extraerá solo las coordenadas `x` e `y` del objeto espacial violencia, descartando otras columnas (como `id`). Convierte las coordenadas en un DataFrame para preparar los datos para el análisis de clustering.
+Extraemos solo las coordenadas. Así la distancia depende de la separación geográfica en metros, sin incluir identificadores ni atributos del registro.
 
 ```{r}
 # Extraer las coordenadas y variables para clustering
-data <- violencia %>%
-  dplyr::select(-id) %>% 
-  st_coordinates() %>%
-  as.data.frame()
-head(data)
+coords_delitos <- st_coordinates(violencia)
+head(coords_delitos)
 ```
 
 **Cálculo de Clustering Jerárquico**
 
-Se definirá los parámetros para el clustering jerárquico: `k = 10` (para dividir los datos en 10 clústeres) y `linkage = "complete"` (método de enlace completo, que agrupa en función de la distancia máxima entre puntos). Luego, aplica el clustering jerárquico con hclust y obtiene 10 clústeres mediante `cutree`.
+`linkage = "complete"` define cómo se construye el árbol. `k = 10` solo fija el **corte** para el mapa, no altera el árbol. Comparar otros cortes permite evaluar si el patrón visual es estable.
 
 ```{r}
-k = 10
+k <- 10
 
-linkage = "complete"
-object   <- hclust(dist(data), method = linkage)
+linkage <- "complete"
+object <- hclust(dist(coords_delitos), method = linkage)
 hclust_result <- cutree(object, k = k)
 ```
 
@@ -424,10 +432,10 @@ Finalmente se crea un mapa con clúster jerárquico que permite analizar la dist
 
 ```{r}
 ggplot() +
-  geom_sf(data = comuna_border, fill = NA, color = "gray50" )+
+  geom_sf(data = limite_urbano, fill = NA, color = "gray50" )+
   geom_sf(data = violencia, aes(color = hclust_cluster), alpha = 1, size = 0.3) +
-  scale_color_brewer(palette = "RdYlGn") +
-  labs(title = "Clustering Jerárquico de Delitos Violentos", color = "Clúster") +
+  scale_color_manual(values = paleta_grupos(levels(violencia$hclust_cluster))) +
+  labs(title = "Agrupamiento jerárquico de casos registrados", color = "Rama") +
   theme_minimal()
 
 # mapview(violencia, zcol = "hclust_cluster",  cex=0.5)
@@ -437,19 +445,19 @@ ggplot() +
 
 **Introducción al Clustering DBSCAN**
 
-DBSCAN (Density-Based Spatial Clustering of Applications with Noise) es un método de agrupamiento basado en la densidad de puntos. A diferencia de métodos como K-means, DBSCAN no requiere especificar de antemano el número de clústeres y puede identificar clústeres de forma arbitraria, independientemente de su forma, mientras ignora puntos que no forman parte de ninguna agrupación, etiquetándolos como ruido.
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise) agrupa puntos según la densidad de sus vecindades. A diferencia de K-means, no exige fijar el número de grupos y puede seguir concentraciones de forma irregular. Los puntos que no quedan conectados a una concentración reciben la etiqueta de ruido.
 
 **Importancia de DBSCAN**
 
-DBSCAN es útil cuando se trabaja con datos espaciales y otros datos que contienen áreas densamente agrupadas mezcladas con áreas dispersas. Es especialmente eficaz para detectar clústeres en presencia de ruido y es ampliamente utilizado en análisis geoespacial, detección de anomalías, y procesamiento de imágenes.
+DBSCAN es útil cuando hay áreas densas mezcladas con puntos dispersos. Un solo par de parámetros puede ser inadecuado si hay densidades muy diferentes. En el ejemplo sirve para **explorar concentraciones de casos registrados**, no para identificar automáticamente zonas de mayor riesgo.
 
 **Funcionamiento**
 
 DBSCAN identifica los clústeres mediante dos parámetros clave:
 
-1.  eps: El radio de búsqueda o distancia máxima dentro de la cual los puntos son considerados vecinos.
+1.  `eps`: Radio de búsqueda. Aquí se mide en **metros** porque las coordenadas están en UTM.
 
-2.  minPts: El número mínimo de puntos necesarios para formar un clúster dentro del radio eps.
+2.  `minPts`: Número mínimo de puntos dentro de `eps` para que un punto sea núcleo, **incluido el propio punto**. Un punto de borde puede incorporarse al grupo sin llegar a ese mínimo.
 
 El algoritmo sigue estos pasos:
 
@@ -471,13 +479,13 @@ El algoritmo sigue estos pasos:
 
 DBSCAN se basa en una función de vecindad por densidad:
 
-$$N_\epsilon(p) = {q \in D \mid \text{dist}(p, q) \leq \epsilon}$$
+$$N_\epsilon(p) = \{q \in D \mid \operatorname{dist}(p, q) \leq \epsilon\}$$
 
 Donde:
 
 -   $N_\epsilon(p)$ es la vecindad de un punto $p$ dentro del radio $\epsilon$.
 
--   $\text{dist}(p, q)$ es la distancia entre los puntos \$p \$y $q$ .
+-   $\operatorname{dist}(p, q)$ es la distancia entre los puntos $p$ y $q$.
 
 -   $\epsilon(eps)$ es el radio de vecindad que define la proximidad.
 
@@ -489,25 +497,25 @@ Para cada punto:
 
 **Ventajas y Limitaciones**
 
--   Ventajas: DBSCAN detecta clústeres de cualquier forma, es insensible al ruido, y no requiere especificar el número de clústeres.
+-   Ventajas: Puede seguir grupos de forma irregular, distingue puntos dispersos como ruido y no requiere fijar el número de grupos.
 
--   Limitaciones: La efectividad de DBSCAN depende de una buena elección de eps y minPts, que puede ser difícil en conjuntos de datos con variaciones de densidad.
+-   Limitaciones: La efectividad depende de `eps` y `minPts`; un único radio y umbral puede no representar bien zonas con densidades muy distintas.
 
 **Interpretación**
 
-Los clústeres generados representan áreas densas de puntos, mientras que los puntos etiquetados como ruido son aquellos en áreas dispersas. DBSCAN es especialmente útil en situaciones donde los clústeres no son esféricos o presentan variabilidad de densidad, como en datos geoespaciales y patrones de movimiento.
+Los clústeres representan concentraciones según el radio y el umbral elegidos; el ruido corresponde a puntos no alcanzados por ellas. Si las densidades varían mucho entre sectores, hay que revisar si una sola configuración puede describirlos adecuadamente.
 
-### Clustering DBSCAN para delitos violentos
+### DBSCAN de delitos en el área urbana
 
-En el ejemplo práctico del CLustering DBSCAN para delitos violentos se utilizará la misma data procesada en el ejemplo anterior.
+Usamos las mismas coordenadas del ejemplo jerárquico. En este caso el grupo `0` significa **ruido**; los demás números solo identifican agrupaciones. Consulta la [documentación de `dbscan`](https://search.r-project.org/CRAN/refmans/dbscan/html/dbscan.html) para la definición de puntos núcleo y borde.
 
 ```{r}
-head(data)
+head(coords_delitos)
 ```
 
 **Parámetros**
 
-Primero se establece valores iniciales para los parámetros de DBSCAN: `eps` es el radio de búsqueda y `minPts` el número mínimo de puntos en la vecindad para formar un clúster.
+Probamos primero `eps = 100` m y `minPts = 40` registros, incluido el punto central. Son valores **ilustrativos**: su pertinencia depende del período observado y de la escala de la intervención pública.
 
 ```{r}
 # eps: radio de búsqueda para formar clústeres
@@ -516,14 +524,14 @@ eps <- 100
 minPts <- 40
 ```
 
-**Cáculo de clustering DBSCAN**
+**Cálculo de clustering DBSCAN**
 
-Ahora se puede aplicar el clustering DBSCAN sobre el conjunto de datos data con los valores de `eps` y `minPts` definidos, generando clústeres iniciales.
+Aplicamos DBSCAN a la matriz de coordenadas `coords_delitos` con estos valores iniciales.
 
 ```{r}
 # Ejecutar DBSCAN con los parámetros iniciales
 library(dbscan)
-dbscan_result_v1 <- dbscan(data, eps = eps, minPts = minPts)
+dbscan_result_v1 <- dbscan(coords_delitos, eps = eps, minPts = minPts)
 ```
 
 Luego se asigna el resultado del clustering como una columna cluster en el objeto violencia para identificar el clúster asignado a cada punto. Luego muestra la distribución de puntos en cada clúster.
@@ -536,111 +544,144 @@ table(violencia$dbscan_cluster_v1 )
 
 **Visualización de Resultados v1**
 
-Este bloque visualiza los resultados de clustering en un mapa, mostrando los puntos en su clúster respectivo y excluyendo los puntos de ruido (clúster 0)
+El mapa muestra los grupos de puntos densos y conserva el ruido en gris para no ocultar los casos dispersos.
 
 ```{r}
 ggplot() +
-  geom_sf(data = comuna_border, fill = NA, color = "gray50" )+
+  geom_sf(data = limite_urbano, fill = NA, color = "gray50" )+
+  geom_sf(data = violencia %>% filter(dbscan_cluster_v1 == "0"),
+          color = "gray65", alpha = 0.35, size = 0.3) +
   geom_sf(data = violencia %>% filter(dbscan_cluster_v1 !="0"),
           aes(color = dbscan_cluster_v1), alpha = 1, size = 0.3) +
-  scale_color_brewer(palette = "RdYlGn") +
+  scale_color_manual(values = paleta_grupos(levels(violencia$dbscan_cluster_v1))) +
   labs(title = "Clustering DBSCAN de Delitos", color = "Clúster") +
   theme_minimal()
 
-# mapview(violencia %>% filter(cluster!="0"), zcol = "cluster", cex=0.5)
 ```
 
-**Búsqueda de Parámetros**
+**Lectura del gráfico de distancias**
 
-El gráfico de `kNNdistplot` ayuda a identificar el valor óptimo de eps observando el “codo” en el gráfico. Aquí se coloca una línea horizontal en 400 como referencia para evaluar el valor potencial de `eps`.
+Primero fijamos `minPts`, porque **el gráfico cambia cuando cambia ese parámetro**. Para comparar concentraciones relativamente marcadas usaremos `minPts = 100`: un punto núcleo necesita otros 99 casos dentro de su radio. Es una definición didáctica de «concentración marcada», no un umbral oficial de seguridad pública. La [documentación de `dbscan`](https://search.r-project.org/CRAN/refmans/dbscan/html/dbscan.html) indica que el gráfico debe usar el vecino `minPts - 1`. Calculamos esas distancias con `kNNdist(..., k = 99)` y las ordenamos.
+
+Cada posición horizontal representa **un caso ordenado por distancia**, no una ubicación en el mapa. La altura muestra cuántos metros lo separan de su vecino 99.º. Si su distancia está **por debajo** de una línea horizontal, ese caso tiene al menos 100 puntos —incluido él mismo— dentro del radio indicado y puede ser núcleo. Los casos sobre la línea no son núcleo a ese radio, aunque algunos podrían incorporarse como puntos de borde. El ascenso fuerte al extremo derecho corresponde a sectores más dispersos; aquí **no hay un codo único y nítido** que determine automáticamente `eps`.
 
 ```{r}
-# Evaluación de valores óptimos para eps con kNNdistplot
-dbscan::kNNdistplot(data, k = 50)
-abline(h = 400, lty = 2, col = rainbow(1), main = "eps optimal value")
+minPts_comparacion <- 100
+distancias_vecino <- dbscan::kNNdist(
+  coords_delitos, k = minPts_comparacion - 1
+)
+plot(sort(distancias_vecino), type = "l",
+     main = "Distancia al vecino 99.º de cada caso",
+     xlab = "Casos ordenados por distancia",
+     ylab = "Distancia al vecino 99.º (m)")
+abline(h = c(250, 300, 350),
+       col = c("#7F7F7F", "#D62728", "#1F77B4"), lty = 2)
+legend("topleft", legend = c("250 m", "300 m", "350 m"),
+       col = c("#7F7F7F", "#D62728", "#1F77B4"),
+       lty = 2, bty = "n")
 ```
 
 **Grilla de Combinaciones de Parámetros**
 
-A continuación se genera las combinaciones posibles de `eps` y `minPts` dentro de los rangos especificados, creando una grilla (params) que se usará para evaluar múltiples combinaciones de parámetros.
+La cuadrícula permite comparar sensibilidad: cuántos grupos se forman, qué porcentaje de registros queda como ruido y qué proporción de **todos los casos** absorbe el grupo más grande. Esta última cifra muestra cuándo varios focos se fusionan en una gran región. **Maximizar el número de grupos no es un criterio de calidad**; puede fragmentar un mismo fenómeno.
 
 ```{r}
 
 eps_options <- seq(100, 400, by = 50)
-minPts_options <- seq(10,100,  by= 10)  # Asegura que tenga 20 valores
+minPts_options <- c(20, 40, 80, 100)
 params <- expand.grid(eps = eps_options, minPts = minPts_options)
 ```
 
-Esta función que continúa aplica DBSCAN usando los valores de `eps` y `minPts` dados, y devuelve el número de clústeres generados (excluyendo el clúster de ruido 0).
+La función calcula las tres medidas para cada combinación. El cero se excluye del número de grupos, pero sí cuenta para el porcentaje de ruido. Si no se forma ningún grupo, la proporción del grupo más grande se registra como cero.
 
 ```{r}
-library(purrr)
-
-# Función para aplicar DBSCAN y devolver el número de clústeres
-run_dbscan <- function(eps, minPts, data, w = NULL) {
-  db_result <- dbscan(data, eps = eps, minPts = minPts, weights = w)
-  num_clusters <- length(unique(db_result$cluster)) - (any(db_result$cluster == 0))  # Resta 1 si hay ruido (cluster 0)
-  return(num_clusters)
+# Función de diagnóstico, no de optimización automática
+run_dbscan <- function(eps, minPts, coordenadas) {
+  grupos <- dbscan::dbscan(coordenadas, eps = eps,
+                           minPts = minPts)$cluster
+  tamanos <- table(grupos[grupos != 0L])
+  data.frame(n_grupos = length(setdiff(unique(grupos), 0L)),
+             pct_ruido = round(mean(grupos == 0L) * 100, 1),
+             pct_mayor_grupo = if (length(tamanos) > 0) {
+               round(max(tamanos) / length(grupos) * 100, 1)
+             } else 0)
 }
 ```
 
-Ahora se aplica la función `run_dbscan` a cada combinación de parámetros en params y guarda el número de clústeres en la columna num_clusters. Luego, muestra las combinaciones que generaron la mayor cantidad de clústeres, ayudando a identificar parámetros óptimos.
+Comparamos las combinaciones sin declarar una ganadora automática. Demasiado ruido puede dejar áreas de interés fuera; demasiado poco puede unir concentraciones que son distintas para la pregunta de política pública.
 
 ```{r}
-# Aplicar la función a cada combinación de parámetros con `pmap`
-results <- params %>%
-  mutate(num_clusters = pmap_dbl(list(eps = eps, minPts = minPts),
-                                 ~ run_dbscan(.x, .y, data)))
-
-# Mostrar los primeros resultados
-head(results %>% arrange(desc(num_clusters)), 10)
+resultados <- lapply(seq_len(nrow(params)), function(i) {
+  cbind(params[i, ],
+        run_dbscan(params$eps[i], params$minPts[i], coords_delitos))
+}) %>% bind_rows()
+resultados
 ```
 
-Establece valores finales de `eps` y `minPts` tras la evaluación y aplica DBSCAN con estos parámetros. unique muestra los clústeres resultantes, permitiendo verificar la estructura obtenida.
+**Cómo elegir con la tabla.** Para esta clase fijamos la pregunta: queremos **varios focos locales**, aceptar hasta alrededor de la mitad de los casos como ruido y evitar que un único grupo abarque gran parte de la comuna. Con `minPts = 100`, comparemos tres radios próximos:
 
 ```{r}
-# Definir parámetros finales basados en la búsqueda de grilla
-eps <- 250
+resultados %>%
+  filter(minPts == minPts_comparacion, eps %in% c(250, 300, 350)) %>%
+  knitr::kable(
+    col.names = c("Radio (m)", "Mínimo", "Grupos", "Ruido (%)",
+                  "Mayor grupo (% de todos los casos)"),
+    caption = paste0("Tres radios con minPts = 100; porcentajes respecto de ",
+                     formatC(nrow(violencia), format = "d", big.mark = ".",
+                             decimal.mark = ","),
+                     " casos urbanos.")
+  )
+```
+
+- **250 m:** aparecen 9 grupos, pero el **66,2 %** de los registros queda como ruido. La regla identifica focos muy compactos y deja fuera gran parte de los casos.
+- **300 m:** siguen apareciendo 9 grupos; el ruido baja al **44,6 %** y el mayor grupo representa el **16,3 %** de todos los casos. Conserva varios focos sin unir la mayor parte de los registros.
+- **350 m:** el ruido baja al **24,0 %**, pero quedan 5 grupos y el mayor reúne el **41,6 %** de todos los casos. El radio empieza a fusionar focos que queríamos distinguir.
+
+**Elección para el ejercicio:** `eps = 300` m y `minPts = 100`. La tabla muestra el compromiso y el gráfico comprueba qué densidad local exige ese radio. En estos datos, alrededor del **27 %** de los casos tiene al menos 99 vecinos dentro de 300 m; otros pueden ser puntos de borde. Este par es **preferible para la pregunta didáctica definida**, no un óptimo estadístico universal. Si el objetivo fuera describir concentraciones más pequeñas o cubrir más registros, cambiarían los criterios y posiblemente la elección.
+
+```{r}
+eps <- 300
 minPts <- 100
 
-# Aplicar DBSCAN con los parámetros optimizados
-dbscan_result_v2 <- dbscan(data, eps = eps, minPts = minPts)
+# Aplicar la configuración elegida para el ejercicio
+dbscan_result_v2 <- dbscan(coords_delitos, eps = eps, minPts = minPts)
 unique(dbscan_result_v2$cluster)
 ```
 
-Asigna el resultado del clustering optimizado a una nueva columna dbscan_cluster en el objeto violencia y muestra la distribución de puntos en cada clúster.
+Asignamos los grupos a los puntos y revisamos también cuántos quedaron en ruido (`0`).
 
 ```{r}
 # Agregar resultados al DataFrame espacial
 violencia$dbscan_cluster_v2 <- factor(dbscan_result_v2$cluster)
-table(violencia$dbscan_cluster)
+table(violencia$dbscan_cluster_v2)
 ```
 
 **Visualización de Resultados**
 
-Genera un mapa que muestra los resultados del clustering DBSCAN con los parámetros optimizados, resaltando la agrupación de los delitos violentos en clústeres específicos y excluyendo puntos de ruido.
+El mapa conserva el ruido en gris. Los colores no expresan magnitud ni riesgo.
 
 ```{r}
 ggplot() +
-  geom_sf(data = comuna_border, fill = NA, color = "gray50" )+
+  geom_sf(data = limite_urbano, fill = NA, color = "gray50" )+
+  geom_sf(data = violencia %>% filter(dbscan_cluster_v2 == "0"),
+          color = "gray65", alpha = 0.35, size = 0.3) +
   geom_sf(data = violencia %>% filter(dbscan_cluster_v2!="0"),
           aes(color = dbscan_cluster_v2), alpha = 1, size = 0.3) +
-  scale_color_brewer(palette = "RdYlGn") +
+  scale_color_manual(values = paleta_grupos(levels(violencia$dbscan_cluster_v2))) +
   labs(title = "Clustering DBSCAN de Delitos", color = "Clúster") +
   theme_minimal()
 
-# mapview(violencia %>% filter(dbscan_cluster!="0"), 
-        # zcol = "dbscan_cluster", cex=0.5)
 ```
 
 ## Resumen
 
-El análisis de Clustering Espacial permite segmentar datos geográficos en grupos homogéneos, facilitando la identificación de patrones espaciales y la toma de decisiones informadas en diversos contextos. En este capítulo, exploramos tres técnicas principales de clustering —K-means, Clustering Jerárquico y DBSCAN— cada una con características particulares que las hacen adecuadas para distintas aplicaciones en políticas públicas y análisis territorial.
+El clustering es una **herramienta exploratoria**: convierte una definición de similitud en grupos que podemos describir y comparar. En este capítulo usamos K-means, clustering jerárquico y DBSCAN sobre tres unidades distintas. La definición de las variables, la distancia y los parámetros cambia la pregunta que responde cada mapa.
 
-Cada uno de estos métodos aporta una perspectiva única al análisis espacial, permitiendo a los investigadores y tomadores de decisiones entender mejor los patrones y dinámicas territoriales. La elección del método depende de la naturaleza de los datos y del objetivo del análisis:
+La elección depende de los datos y del objetivo:
 
--   K-means es eficaz cuando se conocen o se pueden estimar los clústeres de antemano y se busca una solución rápida para agrupar áreas con características homogéneas.
--   Clustering Jerárquico es adecuado para situaciones en las que se desea explorar las relaciones a distintos niveles y obtener una representación completa de la estructura de los datos.
--   DBSCAN es ideal cuando los clústeres tienen formas irregulares y el ruido es una parte importante de los datos, como en la detección de anomalías o áreas con densidad variable.
+-   **K-means espectral** responde qué píxeles tienen firmas parecidas; requiere revisar metadatos y validar coberturas en terreno.
+-   **K-means de manzanas** combina atributos y ubicación aproximada; requiere justificar pesos, `k` y definiciones de los indicadores.
+-   **Jerárquico** permite explorar cortes de un árbol de distancias; requiere elegir enlace y controlar el costo de memoria.
+-   **DBSCAN** muestra concentraciones de puntos y ruido; requiere justificar radio, umbral, período de observación y población expuesta.
 
-En resumen, el clustering espacial es una herramienta poderosa en el análisis territorial y la evaluación de políticas públicas, ofreciendo una comprensión profunda de la distribución de características socioeconómicas, de seguridad, y de infraestructura. La aplicación adecuada de estos métodos permite una visión más integral y equitativa de los territorios, optimizando las estrategias de intervención y distribución de recursos en áreas prioritarias.
+Para una decisión pública hay que verificar la estabilidad de los grupos, contrastarlos con evidencia sustantiva y explicar los sesgos de los datos. Un mapa de agrupamientos **no evalúa por sí mismo el impacto causal** de una política.

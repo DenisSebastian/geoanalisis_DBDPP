@@ -20,7 +20,7 @@ book:
     - indicadores_territoriales.qmd
     - inferencia.qmd
     - autocorrelacion.qmd
-    # - clustering.qmd
+    - clustering.qmd
     - part: "Tareas"
       chapters:
         - tarea_1.qmd

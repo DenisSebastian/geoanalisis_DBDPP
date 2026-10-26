@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./r_project.html" rel="next">
+<link href="./crs.html" rel="next">
 <link href="./tarea_1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -117,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro_estad_esp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Estadística espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -135,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos tipo Raster</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Datos Raster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -147,19 +147,19 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./inferencia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inferencia espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./autocorrelacion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Autocorrelación espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering Espacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering espacial</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -196,14 +196,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Project</span></a>
+  <a href="./crs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CRS en R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./geocoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Geocoding</span></a>
+  <a href="./quiebres.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapas y Quiebres</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -231,11 +231,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
-  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones">Instrucciones</a>
-  <ul class="collapse">
-  <li><a href="#parte-1-interpolación-de-inverso-a-la-distancia-ponderada." id="toc-parte-1-interpolación-de-inverso-a-la-distancia-ponderada." class="nav-link" data-scroll-target="#parte-1-interpolación-de-inverso-a-la-distancia-ponderada.">Parte 1: Interpolación de Inverso a la Distancia Ponderada.</a></li>
-  <li><a href="#parte-2-autocorrelación-espacial." id="toc-parte-2-autocorrelación-espacial." class="nav-link" data-scroll-target="#parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</a></li>
-  </ul></li>
+  <li><a href="#parte-1-interpolación-inversa-a-la-distancia-3-puntos" id="toc-parte-1-interpolación-inversa-a-la-distancia-3-puntos" class="nav-link" data-scroll-target="#parte-1-interpolación-inversa-a-la-distancia-3-puntos">Parte 1: interpolación inversa a la distancia (3 puntos)</a></li>
+  <li><a href="#parte-2-autocorrelación-espacial-3-puntos" id="toc-parte-2-autocorrelación-espacial-3-puntos" class="nav-link" data-scroll-target="#parte-2-autocorrelación-espacial-3-puntos">Parte 2: autocorrelación espacial (3 puntos)</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tarea_1.html">Tareas</a></li><li class="breadcrumb-item"><a href="./tarea_2.html">Tarea 2</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Tarea 2</h1>
-<p class="subtitle lead">Inferencia y Autocorrelación Espacial</p>
+<p class="subtitle lead">Inferencia y autocorrelación espacial</p>
 </div>
 
 
@@ -265,44 +262,69 @@ ul.task-list li input[type="checkbox"] {
 <section id="antecedentes" class="level2">
 <h2 class="anchored" data-anchor-id="antecedentes">Antecedentes</h2>
 <ul>
-<li>Fecha de entrega: <strong>24 de Noviembre 2024</strong></li>
-<li>Formato: Informe (pdf o html) + Código (.r o .rmd)</li>
-<li>Integrantes: Individual o Grupal (máximo 4)</li>
+<li><strong>Publicación:</strong> 27 de octubre de 2026.</li>
+<li><strong>Entrega:</strong> 8 de noviembre de 2026.</li>
+<li><strong>Modalidad:</strong> individual.</li>
+<li><strong>Ponderación:</strong> 60 % de la nota final.</li>
+<li><strong>Formato:</strong> un informe en PDF, PPTX, Markdown o HTML, acompañado del código utilizado. El informe debe contener mapas legibles, tablas de resultados, decisiones metodológicas e interpretación.</li>
+<li><strong>Atraso:</strong> se descontarán 0,5 puntos por cada 12 horas de retraso.</li>
 </ul>
 </section>
-<section id="instrucciones" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="instrucciones">Instrucciones</h2>
-<section id="parte-1-interpolación-de-inverso-a-la-distancia-ponderada." class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="parte-1-interpolación-de-inverso-a-la-distancia-ponderada.">Parte 1: Interpolación de Inverso a la Distancia Ponderada.</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="images/exp_idw.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Descripción gráfica de los resultados de interpolación de inverso a la distancia ponderada</figcaption>
+<section id="parte-1-interpolación-inversa-a-la-distancia-3-puntos" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="parte-1-interpolación-inversa-a-la-distancia-3-puntos">Parte 1: interpolación inversa a la distancia (3 puntos)</h2>
+<p>La IDW estima valores entre puntos observados dando más peso a los puntos cercanos. Revisa la explicación del método en <a href="inferencia.html#sec-IDW" class="quarto-xref"><span>Interpolación Inversa a la Distancia Ponderada (IDW)</span></a>. La imagen siguiente ilustra la idea general; <strong>no representa los datos de esta tarea</strong>.</p>
+<!-- ![Esquema conceptual de interpolación inversa a la distancia](images/exp_idw.png) -->
+<ol type="1">
+<li><p><strong>Prepara el ámbito provincial y revisa los datos.</strong> Define el área urbana de la <strong>provincia de Santiago</strong> con <code>data/censo/zonas_urb_consolidadas.rds</code> y selecciona <strong>todos</strong> los puntos de <code>data/sii/urbes.shp</code> que caen en ella, sin filtrar todavía por comuna. Comprueba que puntos y límite coincidan espacialmente y trabajen en un sistema de coordenadas proyectadas en metros. Informa cuántos puntos usarás. Examina valores faltantes, ceros y extremos de <code>comercio</code>, <code>oficinas</code> y <code>atractor</code>; si modificas algún valor extremo (método windsorizacion), deja claro que ya no interpolas los datos originales.</p></li>
+<li><p><strong>Calcula tres superficies IDW provinciales (1,5 puntos).</strong> Interpola por separado los campos <strong><code>comercio</code></strong>, <strong><code>oficinas</code></strong> y <strong><code>atractor</code></strong> usando los puntos del área urbana provincial. Usa una grilla provincial común para las tres superficies. Informa la resolución de celda en metros, la potencia de IDW y el máximo de vecinos empleados.</p></li>
+</ol>
+<p><img src="images/idw-sii.png" class="img-fluid"></p>
+<ol start="3" type="1">
+<li><strong>Elige la comuna y construye tres indicadores por manzana (1,5 puntos).</strong> Después de calcular las tres IDW provinciales, elige una comuna urbana de la provincia (<code>data/censo-2024/censo_2024_nacional.gpkg</code>). Recorta el raster de IDW provincial por el límite comunal. Calcula cada indicador por las manzanas mediante una estadística zonal que elijas, por ejemplo el promedio (<code>exact_extract</code>). Presenta <strong>un mapa de la IDW recortada y un mapa del indicador por cada variable</strong>. Describe dónde aparecen valores altos y bajos y en qué difieren las superficies. Para las variables numéricas usa paletas continuas.</li>
+</ol>
+<div id="fig-w" class="quarto-layout-panel page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="images/idw-sii-lc.png" class="img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="images/ind-idw-sii-lc.png" class="img-fluid figure-img"></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Pasar de IDW comunal a Indicador Tererritorial
+</figcaption>
 </figure>
 </div>
-<ol type="1">
-<li>Defina un área de estudio Urbana (Excepto Las Condes).</li>
-<li>Realice 3 calculos de interpolación de Inverso a al Distancia (IDW) (<a href="inferencia.html#sec-IDW" class="quarto-xref"><span>Interpolación Inverso a Distancia Ponderada IDW</span></a>) con los datos del SII correspodiente a <em>comercio</em>, <em>oficina</em> y <em>atractor</em> que se encuentra disponible en la siguiente ruta <code>data/sii/urbes.shp</code>. <em>(1.5 pt)</em></li>
-<li>Calcule un indicador de territorial por cada uno de los resultados de las IDW del punto anterior, visualice y describa los los resultados. <em>(1.5 pt)</em></li>
-</ol>
+<p><strong>Interpretación necesaria:</strong> estos indicadores resumen valores <strong>interpolados</strong>, no mediciones directas dentro de cada manzana. La hipótesis es que estos actractores de comercio y oficina pueden polos de atracción de población flotante.</p>
 </section>
-<section id="parte-2-autocorrelación-espacial." class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="parte-2-autocorrelación-espacial.">Parte 2: Autocorrelación espacial.</h3>
+<section id="parte-2-autocorrelación-espacial-3-puntos" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="parte-2-autocorrelación-espacial-3-puntos">Parte 2: autocorrelación espacial (3 puntos)</h2>
+<p>Trabaja con las manzanas urbanas del Censo 2024 disponibles en <code>results/R13_Santiago_urbano_ind_socioeconomicos_2024.rds</code>. Revisa los conceptos de vecindad, Moran global y Moran local en <a href="autocorrelacion.html#sec-matrizVec" class="quarto-xref"><span>Construcción de la matriz de vecindad</span></a>, <a href="autocorrelacion.html#sec-globalMoran" class="quarto-xref"><span>Índice de Moran global</span></a> y <a href="autocorrelacion.html#sec-localMoran" class="quarto-xref"><span>Índice de Moran local</span></a>.</p>
 <ol type="1">
-<li><p>Defina un área de estudio Urbana (Excepto Las Condes) y visualice una variable que usted decida evaluar su autocorrelación espacial (Ej: Nivel Educacional). Justifique la selección de variable a modo de hipótesis breve. <em>(1 pt)</em></p></li>
-<li><p>Genere una Matriz de Vecidad (<a href="autocorrelacion.html#sec-matrizVec" class="quarto-xref"><span>Construcción de la Matriz de Vecindad</span></a>) ponderada por Población</p></li>
-<li><p>Cálculo de índice de Moran global (<a href="autocorrelacion.html#sec-globalMoran" class="quarto-xref"><span>Índice de Moran</span></a>) y visualice sus resultados en gráfico de cuadrantes. Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
-<li><p>Cálculo de índice de local Moran (<a href="autocorrelacion.html#sec-localMoran" class="quarto-xref"><span>Local Moran</span></a>) e identifique los grupos o cluster haciendo uso de los resultados significancia estadística, visualice los resultados en un Mapa e Interprete los resultados de forma general. <em>(1 pt)</em></p></li>
+<li><p><strong>Selecciona la variable y plantea una hipótesis (0,5 puntos).</strong> Elige una comuna urbana distinta de Las Condes y un indicador disponible en la base, por ejemplo <code>IEA</code>, <code>ISV</code> o <code>IVI</code>. Indica qué mide y en qué dirección se interpreta; no supongas que un valor alto significa siempre mayor necesidad. Muestra su distribución y un mapa inicial. Excluye valores faltantes y unidades sin población <strong>antes</strong> de construir la vecindad, e informa cuántas manzanas quedaron.</p></li>
+<li><p><strong>Construye los pesos espaciales (0,5 puntos).</strong> Parte de los ocho vecinos más próximos de cada manzana y convierte las relaciones en recíprocas, como se explica en el capítulo. Dentro de esa vecindad, asigna a cada vecino un peso proporcional a su población <code>n_per</code> y normaliza los pesos de cada manzana para que sumen uno. Informa el criterio de vecindad, el número de unidades y el rango de cantidad de vecinos. Explica qué cambia al ponderar por población: <strong>no cambia quién es vecino, sino cuánto influye cada vecino</strong>.</p></li>
 </ol>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="images/cluster_LC.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="margin-caption">Autocorrelación Espacial</figcaption>
+<p><img src="images/matriz_w.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Matriz de Vecindad</figcaption>
 </figure>
 </div>
+<ol start="3" type="1">
+<li><strong>Evalúa Moran global (1 punto).</strong> Calcula el índice y una prueba con 999 permutaciones usando los pesos anteriores. Presenta el estadístico, el valor p y un diagrama de dispersión de Moran con sus cuadrantes. Explica qué indican el signo del índice, la prueba y los cuadrantes para la comuna estudiada. Un resultado global no localiza por sí solo los sectores destacados.</li>
+</ol>
+<p><img src="images/cuadrantes.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li><strong>Evalúa Moran local (1 punto).</strong> Calcula el índice por manzana con la misma variable y los mismos pesos. Usa un umbral de valor p <strong>≤ 0,05</strong> e identifica HH, LL, HL, LH y las unidades no destacadas. Los cuadrantes dependen del valor de la manzana y del promedio ponderado de sus vecinos; el valor p decide si se destaca la asociación local. Presenta un mapa con colores categóricos y una tabla con el número de manzanas en cada categoría. Interpreta al menos un patrón relevante para una pregunta de política pública e indica una limitación de los datos o de las múltiples pruebas locales.</li>
+</ol>
+<p><img src="_book/autocorrelacion_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid"></p>
+<p><strong>Al cerrar el informe</strong>, distingue lo que muestran los mapas de lo que todavía habría que comprobar con otras fuentes antes de recomendar una intervención.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -712,8 +734,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./r_project.html" class="pagination-link" aria-label="R Project">
-        <span class="nav-page-text">R Project</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./crs.html" class="pagination-link" aria-label="CRS en R">
+        <span class="nav-page-text">CRS en R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
