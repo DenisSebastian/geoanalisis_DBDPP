@@ -24,7 +24,7 @@ book:
     - part: "Tareas"
       chapters:
         - tarea_1.qmd
-        # - tarea_2.qmd
+        - tarea_2.qmd
     - part: "Anexos"
       chapters:
         - crs.qmd

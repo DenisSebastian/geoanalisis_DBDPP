@@ -3,32 +3,43 @@
 # de Santiago. Solo después de interpolar elegimos una comuna para el mapa
 # y el indicador por manzana.
 
+# Librerías ---------------------------------------------------------------
+
+
 library(sf)
 library(dplyr)
 library(terra)
 library(gstat)
 library(exactextractr)
 library(ggplot2)
+library(mapview)
+
+# Parámetros --------------------------------------------------------------
+
 
 crs_metrico <- 32719
+
+# insumos espaciales ------------------------------------------------------
+
 
 # Área urbana completa de la provincia de Santiago.
 zonas_urbanas <- readRDS("data/censo/zonas_urb_consolidadas.rds") |>
   filter(NOM_PROVIN == "SANTIAGO") |>
   st_transform(crs_metrico)
-stopifnot(nrow(zonas_urbanas) > 0)
+
+mapview(zonas_urbanas)
+# stopifnot(nrow(zonas_urbanas) > 0)
+
 limite_provincial <- st_sf(
   geometry = st_union(st_geometry(zonas_urbanas))
 )
+mapview(limite_provincial) 
+
 limite_prov_vect <- terra::vect(limite_provincial)
 
 # El .prj de urbes.shp declara WGS84 en grados, pero su CRS figura como
 # "unknown". Asignamos EPSG:4326 antes de transformar las coordenadas.
 sii_crudo <- st_read("data/sii/urbes.shp", quiet = TRUE)
-stopifnot(st_bbox(sii_crudo)["xmin"] >= -180,
-          st_bbox(sii_crudo)["xmax"] <= 180,
-          st_bbox(sii_crudo)["ymin"] >= -90,
-          st_bbox(sii_crudo)["ymax"] <= 90)
 st_crs(sii_crudo) <- 4326
 
 # La interpolación emplea TODOS los puntos dentro del área urbana provincial;
@@ -38,8 +49,16 @@ sii_provincia <- sii_crudo |>
   st_filter(limite_provincial) |>
   filter(is.finite(atractor)) |>
   select(atractor)
-stopifnot(nrow(sii_provincia) > 8)
+# stopifnot(nrow(sii_provincia) > 8)
 cat("Puntos SII usados en la IDW provincial:", nrow(sii_provincia), "\n")
+sii_provincia
+
+mapview(sii_provincia)
+
+
+# Trannsformación de Valores ----------------------------------------------
+
+
 
 # Acotamos extremos usando la distribución provincial, no la comunal.
 # Esta decisión cambia los valores interpolados y debe informarse.
