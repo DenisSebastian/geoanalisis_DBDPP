@@ -455,7 +455,7 @@ DBSCAN es útil cuando hay áreas densas mezcladas con puntos dispersos. Un solo
 
 DBSCAN identifica los clústeres mediante dos parámetros clave:
 
-1.  `eps`: Radio de búsqueda. Aquí se mide en **metros** porque las coordenadas están en UTM.
+1.  `eps`: Radio de la **vecindad de cada punto**, no radio máximo del clúster completo. Aquí se mide en **metros** porque las coordenadas están en UTM.
 
 2.  `minPts`: Número mínimo de puntos dentro de `eps` para que un punto sea núcleo, **incluido el propio punto**. Un punto de borde puede incorporarse al grupo sin llegar a ese mínimo.
 
@@ -470,8 +470,8 @@ El algoritmo sigue estos pasos:
 2.  Expansión del clúster:
 
 -   DBSCAN elige un punto central no visitado y lo expande, agrupando todos los puntos dentro de su radio eps como parte del clúster.
--   Si un punto frontera se encuentra en la vecindad, también se incluye en el clúster.
--   Continúa expandiendo hasta que no quedan más puntos alcanzables en ese clúster, luego pasa a otro punto central no visitado.
+-   Si un punto frontera se encuentra en la vecindad de un núcleo, también se incluye en el clúster, pero **no permite seguir expandiéndolo**.
+-   Continúa expandiendo a través de núcleos conectados hasta que no quedan más puntos alcanzables en ese clúster; luego pasa a otro núcleo no visitado.
 
 3.  Identificación de puntos de ruido: Los puntos que no cumplen con los requisitos para ser un punto central o frontera son etiquetados como ruido.
 
@@ -658,7 +658,7 @@ table(violencia$dbscan_cluster_v2)
 
 **Visualización de Resultados**
 
-El mapa conserva el ruido en gris. Los colores no expresan magnitud ni riesgo.
+El mapa conserva el ruido en gris. Los colores no expresan magnitud ni riesgo. **`eps = 300` m describe una relación local entre puntos; no dibuja un círculo de 300 m que contenga cada grupo.**
 
 ```{r}
 ggplot() +
@@ -668,10 +668,35 @@ ggplot() +
   geom_sf(data = violencia %>% filter(dbscan_cluster_v2!="0"),
           aes(color = dbscan_cluster_v2), alpha = 1, size = 0.3) +
   scale_color_manual(values = paleta_grupos(levels(violencia$dbscan_cluster_v2))) +
-  labs(title = "Clustering DBSCAN de Delitos", color = "Clúster") +
+  labs(title = "Clustering DBSCAN de Delitos",
+       subtitle = "Vecindad local: 300 m; umbral para núcleos: 100 casos",
+       color = "Clúster") +
   theme_minimal()
 
 ```
+
+**Cómo leer los parámetros en este mapa.** Con `eps = 300`, alrededor de **cada caso** se examina un círculo de 300 m de radio. Un caso es **núcleo** si dentro de ese círculo hay por lo menos `minPts = 100` casos, **contándolo a él mismo**. Un caso con menos vecinos aún puede quedar coloreado si está a no más de 300 m de un núcleo; es un **punto de borde**. Los casos grises no son núcleos ni están al alcance de uno. Por eso `minPts` fija una densidad **local**: no significa que todos los puntos coloreados tengan 100 vecinos próximos ni fija cuántos grupos aparecerán.
+
+Imagina una cadena de postas: cada núcleo está a 300 m o menos del siguiente, pero el primero y el último pueden estar separados por kilómetros. DBSCAN une los núcleos conectados y agrega sus puntos de borde. Por eso **dos casos del mismo color pueden estar mucho más lejos de 300 m entre sí**. El método no calcula un centro ni exige que todo el grupo quepa dentro de un círculo de 300 m. La documentación de [`dbscan()`](https://search.r-project.org/CRAN/refmans/dbscan/html/dbscan.html) describe esta conexión mediante cadenas de núcleos.
+
+Para comprobarlo con estos resultados, calculamos la mayor distancia en línea recta entre dos casos del **grupo más numeroso**. Esa distancia describe la extensión entre esos dos registros; no es el radio de búsqueda ni el diámetro de un polígono estimado.
+
+```{r}
+tamanos_grupos <- table(dbscan_result_v2$cluster[dbscan_result_v2$cluster != 0])
+grupo_mayor <- as.integer(names(which.max(tamanos_grupos)))
+indices_grupo_mayor <- which(dbscan_result_v2$cluster == grupo_mayor)
+separacion_max_m <- max(stats::dist(
+  coords_delitos[indices_grupo_mayor, , drop = FALSE]
+))
+
+tibble::tibble(
+  grupo = grupo_mayor,
+  casos = length(indices_grupo_mayor),
+  separacion_maxima_m = round(separacion_max_m)
+)
+```
+
+En esta ejecución, el grupo `r grupo_mayor` reúne `r length(indices_grupo_mayor)` casos y la separación entre sus dos casos más alejados alcanza **`r format(round(separacion_max_m), big.mark = ".", decimal.mark = ",", scientific = FALSE)` m**. Supera los 300 m porque `eps` limita **cada paso local de la conexión**, no la extensión total del color en el mapa. Los grupos representan patrones de **casos registrados** bajo este umbral de densidad; no indican por sí solos el radio de acción de un delito ni el riesgo para la población.
 
 ## Resumen
 

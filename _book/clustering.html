@@ -276,6 +276,12 @@ window.Quarto = {
  <span class="menu-text">Tarea 1</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tarea_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tarea 2</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -898,7 +904,7 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
 <p><strong>Funcionamiento</strong></p>
 <p>DBSCAN identifica los clústeres mediante dos parámetros clave:</p>
 <ol type="1">
-<li><p><code>eps</code>: Radio de búsqueda. Aquí se mide en <strong>metros</strong> porque las coordenadas están en UTM.</p></li>
+<li><p><code>eps</code>: Radio de la <strong>vecindad de cada punto</strong>, no radio máximo del clúster completo. Aquí se mide en <strong>metros</strong> porque las coordenadas están en UTM.</p></li>
 <li><p><code>minPts</code>: Número mínimo de puntos dentro de <code>eps</code> para que un punto sea núcleo, <strong>incluido el propio punto</strong>. Un punto de borde puede incorporarse al grupo sin llegar a ese mínimo.</p></li>
 </ol>
 <p>El algoritmo sigue estos pasos:</p>
@@ -915,8 +921,8 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
 </ol>
 <ul>
 <li>DBSCAN elige un punto central no visitado y lo expande, agrupando todos los puntos dentro de su radio eps como parte del clúster.</li>
-<li>Si un punto frontera se encuentra en la vecindad, también se incluye en el clúster.</li>
-<li>Continúa expandiendo hasta que no quedan más puntos alcanzables en ese clúster, luego pasa a otro punto central no visitado.</li>
+<li>Si un punto frontera se encuentra en la vecindad de un núcleo, también se incluye en el clúster, pero <strong>no permite seguir expandiéndolo</strong>.</li>
+<li>Continúa expandiendo a través de núcleos conectados hasta que no quedan más puntos alcanzables en ese clúster; luego pasa a otro núcleo no visitado.</li>
 </ul>
 <ol start="3" type="1">
 <li>Identificación de puntos de ruido: Los puntos que no cumplen con los requisitos para ser un punto central o frontera son etiquetados como ruido.</li>
@@ -1174,7 +1180,7 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
 </div>
 </div>
 <p><strong>Visualización de Resultados</strong></p>
-<p>El mapa conserva el ruido en gris. Los colores no expresan magnitud ni riesgo.</p>
+<p>El mapa conserva el ruido en gris. Los colores no expresan magnitud ni riesgo. <strong><code>eps = 300</code> m describe una relación local entre puntos; no dibuja un círculo de 300 m que contenga cada grupo.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> limite_urbano, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"gray50"</span> )<span class="sc">+</span></span>
@@ -1183,8 +1189,10 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> violencia <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dbscan_cluster_v2<span class="sc">!=</span><span class="st">"0"</span>),</span>
 <span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> dbscan_cluster_v2), <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">paleta_grupos</span>(<span class="fu">levels</span>(violencia<span class="sc">$</span>dbscan_cluster_v2))) <span class="sc">+</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Clustering DBSCAN de Delitos"</span>, <span class="at">color =</span> <span class="st">"Clúster"</span>) <span class="sc">+</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Clustering DBSCAN de Delitos"</span>,</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Vecindad local: 300 m; umbral para núcleos: 100 casos"</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Clúster"</span>) <span class="sc">+</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1193,6 +1201,30 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \| x - \mu_i \|^2
 </div>
 </div>
 </div>
+<p><strong>Cómo leer los parámetros en este mapa.</strong> Con <code>eps = 300</code>, alrededor de <strong>cada caso</strong> se examina un círculo de 300 m de radio. Un caso es <strong>núcleo</strong> si dentro de ese círculo hay por lo menos <code>minPts = 100</code> casos, <strong>contándolo a él mismo</strong>. Un caso con menos vecinos aún puede quedar coloreado si está a no más de 300 m de un núcleo; es un <strong>punto de borde</strong>. Los casos grises no son núcleos ni están al alcance de uno. Por eso <code>minPts</code> fija una densidad <strong>local</strong>: no significa que todos los puntos coloreados tengan 100 vecinos próximos ni fija cuántos grupos aparecerán.</p>
+<p>Imagina una cadena de postas: cada núcleo está a 300 m o menos del siguiente, pero el primero y el último pueden estar separados por kilómetros. DBSCAN une los núcleos conectados y agrega sus puntos de borde. Por eso <strong>dos casos del mismo color pueden estar mucho más lejos de 300 m entre sí</strong>. El método no calcula un centro ni exige que todo el grupo quepa dentro de un círculo de 300 m. La documentación de <a href="https://search.r-project.org/CRAN/refmans/dbscan/html/dbscan.html"><code>dbscan()</code></a> describe esta conexión mediante cadenas de núcleos.</p>
+<p>Para comprobarlo con estos resultados, calculamos la mayor distancia en línea recta entre dos casos del <strong>grupo más numeroso</strong>. Esa distancia describe la extensión entre esos dos registros; no es el radio de búsqueda ni el diámetro de un polígono estimado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tamanos_grupos <span class="ot">&lt;-</span> <span class="fu">table</span>(dbscan_result_v2<span class="sc">$</span>cluster[dbscan_result_v2<span class="sc">$</span>cluster <span class="sc">!=</span> <span class="dv">0</span>])</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>grupo_mayor <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">names</span>(<span class="fu">which.max</span>(tamanos_grupos)))</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>indices_grupo_mayor <span class="ot">&lt;-</span> <span class="fu">which</span>(dbscan_result_v2<span class="sc">$</span>cluster <span class="sc">==</span> grupo_mayor)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>separacion_max_m <span class="ot">&lt;-</span> <span class="fu">max</span>(stats<span class="sc">::</span><span class="fu">dist</span>(</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  coords_delitos[indices_grupo_mayor, , <span class="at">drop =</span> <span class="cn">FALSE</span>]</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> grupo_mayor,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">casos =</span> <span class="fu">length</span>(indices_grupo_mayor),</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">separacion_maxima_m =</span> <span class="fu">round</span>(separacion_max_m)</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  grupo casos separacion_maxima_m
+  &lt;int&gt; &lt;int&gt;               &lt;dbl&gt;
+1     2   951                2239</code></pre>
+</div>
+</div>
+<p>En esta ejecución, el grupo 2 reúne 951 casos y la separación entre sus dos casos más alejados alcanza <strong>2.239 m</strong>. Supera los 300 m porque <code>eps</code> limita <strong>cada paso local de la conexión</strong>, no la extensión total del color en el mapa. Los grupos representan patrones de <strong>casos registrados</strong> bajo este umbral de densidad; no indican por sí solos el radio de acción de un delito ni el riesgo para la población.</p>
 </section>
 </section>
 <section id="resumen" class="level2" data-number="8.6">

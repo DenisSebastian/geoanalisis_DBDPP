@@ -9,7 +9,8 @@ editor_options:
 ## Antecedentes
 
 - **Publicación:** 27 de octubre de 2026.
-- **Entrega:** 8 de noviembre de 2026.
+- **Entrega:** 13 de noviembre de 2026, hasta 23:59 horas
+- **Publicación Calificaciones:** 20 de noviembre de 2026.
 - **Modalidad:** individual.
 - **Ponderación:** 60 % de la nota final.
 - **Formato:** un informe en PDF, PPTX, Markdown o HTML, acompañado del código utilizado. El informe debe contener mapas legibles, tablas de resultados, decisiones metodológicas e interpretación.
